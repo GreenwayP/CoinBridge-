@@ -25,6 +25,11 @@
       color: inherit;
     }
 
+    button,
+    select {
+      font-family: inherit;
+    }
+
     .layout {
       display: flex;
       min-height: 100vh;
@@ -115,6 +120,10 @@
       display: none;
     }
 
+    .mobile-menu {
+      display: none;
+    }
+
     .topbar {
       display: flex;
       justify-content: space-between;
@@ -123,8 +132,8 @@
     }
 
     .welcome h1 {
-      font-size: 27px;
-      margin-bottom: 5px;
+      font-size: 28px;
+      margin-bottom: 6px;
     }
 
     .welcome p {
@@ -157,6 +166,39 @@
     .profile-status {
       color: #34d399;
       font-size: 11px;
+      margin-top: 3px;
+    }
+
+    /* BUTTONS */
+
+    .primary-button {
+      border: none;
+      background: #22d3ee;
+      color: #031018;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary-button:hover {
+      opacity: 0.85;
+    }
+
+    .secondary-button {
+      border: 1px solid #294052;
+      background: #0b1b2a;
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .secondary-button:hover {
+      border-color: #22d3ee;
+      color: #22d3ee;
     }
 
     /* SUMMARY */
@@ -188,12 +230,15 @@
     .balance {
       font-size: 36px;
       font-weight: 800;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
     }
 
     .positive {
       color: #34d399;
-      font-size: 12px;
+    }
+
+    .negative {
+      color: #fb7185;
     }
 
     .value {
@@ -201,7 +246,13 @@
       font-weight: 800;
     }
 
-    /* PORTFOLIO */
+    .small-text {
+      color: #718096;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+
+    /* PANELS */
 
     .panel {
       background: #091522;
@@ -215,8 +266,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
       gap: 15px;
+      margin-bottom: 20px;
     }
 
     .panel-header h2 {
@@ -228,6 +279,13 @@
       font-size: 12px;
       margin-top: 5px;
     }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ASSETS */
 
     .asset {
       display: grid;
@@ -249,14 +307,15 @@
     }
 
     .coin {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       background: #132b3d;
       display: grid;
       place-items: center;
       color: #22d3ee;
       font-weight: bold;
+      font-size: 18px;
     }
 
     .asset-name {
@@ -282,7 +341,6 @@
     }
 
     .asset-change {
-      color: #34d399;
       font-size: 11px;
     }
 
@@ -303,14 +361,14 @@
 
     /* ALLOCATION */
 
-    .allocation {
+    .allocation-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 30px;
     }
 
     .allocation-item {
-      margin-bottom: 17px;
+      margin-bottom: 18px;
     }
 
     .allocation-top {
@@ -337,6 +395,32 @@
       border-radius: 10px;
     }
 
+    /* PERFORMANCE */
+
+    .performance-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .performance-card {
+      background: #07111d;
+      border: 1px solid #1b3042;
+      border-radius: 11px;
+      padding: 17px;
+    }
+
+    .performance-card span {
+      display: block;
+      color: #718096;
+      font-size: 10px;
+      margin-bottom: 8px;
+    }
+
+    .performance-card strong {
+      font-size: 17px;
+    }
+
     /* NOTICE */
 
     .notice {
@@ -350,18 +434,142 @@
       text-align: center;
     }
 
+    /* MODAL */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 480px;
+      background: #091522;
+      border: 1px solid #294052;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .modal-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-title h2 {
+      font-size: 19px;
+    }
+
+    .modal-title span {
+      color: #718096;
+      font-size: 11px;
+    }
+
+    .close-button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #294052;
+      background: #07111d;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .close-button:hover {
+      color: #22d3ee;
+      border-color: #22d3ee;
+    }
+
+    .modal-price {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .modal-change {
+      font-size: 12px;
+      margin-bottom: 22px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .detail {
+      background: #07111d;
+      border: 1px solid #1b3042;
+      border-radius: 9px;
+      padding: 13px;
+    }
+
+    .detail span {
+      display: block;
+      color: #718096;
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+
+    .detail strong {
+      font-size: 12px;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .modal-actions button {
+      padding: 11px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .buy-button {
+      border: none;
+      background: #34d399;
+      color: #03150d;
+    }
+
+    .sell-button {
+      border: none;
+      background: #fb7185;
+      color: #21050a;
+    }
+
+    .swap-button {
+      border: 1px solid #294052;
+      background: #0b1b2a;
+      color: #ffffff;
+    }
+
     /* MOBILE */
 
-    @media (max-width: 950px) {
-
-      .sidebar {
-        width: 210px;
-      }
-
-      .main {
-        margin-left: 210px;
-        width: calc(100% - 210px);
-      }
+    @media (max-width: 1000px) {
 
       .summary {
         grid-template-columns: 1fr 1fr;
@@ -376,10 +584,11 @@
       }
 
       .asset-button {
-        display: none;
+        grid-column: span 3;
+        width: fit-content;
       }
 
-      .allocation {
+      .allocation-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -400,7 +609,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 25px;
+        margin-bottom: 18px;
       }
 
       .mobile-header .logo {
@@ -417,7 +626,6 @@
       }
 
       .mobile-menu {
-        display: none;
         background: #07111d;
         border: 1px solid #1b3042;
         border-radius: 12px;
@@ -455,19 +663,50 @@
       }
 
       .balance {
-        font-size: 31px;
+        font-size: 30px;
       }
 
       .panel {
         padding: 18px;
       }
 
+      .panel-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .header-actions {
+        width: 100%;
+      }
+
+      .header-actions button {
+        flex: 1;
+      }
+
       .asset {
         grid-template-columns: 1fr 1fr;
+        gap: 13px;
       }
 
       .asset-left {
         grid-column: span 2;
+      }
+
+      .asset-button {
+        grid-column: span 2;
+        width: 100%;
+      }
+
+      .performance-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-box {
+        padding: 18px;
+      }
+
+      .modal-actions {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -552,7 +791,10 @@
           Coin<span>Bridge</span>
         </div>
 
-        <button class="menu-button" onclick="toggleMenu()">
+        <button
+          class="menu-button"
+          onclick="toggleMenu()"
+        >
           ☰
         </button>
 
@@ -561,7 +803,10 @@
 
       <!-- MOBILE MENU -->
 
-      <div class="mobile-menu" id="mobileMenu">
+      <div
+        class="mobile-menu"
+        id="mobileMenu"
+      >
 
         <a href="./dashboard.html">
           🏠 Dashboard
@@ -647,7 +892,10 @@
             Total Portfolio Value
           </div>
 
-          <div class="balance">
+          <div
+            class="balance"
+            id="portfolioValue"
+          >
             $12,480.50
           </div>
 
@@ -668,6 +916,10 @@
             $10,240.00
           </div>
 
+          <div class="small-text">
+            Demo investment amount
+          </div>
+
         </div>
 
 
@@ -679,6 +931,10 @@
 
           <div class="value positive">
             +$2,240.50
+          </div>
+
+          <div class="small-text">
+            Overall portfolio gain
           </div>
 
         </div>
@@ -701,6 +957,17 @@
             <p>
               Your current demo asset allocation.
             </p>
+
+          </div>
+
+          <div class="header-actions">
+
+            <button
+              class="secondary-button"
+              onclick="refreshPortfolio()"
+            >
+              ↻ Refresh
+            </button>
 
           </div>
 
@@ -764,7 +1031,7 @@
               24h Change
             </div>
 
-            <div class="asset-change">
+            <div class="asset-change positive">
               +4.82%
             </div>
 
@@ -775,7 +1042,7 @@
             class="asset-button"
             onclick="viewAsset('Bitcoin')"
           >
-            View
+            View Details
           </button>
 
         </div>
@@ -838,7 +1105,7 @@
               24h Change
             </div>
 
-            <div class="asset-change">
+            <div class="asset-change positive">
               +3.17%
             </div>
 
@@ -849,7 +1116,7 @@
             class="asset-button"
             onclick="viewAsset('Ethereum')"
           >
-            View
+            View Details
           </button>
 
         </div>
@@ -912,7 +1179,7 @@
               24h Change
             </div>
 
-            <div class="asset-change">
+            <div class="asset-change positive">
               +0.02%
             </div>
 
@@ -923,7 +1190,7 @@
             class="asset-button"
             onclick="viewAsset('USD Coin')"
           >
-            View
+            View Details
           </button>
 
         </div>
@@ -952,7 +1219,7 @@
         </div>
 
 
-        <div class="allocation">
+        <div class="allocation-grid">
 
           <div>
 
@@ -1035,6 +1302,103 @@
 
           </div>
 
+
+          <div>
+
+            <div class="performance-card">
+
+              <span>
+                Portfolio Health
+              </span>
+
+              <strong class="positive">
+                Strong
+              </strong>
+
+            </div>
+
+            <br>
+
+            <div class="performance-card">
+
+              <span>
+                Best Performer
+              </span>
+
+              <strong>
+                Bitcoin
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PERFORMANCE -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Performance
+            </h2>
+
+            <p>
+              Demo portfolio performance overview.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="performance-grid">
+
+          <div class="performance-card">
+
+            <span>
+              Today
+            </span>
+
+            <strong class="positive">
+              +4.82%
+            </strong>
+
+          </div>
+
+
+          <div class="performance-card">
+
+            <span>
+              This Week
+            </span>
+
+            <strong class="positive">
+              +8.41%
+            </strong>
+
+          </div>
+
+
+          <div class="performance-card">
+
+            <span>
+              This Month
+            </span>
+
+            <strong class="positive">
+              +12.63%
+            </strong>
+
+          </div>
+
         </div>
 
       </section>
@@ -1044,9 +1408,9 @@
 
       <div class="notice">
 
-        ⚠️ Demo Portfolio — balances, allocations and asset
-        values shown here are sample data. No real funds are
-        being stored or managed.
+        ⚠️ Demo Portfolio — balances, prices, performance and
+        asset values shown here are sample data. No real funds
+        are being stored, traded or managed.
 
       </div>
 
@@ -1055,9 +1419,188 @@
   </div>
 
 
+  <!-- ASSET DETAILS MODAL -->
+
+  <div
+    class="modal"
+    id="assetModal"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <div class="modal-title">
+
+          <div
+            class="coin"
+            id="modalCoin"
+          >
+            ₿
+          </div>
+
+          <div>
+
+            <h2 id="modalAssetName">
+              Bitcoin
+            </h2>
+
+            <span id="modalSymbol">
+              BTC
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="close-button"
+          onclick="closeAssetModal()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div
+        class="modal-price"
+        id="modalPrice"
+      >
+        $67,420.20
+      </div>
+
+
+      <div
+        class="modal-change positive"
+        id="modalChange"
+      >
+        +4.82% in the last 24 hours
+      </div>
+
+
+      <div class="details-grid">
+
+        <div class="detail">
+
+          <span>
+            Your Holdings
+          </span>
+
+          <strong id="modalHoldings">
+            0.110 BTC
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Current Value
+          </span>
+
+          <strong id="modalValue">
+            $7,420.20
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Demo Market Status
+          </span>
+
+          <strong class="positive">
+            Active
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Asset Type
+          </span>
+
+          <strong>
+            Digital Asset
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          class="buy-button"
+          onclick="assetAction('Buy')"
+        >
+          Buy
+        </button>
+
+        <button
+          class="sell-button"
+          onclick="assetAction('Sell')"
+        >
+          Sell
+        </button>
+
+        <button
+          class="swap-button"
+          onclick="assetAction('Swap')"
+        >
+          Swap
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
   <!-- JAVASCRIPT -->
 
   <script>
+
+    const assets = {
+
+      Bitcoin: {
+        symbol: "BTC",
+        icon: "₿",
+        price: "$67,420.20",
+        holdings: "0.110 BTC",
+        value: "$7,420.20",
+        change: "+4.82% in the last 24 hours"
+      },
+
+      Ethereum: {
+        symbol: "ETH",
+        icon: "Ξ",
+        price: "$3,210.70",
+        holdings: "1.000 ETH",
+        value: "$3,210.70",
+        change: "+3.17% in the last 24 hours"
+      },
+
+      "USD Coin": {
+        symbol: "USDC",
+        icon: "$",
+        price: "$1.00",
+        holdings: "1,849.60 USDC",
+        value: "$1,849.60",
+        change: "+0.02% in the last 24 hours"
+      }
+
+    };
+
 
     function toggleMenu() {
 
@@ -1071,11 +1614,118 @@
 
     function viewAsset(asset) {
 
+      const coin = assets[asset];
+
+      if (!coin) {
+        return;
+      }
+
+      document.getElementById(
+        "modalAssetName"
+      ).textContent = asset;
+
+
+      document.getElementById(
+        "modalSymbol"
+      ).textContent = coin.symbol;
+
+
+      document.getElementById(
+        "modalCoin"
+      ).textContent = coin.icon;
+
+
+      document.getElementById(
+        "modalPrice"
+      ).textContent = coin.price;
+
+
+      document.getElementById(
+        "modalHoldings"
+      ).textContent = coin.holdings;
+
+
+      document.getElementById(
+        "modalValue"
+      ).textContent = coin.value;
+
+
+      document.getElementById(
+        "modalChange"
+      ).textContent = coin.change;
+
+
+      document
+        .getElementById("assetModal")
+        .classList.add("show");
+
+    }
+
+
+    function closeAssetModal() {
+
+      document
+        .getElementById("assetModal")
+        .classList.remove("show");
+
+    }
+
+
+    function assetAction(action) {
+
+      const asset =
+        document.getElementById(
+          "modalAssetName"
+        ).textContent;
+
       alert(
-        "Demo only: opening details for " + asset + "."
+        "Demo only: " +
+        action +
+        " " +
+        asset +
+        " functionality is not connected to real transactions yet."
       );
 
     }
+
+
+    function refreshPortfolio() {
+
+      alert(
+        "Demo portfolio refreshed successfully."
+      );
+
+    }
+
+
+    document
+      .getElementById("assetModal")
+      .addEventListener(
+        "click",
+        function(event) {
+
+          if (event.target === this) {
+
+            closeAssetModal();
+
+          }
+
+        }
+      );
+
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Escape") {
+
+          closeAssetModal();
+
+        }
+
+      }
+    );
 
   </script>
 

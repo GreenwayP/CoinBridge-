@@ -313,7 +313,7 @@
       color: #fb7185;
     }
 
-    /* CHART PANEL */
+    /* CHART */
 
     .chart-panel {
       background: #091522;
@@ -399,8 +399,6 @@
       background: rgba(34,211,238,0.06);
     }
 
-    /* CHART */
-
     .chart-area {
       position: relative;
       height: 430px;
@@ -420,18 +418,19 @@
       top: 15px;
       left: 18px;
       display: flex;
-      gap: 10px;
+      gap: 14px;
       flex-wrap: wrap;
       pointer-events: none;
     }
 
     .chart-stat {
-      background: rgba(5,11,20,0.82);
+      background: rgba(5,11,20,0.78);
       border: 1px solid rgba(255,255,255,0.06);
       padding: 7px 10px;
       border-radius: 6px;
       font-size: 10px;
       color: #91a1b4;
+      backdrop-filter: blur(5px);
     }
 
     .chart-stat strong {
@@ -517,16 +516,8 @@
       background: #059669;
     }
 
-    .buy-button:hover {
-      background: #047857;
-    }
-
     .sell-button {
       background: #e11d48;
-    }
-
-    .sell-button:hover {
-      background: #be123c;
     }
 
     /* TABLE */
@@ -611,26 +602,199 @@
       margin-top: 2px;
     }
 
+    /* MODAL */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 500;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .trade-modal {
+      width: 100%;
+      max-width: 430px;
+      background: #091522;
+      border: 1px solid #243c50;
+      border-radius: 16px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #1b3042;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .modal-subtitle {
+      color: #718096;
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    .close-modal {
+      border: none;
+      background: transparent;
+      color: #718096;
+      font-size: 23px;
+    }
+
+    .trade-body {
+      padding: 20px;
+    }
+
+    .trade-asset {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #07111d;
+      border: 1px solid #1d3448;
+      padding: 13px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+
+    .trade-asset-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #132b3d;
+      color: #22d3ee;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+    }
+
+    .trade-asset-name {
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .trade-asset-symbol {
+      color: #718096;
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    .field-label {
+      color: #91a1b4;
+      font-size: 10px;
+      margin-bottom: 7px;
+      display: block;
+    }
+
+    .amount-input {
+      width: 100%;
+      background: #07111d;
+      border: 1px solid #1d3448;
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 13px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .amount-input:focus {
+      border-color: #22d3ee;
+    }
+
+    .estimate {
+      display: flex;
+      justify-content: space-between;
+      color: #718096;
+      font-size: 11px;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+
+    .estimate strong {
+      color: #ffffff;
+    }
+
+    .review-button {
+      width: 100%;
+      border: none;
+      background: #22d3ee;
+      color: #031018;
+      border-radius: 8px;
+      padding: 12px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .review-button.sell-mode {
+      background: #fb7185;
+      color: #ffffff;
+    }
+
+    /* CONFIRMATION */
+
+    .confirmation {
+      text-align: center;
+      padding: 30px 20px;
+      display: none;
+    }
+
+    .confirmation.show {
+      display: block;
+    }
+
+    .success-icon {
+      width: 55px;
+      height: 55px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      background: rgba(52,211,153,0.12);
+      color: #34d399;
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+    }
+
+    .confirmation h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .confirmation p {
+      color: #718096;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .done-button {
+      width: 100%;
+      border: none;
+      background: #22d3ee;
+      color: #031018;
+      border-radius: 8px;
+      padding: 11px;
+      font-weight: 800;
+      margin-top: 20px;
+    }
+
     /* RESPONSIVE */
 
     @media (max-width: 1050px) {
       .market-cards {
         grid-template-columns: 1fr 1fr;
-      }
-
-      .chart-area {
-        height: 390px;
-      }
-    }
-
-    @media (max-width: 950px) {
-      .sidebar {
-        width: 210px;
-      }
-
-      .main {
-        margin-left: 210px;
-        width: calc(100% - 210px);
       }
     }
 
@@ -681,17 +845,8 @@
         font-size: 14px;
       }
 
-      .mobile-menu a:hover {
-        background: rgba(34,211,238,0.09);
-        color: #22d3ee;
-      }
-
       .topbar .profile {
         display: none;
-      }
-
-      .market-toolbar {
-        align-items: stretch;
       }
 
       .search-box {
@@ -734,17 +889,13 @@
 
   <div class="layout">
 
-    <!-- SIDEBAR -->
-
     <aside class="sidebar">
 
       <div class="logo">
         Coin<span>Bridge</span>
       </div>
 
-      <div class="menu-title">
-        Main Menu
-      </div>
+      <div class="menu-title">Main Menu</div>
 
       <nav class="nav">
         <a href="./dashboard.html">🏠 Dashboard</a>
@@ -754,9 +905,7 @@
         <a href="./markets.html" class="active">📈 Markets</a>
       </nav>
 
-      <div class="menu-title" style="margin-top:30px;">
-        Account
-      </div>
+      <div class="menu-title" style="margin-top:30px;">Account</div>
 
       <nav class="nav">
         <a href="./settings.html">⚙️ Settings</a>
@@ -769,9 +918,6 @@
 
     </aside>
 
-
-    <!-- MAIN -->
-
     <main class="main">
 
       <div class="mobile-header">
@@ -780,21 +926,12 @@
           Coin<span>Bridge</span>
         </div>
 
-        <button
-          class="menu-button"
-          id="menuButton"
-          type="button"
-        >
-          ☰
-        </button>
+        <button class="menu-button" onclick="toggleMenu()">☰</button>
 
       </div>
 
+      <div class="mobile-menu" id="mobileMenu">
 
-      <div
-        class="mobile-menu"
-        id="mobileMenu"
-      >
         <a href="./dashboard.html">🏠 Dashboard</a>
         <a href="./portfolio.html">💼 Portfolio</a>
         <a href="./wallet.html">💰 Wallet</a>
@@ -803,18 +940,14 @@
         <a href="./settings.html">⚙️ Settings</a>
         <a href="./security.html">🔐 Security</a>
         <a href="./index.html">← Log Out</a>
+
       </div>
-
-
-      <!-- TOPBAR -->
 
       <div class="topbar">
 
         <div class="welcome">
           <h1>Markets</h1>
-          <p>
-            Explore digital asset prices and simulated market movements.
-          </p>
+          <p>Explore digital asset prices and market movements.</p>
         </div>
 
         <div class="profile">
@@ -822,21 +955,13 @@
           <div class="avatar">U</div>
 
           <div>
-            <div class="profile-name">
-              CoinBridge User
-            </div>
-
-            <div class="profile-status">
-              ● Account Active
-            </div>
+            <div class="profile-name">CoinBridge User</div>
+            <div class="profile-status">● Account Active</div>
           </div>
 
         </div>
 
       </div>
-
-
-      <!-- SEARCH -->
 
       <div class="market-toolbar">
 
@@ -848,28 +973,23 @@
             type="text"
             id="marketSearch"
             placeholder="Search Bitcoin, Ethereum..."
-            autocomplete="off"
+            oninput="searchMarkets()"
           >
 
         </div>
 
         <div class="market-status">
-          ● <span>Market simulation active</span>
+          ● <span>Market updates active</span>
         </div>
 
       </div>
 
-
-      <!-- MARKET CARDS -->
-
-      <section
-        class="market-cards"
-        id="marketCards"
-      >
+      <section class="market-cards" id="marketCards">
 
         <div
           class="market-card selected"
           data-coin="BTC"
+          onclick="selectCoin('BTC')"
         >
 
           <div class="market-card-top">
@@ -888,33 +1008,20 @@
             <button
               class="watch-button"
               data-watch="BTC"
-              type="button"
-            >
-              ☆
-            </button>
+              onclick="toggleWatch(event,'BTC')"
+            >☆</button>
 
           </div>
 
-          <div
-            class="market-price"
-            id="cardPriceBTC"
-          >
-            $67,420.20
-          </div>
-
-          <div
-            class="market-change positive"
-            id="cardChangeBTC"
-          >
-            +4.82%
-          </div>
+          <div class="market-price" id="cardPriceBTC">$67,420.20</div>
+          <div class="market-change positive" id="cardChangeBTC">+4.82%</div>
 
         </div>
-
 
         <div
           class="market-card"
           data-coin="ETH"
+          onclick="selectCoin('ETH')"
         >
 
           <div class="market-card-top">
@@ -933,33 +1040,20 @@
             <button
               class="watch-button"
               data-watch="ETH"
-              type="button"
-            >
-              ☆
-            </button>
+              onclick="toggleWatch(event,'ETH')"
+            >☆</button>
 
           </div>
 
-          <div
-            class="market-price"
-            id="cardPriceETH"
-          >
-            $3,210.70
-          </div>
-
-          <div
-            class="market-change positive"
-            id="cardChangeETH"
-          >
-            +3.17%
-          </div>
+          <div class="market-price" id="cardPriceETH">$3,210.70</div>
+          <div class="market-change positive" id="cardChangeETH">+3.17%</div>
 
         </div>
-
 
         <div
           class="market-card"
           data-coin="USDC"
+          onclick="selectCoin('USDC')"
         >
 
           <div class="market-card-top">
@@ -978,33 +1072,17 @@
             <button
               class="watch-button"
               data-watch="USDC"
-              type="button"
-            >
-              ☆
-            </button>
+              onclick="toggleWatch(event,'USDC')"
+            >☆</button>
 
           </div>
 
-          <div
-            class="market-price"
-            id="cardPriceUSDC"
-          >
-            $1.0000
-          </div>
-
-          <div
-            class="market-change positive"
-            id="cardChangeUSDC"
-          >
-            +0.02%
-          </div>
+          <div class="market-price" id="cardPriceUSDC">$1.0000</div>
+          <div class="market-change positive" id="cardChangeUSDC">+0.02%</div>
 
         </div>
 
       </section>
-
-
-      <!-- CHART PANEL -->
 
       <section class="chart-panel">
 
@@ -1014,40 +1092,18 @@
 
             <div class="selected-coin">
 
-              <div
-                class="selected-icon"
-                id="selectedIcon"
-              >
-                ₿
-              </div>
+              <div class="selected-icon" id="selectedIcon">₿</div>
 
               <div>
-                <div
-                  class="selected-name"
-                  id="selectedName"
-                >
-                  Bitcoin
-                </div>
-
-                <div
-                  class="selected-symbol"
-                  id="selectedSymbol"
-                >
-                  BTC / USD
-                </div>
+                <div class="selected-name" id="selectedName">Bitcoin</div>
+                <div class="selected-symbol" id="selectedSymbol">BTC / USD</div>
               </div>
 
             </div>
 
-
             <div>
 
-              <div
-                class="selected-price"
-                id="selectedPrice"
-              >
-                $67,420.20
-              </div>
+              <div class="selected-price" id="selectedPrice">$67,420.20</div>
 
               <div
                 class="selected-change positive"
@@ -1060,52 +1116,18 @@
 
           </div>
 
-
           <div class="timeframes">
 
-            <button
-              class="timeframe active"
-              data-timeframe="1H"
-              type="button"
-            >
-              1H
-            </button>
-
-            <button
-              class="timeframe"
-              data-timeframe="4H"
-              type="button"
-            >
-              4H
-            </button>
-
-            <button
-              class="timeframe"
-              data-timeframe="1D"
-              type="button"
-            >
-              1D
-            </button>
-
-            <button
-              class="timeframe"
-              data-timeframe="1W"
-              type="button"
-            >
-              1W
-            </button>
+            <button class="timeframe active" onclick="setTimeframe(this,'1H')">1H</button>
+            <button class="timeframe" onclick="setTimeframe(this,'4H')">4H</button>
+            <button class="timeframe" onclick="setTimeframe(this,'1D')">1D</button>
+            <button class="timeframe" onclick="setTimeframe(this,'1W')">1W</button>
 
           </div>
 
         </div>
 
-
-        <!-- CHART -->
-
-        <div
-          class="chart-area"
-          id="chartArea"
-        >
+        <div class="chart-area" id="chartArea">
 
           <canvas id="marketChart"></canvas>
 
@@ -1129,13 +1151,10 @@
           </div>
 
           <div class="chart-help">
-            Drag chart left or right to explore price history
+            Drag chart to explore price history
           </div>
 
         </div>
-
-
-        <!-- MARKET OVERVIEW -->
 
         <div class="order-panel">
 
@@ -1143,12 +1162,9 @@
 
             <h3>Market Overview</h3>
 
-            <span id="marketClock">
-              Initializing...
-            </span>
+            <span id="marketClock">Updating</span>
 
           </div>
-
 
           <div class="order-grid">
 
@@ -1173,14 +1189,12 @@
 
               <button
                 class="buy-button"
-                id="buyButton"
-                type="button"
+                onclick="openTrade('Buy')"
               >
                 Buy Asset
               </button>
 
             </div>
-
 
             <div class="order-box">
 
@@ -1198,13 +1212,12 @@
 
               <div class="order-row">
                 <span>Holding</span>
-                <strong>0.110 BTC</strong>
+                <strong id="holdingAmount">0.110 BTC</strong>
               </div>
 
               <button
                 class="sell-button"
-                id="sellButton"
-                type="button"
+                onclick="openTrade('Sell')"
               >
                 Sell Asset
               </button>
@@ -1217,21 +1230,15 @@
 
       </section>
 
-
-      <!-- MARKET TABLE -->
-
       <section class="table-panel">
 
         <div class="table-header">
 
           <h2>Market Overview</h2>
 
-          <p>
-            Simulated asset prices and market performance.
-          </p>
+          <p>Current asset prices and market performance.</p>
 
         </div>
-
 
         <div class="table-wrap">
 
@@ -1248,7 +1255,6 @@
               </tr>
 
             </thead>
-
 
             <tbody>
 
@@ -1271,31 +1277,19 @@
 
                 <td id="tablePriceBTC">$67,420.20</td>
 
-                <td
-                  class="positive"
-                  id="tableChangeBTC"
-                >
-                  +4.82%
-                </td>
+                <td class="positive" id="tableChangeBTC">+4.82%</td>
 
-                <td id="rangeBTC">
-                  $64,890 — $68,210
-                </td>
+                <td>$64,890 — $68,210</td>
 
                 <td>
-
                   <button
                     class="mini-watch"
                     data-mini-watch="BTC"
-                    type="button"
-                  >
-                    ☆
-                  </button>
-
+                    onclick="toggleMiniWatch('BTC')"
+                  >☆</button>
                 </td>
 
               </tr>
-
 
               <tr>
 
@@ -1316,31 +1310,19 @@
 
                 <td id="tablePriceETH">$3,210.70</td>
 
-                <td
-                  class="positive"
-                  id="tableChangeETH"
-                >
-                  +3.17%
-                </td>
+                <td class="positive" id="tableChangeETH">+3.17%</td>
 
-                <td id="rangeETH">
-                  $3,080 — $3,280
-                </td>
+                <td>$3,080 — $3,280</td>
 
                 <td>
-
                   <button
                     class="mini-watch"
                     data-mini-watch="ETH"
-                    type="button"
-                  >
-                    ☆
-                  </button>
-
+                    onclick="toggleMiniWatch('ETH')"
+                  >☆</button>
                 </td>
 
               </tr>
-
 
               <tr>
 
@@ -1361,27 +1343,16 @@
 
                 <td id="tablePriceUSDC">$1.0000</td>
 
-                <td
-                  class="positive"
-                  id="tableChangeUSDC"
-                >
-                  +0.02%
-                </td>
+                <td class="positive" id="tableChangeUSDC">+0.02%</td>
 
-                <td id="rangeUSDC">
-                  $0.998 — $1.002
-                </td>
+                <td>$0.998 — $1.002</td>
 
                 <td>
-
                   <button
                     class="mini-watch"
                     data-mini-watch="USDC"
-                    type="button"
-                  >
-                    ☆
-                  </button>
-
+                    onclick="toggleMiniWatch('USDC')"
+                  >☆</button>
                 </td>
 
               </tr>
@@ -1398,1576 +1369,1001 @@
 
   </div>
 
+  <!-- TRADE MODAL -->
+
+  <div class="modal" id="tradeModal">
+
+    <div class="trade-modal">
+
+      <div class="modal-header">
+
+        <div>
+          <div class="modal-title" id="modalTitle">Buy Bitcoin</div>
+          <div class="modal-subtitle">Review your order details</div>
+        </div>
+
+        <button class="close-modal" onclick="closeTrade()">×</button>
+
+      </div>
+
+      <div class="trade-body" id="tradeBody">
+
+        <div class="trade-asset">
+
+          <div class="trade-asset-icon" id="tradeIcon">₿</div>
+
+          <div>
+            <div class="trade-asset-name" id="tradeName">Bitcoin</div>
+            <div class="trade-asset-symbol" id="tradeSymbol">BTC / USD</div>
+          </div>
+
+        </div>
+
+        <label class="field-label">
+          Amount in USD
+        </label>
+
+        <input
+          class="amount-input"
+          type="number"
+          id="tradeAmount"
+          placeholder="0.00"
+          min="0"
+          step="0.01"
+          oninput="calculateEstimate()"
+        >
+
+        <div class="estimate">
+
+          <span>Current price</span>
+
+          <strong id="modalPrice">
+            $67,420.20
+          </strong>
+
+        </div>
+
+        <div class="estimate">
+
+          <span>Estimated amount</span>
+
+          <strong id="estimatedAmount">
+            0 BTC
+          </strong>
+
+        </div>
+
+        <button
+          class="review-button"
+          id="reviewButton"
+          onclick="reviewTrade()"
+        >
+          Review Order
+        </button>
+
+      </div>
+
+      <div class="confirmation" id="confirmation">
+
+        <div class="success-icon">✓</div>
+
+        <h3 id="confirmationTitle">Order Confirmed</h3>
+
+        <p id="confirmationText">
+          Your order has been processed successfully.
+        </p>
+
+        <button class="done-button" onclick="closeTrade()">
+          Done
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
   <script>
 
-    /*
-      COINBRIDGE MARKETS
-      Classroom simulation only.
-      No external API required.
-    */
+    const coins = {
 
-    document.addEventListener("DOMContentLoaded", function () {
+      BTC: {
+        name: "Bitcoin",
+        symbol: "BTC",
+        pair: "BTC / USD",
+        icon: "₿",
+        price: 67420.20,
+        change: 4.82,
+        base: 67420.20,
+        volume: "2.84B"
+      },
 
-      "use strict";
+      ETH: {
+        name: "Ethereum",
+        symbol: "ETH",
+        pair: "ETH / USD",
+        icon: "Ξ",
+        price: 3210.70,
+        change: 3.17,
+        base: 3210.70,
+        volume: "1.42B"
+      },
 
+      USDC: {
+        name: "USD Coin",
+        symbol: "USDC",
+        pair: "USDC / USD",
+        icon: "$",
+        price: 1.00,
+        change: 0.02,
+        base: 1.00,
+        volume: "684M"
+      }
 
-      /* =========================
-         DATA
-      ========================= */
+    };
 
-      const coins = {
+    let selectedCoin = "BTC";
+    let timeframe = "1H";
+    let candles = [];
+    let dragStartX = null;
+    let dragOffset = 0;
+    let tradeType = "Buy";
 
-        BTC: {
-          name: "Bitcoin",
-          symbol: "BTC / USD",
-          short: "BTC",
-          icon: "₿",
-          price: 67420.20,
-          change: 4.82,
-          base: 67420.20,
-          volume: "2.84B"
-        },
+    function toggleMenu() {
 
-        ETH: {
-          name: "Ethereum",
-          symbol: "ETH / USD",
-          short: "ETH",
-          icon: "Ξ",
-          price: 3210.70,
-          change: 3.17,
-          base: 3210.70,
-          volume: "1.42B"
-        },
+      document
+        .getElementById("mobileMenu")
+        .classList.toggle("open");
 
-        USDC: {
-          name: "USD Coin",
-          symbol: "USDC / USD",
-          short: "USDC",
-          icon: "$",
-          price: 1.0000,
-          change: 0.02,
-          base: 1.0000,
-          volume: "684M"
-        }
+    }
 
-      };
+    function formatCoinPrice(price, symbol) {
 
+      if (symbol === "USDC") {
+        return "$" + price.toFixed(4);
+      }
 
-      let selectedCoin = "BTC";
-      let timeframe = "1H";
-      let candles = [];
-      let dragStartX = null;
-      let dragOffset = 0;
-      let animationTimer = null;
+      return "$" + price.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
 
+    }
 
-      /* =========================
-         ELEMENTS
-      ========================= */
+    function formatSelectedPrice(price) {
+      return formatCoinPrice(price, selectedCoin);
+    }
 
-      const chartArea =
-        document.getElementById("chartArea");
+    function createCandles() {
+
+      const coin = coins[selectedCoin];
+
+      candles = [];
+
+      let price = coin.base * 0.94;
+
+      for (let i = 0; i < 180; i++) {
+
+        const movement =
+          (Math.random() - 0.46) *
+          coin.base *
+          0.012;
+
+        const open = price;
+
+        const close = Math.max(
+          coin.base * 0.86,
+          Math.min(
+            coin.base * 1.07,
+            price + movement
+          )
+        );
+
+        const high =
+          Math.max(open, close) +
+          Math.random() *
+          coin.base *
+          0.006;
+
+        const low =
+          Math.min(open, close) -
+          Math.random() *
+          coin.base *
+          0.006;
+
+        candles.push({
+          open,
+          high,
+          low,
+          close
+        });
+
+        price = close;
+
+      }
+
+      const finalCandle =
+        candles[candles.length - 1];
+
+      const correction =
+        coin.base / finalCandle.close;
+
+      candles = candles.map(candle => ({
+        open: candle.open * correction,
+        high: candle.high * correction,
+        low: candle.low * correction,
+        close: candle.close * correction
+      }));
+
+      dragOffset = 0;
+
+    }
+
+    function formatChartPrice(price) {
+
+      if (selectedCoin === "USDC") {
+        return "$" + price.toFixed(4);
+      }
+
+      if (price >= 1000) {
+        return "$" + Math.round(price).toLocaleString();
+      }
+
+      return "$" + price.toFixed(2);
+
+    }
+
+    function priceToY(price, min, max, height) {
+
+      return 25 +
+        ((max - price) / (max - min)) *
+        (height - 55);
+
+    }
+
+    function drawChart() {
 
       const canvas =
         document.getElementById("marketChart");
 
-      const ctx =
-        canvas ? canvas.getContext("2d") : null;
+      const area =
+        document.getElementById("chartArea");
 
+      if (!canvas || !area || !candles.length) {
+        return;
+      }
 
-      /* =========================
-         MOBILE MENU
-      ========================= */
+      const rect =
+        area.getBoundingClientRect();
 
-      const menuButton =
-        document.getElementById("menuButton");
+      const dpr =
+        window.devicePixelRatio || 1;
 
-      const mobileMenu =
-        document.getElementById("mobileMenu");
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
 
+      canvas.style.width = rect.width + "px";
+      canvas.style.height = rect.height + "px";
 
-      if (menuButton && mobileMenu) {
+      const ctx = canvas.getContext("2d");
 
-        menuButton.addEventListener(
-          "click",
-          function () {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-            mobileMenu.classList.toggle("open");
+      const width = rect.width;
+      const height = rect.height;
 
-          }
+      ctx.clearRect(0, 0, width, height);
+
+      ctx.fillStyle = "#06101a";
+      ctx.fillRect(0, 0, width, height);
+
+      const visibleCount =
+        width < 600 ? 55 : 90;
+
+      let end =
+        candles.length -
+        Math.round(dragOffset);
+
+      end = Math.max(visibleCount, end);
+      end = Math.min(candles.length, end);
+
+      const start =
+        Math.max(0, end - visibleCount);
+
+      const visible =
+        candles.slice(start, end);
+
+      if (!visible.length) {
+        return;
+      }
+
+      let minPrice =
+        Math.min(...visible.map(c => c.low));
+
+      let maxPrice =
+        Math.max(...visible.map(c => c.high));
+
+      const padding =
+        (maxPrice - minPrice) * 0.12;
+
+      minPrice -= padding;
+      maxPrice += padding;
+
+      ctx.strokeStyle =
+        "rgba(130,160,185,0.09)";
+
+      ctx.lineWidth = 1;
+
+      const horizontalLines = 6;
+
+      for (let i = 0; i <= horizontalLines; i++) {
+
+        const y =
+          25 +
+          ((height - 55) /
+          horizontalLines) * i;
+
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+
+      }
+
+      const verticalLines =
+        width < 600 ? 7 : 10;
+
+      for (let i = 0; i <= verticalLines; i++) {
+
+        const x =
+          (width / verticalLines) * i;
+
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+
+      }
+
+      ctx.fillStyle = "#607489";
+      ctx.font = "10px Arial";
+
+      for (let i = 0; i <= horizontalLines; i++) {
+
+        const price =
+          maxPrice -
+          ((maxPrice - minPrice) /
+          horizontalLines) * i;
+
+        const y =
+          25 +
+          ((height - 55) /
+          horizontalLines) * i;
+
+        ctx.fillText(
+          formatChartPrice(price),
+          width - 70,
+          y - 3
         );
 
       }
 
+      const chartWidth = width - 78;
 
-      /* =========================
-         PRICE FORMATTING
-      ========================= */
+      const candleSpace =
+        chartWidth / visible.length;
 
-      function formatPrice(value, symbol) {
+      const candleWidth =
+        Math.max(3, candleSpace * 0.58);
 
-        if (symbol === "USDC") {
+      visible.forEach((candle, index) => {
 
-          return "$" + Number(value).toFixed(4);
+        const x =
+          index * candleSpace +
+          candleSpace / 2;
 
-        }
-
-        return "$" +
-          Number(value).toLocaleString(
-            "en-US",
-            {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            }
-          );
-
-      }
-
-
-      function formatChartPrice(value) {
-
-        if (selectedCoin === "USDC") {
-
-          return "$" + value.toFixed(4);
-
-        }
-
-        if (value >= 1000) {
-
-          return "$" +
-            Math.round(value).toLocaleString();
-
-        }
-
-        return "$" + value.toFixed(2);
-
-      }
-
-
-      /* =========================
-         CREATE CANDLES
-      ========================= */
-
-      function createCandles() {
-
-        const coin =
-          coins[selectedCoin];
-
-        candles = [];
-
-        let price =
-          coin.base * 0.94;
-
-        const total =
-          timeframe === "1H"
-            ? 160
-            : timeframe === "4H"
-              ? 140
-              : timeframe === "1D"
-                ? 120
-                : 100;
-
-
-        for (
-          let i = 0;
-          i < total;
-          i++
-        ) {
-
-          const volatility =
-            selectedCoin === "USDC"
-              ? coin.base * 0.0015
-              : coin.base * 0.009;
-
-
-          const movement =
-            (Math.random() - 0.45) *
-            volatility;
-
-
-          const open =
-            price;
-
-
-          const close =
-            Math.max(
-              coin.base * 0.86,
-              Math.min(
-                coin.base * 1.08,
-                price + movement
-              )
-            );
-
-
-          const wick =
-            selectedCoin === "USDC"
-              ? coin.base * 0.0007
-              : coin.base * 0.0045;
-
-
-          const high =
-            Math.max(open, close) +
-            Math.random() * wick;
-
-
-          const low =
-            Math.min(open, close) -
-            Math.random() * wick;
-
-
-          candles.push({
-            open: open,
-            high: high,
-            low: low,
-            close: close
-          });
-
-
-          price = close;
-
-        }
-
-
-        /*
-          Bring the final candle
-          exactly to the displayed
-          simulated market price.
-        */
-
-        const last =
-          candles[candles.length - 1];
-
-
-        if (last) {
-
-          const correction =
-            coin.price / last.close;
-
-
-          candles =
-            candles.map(
-              function (candle) {
-
-                return {
-                  open: candle.open * correction,
-                  high: candle.high * correction,
-                  low: candle.low * correction,
-                  close: candle.close * correction
-                };
-
-              }
-            );
-
-        }
-
-
-        dragOffset = 0;
-
-      }
-
-
-      /* =========================
-         PRICE TO Y
-      ========================= */
-
-      function priceToY(
-        price,
-        min,
-        max,
-        height
-      ) {
-
-        return 25 +
-          ((max - price) /
-          (max - min)) *
-          (height - 55);
-
-      }
-
-
-      /* =========================
-         DRAW CHART
-      ========================= */
-
-      function drawChart() {
-
-        if (!canvas || !ctx || !chartArea) {
-          return;
-        }
-
-
-        const rect =
-          chartArea.getBoundingClientRect();
-
-
-        if (
-          rect.width <= 0 ||
-          rect.height <= 0
-        ) {
-          return;
-        }
-
-
-        const dpr =
-          window.devicePixelRatio || 1;
-
-
-        canvas.width =
-          Math.floor(rect.width * dpr);
-
-        canvas.height =
-          Math.floor(rect.height * dpr);
-
-
-        canvas.style.width =
-          rect.width + "px";
-
-        canvas.style.height =
-          rect.height + "px";
-
-
-        ctx.setTransform(
-          dpr,
-          0,
-          0,
-          dpr,
-          0,
-          0
-        );
-
-
-        const width =
-          rect.width;
-
-        const height =
-          rect.height;
-
-
-        /* BACKGROUND */
-
-        ctx.fillStyle =
-          "#06101a";
-
-        ctx.fillRect(
-          0,
-          0,
-          width,
-          height
-        );
-
-
-        if (!candles.length) {
-          return;
-        }
-
-
-        /* VISIBLE CANDLES */
-
-        const visibleCount =
-          width < 600 ? 52 : 88;
-
-
-        let end =
-          candles.length -
-          Math.round(dragOffset);
-
-
-        end =
-          Math.max(
-            visibleCount,
-            Math.min(
-              candles.length,
-              end
-            )
-          );
-
-
-        const start =
-          Math.max(
-            0,
-            end - visibleCount
-          );
-
-
-        const visible =
-          candles.slice(
-            start,
-            end
-          );
-
-
-        if (!visible.length) {
-          return;
-        }
-
-
-        /* RANGE */
-
-        let minPrice =
-          Math.min.apply(
-            null,
-            visible.map(
-              function (candle) {
-                return candle.low;
-              }
-            )
-          );
-
-
-        let maxPrice =
-          Math.max.apply(
-            null,
-            visible.map(
-              function (candle) {
-                return candle.high;
-              }
-            )
-          );
-
-
-        let range =
-          maxPrice - minPrice;
-
-
-        if (range <= 0) {
-          range = 1;
-        }
-
-
-        const padding =
-          range * 0.12;
-
-
-        minPrice -= padding;
-        maxPrice += padding;
-
-
-        /* GRID */
-
-        ctx.strokeStyle =
-          "rgba(130,160,185,0.09)";
-
-        ctx.lineWidth = 1;
-
-
-        const horizontalLines = 6;
-
-
-        for (
-          let i = 0;
-          i <= horizontalLines;
-          i++
-        ) {
-
-          const y =
-            25 +
-            ((height - 55) /
-            horizontalLines) * i;
-
-
-          ctx.beginPath();
-
-          ctx.moveTo(
-            0,
-            y
-          );
-
-          ctx.lineTo(
-            width,
-            y
-          );
-
-          ctx.stroke();
-
-        }
-
-
-        const verticalLines =
-          width < 600 ? 7 : 10;
-
-
-        for (
-          let i = 0;
-          i <= verticalLines;
-          i++
-        ) {
-
-          const x =
-            (width /
-            verticalLines) * i;
-
-
-          ctx.beginPath();
-
-          ctx.moveTo(
-            x,
-            0
-          );
-
-          ctx.lineTo(
-            x,
-            height
-          );
-
-          ctx.stroke();
-
-        }
-
-
-        /* PRICE LABELS */
-
-        ctx.fillStyle =
-          "#607489";
-
-        ctx.font =
-          "10px Arial";
-
-
-        for (
-          let i = 0;
-          i <= horizontalLines;
-          i++
-        ) {
-
-          const price =
-            maxPrice -
-            ((maxPrice - minPrice) /
-            horizontalLines) * i;
-
-
-          const y =
-            25 +
-            ((height - 55) /
-            horizontalLines) * i;
-
-
-          ctx.fillText(
-            formatChartPrice(price),
-            Math.max(5, width - 72),
-            y - 3
-          );
-
-        }
-
-
-        /* CANDLE DIMENSIONS */
-
-        const chartWidth =
-          Math.max(
-            100,
-            width - 78
-          );
-
-
-        const candleSpace =
-          chartWidth /
-          visible.length;
-
-
-        const candleWidth =
-          Math.max(
-            3,
-            candleSpace * 0.58
-          );
-
-
-        /* DRAW CANDLES */
-
-        visible.forEach(
-          function (candle, index) {
-
-            const x =
-              index *
-              candleSpace +
-              candleSpace / 2;
-
-
-            const highY =
-              priceToY(
-                candle.high,
-                minPrice,
-                maxPrice,
-                height
-              );
-
-
-            const lowY =
-              priceToY(
-                candle.low,
-                minPrice,
-                maxPrice,
-                height
-              );
-
-
-            const openY =
-              priceToY(
-                candle.open,
-                minPrice,
-                maxPrice,
-                height
-              );
-
-
-            const closeY =
-              priceToY(
-                candle.close,
-                minPrice,
-                maxPrice,
-                height
-              );
-
-
-            const rising =
-              candle.close >=
-              candle.open;
-
-
-            const candleColor =
-              rising
-                ? "#34d399"
-                : "#fb7185";
-
-
-            /* WICK */
-
-            ctx.strokeStyle =
-              candleColor;
-
-            ctx.lineWidth = 1;
-
-
-            ctx.beginPath();
-
-            ctx.moveTo(
-              x,
-              highY
-            );
-
-            ctx.lineTo(
-              x,
-              lowY
-            );
-
-            ctx.stroke();
-
-
-            /* BODY */
-
-            ctx.fillStyle =
-              candleColor;
-
-
-            const bodyTop =
-              Math.min(
-                openY,
-                closeY
-              );
-
-
-            const bodyHeight =
-              Math.max(
-                1,
-                Math.abs(
-                  closeY - openY
-                )
-              );
-
-
-            ctx.fillRect(
-              x - candleWidth / 2,
-              bodyTop,
-              candleWidth,
-              bodyHeight
-            );
-
-          }
-        );
-
-
-        /* CURRENT PRICE */
-
-        const current =
-          coins[selectedCoin].price;
-
-
-        const currentY =
+        const highY =
           priceToY(
-            current,
+            candle.high,
             minPrice,
             maxPrice,
             height
           );
 
+        const lowY =
+          priceToY(
+            candle.low,
+            minPrice,
+            maxPrice,
+            height
+          );
 
-        ctx.setLineDash(
-          [5, 5]
-        );
+        const openY =
+          priceToY(
+            candle.open,
+            minPrice,
+            maxPrice,
+            height
+          );
 
+        const closeY =
+          priceToY(
+            candle.close,
+            minPrice,
+            maxPrice,
+            height
+          );
+
+        const rising =
+          candle.close >= candle.open;
 
         ctx.strokeStyle =
-          "rgba(34,211,238,0.65)";
+          rising ? "#34d399" : "#fb7185";
 
+        ctx.fillStyle =
+          rising ? "#34d399" : "#fb7185";
 
         ctx.beginPath();
-
-        ctx.moveTo(
-          0,
-          currentY
-        );
-
-        ctx.lineTo(
-          Math.max(
-            0,
-            width - 75
-          ),
-          currentY
-        );
-
+        ctx.moveTo(x, highY);
+        ctx.lineTo(x, lowY);
         ctx.stroke();
 
+        const bodyTop =
+          Math.min(openY, closeY);
 
-        ctx.setLineDash([]);
-
-
-        /* CURRENT PRICE LABEL */
-
-        const labelX =
+        const bodyHeight =
           Math.max(
-            0,
-            width - 74
+            1,
+            Math.abs(closeY - openY)
           );
-
-
-        ctx.fillStyle =
-          "#22d3ee";
-
 
         ctx.fillRect(
-          labelX,
-          currentY - 10,
-          74,
-          20
+          x - candleWidth / 2,
+          bodyTop,
+          candleWidth,
+          bodyHeight
         );
 
+      });
 
-        ctx.fillStyle =
-          "#031018";
+      const current =
+        candles[candles.length - 1].close;
 
-
-        ctx.font =
-          "bold 9px Arial";
-
-
-        ctx.fillText(
-          formatChartPrice(current),
-          labelX + 5,
-          currentY + 3
+      const currentY =
+        priceToY(
+          current,
+          minPrice,
+          maxPrice,
+          height
         );
 
-      }
+      ctx.setLineDash([5, 5]);
 
+      ctx.strokeStyle =
+        "rgba(34,211,238,0.65)";
 
-      /* =========================
-         UPDATE SELECTED COIN
-      ========================= */
+      ctx.beginPath();
+      ctx.moveTo(0, currentY);
+      ctx.lineTo(width - 75, currentY);
+      ctx.stroke();
 
-      function updateSelectedCoin() {
+      ctx.setLineDash([]);
 
-        const coin =
-          coins[selectedCoin];
+      ctx.fillStyle = "#22d3ee";
 
+      ctx.fillRect(
+        width - 74,
+        currentY - 10,
+        74,
+        20
+      );
 
-        document.getElementById(
-          "selectedIcon"
-        ).textContent =
-          coin.icon;
+      ctx.fillStyle = "#031018";
+      ctx.font = "bold 9px Arial";
 
+      ctx.fillText(
+        formatChartPrice(current),
+        width - 69,
+        currentY + 3
+      );
 
-        document.getElementById(
-          "selectedName"
-        ).textContent =
-          coin.name;
+    }
 
+    function selectCoin(symbol) {
 
-        document.getElementById(
-          "selectedSymbol"
-        ).textContent =
-          coin.symbol;
-
-
-        document.getElementById(
-          "selectedPrice"
-        ).textContent =
-          formatPrice(
-            coin.price,
-            selectedCoin
-          );
-
-
-        const changeElement =
-          document.getElementById(
-            "selectedChange"
-          );
-
-
-        changeElement.textContent =
-          (coin.change >= 0 ? "+" : "") +
-          coin.change.toFixed(2) +
-          "% today";
-
-
-        changeElement.className =
-          "selected-change " +
-          (
-            coin.change >= 0
-              ? "positive"
-              : "negative"
-          );
-
-
-        document.getElementById(
-          "buyAsset"
-        ).textContent =
-          coin.short;
-
-
-        document.getElementById(
-          "sellAsset"
-        ).textContent =
-          coin.short;
-
-
-        document.getElementById(
-          "buyPrice"
-        ).textContent =
-          formatPrice(
-            coin.price,
-            selectedCoin
-          );
-
-
-        document.getElementById(
-          "sellPrice"
-        ).textContent =
-          formatPrice(
-            coin.price,
-            selectedCoin
-          );
-
-
-        updateStats();
-
-      }
-
-
-      /* =========================
-         MARKET STATS
-      ========================= */
-
-      function updateStats() {
-
-        const coin =
-          coins[selectedCoin];
-
-
-        const high =
-          coin.price *
-          1.011;
-
-
-        const low =
-          coin.price *
-          0.962;
-
-
-        document.getElementById(
-          "highValue"
-        ).textContent =
-          formatPrice(
-            high,
-            selectedCoin
-          );
-
-
-        document.getElementById(
-          "lowValue"
-        ).textContent =
-          formatPrice(
-            low,
-            selectedCoin
-          );
-
-
-        document.getElementById(
-          "volumeValue"
-        ).textContent =
-          coin.volume;
-
-
-        document.getElementById(
-          "range" + selectedCoin
-        ).textContent =
-          formatPrice(
-            low,
-            selectedCoin
-          ) +
-          " — " +
-          formatPrice(
-            high,
-            selectedCoin
-          );
-
-      }
-
-
-      /* =========================
-         UPDATE CARDS + TABLE
-      ========================= */
-
-      function updateCoinDisplays(symbol) {
-
-        const coin =
-          coins[symbol];
-
-
-        const price =
-          formatPrice(
-            coin.price,
-            symbol
-          );
-
-
-        const cardPrice =
-          document.getElementById(
-            "cardPrice" + symbol
-          );
-
-
-        const tablePrice =
-          document.getElementById(
-            "tablePrice" + symbol
-          );
-
-
-        const cardChange =
-          document.getElementById(
-            "cardChange" + symbol
-          );
-
-
-        const tableChange =
-          document.getElementById(
-            "tableChange" + symbol
-          );
-
-
-        if (cardPrice) {
-          cardPrice.textContent = price;
-        }
-
-
-        if (tablePrice) {
-          tablePrice.textContent = price;
-        }
-
-
-        const changeText =
-          (coin.change >= 0 ? "+" : "") +
-          coin.change.toFixed(2) +
-          "%";
-
-
-        if (cardChange) {
-
-          cardChange.textContent =
-            changeText;
-
-          cardChange.className =
-            "market-change " +
-            (
-              coin.change >= 0
-                ? "positive"
-                : "negative"
-            );
-
-        }
-
-
-        if (tableChange) {
-
-          tableChange.textContent =
-            changeText;
-
-          tableChange.className =
-            coin.change >= 0
-              ? "positive"
-              : "negative";
-
-        }
-
-      }
-
-
-      /* =========================
-         SELECT COIN
-      ========================= */
+      selectedCoin = symbol;
 
       document
         .querySelectorAll(".market-card")
-        .forEach(
-          function (card) {
+        .forEach(card => {
 
-            card.addEventListener(
-              "click",
-              function () {
+          card.classList.toggle(
+            "selected",
+            card.dataset.coin === symbol
+          );
 
-                selectedCoin =
-                  card.dataset.coin;
+        });
 
+      createCandles();
+      updateSelectedCoin();
+      drawChart();
 
-                document
-                  .querySelectorAll(
-                    ".market-card"
-                  )
-                  .forEach(
-                    function (item) {
+    }
 
-                      item.classList.toggle(
-                        "selected",
-                        item.dataset.coin ===
-                        selectedCoin
-                      );
+    function updateSelectedCoin() {
 
-                    }
-                  );
+      const coin = coins[selectedCoin];
 
+      document.getElementById("selectedIcon").textContent =
+        coin.icon;
 
-                createCandles();
+      document.getElementById("selectedName").textContent =
+        coin.name;
 
-                updateSelectedCoin();
+      document.getElementById("selectedSymbol").textContent =
+        coin.pair;
 
-                drawChart();
+      document.getElementById("selectedPrice").textContent =
+        formatSelectedPrice(coin.price);
 
-              }
-            );
+      document.getElementById("selectedChange").textContent =
+        "+" + coin.change.toFixed(2) + "% today";
 
-          }
+      document.getElementById("buyAsset").textContent =
+        coin.symbol;
+
+      document.getElementById("sellAsset").textContent =
+        coin.symbol;
+
+      document.getElementById("buyPrice").textContent =
+        formatSelectedPrice(coin.price);
+
+      document.getElementById("sellPrice").textContent =
+        formatSelectedPrice(coin.price);
+
+      updateStats();
+
+    }
+
+    function updateStats() {
+
+      const coin = coins[selectedCoin];
+
+      document.getElementById("highValue").textContent =
+        formatSelectedPrice(coin.price * 1.011);
+
+      document.getElementById("lowValue").textContent =
+        formatSelectedPrice(coin.price * 0.962);
+
+      document.getElementById("volumeValue").textContent =
+        coin.volume;
+
+    }
+
+    function updateCoinDisplays(symbol) {
+
+      const coin = coins[symbol];
+
+      const cardPrice =
+        document.getElementById(
+          "cardPrice" + symbol
         );
 
+      const tablePrice =
+        document.getElementById(
+          "tablePrice" + symbol
+        );
 
-      /* =========================
-         TIMEFRAMES
-      ========================= */
+      if (cardPrice) {
+        cardPrice.textContent =
+          formatCoinPrice(
+            coin.price,
+            symbol
+          );
+      }
+
+      if (tablePrice) {
+        tablePrice.textContent =
+          formatCoinPrice(
+            coin.price,
+            symbol
+          );
+      }
+
+    }
+
+    function updateMarket() {
+
+      Object.keys(coins).forEach(symbol => {
+
+        const coin = coins[symbol];
+
+        if (symbol === "USDC") {
+
+          coin.price =
+            1 +
+            (Math.random() - 0.5) *
+            0.001;
+
+        } else {
+
+          const movement =
+            (Math.random() - 0.48) *
+            coin.base *
+            0.00045;
+
+          coin.price += movement;
+
+        }
+
+        if (symbol === selectedCoin) {
+
+          const last =
+            candles[candles.length - 1];
+
+          if (last) {
+
+            last.close = coin.price;
+
+            last.high =
+              Math.max(
+                last.high,
+                coin.price
+              );
+
+            last.low =
+              Math.min(
+                last.low,
+                coin.price
+              );
+
+          }
+
+        }
+
+        updateCoinDisplays(symbol);
+
+      });
+
+      updateSelectedCoin();
+      drawChart();
+
+      document.getElementById("marketClock").textContent =
+        "Updated " +
+        new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit"
+        });
+
+    }
+
+    function setTimeframe(button, selectedTimeframe) {
 
       document
         .querySelectorAll(".timeframe")
-        .forEach(
-          function (button) {
+        .forEach(item => {
+          item.classList.remove("active");
+        });
 
-            button.addEventListener(
-              "click",
-              function () {
+      button.classList.add("active");
 
-                document
-                  .querySelectorAll(
-                    ".timeframe"
-                  )
-                  .forEach(
-                    function (item) {
+      timeframe = selectedTimeframe;
 
-                      item.classList.remove(
-                        "active"
-                      );
+      createCandles();
+      drawChart();
 
-                    }
-                  );
+    }
 
+    function searchMarkets() {
 
-                button.classList.add(
-                  "active"
-                );
+      const query =
+        document
+          .getElementById("marketSearch")
+          .value
+          .toLowerCase()
+          .trim();
 
+      document
+        .querySelectorAll(".market-card")
+        .forEach(card => {
 
-                timeframe =
-                  button.dataset.timeframe;
+          const text =
+            card.textContent.toLowerCase();
 
-
-                createCandles();
-
-                drawChart();
-
-              }
-            );
-
-          }
-        );
-
-
-      /* =========================
-         SEARCH
-      ========================= */
-
-      const searchInput =
-        document.getElementById(
-          "marketSearch"
-        );
-
-
-      if (searchInput) {
-
-        searchInput.addEventListener(
-          "input",
-          function () {
-
-            const query =
-              searchInput.value
-                .toLowerCase()
-                .trim();
-
-
-            document
-              .querySelectorAll(
-                ".market-card"
-              )
-              .forEach(
-                function (card) {
-
-                  const text =
-                    card.textContent
-                      .toLowerCase();
-
-
-                  card.classList.toggle(
-                    "hidden",
-                    query !== "" &&
-                    !text.includes(query)
-                  );
-
-                }
-              );
-
-          }
-        );
-
-      }
-
-
-      /* =========================
-         WATCHLIST
-      ========================= */
-
-      function toggleWatch(symbol) {
-
-        const buttons =
-          document.querySelectorAll(
-            '[data-watch="' +
-            symbol +
-            '"], ' +
-            '[data-mini-watch="' +
-            symbol +
-            '"]'
+          card.classList.toggle(
+            "hidden",
+            !text.includes(query)
           );
 
+        });
 
-        buttons.forEach(
-          function (button) {
+    }
 
-            button.classList.toggle(
-              "active"
-            );
+    function toggleWatch(event, symbol) {
 
+      event.stopPropagation();
 
-            button.textContent =
-              button.classList.contains(
-                "active"
-              )
-                ? "★"
-                : "☆";
-
-          }
+      const buttons =
+        document.querySelectorAll(
+          '[data-watch="' + symbol + '"], ' +
+          '[data-mini-watch="' + symbol + '"]'
         );
+
+      buttons.forEach(button => {
+
+        button.classList.toggle("active");
+
+        button.textContent =
+          button.classList.contains("active")
+            ? "★"
+            : "☆";
+
+      });
+
+    }
+
+    function toggleMiniWatch(symbol) {
+
+      const buttons =
+        document.querySelectorAll(
+          '[data-watch="' + symbol + '"], ' +
+          '[data-mini-watch="' + symbol + '"]'
+        );
+
+      buttons.forEach(button => {
+
+        button.classList.toggle("active");
+
+        button.textContent =
+          button.classList.contains("active")
+            ? "★"
+            : "☆";
+
+      });
+
+    }
+
+    /* TRADE MODAL */
+
+    function openTrade(type) {
+
+      tradeType = type;
+
+      const coin = coins[selectedCoin];
+
+      document.getElementById("modalTitle").textContent =
+        type + " " + coin.name;
+
+      document.getElementById("tradeIcon").textContent =
+        coin.icon;
+
+      document.getElementById("tradeName").textContent =
+        coin.name;
+
+      document.getElementById("tradeSymbol").textContent =
+        coin.pair;
+
+      document.getElementById("modalPrice").textContent =
+        formatSelectedPrice(coin.price);
+
+      document.getElementById("tradeAmount").value = "";
+
+      document.getElementById("estimatedAmount").textContent =
+        "0 " + coin.symbol;
+
+      document.getElementById("reviewButton").textContent =
+        "Review " + type + " Order";
+
+      document.getElementById("reviewButton").classList.toggle(
+        "sell-mode",
+        type === "Sell"
+      );
+
+      document.getElementById("tradeBody").style.display =
+        "block";
+
+      document.getElementById("confirmation").classList.remove(
+        "show"
+      );
+
+      document.getElementById("tradeModal").classList.add(
+        "open"
+      );
+
+    }
+
+    function closeTrade() {
+
+      document
+        .getElementById("tradeModal")
+        .classList.remove("open");
+
+    }
+
+    function calculateEstimate() {
+
+      const amount =
+        parseFloat(
+          document.getElementById("tradeAmount").value
+        ) || 0;
+
+      const coin =
+        coins[selectedCoin];
+
+      const estimated =
+        coin.price > 0
+          ? amount / coin.price
+          : 0;
+
+      document.getElementById("estimatedAmount").textContent =
+        estimated.toFixed(
+          selectedCoin === "USDC" ? 4 : 8
+        ) +
+        " " +
+        coin.symbol;
+
+    }
+
+    function reviewTrade() {
+
+      const amount =
+        parseFloat(
+          document.getElementById("tradeAmount").value
+        );
+
+      if (!amount || amount <= 0) {
+
+        alert("Please enter an amount.");
+
+        return;
 
       }
 
+      const coin = coins[selectedCoin];
 
-      document
-        .querySelectorAll(
-          ".watch-button"
-        )
-        .forEach(
-          function (button) {
+      const quantity =
+        amount / coin.price;
 
-            button.addEventListener(
-              "click",
-              function (event) {
+      document.getElementById("tradeBody").style.display =
+        "none";
 
-                event.stopPropagation();
+      document.getElementById("confirmation").classList.add(
+        "show"
+      );
 
-                toggleWatch(
-                  button.dataset.watch
-                );
+      document.getElementById("confirmationTitle").textContent =
+        tradeType + " Order Confirmed";
 
-              }
-            );
+      document.getElementById("confirmationText").textContent =
+        tradeType +
+        " order for " +
+        quantity.toFixed(
+          selectedCoin === "USDC" ? 4 : 8
+        ) +
+        " " +
+        coin.symbol +
+        " at " +
+        formatSelectedPrice(coin.price) +
+        " has been confirmed.";
 
-          }
-        );
+    }
 
+    /* CHART DRAGGING */
 
-      document
-        .querySelectorAll(
-          ".mini-watch"
-        )
-        .forEach(
-          function (button) {
+    const chartArea =
+      document.getElementById("chartArea");
 
-            button.addEventListener(
-              "click",
-              function () {
+    chartArea.addEventListener(
+      "pointerdown",
+      event => {
 
-                toggleWatch(
-                  button.dataset.miniWatch
-                );
+        dragStartX = event.clientX;
 
-              }
-            );
-
-          }
-        );
-
-
-      /* =========================
-         BUY / SELL
-      ========================= */
-
-      document
-        .getElementById("buyButton")
-        .addEventListener(
-          "click",
-          function () {
-
-            const coin =
-              coins[selectedCoin];
-
-
-            alert(
-              "BUY\n\n" +
-              coin.name +
-              "\nCurrent price: " +
-              formatPrice(
-                coin.price,
-                selectedCoin
-              ) +
-              "\n\nClassroom illustration only."
-            );
-
-          }
-        );
-
-
-      document
-        .getElementById("sellButton")
-        .addEventListener(
-          "click",
-          function () {
-
-            const coin =
-              coins[selectedCoin];
-
-
-            alert(
-              "SELL\n\n" +
-              coin.name +
-              "\nCurrent price: " +
-              formatPrice(
-                coin.price,
-                selectedCoin
-              ) +
-              "\n\nClassroom illustration only."
-            );
-
-          }
-        );
-
-
-      /* =========================
-         DRAG / SCROLL CHART
-      ========================= */
-
-      if (chartArea) {
-
-        chartArea.addEventListener(
-          "pointerdown",
-          function (event) {
-
-            dragStartX =
-              event.clientX;
-
-
-            try {
-
-              chartArea.setPointerCapture(
-                event.pointerId
-              );
-
-            } catch (error) {
-              /* Safe fallback */
-            }
-
-          }
-        );
-
-
-        chartArea.addEventListener(
-          "pointermove",
-          function (event) {
-
-            if (
-              dragStartX === null
-            ) {
-              return;
-            }
-
-
-            const movement =
-              event.clientX -
-              dragStartX;
-
-
-            const sensitivity =
-              window.innerWidth < 700
-                ? 0.25
-                : 0.45;
-
-
-            dragOffset -=
-              movement *
-              sensitivity;
-
-
-            const maxOffset =
-              Math.max(
-                0,
-                candles.length - 20
-              );
-
-
-            dragOffset =
-              Math.max(
-                0,
-                Math.min(
-                  maxOffset,
-                  dragOffset
-                )
-              );
-
-
-            dragStartX =
-              event.clientX;
-
-
-            drawChart();
-
-          }
-        );
-
-
-        chartArea.addEventListener(
-          "pointerup",
-          function () {
-
-            dragStartX = null;
-
-          }
-        );
-
-
-        chartArea.addEventListener(
-          "pointercancel",
-          function () {
-
-            dragStartX = null;
-
-          }
+        chartArea.setPointerCapture(
+          event.pointerId
         );
 
       }
+    );
 
+    chartArea.addEventListener(
+      "pointermove",
+      event => {
 
-      /* =========================
-         SIMULATED MARKET UPDATE
-      ========================= */
+        if (dragStartX === null) {
+          return;
+        }
 
-      function updateMarket() {
+        const movement =
+          event.clientX - dragStartX;
 
-        Object.keys(coins)
-          .forEach(
-            function (symbol) {
+        const sensitivity =
+          window.innerWidth < 700
+            ? 0.25
+            : 0.45;
 
-              const coin =
-                coins[symbol];
+        dragOffset -=
+          movement * sensitivity;
 
-
-              if (symbol === "USDC") {
-
-                coin.price =
-                  1 +
-                  (Math.random() - 0.5) *
-                  0.001;
-
-              } else {
-
-                const movement =
-                  (Math.random() - 0.48) *
-                  coin.base *
-                  0.00045;
-
-
-                coin.price +=
-                  movement;
-
-
-                coin.price =
-                  Math.max(
-                    coin.base * 0.82,
-                    Math.min(
-                      coin.base * 1.18,
-                      coin.price
-                    )
-                  );
-
-              }
-
-
-              if (
-                symbol === selectedCoin &&
-                candles.length
-              ) {
-
-                const last =
-                  candles[
-                    candles.length - 1
-                  ];
-
-
-                last.close =
-                  coin.price;
-
-
-                last.high =
-                  Math.max(
-                    last.high,
-                    coin.price
-                  );
-
-
-                last.low =
-                  Math.min(
-                    last.low,
-                    coin.price
-                  );
-
-              }
-
-
-              updateCoinDisplays(symbol);
-
-            }
+        const maxOffset =
+          Math.max(
+            0,
+            candles.length - 20
           );
 
+        dragOffset =
+          Math.max(
+            0,
+            Math.min(
+              maxOffset,
+              dragOffset
+            )
+          );
 
-        updateSelectedCoin();
+        dragStartX = event.clientX;
 
         drawChart();
 
-
-        const clock =
-          document.getElementById(
-            "marketClock"
-          );
-
-
-        if (clock) {
-
-          clock.textContent =
-            "Updated " +
-            new Date().toLocaleTimeString(
-              [],
-              {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit"
-              }
-            );
-
-        }
-
       }
+    );
 
+    chartArea.addEventListener(
+      "pointerup",
+      () => {
+        dragStartX = null;
+      }
+    );
 
-      /* =========================
-         INITIALIZE
-      ========================= */
+    chartArea.addEventListener(
+      "pointercancel",
+      () => {
+        dragStartX = null;
+      }
+    );
 
-      createCandles();
+    /* CLOSE MODAL WHEN CLICKING OUTSIDE */
 
-      updateSelectedCoin();
+    document
+      .getElementById("tradeModal")
+      .addEventListener(
+        "click",
+        event => {
 
+          if (
+            event.target.id === "tradeModal"
+          ) {
 
-      Object.keys(coins)
-        .forEach(
-          function (symbol) {
-
-            updateCoinDisplays(
-              symbol
-            );
+            closeTrade();
 
           }
-        );
-
-
-      /*
-        Wait one frame before drawing.
-        This gives the browser time to
-        calculate the chart dimensions.
-      */
-
-      window.requestAnimationFrame(
-        function () {
-
-          drawChart();
 
         }
       );
 
+    /* INITIALISE */
 
-      /* =========================
-         AUTO UPDATE
-      ========================= */
+    createCandles();
+    updateSelectedCoin();
+    drawChart();
 
-      animationTimer =
-        window.setInterval(
-          updateMarket,
-          3000
-        );
+    updateCoinDisplays("BTC");
+    updateCoinDisplays("ETH");
+    updateCoinDisplays("USDC");
 
+    setInterval(
+      updateMarket,
+      3000
+    );
 
-      /* =========================
-         RESIZE
-      ========================= */
+    window.addEventListener(
+      "resize",
+      function () {
 
-      window.addEventListener(
-        "resize",
-        function () {
+        drawChart();
 
-          drawChart();
-
-        }
-      );
-
-  
+      }
+    );
 
   </script>
 

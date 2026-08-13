@@ -103,7 +103,6 @@ a{
   padding:12px;
   color:#8798ab;
   font-size:14px;
-  border-radius:9px;
 }
 
 /* MAIN */
@@ -429,7 +428,7 @@ a{
   margin-left:4px;
 }
 
-/* ORDER */
+/* ORDER PANEL */
 
 .order-panel{
   padding:20px;
@@ -473,13 +472,32 @@ a{
 .order-row{
   display:flex;
   justify-content:space-between;
+  align-items:center;
+  gap:10px;
   color:#718096;
   font-size:10px;
-  margin-bottom:7px;
+  margin-bottom:9px;
 }
 
 .order-row strong{
   color:#fff;
+}
+
+.price-input{
+  width:155px;
+  max-width:60%;
+  background:#091522;
+  border:1px solid #1d3448;
+  color:#fff;
+  border-radius:7px;
+  padding:9px 8px;
+  outline:none;
+  font-size:11px;
+  text-align:right;
+}
+
+.price-input:focus{
+  border-color:#22d3ee;
 }
 
 .buy-button,
@@ -487,11 +505,11 @@ a{
   width:100%;
   border:none;
   border-radius:7px;
-  padding:10px;
+  padding:11px;
   color:#fff;
   font-weight:bold;
   font-size:11px;
-  margin-top:6px;
+  margin-top:7px;
 }
 
 .buy-button{
@@ -591,102 +609,111 @@ td{
 /* RESPONSIVE */
 
 @media(max-width:1050px){
-  .market-cards{
-    grid-template-columns:1fr 1fr;
-  }
+
+.market-cards{
+  grid-template-columns:1fr 1fr;
+}
+
 }
 
 @media(max-width:950px){
 
-  .sidebar{
-    width:210px;
-  }
+.sidebar{
+  width:210px;
+}
 
-  .main{
-    margin-left:210px;
-    width:calc(100% - 210px);
-  }
+.main{
+  margin-left:210px;
+  width:calc(100% - 210px);
+}
+
 }
 
 @media(max-width:700px){
 
-  .sidebar{
-    display:none;
-  }
+.sidebar{
+  display:none;
+}
 
-  .main{
-    margin-left:0;
-    width:100%;
-    padding:18px;
-  }
+.main{
+  margin-left:0;
+  width:100%;
+  padding:18px;
+}
 
-  .mobile-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-  }
+.mobile-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
 
-  .mobile-header .logo{
-    padding:0;
-    margin:0;
-  }
+.mobile-header .logo{
+  padding:0;
+  margin:0;
+}
 
-  .menu-button{
-    background:none;
-    border:none;
-    color:#fff;
-    font-size:25px;
-  }
+.menu-button{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:25px;
+}
 
-  .mobile-menu.open{
-    display:flex;
-    flex-direction:column;
-    background:#07111d;
-    border:1px solid #1b3042;
-    border-radius:12px;
-    padding:10px;
-    margin-bottom:20px;
-  }
+.mobile-menu.open{
+  display:flex;
+  flex-direction:column;
+  background:#07111d;
+  border:1px solid #1b3042;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:20px;
+}
 
-  .mobile-menu a{
-    color:#91a1b4;
-    padding:13px;
-    font-size:14px;
-  }
+.mobile-menu a{
+  color:#91a1b4;
+  padding:13px;
+  font-size:14px;
+}
 
-  .topbar .profile{
-    display:none;
-  }
+.topbar .profile{
+  display:none;
+}
 
-  .search-box{
-    width:100%;
-  }
+.search-box{
+  width:100%;
+}
 
-  .market-cards{
-    grid-template-columns:1fr;
-  }
+.market-cards{
+  grid-template-columns:1fr;
+}
 
-  .chart-title-row{
-    flex-direction:column;
-  }
+.chart-title-row{
+  flex-direction:column;
+}
 
-  .selected-price,
-  .selected-change{
-    text-align:left;
-  }
+.selected-price,
+.selected-change{
+  text-align:left;
+}
 
-  .chart-area{
-    height:330px;
-  }
+.chart-area{
+  height:330px;
+}
 
-  .chart-overlay{
-    display:none;
-  }
+.chart-overlay{
+  display:none;
+}
 
-  .order-grid{
-    grid-template-columns:1fr;
-  }
+.order-grid{
+  grid-template-columns:1fr;
+}
+
+.price-input{
+  width:145px;
+  max-width:55%;
+}
+
 }
 </style>
 </head>
@@ -695,128 +722,225 @@ td{
 
 <div class="layout">
 
+<!-- SIDEBAR -->
+
 <aside class="sidebar">
 
-  <div class="logo">
-    Coin<span>Bridge</span>
-  </div>
+<div class="logo">
+Coin<span>Bridge</span>
+</div>
 
-  <div class="menu-title">Main Menu</div>
+<div class="menu-title">
+Main Menu
+</div>
 
-  <nav class="nav">
-    <a href="./dashboard.html">🏠 Dashboard</a>
-    <a href="./portfolio.html">💼 Portfolio</a>
-    <a href="./wallet.html">💰 Wallet</a>
-    <a href="./transactions.html">📊 Transactions</a>
-    <a href="./markets.html" class="active">📈 Markets</a>
-  </nav>
+<nav class="nav">
 
-  <div class="menu-title" style="margin-top:30px;">
-    Account
-  </div>
+<a href="./dashboard.html">
+🏠 Dashboard
+</a>
 
-  <nav class="nav">
-    <a href="./settings.html">⚙️ Settings</a>
-    <a href="./security.html">🔐 Security</a>
-  </nav>
+<a href="./portfolio.html">
+💼 Portfolio
+</a>
 
-  <div class="logout">
-    <a href="./index.html">← Log Out</a>
-  </div>
+<a href="./wallet.html">
+💰 Wallet
+</a>
+
+<a href="./transactions.html">
+📊 Transactions
+</a>
+
+<a href="./markets.html" class="active">
+📈 Markets
+</a>
+
+</nav>
+
+<div
+class="menu-title"
+style="margin-top:30px;"
+>
+Account
+</div>
+
+<nav class="nav">
+
+<a href="./settings.html">
+⚙️ Settings
+</a>
+
+<a href="./security.html">
+🔐 Security
+</a>
+
+</nav>
+
+<div class="logout">
+
+<a href="./index.html">
+← Log Out
+</a>
+
+</div>
 
 </aside>
 
+
+<!-- MAIN -->
+
 <main class="main">
+
+<!-- MOBILE HEADER -->
 
 <div class="mobile-header">
 
-  <div class="logo">
-    Coin<span>Bridge</span>
-  </div>
+<div class="logo">
+Coin<span>Bridge</span>
+</div>
 
-  <button class="menu-button" onclick="toggleMenu()">☰</button>
+<button
+class="menu-button"
+onclick="toggleMenu()"
+>
+☰
+</button>
 
 </div>
 
-<div class="mobile-menu" id="mobileMenu">
 
-  <a href="./dashboard.html">🏠 Dashboard</a>
-  <a href="./portfolio.html">💼 Portfolio</a>
-  <a href="./wallet.html">💰 Wallet</a>
-  <a href="./transactions.html">📊 Transactions</a>
-  <a href="./markets.html">📈 Markets</a>
-  <a href="./settings.html">⚙️ Settings</a>
-  <a href="./security.html">🔐 Security</a>
-  <a href="./index.html">← Log Out</a>
+<div
+class="mobile-menu"
+id="mobileMenu"
+>
+
+<a href="./dashboard.html">
+🏠 Dashboard
+</a>
+
+<a href="./portfolio.html">
+💼 Portfolio
+</a>
+
+<a href="./wallet.html">
+💰 Wallet
+</a>
+
+<a href="./transactions.html">
+📊 Transactions
+</a>
+
+<a href="./markets.html">
+📈 Markets
+</a>
+
+<a href="./settings.html">
+⚙️ Settings
+</a>
+
+<a href="./security.html">
+🔐 Security
+</a>
+
+<a href="./index.html">
+← Log Out
+</a>
 
 </div>
+
+
+<!-- TOPBAR -->
 
 <div class="topbar">
 
-  <div class="welcome">
+<div class="welcome">
 
-    <h1>Markets</h1>
+<h1>
+Markets
+</h1>
 
-    <p>
-      Explore digital asset prices and market movements.
-    </p>
-
-  </div>
-
-  <div class="profile">
-
-    <div class="avatar">U</div>
-
-    <div>
-
-      <div class="profile-name">
-        CoinBridge User
-      </div>
-
-      <div class="profile-status">
-        ● Account Active
-      </div>
-
-    </div>
-
-  </div>
+<p>
+Explore digital asset prices and market movements.
+</p>
 
 </div>
+
+
+<div class="profile">
+
+<div class="avatar">
+U
+</div>
+
+<div>
+
+<div class="profile-name">
+CoinBridge User
+</div>
+
+<div class="profile-status">
+● Account Active
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SEARCH -->
 
 <div class="market-toolbar">
 
-  <div class="search-box">
+<div class="search-box">
 
-    <span class="search-icon">🔍</span>
+<span class="search-icon">
+🔍
+</span>
 
-    <input
-      id="marketSearch"
-      type="text"
-      placeholder="Search Bitcoin, Ethereum..."
-      oninput="searchMarkets()"
-    >
-
-  </div>
-
-  <div class="market-status">
-    ● <span>Market updates active</span>
-  </div>
+<input
+id="marketSearch"
+type="text"
+placeholder="Search Bitcoin, Ethereum..."
+oninput="searchMarkets()"
+>
 
 </div>
 
+<div class="market-status">
+
+●
+<span>
+Market updates active
+</span>
+
+</div>
+
+</div>
+
+
+<!-- MARKET CARDS -->
+
 <section class="market-cards">
 
+
+<!-- BTC -->
+
 <div
-  class="market-card selected"
-  data-coin="BTC"
-  onclick="selectCoin('BTC')"
+class="market-card selected"
+data-coin="BTC"
+onclick="selectCoin('BTC')"
 >
 
 <div class="market-card-top">
 
 <div class="coin-info">
 
-<div class="coin-icon">₿</div>
+<div class="coin-icon">
+₿
+</div>
 
 <div>
 
@@ -833,16 +957,18 @@ BTC
 </div>
 
 <button
-  class="watch-button"
-  data-watch="BTC"
-  onclick="toggleWatch(event,'BTC')"
->☆</button>
+class="watch-button"
+data-watch="BTC"
+onclick="toggleWatch(event,'BTC')"
+>
+☆
+</button>
 
 </div>
 
 <div
-  class="market-price"
-  id="cardPriceBTC"
+class="market-price"
+id="cardPriceBTC"
 >
 $67,420.20
 </div>
@@ -854,17 +980,21 @@ $67,420.20
 </div>
 
 
+<!-- ETH -->
+
 <div
-  class="market-card"
-  data-coin="ETH"
-  onclick="selectCoin('ETH')"
+class="market-card"
+data-coin="ETH"
+onclick="selectCoin('ETH')"
 >
 
 <div class="market-card-top">
 
 <div class="coin-info">
 
-<div class="coin-icon">Ξ</div>
+<div class="coin-icon">
+Ξ
+</div>
 
 <div>
 
@@ -881,16 +1011,18 @@ ETH
 </div>
 
 <button
-  class="watch-button"
-  data-watch="ETH"
-  onclick="toggleWatch(event,'ETH')"
->☆</button>
+class="watch-button"
+data-watch="ETH"
+onclick="toggleWatch(event,'ETH')"
+>
+☆
+</button>
 
 </div>
 
 <div
-  class="market-price"
-  id="cardPriceETH"
+class="market-price"
+id="cardPriceETH"
 >
 $3,210.70
 </div>
@@ -902,17 +1034,21 @@ $3,210.70
 </div>
 
 
+<!-- USDC -->
+
 <div
-  class="market-card"
-  data-coin="USDC"
-  onclick="selectCoin('USDC')"
+class="market-card"
+data-coin="USDC"
+onclick="selectCoin('USDC')"
 >
 
 <div class="market-card-top">
 
 <div class="coin-info">
 
-<div class="coin-icon">$</div>
+<div class="coin-icon">
+$
+</div>
 
 <div>
 
@@ -929,16 +1065,18 @@ USDC
 </div>
 
 <button
-  class="watch-button"
-  data-watch="USDC"
-  onclick="toggleWatch(event,'USDC')"
->☆</button>
+class="watch-button"
+data-watch="USDC"
+onclick="toggleWatch(event,'USDC')"
+>
+☆
+</button>
 
 </div>
 
 <div
-  class="market-price"
-  id="cardPriceUSDC"
+class="market-price"
+id="cardPriceUSDC"
 >
 $1.0000
 </div>
@@ -952,17 +1090,21 @@ $1.0000
 </section>
 
 
+<!-- CHART -->
+
 <section class="chart-panel">
+
 
 <div class="chart-header">
 
 <div class="chart-title-row">
 
+
 <div class="selected-coin">
 
 <div
-  class="selected-icon"
-  id="selectedIcon"
+class="selected-icon"
+id="selectedIcon"
 >
 ₿
 </div>
@@ -970,15 +1112,15 @@ $1.0000
 <div>
 
 <div
-  class="selected-name"
-  id="selectedName"
+class="selected-name"
+id="selectedName"
 >
 Bitcoin
 </div>
 
 <div
-  class="selected-symbol"
-  id="selectedSymbol"
+class="selected-symbol"
+id="selectedSymbol"
 >
 BTC / USD
 </div>
@@ -987,18 +1129,19 @@ BTC / USD
 
 </div>
 
+
 <div>
 
 <div
-  class="selected-price"
-  id="selectedPrice"
+class="selected-price"
+id="selectedPrice"
 >
 $67,420.20
 </div>
 
 <div
-  class="selected-change positive"
-  id="selectedChange"
+class="selected-change positive"
+id="selectedChange"
 >
 +4.82% today
 </div>
@@ -1007,32 +1150,33 @@ $67,420.20
 
 </div>
 
+
 <div class="timeframes">
 
 <button
-  class="timeframe active"
-  onclick="setTimeframe(this,'1H')"
+class="timeframe active"
+onclick="setTimeframe(this,'1H')"
 >
 1H
 </button>
 
 <button
-  class="timeframe"
-  onclick="setTimeframe(this,'4H')"
+class="timeframe"
+onclick="setTimeframe(this,'4H')"
 >
 4H
 </button>
 
 <button
-  class="timeframe"
-  onclick="setTimeframe(this,'1D')"
+class="timeframe"
+onclick="setTimeframe(this,'1D')"
 >
 1D
 </button>
 
 <button
-  class="timeframe"
-  onclick="setTimeframe(this,'1W')"
+class="timeframe"
+onclick="setTimeframe(this,'1W')"
 >
 1W
 </button>
@@ -1042,12 +1186,17 @@ $67,420.20
 </div>
 
 
+<!-- CHART AREA -->
+
 <div
-  class="chart-area"
-  id="chartArea"
+class="chart-area"
+id="chartArea"
 >
 
-<canvas id="marketChart"></canvas>
+<canvas
+id="marketChart"
+></canvas>
+
 
 <div class="chart-overlay">
 
@@ -1061,6 +1210,7 @@ $68,210
 
 </div>
 
+
 <div class="chart-stat">
 
 24H Low
@@ -1070,6 +1220,7 @@ $64,890
 </strong>
 
 </div>
+
 
 <div class="chart-stat">
 
@@ -1086,12 +1237,14 @@ Volume
 </div>
 
 
+<!-- ORDER PANEL -->
+
 <div class="order-panel">
 
 <div class="order-header">
 
 <h3>
-Market Overview
+Market Order
 </h3>
 
 <span id="marketClock">
@@ -1100,13 +1253,18 @@ Updating
 
 </div>
 
+
 <div class="order-grid">
+
+
+<!-- BUY -->
 
 <div class="order-box">
 
 <h4>
 Buy
 </h4>
+
 
 <div class="order-row">
 
@@ -1120,45 +1278,56 @@ BTC
 
 </div>
 
+
 <div class="order-row">
 
 <span>
-Price
+Market Price
 </span>
 
-<strong id="buyPrice">
+<strong id="buyMarketPrice">
 $67,420.20
 </strong>
 
 </div>
 
+
 <div class="order-row">
 
 <span>
-Available
+Your Price
 </span>
 
-<strong>
-$12,480.50
-</strong>
+<input
+id="buyPriceInput"
+class="price-input"
+type="number"
+step="0.0001"
+min="0"
+value="67420.20"
+>
 
 </div>
 
+
 <button
-  class="buy-button"
-  onclick="submitMarketOrder('Buy')"
+class="buy-button"
+onclick="submitMarketOrder('Buy')"
 >
-Buy Asset
+Submit Buy Order
 </button>
 
 </div>
 
+
+<!-- SELL -->
 
 <div class="order-box">
 
 <h4>
 Sell
 </h4>
+
 
 <div class="order-row">
 
@@ -1172,35 +1341,43 @@ BTC
 
 </div>
 
+
 <div class="order-row">
 
 <span>
-Price
+Market Price
 </span>
 
-<strong id="sellPrice">
+<strong id="sellMarketPrice">
 $67,420.20
 </strong>
 
 </div>
 
+
 <div class="order-row">
 
 <span>
-Holding
+Your Price
 </span>
 
-<strong>
-0.110 BTC
-</strong>
+<input
+id="sellPriceInput"
+class="price-input"
+type="number"
+step="0.0001"
+min="0"
+value="67420.20"
+>
 
 </div>
 
+
 <button
-  class="sell-button"
-  onclick="submitMarketOrder('Sell')"
+class="sell-button"
+onclick="submitMarketOrder('Sell')"
 >
-Sell Asset
+Submit Sell Order
 </button>
 
 </div>
@@ -1211,6 +1388,8 @@ Sell Asset
 
 </section>
 
+
+<!-- MARKET TABLE -->
 
 <section class="table-panel">
 
@@ -1225,6 +1404,7 @@ Current asset prices and market performance.
 </p>
 
 </div>
+
 
 <div class="table-wrap">
 
@@ -1258,7 +1438,9 @@ Watch
 
 </thead>
 
+
 <tbody>
+
 
 <tr>
 
@@ -1301,9 +1483,9 @@ $64,890 — $68,210
 <td>
 
 <button
-  class="mini-watch"
-  data-mini-watch="BTC"
-  onclick="toggleMiniWatch('BTC')"
+class="mini-watch"
+data-mini-watch="BTC"
+onclick="toggleMiniWatch('BTC')"
 >
 ☆
 </button>
@@ -1354,9 +1536,9 @@ $3,080 — $3,280
 <td>
 
 <button
-  class="mini-watch"
-  data-mini-watch="ETH"
-  onclick="toggleMiniWatch('ETH')"
+class="mini-watch"
+data-mini-watch="ETH"
+onclick="toggleMiniWatch('ETH')"
 >
 ☆
 </button>
@@ -1407,9 +1589,9 @@ $0.998 — $1.002
 <td>
 
 <button
-  class="mini-watch"
-  data-mini-watch="USDC"
-  onclick="toggleMiniWatch('USDC')"
+class="mini-watch"
+data-mini-watch="USDC"
+onclick="toggleMiniWatch('USDC')"
 >
 ☆
 </button>
@@ -1433,7 +1615,11 @@ $0.998 — $1.002
 
 <script>
 
-const coins = {
+/* ================================
+   COIN DATA
+================================ */
+
+const coins={
 
 BTC:{
 name:"Bitcoin",
@@ -1461,7 +1647,6 @@ USDC:{
 name:"USD Coin",
 symbol:"USDC / USD",
 short:"USDC",
-icon:"$",
 price:1,
 change:0.02,
 base:1,
@@ -1470,12 +1655,10 @@ volume:"684M"
 
 };
 
+
 let selectedCoin="BTC";
-
 let candles=[];
-
 let dragStartX=null;
-
 let dragOffset=0;
 
 
@@ -1490,17 +1673,17 @@ document
 }
 
 
-/* FORMAT */
+/* PRICE FORMAT */
 
-function formatPrice(value){
+function formatCoinPrice(value,symbol){
 
-if(selectedCoin==="USDC"){
+if(symbol==="USDC"){
 
-return "$"+value.toFixed(4);
+return "$"+Number(value).toFixed(4);
 
 }
 
-return "$"+value.toLocaleString(
+return "$"+Number(value).toLocaleString(
 "en-US",
 {
 minimumFractionDigits:2,
@@ -1511,20 +1694,11 @@ maximumFractionDigits:2
 }
 
 
-function formatCoinPrice(value,symbol){
+function formatPrice(value){
 
-if(symbol==="USDC"){
-
-return "$"+value.toFixed(4);
-
-}
-
-return "$"+value.toLocaleString(
-"en-US",
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
+return formatCoinPrice(
+value,
+selectedCoin
 );
 
 }
@@ -1549,8 +1723,7 @@ coin.base*
 
 const open=price;
 
-const close=
-Math.max(
+const close=Math.max(
 coin.base*0.86,
 Math.min(
 coin.base*1.07,
@@ -1567,15 +1740,16 @@ Math.min(open,close)-
 Math.random()*coin.base*0.006;
 
 candles.push({
-open,
-high,
-low,
-close
+open:open,
+high:high,
+low:low,
+close:close
 });
 
 price=close;
 
 }
+
 
 const finalClose=
 candles[candles.length-1].close;
@@ -1597,7 +1771,7 @@ dragOffset=0;
 }
 
 
-/* DRAW */
+/* CHART */
 
 function drawChart(){
 
@@ -1607,7 +1781,9 @@ document.getElementById("marketChart");
 const area=
 document.getElementById("chartArea");
 
-if(!canvas||!area||!candles.length)return;
+if(!canvas||!area||!candles.length){
+return;
+}
 
 const rect=
 area.getBoundingClientRect();
@@ -1615,14 +1791,10 @@ area.getBoundingClientRect();
 const dpr=
 window.devicePixelRatio||1;
 
-canvas.width=
-rect.width*dpr;
+canvas.width=rect.width*dpr;
+canvas.height=rect.height*dpr;
 
-canvas.height=
-rect.height*dpr;
-
-const ctx=
-canvas.getContext("2d");
+const ctx=canvas.getContext("2d");
 
 ctx.setTransform(
 dpr,
@@ -1634,7 +1806,6 @@ dpr,
 );
 
 const width=rect.width;
-
 const height=rect.height;
 
 ctx.clearRect(
@@ -1663,8 +1834,7 @@ let end=
 candles.length-
 Math.round(dragOffset);
 
-end=
-Math.max(
+end=Math.max(
 visibleCount,
 Math.min(
 candles.length,
@@ -1672,8 +1842,7 @@ end
 )
 );
 
-const start=
-Math.max(
+const start=Math.max(
 0,
 end-visibleCount
 );
@@ -1684,18 +1853,18 @@ start,
 end
 );
 
-if(!visible.length)return;
+if(!visible.length){
+return;
+}
 
 
 /* RANGE */
 
-let minPrice=
-Math.min(
+let minPrice=Math.min(
 ...visible.map(c=>c.low)
 );
 
-let maxPrice=
-Math.max(
+let maxPrice=Math.max(
 ...visible.map(c=>c.high)
 );
 
@@ -1703,7 +1872,6 @@ const padding=
 (maxPrice-minPrice)*0.12;
 
 minPrice-=padding;
-
 maxPrice+=padding;
 
 
@@ -1723,22 +1891,20 @@ const y=
 ctx.beginPath();
 
 ctx.moveTo(0,y);
-
 ctx.lineTo(width,y);
 
 ctx.stroke();
 
 }
 
+
 for(let i=0;i<=10;i++){
 
-const x=
-(width/10)*i;
+const x=(width/10)*i;
 
 ctx.beginPath();
 
 ctx.moveTo(x,0);
-
 ctx.lineTo(x,height);
 
 ctx.stroke();
@@ -1749,7 +1915,6 @@ ctx.stroke();
 /* PRICE LABELS */
 
 ctx.fillStyle="#607489";
-
 ctx.font="10px Arial";
 
 for(let i=0;i<=6;i++){
@@ -1786,10 +1951,9 @@ candleSpace*.58
 );
 
 
-/* CANDLES */
+/* DRAW CANDLES */
 
-visible.forEach(
-(candle,index)=>{
+visible.forEach((candle,index)=>{
 
 const x=
 index*candleSpace+
@@ -1838,30 +2002,18 @@ rising?"#34d399":"#fb7185";
 
 ctx.beginPath();
 
-ctx.moveTo(
-x,
-highY
-);
-
-ctx.lineTo(
-x,
-lowY
-);
+ctx.moveTo(x,highY);
+ctx.lineTo(x,lowY);
 
 ctx.stroke();
 
 const bodyTop=
-Math.min(
-openY,
-closeY
-);
+Math.min(openY,closeY);
 
 const bodyHeight=
 Math.max(
 1,
-Math.abs(
-closeY-openY
-)
+Math.abs(closeY-openY)
 );
 
 ctx.fillRect(
@@ -1871,11 +2023,10 @@ candleWidth,
 bodyHeight
 );
 
-}
-);
+});
 
 
-/* CURRENT PRICE */
+/* CURRENT PRICE LINE */
 
 const current=
 coins[selectedCoin].price;
@@ -1888,24 +2039,15 @@ maxPrice,
 height
 );
 
-ctx.setLineDash(
-[5,5]
-);
+ctx.setLineDash([5,5]);
 
 ctx.strokeStyle=
 "rgba(34,211,238,.65)";
 
 ctx.beginPath();
 
-ctx.moveTo(
-0,
-currentY
-);
-
-ctx.lineTo(
-width-75,
-currentY
-);
+ctx.moveTo(0,currentY);
+ctx.lineTo(width-75,currentY);
 
 ctx.stroke();
 
@@ -1933,23 +2075,24 @@ currentY+3
 }
 
 
+/* CHART PRICE */
+
 function formatChartPrice(price){
 
 if(selectedCoin==="USDC"){
 
-return "$"+price.toFixed(4);
+return "$"+Number(price).toFixed(4);
 
 }
 
 if(price>=1000){
 
 return "$"+
-Math.round(price)
-.toLocaleString();
+Math.round(price).toLocaleString();
 
 }
 
-return "$"+price.toFixed(2);
+return "$"+Number(price).toFixed(2);
 
 }
 
@@ -1968,7 +2111,7 @@ return 25+
 }
 
 
-/* SELECT */
+/* SELECT COIN */
 
 function selectCoin(symbol){
 
@@ -1994,89 +2137,103 @@ drawChart();
 }
 
 
+/* UPDATE SELECTED COIN */
+
 function updateSelectedCoin(){
 
-const coin=
-coins[selectedCoin];
+const coin=coins[selectedCoin];
 
-document
-.getElementById("selectedIcon")
-.textContent=
-coin.icon;
+document.getElementById(
+"selectedIcon"
+).textContent=coin.icon;
 
-document
-.getElementById("selectedName")
-.textContent=
-coin.name;
+document.getElementById(
+"selectedName"
+).textContent=coin.name;
 
-document
-.getElementById("selectedSymbol")
-.textContent=
-coin.symbol;
+document.getElementById(
+"selectedSymbol"
+).textContent=coin.symbol;
 
-document
-.getElementById("selectedPrice")
-.textContent=
+document.getElementById(
+"selectedPrice"
+).textContent=
 formatPrice(coin.price);
 
-document
-.getElementById("selectedChange")
-.textContent=
+document.getElementById(
+"selectedChange"
+).textContent=
 "+"+
 coin.change.toFixed(2)+
 "% today";
 
-document
-.getElementById("buyAsset")
-.textContent=
-coin.short;
 
-document
-.getElementById("sellAsset")
-.textContent=
-coin.short;
+document.getElementById(
+"buyAsset"
+).textContent=coin.short;
 
-document
-.getElementById("buyPrice")
-.textContent=
+document.getElementById(
+"sellAsset"
+).textContent=coin.short;
+
+
+document.getElementById(
+"buyMarketPrice"
+).textContent=
 formatPrice(coin.price);
 
-document
-.getElementById("sellPrice")
-.textContent=
+document.getElementById(
+"sellMarketPrice"
+).textContent=
 formatPrice(coin.price);
 
-document
-.getElementById("highValue")
-.textContent=
-formatPrice(
-coin.price*1.011
-);
 
-document
-.getElementById("lowValue")
-.textContent=
-formatPrice(
-coin.price*.962
-);
+/*
+ Keep customer price editable,
+ but update it automatically
+ when switching to another coin.
+*/
 
-document
-.getElementById("volumeValue")
-.textContent=
+const buyInput=
+document.getElementById("buyPriceInput");
+
+const sellInput=
+document.getElementById("sellPriceInput");
+
+if(buyInput){
+buyInput.value=coin.price;
+}
+
+if(sellInput){
+sellInput.value=coin.price;
+}
+
+
+document.getElementById(
+"highValue"
+).textContent=
+formatPrice(coin.price*1.011);
+
+document.getElementById(
+"lowValue"
+).textContent=
+formatPrice(coin.price*.962);
+
+document.getElementById(
+"volumeValue"
+).textContent=
 coin.volume;
 
 }
 
 
-/* MARKET */
+/* MARKET MOVEMENT */
 
 function updateMarket(){
 
-Object.keys(coins).forEach(
-symbol=>{
+Object.keys(coins).forEach(symbol=>{
 
-const coin=
-coins[symbol];
+const coin=coins[symbol];
 
 if(symbol==="USDC"){
 
@@ -2097,16 +2254,17 @@ updateCoinDisplays(symbol);
 
 });
 
+
 updateSelectedCoin();
 
 drawChart();
 
-document
-.getElementById("marketClock")
-.textContent=
+
+document.getElementById(
+"marketClock"
+).textContent=
 "Updated "+
-new Date()
-.toLocaleTimeString(
+new Date().toLocaleTimeString(
 [],
 {
 hour:"2-digit",
@@ -2118,10 +2276,11 @@ second:"2-digit"
 }
 
 
+/* UPDATE CARD/TABLE */
+
 function updateCoinDisplays(symbol){
 
-const coin=
-coins[symbol];
+const coin=coins[symbol];
 
 const card=
 document.getElementById(
@@ -2158,19 +2317,13 @@ symbol
 
 /* TIMEFRAME */
 
-function setTimeframe(
-button,
-value
-){
+function setTimeframe(button,value){
 
 document
 .querySelectorAll(".timeframe")
-.forEach(
-item=>
-item.classList.remove(
-"active"
-)
-);
+.forEach(item=>{
+item.classList.remove("active");
+});
 
 button.classList.add("active");
 
@@ -2186,9 +2339,9 @@ drawChart();
 function searchMarkets(){
 
 const query=
-document
-.getElementById("marketSearch")
-.value
+document.getElementById(
+"marketSearch"
+).value
 .toLowerCase()
 .trim();
 
@@ -2197,8 +2350,7 @@ document
 .forEach(card=>{
 
 const text=
-card.textContent
-.toLowerCase();
+card.textContent.toLowerCase();
 
 card.classList.toggle(
 "hidden",
@@ -2212,10 +2364,7 @@ card.classList.toggle(
 
 /* WATCHLIST */
 
-function toggleWatch(
-event,
-symbol
-){
+function toggleWatch(event,symbol){
 
 event.stopPropagation();
 
@@ -2245,9 +2394,7 @@ button.classList.toggle(
 );
 
 button.textContent=
-button.classList.contains(
-"active"
-)
+button.classList.contains("active")
 ?"★"
 :"☆";
 
@@ -2256,31 +2403,58 @@ button.classList.contains(
 }
 
 
-/* ==========================================
-   PENDING BUY / SELL ORDER
-   ========================================== */
+/* =========================================
+   CUSTOMER MARKET ORDER
+========================================= */
 
 function submitMarketOrder(action){
 
-const coin=
-coins[selectedCoin];
+const coin=coins[selectedCoin];
 
-/*
-  Create a unique order ID.
-*/
+let inputId="";
+
+if(action==="Buy"){
+
+inputId="buyPriceInput";
+
+}else{
+
+inputId="sellPriceInput";
+
+}
+
+
+const input=
+document.getElementById(inputId);
+
+const customerPrice=
+Number(input.value);
+
+
+/* PRICE VALIDATION */
+
+if(!Number.isFinite(customerPrice)||customerPrice<=0){
+
+alert(
+"Please enter a valid price."
+);
+
+input.focus();
+
+return;
+
+}
+
+
+/* UNIQUE ORDER ID */
 
 const orderId=
-"ORD-"+Date.now();
+"ORD-"+Date.now()+"-"+Math.floor(
+Math.random()*1000
+);
 
-/*
-  This is the customer order.
 
-  IMPORTANT:
-  The order is NOT completed here.
-
-  It stays Pending until your Admin page
-  approves or rejects it.
-*/
+/* ORDER OBJECT */
 
 const order={
 
@@ -2292,7 +2466,9 @@ asset:coin.short,
 
 assetName:coin.name,
 
-price:Number(
+price:customerPrice,
+
+marketPrice:Number(
 coin.price.toFixed(
 coin.short==="USDC"?4:2
 )
@@ -2309,56 +2485,44 @@ adminNote:""
 };
 
 
-/*
-  Get existing pending orders.
-*/
+/* PENDING ORDERS */
 
-let existingOrders=[];
+let pendingOrders=[];
 
 try{
 
-existingOrders=
+pendingOrders=
 JSON.parse(
 localStorage.getItem(
 "coinbridge_pending_orders"
 )||"[]"
 );
 
-if(!Array.isArray(existingOrders)){
+if(!Array.isArray(pendingOrders)){
 
-existingOrders=[];
+pendingOrders=[];
 
 }
 
 }catch(error){
 
-existingOrders=[];
+pendingOrders=[];
 
 }
 
 
-/*
-  Add the new request.
-*/
+pendingOrders.push(order);
 
-existingOrders.push(order);
-
-
-/*
-  Save it for the Admin page.
-*/
 
 localStorage.setItem(
 "coinbridge_pending_orders",
 JSON.stringify(
-existingOrders
+pendingOrders
 )
 );
 
 
-/*
-  Also keep a general order history.
-*/
+/* GENERAL HISTORY */
 
 let history=[];
 
@@ -2383,7 +2547,9 @@ history=[];
 
 }
 
+
 history.push(order);
+
 
 localStorage.setItem(
 "coinbridge_order_history",
@@ -2391,37 +2557,40 @@ JSON.stringify(history)
 );
 
 
-/*
-  Professional confirmation.
-*/
+/* CONFIRMATION */
 
 alert(
-
 "Order submitted successfully\n\n"+
 "Order ID: "+orderId+"\n"+
 action+" "+coin.name+"\n"+
-"Price: "+formatPrice(coin.price)+"\n"+
+"Your Price: "+formatCoinPrice(
+customerPrice,
+coin.short
+)+"\n"+
+"Market Price: "+formatCoinPrice(
+coin.price,
+coin.short
+)+"\n"+
 "Status: PENDING\n\n"+
-"Your request has been sent to the admin for approval."
-
+"Your order has been sent to the admin for approval."
 );
 
 }
 
 
-/* DRAG CHART */
+/* =========================================
+   CHART DRAG
+========================================= */
 
 const chartArea=
-document.getElementById(
-"chartArea"
-);
+document.getElementById("chartArea");
+
 
 chartArea.addEventListener(
 "pointerdown",
 event=>{
 
-dragStartX=
-event.clientX;
+dragStartX=event.clientX;
 
 chartArea.setPointerCapture(
 event.pointerId
@@ -2435,16 +2604,16 @@ chartArea.addEventListener(
 "pointermove",
 event=>{
 
-if(dragStartX===null)return;
+if(dragStartX===null){
+return;
+}
 
 const movement=
 event.clientX-dragStartX;
 
 dragOffset-=
 movement*
-(window.innerWidth<700?
-.25:
-.45);
+(window.innerWidth<700?.25:.45);
 
 const maxOffset=
 Math.max(
@@ -2461,8 +2630,7 @@ dragOffset
 )
 );
 
-dragStartX=
-event.clientX;
+dragStartX=event.clientX;
 
 drawChart();
 
@@ -2473,9 +2641,7 @@ drawChart();
 chartArea.addEventListener(
 "pointerup",
 ()=>{
-
 dragStartX=null;
-
 }
 );
 
@@ -2483,9 +2649,7 @@ dragStartX=null;
 chartArea.addEventListener(
 "pointercancel",
 ()=>{
-
 dragStartX=null;
-
 }
 );
 
@@ -2497,9 +2661,7 @@ createCandles();
 updateSelectedCoin();
 
 updateCoinDisplays("BTC");
-
 updateCoinDisplays("ETH");
-
 updateCoinDisplays("USDC");
 
 drawChart();

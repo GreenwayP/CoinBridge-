@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Markets | CoinBridge</title>
 
   <style>
+
     * {
       margin: 0;
       padding: 0;
@@ -23,6 +25,11 @@
     a {
       text-decoration: none;
       color: inherit;
+    }
+
+    button,
+    input {
+      font-family: inherit;
     }
 
     .layout {
@@ -115,16 +122,23 @@
       display: none;
     }
 
+    .mobile-menu {
+      display: none;
+    }
+
+    /* TOPBAR */
+
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 28px;
+      gap: 20px;
     }
 
     .welcome h1 {
-      font-size: 27px;
-      margin-bottom: 5px;
+      font-size: 28px;
+      margin-bottom: 6px;
     }
 
     .welcome p {
@@ -157,37 +171,99 @@
     .profile-status {
       color: #34d399;
       font-size: 11px;
+      margin-top: 3px;
+    }
+
+    /* MARKET SUMMARY */
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .summary-card {
+      background: #091522;
+      border: 1px solid #1d3448;
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .summary-label {
+      color: #718096;
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+
+    .summary-value {
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .summary-change {
+      color: #34d399;
+      font-size: 10px;
+      margin-top: 6px;
     }
 
     /* SEARCH */
 
+    .market-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
     .search-box {
-      margin-bottom: 22px;
+      flex: 1;
+      position: relative;
     }
 
     .search-box input {
       width: 100%;
-      max-width: 500px;
       padding: 13px 15px;
       background: #091522;
       border: 1px solid #1d3448;
       border-radius: 9px;
       color: #ffffff;
       outline: none;
-      font-size: 13px;
     }
 
     .search-box input:focus {
       border-color: #22d3ee;
     }
 
-    /* PANEL */
+    .search-box input::placeholder {
+      color: #617488;
+    }
+
+    .refresh-button {
+      border: 1px solid #1d3448;
+      background: #091522;
+      color: #22d3ee;
+      border-radius: 9px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .refresh-button:hover {
+      border-color: #22d3ee;
+      background: rgba(34,211,238,0.08);
+    }
+
+    /* MARKET TABLE */
 
     .panel {
       background: #091522;
       border: 1px solid #1d3448;
       border-radius: 15px;
       padding: 24px;
+      margin-bottom: 20px;
     }
 
     .panel-header {
@@ -202,46 +278,39 @@
       font-size: 18px;
     }
 
-    .market-note {
+    .panel-header p {
       color: #718096;
-      font-size: 11px;
+      font-size: 12px;
+      margin-top: 5px;
     }
 
-    /* TABLE */
-
-    .table-wrapper {
-      overflow-x: auto;
-    }
-
-    table {
+    .market-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 700px;
     }
 
-    th {
+    .market-table th {
+      color: #617488;
+      font-size: 10px;
       text-align: left;
-      color: #718096;
-      font-size: 11px;
-      font-weight: normal;
-      padding: 12px;
-      border-bottom: 1px solid #1b3042;
+      padding: 12px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
 
-    td {
-      padding: 17px 12px;
+    .market-table td {
+      padding: 16px 8px;
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      font-size: 13px;
+      font-size: 12px;
     }
 
-    tr:last-child td {
+    .market-table tr:last-child td {
       border-bottom: none;
     }
 
     .coin-info {
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 10px;
     }
 
     .coin-icon {
@@ -252,69 +321,254 @@
       display: grid;
       place-items: center;
       color: #22d3ee;
-      font-weight: bold;
       font-size: 17px;
+      font-weight: bold;
     }
 
     .coin-name {
       font-weight: bold;
     }
 
-    .coin-code {
+    .coin-symbol {
       color: #6f8295;
-      font-size: 10px;
+      font-size: 9px;
       margin-top: 3px;
-    }
-
-    .price {
-      font-weight: bold;
     }
 
     .positive {
       color: #34d399;
-      font-weight: bold;
     }
 
     .negative {
-      color: #ff7b8a;
+      color: #fb7185;
+    }
+
+    .star-button {
+      border: none;
+      background: none;
+      color: #617488;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .star-button.active {
+      color: #facc15;
+    }
+
+    .view-button {
+      border: 1px solid #1d3448;
+      background: #07111d;
+      color: #22d3ee;
+      padding: 7px 11px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 10px;
+    }
+
+    .view-button:hover {
+      border-color: #22d3ee;
+    }
+
+    /* MARKET DETAIL */
+
+    .detail-box {
+      display: none;
+      background: #07111d;
+      border: 1px solid #294052;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 18px;
+    }
+
+    .detail-box.show {
+      display: block;
+    }
+
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .detail-title {
+      font-size: 18px;
       font-weight: bold;
     }
 
-    .watch {
-      padding: 7px 11px;
-      border-radius: 7px;
-      background: #0b1b2a;
+    .close-detail {
       border: 1px solid #294052;
-      color: #8798ab;
-      font-size: 11px;
+      background: transparent;
+      color: #ffffff;
+      border-radius: 7px;
+      padding: 6px 10px;
       cursor: pointer;
     }
 
-    .watch:hover {
-      border-color: #22d3ee;
-      color: #22d3ee;
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
     }
 
-    .watch.watching {
-      border-color: #34d399;
+    .detail-item {
+      background: #091522;
+      border: 1px solid #1d3448;
+      border-radius: 9px;
+      padding: 14px;
+    }
+
+    .detail-label {
+      color: #718096;
+      font-size: 9px;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    /* CHAT */
+
+    .chat-button {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      width: 55px;
+      height: 55px;
+      border: none;
+      border-radius: 50%;
+      background: #22d3ee;
+      color: #031018;
+      font-size: 22px;
+      cursor: pointer;
+      z-index: 700;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+    }
+
+    .chat-panel {
+      display: none;
+      position: fixed;
+      right: 25px;
+      bottom: 90px;
+      width: 320px;
+      background: #091522;
+      border: 1px solid #294052;
+      border-radius: 15px;
+      overflow: hidden;
+      z-index: 700;
+    }
+
+    .chat-panel.show {
+      display: block;
+    }
+
+    .chat-header {
+      background: #07111d;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header strong {
+      font-size: 13px;
+    }
+
+    .chat-header span {
       color: #34d399;
-      background: rgba(52,211,153,0.08);
+      font-size: 9px;
+    }
+
+    .chat-close {
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .chat-body {
+      padding: 15px;
+      height: 220px;
+      overflow-y: auto;
+    }
+
+    .chat-message {
+      background: #132b3d;
+      border-radius: 9px;
+      padding: 10px;
+      font-size: 11px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .chat-message.user {
+      background: rgba(34,211,238,0.10);
+      text-align: right;
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 7px;
+      padding: 12px;
+      border-top: 1px solid #1d3448;
+    }
+
+    .chat-input {
+      flex: 1;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid #294052;
+      background: #07111d;
+      color: #ffffff;
+      border-radius: 7px;
+      outline: none;
+      font-size: 11px;
+    }
+
+    .chat-send {
+      border: none;
+      background: #22d3ee;
+      color: #031018;
+      border-radius: 7px;
+      padding: 0 12px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     /* NOTICE */
 
     .notice {
-      margin-top: 20px;
       padding: 14px;
       border-radius: 10px;
       background: rgba(34,211,238,0.05);
       border: 1px solid rgba(34,211,238,0.16);
       color: #8798ab;
-      font-size: 12px;
+      font-size: 11px;
       text-align: center;
+      margin-bottom: 20px;
     }
 
-    /* MOBILE */
+    /* RESPONSIVE */
+
+    @media (max-width: 1050px) {
+
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .market-table th:nth-child(5),
+      .market-table td:nth-child(5) {
+        display: none;
+      }
+
+    }
 
     @media (max-width: 700px) {
 
@@ -332,7 +586,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 25px;
+        margin-bottom: 18px;
       }
 
       .mobile-header .logo {
@@ -348,18 +602,14 @@
         cursor: pointer;
       }
 
-      .mobile-menu {
-        display: none;
+      .mobile-menu.open {
+        display: flex;
+        flex-direction: column;
         background: #07111d;
         border: 1px solid #1b3042;
         border-radius: 12px;
         padding: 10px;
         margin-bottom: 20px;
-      }
-
-      .mobile-menu.open {
-        display: flex;
-        flex-direction: column;
       }
 
       .mobile-menu a {
@@ -370,7 +620,7 @@
       }
 
       .mobile-menu a:hover {
-        background: rgba(34, 211, 238, 0.09);
+        background: rgba(34,211,238,0.09);
         color: #22d3ee;
       }
 
@@ -378,16 +628,51 @@
         display: none;
       }
 
-      .panel {
-        padding: 18px;
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .panel-header {
-        align-items: flex-start;
+      .market-toolbar {
         flex-direction: column;
+        align-items: stretch;
       }
+
+      .market-table th:nth-child(3),
+      .market-table td:nth-child(3),
+      .market-table th:nth-child(5),
+      .market-table td:nth-child(5) {
+        display: none;
+      }
+
+      .market-table th,
+      .market-table td {
+        padding: 12px 5px;
+      }
+
+      .panel {
+        padding: 16px;
+        overflow-x: auto;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .chat-panel {
+        right: 15px;
+        left: 15px;
+        width: auto;
+      }
+
+      .chat-button {
+        right: 18px;
+        bottom: 18px;
+      }
+
     }
+
   </style>
+
 </head>
 
 <body>
@@ -436,11 +721,11 @@
 
       <nav class="nav">
 
-        <a href="#">
+        <a href="./settings.html">
           ⚙️ Settings
         </a>
 
-        <a href="#">
+        <a href="./security.html">
           🔐 Security
         </a>
 
@@ -461,36 +746,62 @@
 
     <main class="main">
 
+      <!-- MOBILE HEADER -->
+
       <div class="mobile-header">
 
         <div class="logo">
           Coin<span>Bridge</span>
         </div>
 
-        <button class="menu-button" onclick="toggleMenu()">
+        <button
+          class="menu-button"
+          onclick="toggleMenu()"
+        >
           ☰
         </button>
 
       </div>
 
 
-      <div class="mobile-menu" id="mobileMenu">
+      <!-- MOBILE MENU -->
 
-        <a href="./dashboard.html">🏠 Dashboard</a>
+      <div
+        class="mobile-menu"
+        id="mobileMenu"
+      >
 
-        <a href="./portfolio.html">💼 Portfolio</a>
+        <a href="./dashboard.html">
+          🏠 Dashboard
+        </a>
 
-        <a href="./wallet.html">💰 Wallet</a>
+        <a href="./portfolio.html">
+          💼 Portfolio
+        </a>
 
-        <a href="./transactions.html">📊 Transactions</a>
+        <a href="./wallet.html">
+          💰 Wallet
+        </a>
 
-        <a href="./markets.html">📈 Markets</a>
+        <a href="./transactions.html">
+          📊 Transactions
+        </a>
 
-        <a href="#">⚙️ Settings</a>
+        <a href="./markets.html">
+          📈 Markets
+        </a>
 
-        <a href="#">🔐 Security</a>
+        <a href="./settings.html">
+          ⚙️ Settings
+        </a>
 
-        <a href="./index.html">← Log Out</a>
+        <a href="./security.html">
+          🔐 Security
+        </a>
+
+        <a href="./index.html">
+          ← Log Out
+        </a>
 
       </div>
 
@@ -501,14 +812,15 @@
 
         <div class="welcome">
 
-          <h1>Markets</h1>
+          <h1>
+            Markets
+          </h1>
 
           <p>
-            Explore digital assets and monitor market activity.
+            Explore digital asset prices and market activity.
           </p>
 
         </div>
-
 
         <div class="profile">
 
@@ -523,7 +835,7 @@
             </div>
 
             <div class="profile-status">
-              ● Demo Account
+              ● Account Active
             </div>
 
           </div>
@@ -533,16 +845,101 @@
       </div>
 
 
+      <!-- MARKET SUMMARY -->
+
+      <section class="summary-grid">
+
+        <div class="summary-card">
+
+          <div class="summary-label">
+            Global Market Cap
+          </div>
+
+          <div class="summary-value">
+            $2.41T
+          </div>
+
+          <div class="summary-change">
+            ▲ +2.84% today
+          </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+          <div class="summary-label">
+            24h Trading Volume
+          </div>
+
+          <div class="summary-value">
+            $98.42B
+          </div>
+
+          <div class="summary-change">
+            ▲ +6.12%
+          </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+          <div class="summary-label">
+            Bitcoin Dominance
+          </div>
+
+          <div class="summary-value">
+            59.45%
+          </div>
+
+          <div class="summary-change">
+            ▲ +0.42%
+          </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+          <div class="summary-label">
+            Active Assets
+          </div>
+
+          <div class="summary-value">
+            3
+          </div>
+
+          <div class="summary-change">
+            Markets available
+          </div>
+
+        </div>
+
+      </section>
+
+
       <!-- SEARCH -->
 
-      <div class="search-box">
+      <div class="market-toolbar">
 
-        <input
-          type="text"
-          id="marketSearch"
-          placeholder="Search assets..."
-          onkeyup="searchMarkets()"
+        <div class="search-box">
+
+          <input
+            type="text"
+            id="marketSearch"
+            placeholder="Search assets by name or symbol..."
+            oninput="searchMarkets()"
+          >
+
+        </div>
+
+        <button
+          class="refresh-button"
+          onclick="refreshMarkets()"
         >
+          ↻ Refresh Markets
+        </button>
 
       </div>
 
@@ -553,341 +950,387 @@
 
         <div class="panel-header">
 
-          <h2>Market Overview</h2>
+          <div>
 
-          <span class="market-note">
-            Demo market data
-          </span>
+            <h2>
+              Cryptocurrency Markets
+            </h2>
+
+            <p>
+              Current market overview and asset performance.
+            </p>
+
+          </div>
 
         </div>
 
 
-        <div class="table-wrapper">
+        <table class="market-table">
 
-          <table>
+          <thead>
 
-            <thead>
+            <tr>
 
-              <tr>
+              <th>
+                Asset
+              </th>
 
-                <th>Asset</th>
-                <th>Price</th>
-                <th>24h Change</th>
-                <th>Market Cap</th>
-                <th>Volume</th>
-                <th></th>
+              <th>
+                Price
+              </th>
 
-              </tr>
+              <th>
+                24H Change
+              </th>
 
-            </thead>
+              <th>
+                Market Cap
+              </th>
+
+              <th>
+                24H Volume
+              </th>
+
+              <th>
+                Watch
+              </th>
+
+              <th>
+                Details
+              </th>
+
+            </tr>
+
+          </thead>
 
 
-            <tbody id="marketTable">
+          <tbody id="marketBody">
 
+            <tr
+              data-name="Bitcoin"
+              data-symbol="BTC"
+            >
 
-              <!-- BITCOIN -->
+              <td>
 
-              <tr>
+                <div class="coin-info">
 
-                <td>
+                  <div class="coin-icon">
+                    ₿
+                  </div>
 
-                  <div class="coin-info">
+                  <div>
 
-                    <div class="coin-icon">
-                      ₿
+                    <div class="coin-name">
+                      Bitcoin
                     </div>
 
-                    <div>
-
-                      <div class="coin-name">
-                        Bitcoin
-                      </div>
-
-                      <div class="coin-code">
-                        BTC
-                      </div>
-
+                    <div class="coin-symbol">
+                      BTC
                     </div>
 
                   </div>
 
-                </td>
+                </div>
 
-                <td class="price">
-                  $67,420.20
-                </td>
+              </td>
 
-                <td class="positive">
-                  +4.82%
-                </td>
+              <td>
+                $67,420.20
+              </td>
 
-                <td>
-                  $1.33T
-                </td>
+              <td class="positive">
+                +4.82%
+              </td>
 
-                <td>
-                  $28.4B
-                </td>
+              <td>
+                $1.34T
+              </td>
 
-                <td>
+              <td>
+                $38.21B
+              </td>
 
-                  <button
-                    class="watch"
-                    onclick="toggleWatch(this)"
-                  >
-                    ☆ Watch
-                  </button>
+              <td>
 
-                </td>
+                <button
+                  class="star-button"
+                  onclick="toggleWatch(this)"
+                >
+                  ☆
+                </button>
 
-              </tr>
+              </td>
+
+              <td>
+
+                <button
+                  class="view-button"
+                  onclick="viewMarket('Bitcoin','BTC','$67,420.20','+4.82%','$1.34T','$38.21B')"
+                >
+                  View
+                </button>
+
+              </td>
+
+            </tr>
 
 
-              <!-- ETHEREUM -->
+            <tr
+              data-name="Ethereum"
+              data-symbol="ETH"
+            >
 
-              <tr>
+              <td>
 
-                <td>
+                <div class="coin-info">
 
-                  <div class="coin-info">
+                  <div class="coin-icon">
+                    Ξ
+                  </div>
 
-                    <div class="coin-icon">
-                      Ξ
+                  <div>
+
+                    <div class="coin-name">
+                      Ethereum
                     </div>
 
-                    <div>
-
-                      <div class="coin-name">
-                        Ethereum
-                      </div>
-
-                      <div class="coin-code">
-                        ETH
-                      </div>
-
+                    <div class="coin-symbol">
+                      ETH
                     </div>
 
                   </div>
 
-                </td>
+                </div>
 
-                <td class="price">
-                  $3,210.70
-                </td>
+              </td>
 
-                <td class="positive">
-                  +3.17%
-                </td>
+              <td>
+                $3,210.70
+              </td>
 
-                <td>
-                  $386B
-                </td>
+              <td class="positive">
+                +3.17%
+              </td>
 
-                <td>
-                  $14.7B
-                </td>
+              <td>
+                $386.4B
+              </td>
 
-                <td>
+              <td>
+                $19.74B
+              </td>
 
-                  <button
-                    class="watch"
-                    onclick="toggleWatch(this)"
-                  >
-                    ☆ Watch
-                  </button>
+              <td>
 
-                </td>
+                <button
+                  class="star-button"
+                  onclick="toggleWatch(this)"
+                >
+                  ☆
+                </button>
 
-              </tr>
+              </td>
+
+              <td>
+
+                <button
+                  class="view-button"
+                  onclick="viewMarket('Ethereum','ETH','$3,210.70','+3.17%','$386.4B','$19.74B')"
+                >
+                  View
+                </button>
+
+              </td>
+
+            </tr>
 
 
-              <!-- USDC -->
+            <tr
+              data-name="USD Coin"
+              data-symbol="USDC"
+            >
 
-              <tr>
+              <td>
 
-                <td>
+                <div class="coin-info">
 
-                  <div class="coin-info">
+                  <div class="coin-icon">
+                    $
+                  </div>
 
-                    <div class="coin-icon">
-                      $
+                  <div>
+
+                    <div class="coin-name">
+                      USD Coin
                     </div>
 
-                    <div>
-
-                      <div class="coin-name">
-                        USD Coin
-                      </div>
-
-                      <div class="coin-code">
-                        USDC
-                      </div>
-
+                    <div class="coin-symbol">
+                      USDC
                     </div>
 
                   </div>
 
-                </td>
+                </div>
 
-                <td class="price">
-                  $1.00
-                </td>
+              </td>
 
-                <td class="positive">
-                  +0.02%
-                </td>
+              <td>
+                $1.00
+              </td>
 
-                <td>
-                  $34.2B
-                </td>
+              <td class="positive">
+                +0.02%
+              </td>
 
-                <td>
-                  $6.8B
-                </td>
+              <td>
+                $32.8B
+              </td>
 
-                <td>
+              <td>
+                $7.42B
+              </td>
 
-                  <button
-                    class="watch"
-                    onclick="toggleWatch(this)"
-                  >
-                    ☆ Watch
-                  </button>
+              <td>
 
-                </td>
+                <button
+                  class="star-button"
+                  onclick="toggleWatch(this)"
+                >
+                  ☆
+                </button>
 
-              </tr>
+              </td>
 
+              <td>
 
-              <!-- SOLANA -->
+                <button
+                  class="view-button"
+                  onclick="viewMarket('USD Coin','USDC','$1.00','+0.02%','$32.8B','$7.42B')"
+                >
+                  View
+                </button>
 
-              <tr>
+              </td>
 
-                <td>
+            </tr>
 
-                  <div class="coin-info">
+          </tbody>
 
-                    <div class="coin-icon">
-                      ◎
-                    </div>
-
-                    <div>
-
-                      <div class="coin-name">
-                        Solana
-                      </div>
-
-                      <div class="coin-code">
-                        SOL
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </td>
-
-                <td class="price">
-                  $182.45
-                </td>
-
-                <td class="positive">
-                  +5.26%
-                </td>
-
-                <td>
-                  $85.1B
-                </td>
-
-                <td>
-                  $3.9B
-                </td>
-
-                <td>
-
-                  <button
-                    class="watch"
-                    onclick="toggleWatch(this)"
-                  >
-                    ☆ Watch
-                  </button>
-
-                </td>
-
-              </tr>
+        </table>
 
 
-              <!-- BNB -->
+        <!-- MARKET DETAILS -->
 
-              <tr>
+        <div
+          class="detail-box"
+          id="detailBox"
+        >
 
-                <td>
+          <div class="detail-header">
 
-                  <div class="coin-info">
+            <div class="detail-title">
+              <span id="detailName">
+                Bitcoin
+              </span>
+              <span
+                id="detailSymbol"
+                style="color:#22d3ee;"
+              >
+                BTC
+              </span>
+            </div>
 
-                    <div class="coin-icon">
-                      ◇
-                    </div>
+            <button
+              class="close-detail"
+              onclick="closeDetails()"
+            >
+              Close
+            </button>
 
-                    <div>
-
-                      <div class="coin-name">
-                        BNB
-                      </div>
-
-                      <div class="coin-code">
-                        BNB
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </td>
-
-                <td class="price">
-                  $612.80
-                </td>
-
-                <td class="negative">
-                  -1.24%
-                </td>
-
-                <td>
-                  $91.7B
-                </td>
-
-                <td>
-                  $1.5B
-                </td>
-
-                <td>
-
-                  <button
-                    class="watch"
-                    onclick="toggleWatch(this)"
-                  >
-                    ☆ Watch
-                  </button>
-
-                </td>
-
-              </tr>
+          </div>
 
 
-            </tbody>
+          <div class="detail-grid">
 
-          </table>
+            <div class="detail-item">
+
+              <div class="detail-label">
+                Current Price
+              </div>
+
+              <div
+                class="detail-value"
+                id="detailPrice"
+              >
+                —
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-label">
+                24H Change
+              </div>
+
+              <div
+                class="detail-value positive"
+                id="detailChange"
+              >
+                —
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-label">
+                Market Cap
+              </div>
+
+              <div
+                class="detail-value"
+                id="detailCap"
+              >
+                —
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-label">
+                24H Volume
+              </div>
+
+              <div
+                class="detail-value"
+                id="detailVolume"
+              >
+                —
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
       </section>
 
 
+      <!-- NOTICE -->
+
       <div class="notice">
 
-        ⚠️ Demo Markets — prices, market caps and volumes
-        shown here are sample data and are not live market data.
+        Market prices and statistics displayed on this page
+        are illustrative data for the CoinBridge platform.
+        Live market feeds can be connected when the backend
+        infrastructure is ready.
 
       </div>
 
@@ -896,9 +1339,90 @@
   </div>
 
 
-  <script>
+  <!-- CHAT BUTTON -->
 
-    /* MOBILE MENU */
+  <button
+    class="chat-button"
+    onclick="toggleChat()"
+    aria-label="Open support chat"
+  >
+    💬
+  </button>
+
+
+  <!-- CHAT PANEL -->
+
+  <div
+    class="chat-panel"
+    id="chatPanel"
+  >
+
+    <div class="chat-header">
+
+      <div>
+
+        <strong>
+          CoinBridge Support
+        </strong>
+
+        <br>
+
+        <span>
+          ● Online
+        </span>
+
+      </div>
+
+      <button
+        class="chat-close"
+        onclick="toggleChat()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      class="chat-body"
+      id="chatBody"
+    >
+
+      <div class="chat-message">
+
+        Hello! Welcome to CoinBridge Support.
+        How can we help you today?
+
+      </div>
+
+    </div>
+
+
+    <div class="chat-input-area">
+
+      <input
+        type="text"
+        id="chatInput"
+        class="chat-input"
+        placeholder="Type a message..."
+        onkeydown="handleChatKey(event)"
+      >
+
+      <button
+        class="chat-send"
+        onclick="sendChat()"
+      >
+        Send
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
 
     function toggleMenu() {
 
@@ -910,46 +1434,49 @@
     }
 
 
-    /* WATCH BUTTON */
-
     function toggleWatch(button) {
 
-      if (button.classList.contains("watching")) {
+      button.classList.toggle("active");
 
-        button.classList.remove("watching");
+      if (button.classList.contains("active")) {
 
-        button.textContent = "☆ Watch";
+        button.textContent = "★";
 
       } else {
 
-        button.classList.add("watching");
-
-        button.textContent = "★ Watching";
+        button.textContent = "☆";
 
       }
 
     }
 
 
-    /* SEARCH */
-
     function searchMarkets() {
 
-      const input =
-        document.getElementById("marketSearch");
-
-      const filter =
-        input.value.toLowerCase();
+      const search =
+        document
+          .getElementById("marketSearch")
+          .value
+          .toLowerCase()
+          .trim();
 
       const rows =
-        document.querySelectorAll("#marketTable tr");
+        document.querySelectorAll(
+          "#marketBody tr"
+        );
 
-      rows.forEach(row => {
+      rows.forEach(function(row) {
 
-        const text =
-          row.textContent.toLowerCase();
+        const name =
+          row.dataset.name.toLowerCase();
 
-        if (text.includes(filter)) {
+        const symbol =
+          row.dataset.symbol.toLowerCase();
+
+        if (
+          name.includes(search) ||
+          symbol.includes(search)
+        ) {
 
           row.style.display = "";
 
@@ -963,7 +1490,147 @@
 
     }
 
+
+    function refreshMarkets() {
+
+      alert(
+        "Market information refreshed successfully."
+      );
+
+    }
+
+
+    function viewMarket(
+      name,
+      symbol,
+      price,
+      change,
+      cap,
+      volume
+    ) {
+
+      document.getElementById(
+        "detailName"
+      ).textContent = name;
+
+      document.getElementById(
+        "detailSymbol"
+      ).textContent = symbol;
+
+      document.getElementById(
+        "detailPrice"
+      ).textContent = price;
+
+      document.getElementById(
+        "detailChange"
+      ).textContent = change;
+
+      document.getElementById(
+        "detailCap"
+      ).textContent = cap;
+
+      document.getElementById(
+        "detailVolume"
+      ).textContent = volume;
+
+      document
+        .getElementById("detailBox")
+        .classList.add("show");
+
+      document
+        .getElementById("detailBox")
+        .scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+
+    }
+
+
+    function closeDetails() {
+
+      document
+        .getElementById("detailBox")
+        .classList.remove("show");
+
+    }
+
+
+    function toggleChat() {
+
+      document
+        .getElementById("chatPanel")
+        .classList.toggle("show");
+
+    }
+
+
+    function handleChatKey(event) {
+
+      if (event.key === "Enter") {
+
+        sendChat();
+
+      }
+
+    }
+
+
+    function sendChat() {
+
+      const input =
+        document.getElementById("chatInput");
+
+      const message =
+        input.value.trim();
+
+      if (!message) {
+
+        return;
+
+      }
+
+
+      const body =
+        document.getElementById("chatBody");
+
+
+      const userMessage =
+        document.createElement("div");
+
+      userMessage.className =
+        "chat-message user";
+
+      userMessage.textContent =
+        message;
+
+      body.appendChild(userMessage);
+
+
+      input.value = "";
+
+
+      setTimeout(function() {
+
+        const reply =
+          document.createElement("div");
+
+        reply.className =
+          "chat-message";
+
+        reply.textContent =
+          "Thanks for contacting CoinBridge Support. Your message has been received. Live support connectivity can be added when the backend is connected.";
+
+        body.appendChild(reply);
+
+        body.scrollTop =
+          body.scrollHeight;
+
+      }, 500);
+
+    }
+
   </script>
 
 </body>
-        </html>
+</html>

@@ -25,10 +25,18 @@
       color: inherit;
     }
 
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
     .layout {
       display: flex;
       min-height: 100vh;
     }
+
+    /* SIDEBAR */
 
     .sidebar {
       width: 245px;
@@ -39,6 +47,7 @@
       top: 0;
       bottom: 0;
       left: 0;
+      z-index: 100;
     }
 
     .logo {
@@ -95,6 +104,13 @@
       border-radius: 9px;
     }
 
+    .logout a:hover {
+      background: rgba(255,255,255,0.04);
+      color: #ffffff;
+    }
+
+    /* MAIN */
+
     .main {
       margin-left: 245px;
       width: calc(100% - 245px);
@@ -105,16 +121,20 @@
       display: none;
     }
 
+    .mobile-menu {
+      display: none;
+    }
+
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
     .welcome h1 {
-      font-size: 27px;
-      margin-bottom: 5px;
+      font-size: 28px;
+      margin-bottom: 6px;
     }
 
     .welcome p {
@@ -147,146 +167,255 @@
     .profile-status {
       color: #34d399;
       font-size: 11px;
+      margin-top: 3px;
     }
+
+    /* BALANCE */
 
     .balance-card {
       background: linear-gradient(135deg, #0c2230, #091522);
       border: 1px solid #1d3448;
       border-radius: 16px;
-      padding: 30px;
+      padding: 28px;
       margin-bottom: 22px;
     }
 
     .label {
       color: #8798ab;
-      font-size: 13px;
+      font-size: 12px;
       margin-bottom: 9px;
     }
 
     .balance {
-      font-size: 40px;
+      font-size: 38px;
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .positive {
       color: #34d399;
-      font-size: 13px;
     }
+
+    .small-text {
+      color: #718096;
+      font-size: 11px;
+    }
+
+    /* ACTIONS */
 
     .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
-    }
-
-    .action {
-      padding: 12px 20px;
-      border-radius: 8px;
-      background: #22d3ee;
-      color: #041018;
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .action.secondary {
-      background: #0b1b2a;
-      color: #ffffff;
-      border: 1px solid #294052;
-    }
-
-    .grid {
       display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin-bottom: 24px;
     }
+
+    .action-button {
+      border: 1px solid #1d3448;
+      background: #091522;
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 18px 12px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .action-button:hover {
+      border-color: #22d3ee;
+      background: #0b1b2a;
+    }
+
+    .action-icon {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .action-title {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .action-description {
+      display: block;
+      color: #718096;
+      font-size: 9px;
+      margin-top: 5px;
+    }
+
+    /* PANELS */
 
     .panel {
       background: #091522;
       border: 1px solid #1d3448;
       border-radius: 15px;
       padding: 24px;
-    }
-
-    .panel h2 {
-      font-size: 18px;
       margin-bottom: 20px;
     }
 
-    .wallet-item {
+    .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 0;
+      margin-bottom: 20px;
+      gap: 15px;
+    }
+
+    .panel-header h2 {
+      font-size: 18px;
+    }
+
+    .panel-header p {
+      color: #718096;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    /* ASSETS */
+
+    .asset {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      align-items: center;
+      gap: 15px;
+      padding: 17px 0;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .wallet-item:last-child {
+    .asset:last-child {
       border-bottom: none;
     }
 
-    .wallet-left {
+    .asset-left {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
     .coin {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       background: #132b3d;
       display: grid;
       place-items: center;
       color: #22d3ee;
       font-weight: bold;
+      font-size: 18px;
     }
 
     .asset-name {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
     }
 
     .asset-code {
       color: #6f8295;
-      font-size: 11px;
+      font-size: 10px;
       margin-top: 3px;
     }
 
-    .wallet-value {
+    .asset-label {
+      color: #6f8295;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    .asset-value {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .asset-change {
+      font-size: 11px;
+    }
+
+    /* TRANSACTIONS */
+
+    .transaction {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .transaction:last-child {
+      border-bottom: none;
+    }
+
+    .transaction-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .transaction-icon {
+      width: 37px;
+      height: 37px;
+      border-radius: 50%;
+      background: #132b3d;
+      display: grid;
+      place-items: center;
+    }
+
+    .transaction-title {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .transaction-date {
+      color: #718096;
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    .transaction-amount {
+      font-size: 12px;
+      font-weight: bold;
       text-align: right;
     }
 
-    .wallet-value strong {
-      display: block;
-      font-size: 13px;
+    .transaction-status {
+      color: #34d399;
+      font-size: 9px;
+      margin-top: 4px;
+      text-align: right;
     }
 
-    .wallet-value span {
-      color: #8798ab;
-      font-size: 11px;
+    /* ALLOCATION */
+
+    .allocation-item {
+      margin-bottom: 17px;
     }
 
-    .address-box {
-      background: #07111d;
-      border: 1px solid #263c4e;
-      border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 12px;
-      overflow-wrap: anywhere;
-    }
-
-    .address-label {
-      color: #718096;
-      font-size: 11px;
+    .allocation-top {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 7px;
+      font-size: 11px;
     }
 
-    .address {
-      color: #d8e0e8;
-      font-size: 12px;
+    .allocation-top span:first-child {
+      color: #8798ab;
     }
+
+    .bar {
+      height: 7px;
+      background: #132335;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: #22d3ee;
+      border-radius: 10px;
+    }
+
+    /* NOTICE */
 
     .notice {
       margin-top: 20px;
@@ -298,8 +427,122 @@
       font-size: 12px;
       text-align: center;
     }
+/* SECONDARY BUTTON */
 
-    @media (max-width: 900px) {
+.secondary-button {
+  border: 1px solid #1d3448;
+  background: #07111d;
+  color: #22d3ee;
+  border-radius: 8px;
+  padding: 9px 14px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.secondary-button:hover {
+  border-color: #22d3ee;
+  background: rgba(34, 211, 238, 0.08);
+}
+    /* MODAL */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 460px;
+      background: #091522;
+      border: 1px solid #294052;
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 19px;
+    }
+
+    .close-button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #294052;
+      background: #07111d;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #8798ab;
+      font-size: 11px;
+      margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      background: #07111d;
+      border: 1px solid #294052;
+      border-radius: 8px;
+      color: #ffffff;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #22d3ee;
+    }
+
+    .modal-submit {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #22d3ee;
+      color: #031018;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .modal-note {
+      color: #718096;
+      font-size: 10px;
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 950px) {
+
       .sidebar {
         width: 210px;
       }
@@ -309,12 +552,21 @@
         width: calc(100% - 210px);
       }
 
-      .grid {
-        grid-template-columns: 1fr;
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .asset {
+        grid-template-columns: 2fr 1fr 1fr;
+      }
+
+      .asset-change {
+        display: none;
       }
     }
 
     @media (max-width: 700px) {
+
       .sidebar {
         display: none;
       }
@@ -329,7 +581,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 25px;
+        margin-bottom: 18px;
       }
 
       .mobile-header .logo {
@@ -337,12 +589,62 @@
         margin: 0;
       }
 
+      .menu-button {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 25px;
+        cursor: pointer;
+      }
+
+      .mobile-menu.open {
+        display: flex;
+        flex-direction: column;
+        background: #07111d;
+        border: 1px solid #1b3042;
+        border-radius: 12px;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      .mobile-menu a {
+        color: #91a1b4;
+        padding: 13px;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+
+      .mobile-menu a:hover {
+        background: rgba(34,211,238,0.09);
+        color: #22d3ee;
+      }
+
       .topbar .profile {
         display: none;
       }
 
       .balance {
-        font-size: 33px;
+        font-size: 30px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .asset {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .asset-left {
+        grid-column: span 2;
+      }
+
+      .transaction {
+        align-items: flex-start;
       }
     }
   </style>
@@ -351,6 +653,8 @@
 <body>
 
   <div class="layout">
+
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
@@ -364,23 +668,23 @@
 
       <nav class="nav">
 
-        <a href="dashboard.html">
+        <a href="./dashboard.html">
           🏠 Dashboard
         </a>
 
-        <a href="portfolio.html">
+        <a href="./portfolio.html">
           💼 Portfolio
         </a>
 
-        <a href="wallet.html" class="active">
+        <a href="./wallet.html" class="active">
           💰 Wallet
         </a>
 
-        <a href="#">
+        <a href="./transactions.html">
           📊 Transactions
         </a>
 
-        <a href="#">
+        <a href="./markets.html">
           📈 Markets
         </a>
 
@@ -392,26 +696,32 @@
 
       <nav class="nav">
 
-        <a href="#">
+        <a href="./settings.html">
           ⚙️ Settings
         </a>
 
-        <a href="#">
+        <a href="./security.html">
           🔐 Security
         </a>
 
       </nav>
 
       <div class="logout">
-        <a href="index.html">
+
+        <a href="./index.html">
           ← Log Out
         </a>
+
       </div>
 
     </aside>
 
 
+    <!-- MAIN -->
+
     <main class="main">
+
+      <!-- MOBILE HEADER -->
 
       <div class="mobile-header">
 
@@ -419,21 +729,70 @@
           Coin<span>Bridge</span>
         </div>
 
-        <div>
+        <button
+          class="menu-button"
+          onclick="toggleMenu()"
+        >
           ☰
-        </div>
+        </button>
 
       </div>
 
+
+      <!-- MOBILE MENU -->
+
+      <div
+        class="mobile-menu"
+        id="mobileMenu"
+      >
+
+        <a href="./dashboard.html">
+          🏠 Dashboard
+        </a>
+
+        <a href="./portfolio.html">
+          💼 Portfolio
+        </a>
+
+        <a href="./wallet.html">
+          💰 Wallet
+        </a>
+
+        <a href="./transactions.html">
+          📊 Transactions
+        </a>
+
+        <a href="./markets.html">
+          📈 Markets
+        </a>
+
+        <a href="./settings.html">
+          ⚙️ Settings
+        </a>
+
+        <a href="./security.html">
+          🔐 Security
+        </a>
+
+        <a href="./index.html">
+          ← Log Out
+        </a>
+
+      </div>
+
+
+      <!-- TOPBAR -->
 
       <div class="topbar">
 
         <div class="welcome">
 
-          <h1>Wallet</h1>
+          <h1>
+            Wallet
+          </h1>
 
           <p>
-            Manage your digital asset wallets in one place.
+            Manage your demo digital assets and wallet activity.
           </p>
 
         </div>
@@ -461,6 +820,8 @@
       </div>
 
 
+      <!-- BALANCE -->
+
       <section class="balance-card">
 
         <div class="label">
@@ -475,140 +836,455 @@
           ▲ +$582.40 today (+4.82%)
         </div>
 
+        <div class="small-text" style="margin-top: 10px;">
+          Available demo balance
+        </div>
+
       </section>
 
 
-      <div class="actions">
+      <!-- ACTIONS -->
 
-        <a href="#" class="action">
-          + Deposit
-        </a>
+      <section class="actions">
 
-        <a href="#" class="action secondary">
-          ↑ Send
-        </a>
+        <button
+          class="action-button"
+          onclick="openWalletModal('Deposit')"
+        >
 
-        <a href="#" class="action secondary">
-          ↓ Withdraw
-        </a>
+          <span class="action-icon">
+            📥
+          </span>
 
-      </div>
+          <span class="action-title">
+            Deposit
+          </span>
+
+          <span class="action-description">
+            Add demo funds
+          </span>
+
+        </button>
 
 
-      <section class="grid">
+        <button
+          class="action-button"
+          onclick="openWalletModal('Send')"
+        >
+
+          <span class="action-icon">
+            📤
+          </span>
+
+          <span class="action-title">
+            Send
+          </span>
+
+          <span class="action-description">
+            Send demo assets
+          </span>
+
+        </button>
 
 
-        <div class="panel">
+        <button
+          class="action-button"
+          onclick="openWalletModal('Receive')"
+        >
 
-          <h2>Your Wallets</h2>
+          <span class="action-icon">
+            📋
+          </span>
+
+          <span class="action-title">
+            Receive
+          </span>
+
+          <span class="action-description">
+            View demo address
+          </span>
+
+        </button>
 
 
-          <div class="wallet-item">
+        <button
+          class="action-button"
+          onclick="openWalletModal('Swap')"
+        >
 
-            <div class="wallet-left">
+          <span class="action-icon">
+            🔄
+          </span>
 
-              <div class="coin">
-                ₿
-              </div>
+          <span class="action-title">
+            Swap
+          </span>
 
-              <div>
+          <span class="action-description">
+            Exchange demo assets
+          </span>
 
-                <div class="asset-name">
-                  Bitcoin
-                </div>
+        </button>
 
-                <div class="asset-code">
-                  BTC
-                </div>
+      </section>
 
-              </div>
 
+      <!-- ASSETS -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Wallet Assets
+            </h2>
+
+            <p>
+              Your current demo wallet holdings.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- BITCOIN -->
+
+        <div class="asset">
+
+          <div class="asset-left">
+
+            <div class="coin">
+              ₿
             </div>
 
-            <div class="wallet-value">
+            <div>
 
-              <strong>
-                0.10845 BTC
-              </strong>
+              <div class="asset-name">
+                Bitcoin
+              </div>
 
-              <span>
-                $7,420.20
-              </span>
+              <div class="asset-code">
+                BTC
+              </div>
 
             </div>
 
           </div>
 
 
-          <div class="wallet-item">
+          <div>
 
-            <div class="wallet-left">
-
-              <div class="coin">
-                Ξ
-              </div>
-
-              <div>
-
-                <div class="asset-name">
-                  Ethereum
-                </div>
-
-                <div class="asset-code">
-                  ETH
-                </div>
-
-              </div>
-
+            <div class="asset-label">
+              Balance
             </div>
 
-            <div class="wallet-value">
+            <div class="asset-value">
+              0.110 BTC
+            </div>
 
-              <strong>
-                0.9388 ETH
-              </strong>
+          </div>
 
-              <span>
-                $3,210.70
-              </span>
+
+          <div>
+
+            <div class="asset-label">
+              Value
+            </div>
+
+            <div class="asset-value">
+              $7,420.20
+            </div>
+
+          </div>
+
+
+          <div class="asset-change positive">
+            +4.82%
+          </div>
+
+        </div>
+
+
+        <!-- ETHEREUM -->
+
+        <div class="asset">
+
+          <div class="asset-left">
+
+            <div class="coin">
+              Ξ
+            </div>
+
+            <div>
+
+              <div class="asset-name">
+                Ethereum
+              </div>
+
+              <div class="asset-code">
+                ETH
+              </div>
 
             </div>
 
           </div>
 
 
-          <div class="wallet-item">
+          <div>
 
-            <div class="wallet-left">
+            <div class="asset-label">
+              Balance
+            </div>
 
-              <div class="coin">
-                $
+            <div class="asset-value">
+              1.000 ETH
+            </div>
+
+          </div>
+
+
+          <div>
+
+            <div class="asset-label">
+              Value
+            </div>
+
+            <div class="asset-value">
+              $3,210.70
+            </div>
+
+          </div>
+
+
+          <div class="asset-change positive">
+            +3.17%
+          </div>
+
+        </div>
+
+
+        <!-- USDC -->
+
+        <div class="asset">
+
+          <div class="asset-left">
+
+            <div class="coin">
+              $
+            </div>
+
+            <div>
+
+              <div class="asset-name">
+                USD Coin
               </div>
 
-              <div>
-
-                <div class="asset-name">
-                  USD Coin
-                </div>
-
-                <div class="asset-code">
-                  USDC
-                </div>
-
+              <div class="asset-code">
+                USDC
               </div>
 
             </div>
 
-            <div class="wallet-value">
+          </div>
 
-              <strong>
-                1,849.60 USDC
-              </strong>
 
-              <span>
-                $1,849.60
-              </span>
+          <div>
 
+            <div class="asset-label">
+              Balance
+            </div>
+
+            <div class="asset-value">
+              1,849.60 USDC
+            </div>
+
+          </div>
+
+
+          <div>
+
+            <div class="asset-label">
+              Value
+            </div>
+
+            <div class="asset-value">
+              $1,849.60
+            </div>
+
+          </div>
+
+
+          <div class="asset-change positive">
+            +0.02%
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ALLOCATION -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Wallet Allocation
+            </h2>
+
+            <p>
+              Distribution of your demo wallet balance.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="allocation-item">
+
+          <div class="allocation-top">
+
+            <span>
+              Bitcoin
+            </span>
+
+            <span>
+              59.45%
+            </span>
+
+          </div>
+
+          <div class="bar">
+
+            <div
+              class="bar-fill"
+              style="width: 59.45%;"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="allocation-item">
+
+          <div class="allocation-top">
+
+            <span>
+              Ethereum
+            </span>
+
+            <span>
+              25.72%
+            </span>
+
+          </div>
+
+          <div class="bar">
+
+            <div
+              class="bar-fill"
+              style="width: 25.72%;"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="allocation-item">
+
+          <div class="allocation-top">
+
+            <span>
+              USD Coin
+            </span>
+
+            <span>
+              14.83%
+            </span>
+
+          </div>
+
+          <div class="bar">
+
+            <div
+              class="bar-fill"
+              style="width: 14.83%;"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- RECENT TRANSACTIONS -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Recent Wallet Activity
+            </h2>
+
+            <p>
+              Recent demo wallet transactions.
+            </p>
+
+          </div>
+
+          <button
+            class="secondary-button"
+            onclick="openTransactions()"
+          >
+            View All
+          </button>
+
+        </div>
+
+
+        <div class="transaction">
+
+          <div class="transaction-left">
+
+            <div class="transaction-icon">
+              📥
+            </div>
+
+            <div>
+
+              <div class="transaction-title">
+                Deposit
+              </div>
+
+              <div class="transaction-date">
+                Today • Bitcoin
+              </div>
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <div class="transaction-amount positive">
+              +$2,000.00
+            </div>
+
+            <div class="transaction-status">
+              Completed
             </div>
 
           </div>
@@ -616,45 +1292,73 @@
         </div>
 
 
-        <div class="panel">
+        <div class="transaction">
 
-          <h2>Wallet Addresses</h2>
+          <div class="transaction-left">
 
-
-          <div class="address-box">
-
-            <div class="address-label">
-              Bitcoin Address
+            <div class="transaction-icon">
+              🔄
             </div>
 
-            <div class="address">
-              DemoBTCAddress123456789
-            </div>
+            <div>
 
-          </div>
+              <div class="transaction-title">
+                Swap
+              </div>
 
+              <div class="transaction-date">
+                Yesterday • ETH → USDC
+              </div>
 
-          <div class="address-box">
-
-            <div class="address-label">
-              Ethereum Address
-            </div>
-
-            <div class="address">
-              0xDemoEthereumAddress123
             </div>
 
           </div>
 
+          <div>
 
-          <div class="address-box">
-
-            <div class="address-label">
-              USDC Address
+            <div class="transaction-amount">
+              $850.00
             </div>
 
-            <div class="address">
-              DemoUSDCAddress987654321
+            <div class="transaction-status">
+              Completed
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="transaction">
+
+          <div class="transaction-left">
+
+            <div class="transaction-icon">
+              📤
+            </div>
+
+            <div>
+
+              <div class="transaction-title">
+                Send
+              </div>
+
+              <div class="transaction-date">
+                Aug 10 • USDC
+              </div>
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <div class="transaction-amount">
+              -$300.00
+            </div>
+
+            <div class="transaction-status">
+              Completed
             </div>
 
           </div>
@@ -663,12 +1367,14 @@
 
       </section>
 
+
+      <!-- NOTICE -->
 
       <div class="notice">
 
-        ⚠️ Demo Wallet — all balances and wallet addresses shown
-        here are sample data. No real funds or transactions are
-        connected to this wallet.
+        ⚠️ Demo Wallet — balances, transactions and wallet
+        actions shown here are sample data. No real funds,
+        deposits, withdrawals or transfers are being processed.
 
       </div>
 
@@ -676,5 +1382,214 @@
 
   </div>
 
+
+  <!-- WALLET ACTION MODAL -->
+
+  <div
+    class="modal"
+    id="walletModal"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <h2 id="modalTitle">
+          Deposit
+        </h2>
+
+        <button
+          class="close-button"
+          onclick="closeWalletModal()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div id="modalContent">
+
+        <div class="form-group">
+
+          <label>
+            Asset
+          </label>
+
+          <select id="assetSelect">
+
+            <option value="BTC">
+              Bitcoin (BTC)
+            </option>
+
+            <option value="ETH">
+              Ethereum (ETH)
+            </option>
+
+            <option value="USDC">
+              USD Coin (USDC)
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Amount
+          </label>
+
+          <input
+            type="number"
+            id="amountInput"
+            placeholder="Enter demo amount"
+          >
+
+        </div>
+
+
+        <button
+          class="modal-submit"
+          onclick="submitWalletAction()"
+        >
+          Continue
+        </button>
+
+        <div class="modal-note">
+          Demo mode only. This action does not move real
+          cryptocurrency or connect to a real blockchain.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    let currentAction = "";
+
+
+    function toggleMenu() {
+
+      const menu =
+        document.getElementById("mobileMenu");
+
+      menu.classList.toggle("open");
+
+    }
+
+
+    function openWalletModal(action) {
+
+      currentAction = action;
+
+      document.getElementById(
+        "modalTitle"
+      ).textContent = action;
+
+
+      document.getElementById(
+        "walletModal"
+      ).classList.add("show");
+
+    }
+
+
+    function closeWalletModal() {
+
+      document
+        .getElementById("walletModal")
+        .classList.remove("show");
+
+    }
+
+
+    function submitWalletAction() {
+
+      const asset =
+        document.getElementById(
+          "assetSelect"
+        ).value;
+
+
+      const amount =
+        document.getElementById(
+          "amountInput"
+        ).value;
+
+
+      if (!amount || Number(amount) <= 0) {
+
+        alert(
+          "Please enter a valid demo amount."
+        );
+
+        return;
+
+      }
+
+
+      alert(
+        "Demo only: " +
+        currentAction +
+        " of " +
+        amount +
+        " " +
+        asset +
+        " is not connected to real transactions yet."
+      );
+
+
+      closeWalletModal();
+
+    }
+
+
+    function openTransactions() {
+
+      window.location.href =
+        "./transactions.html";
+
+    }
+
+
+    document
+      .getElementById("walletModal")
+      .addEventListener(
+        "click",
+        function(event) {
+
+          if (event.target === this) {
+
+            closeWalletModal();
+
+          }
+
+        }
+      );
+
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Escape") {
+
+          closeWalletModal();
+
+        }
+
+      }
+    );
+
+  </script>
+
 </body>
-</html>
+          </html>

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Markets | CoinBridge</title>
 
   <style>
-
     * {
       margin: 0;
       padding: 0;
@@ -23,8 +21,7 @@
     }
 
     button,
-    input,
-    select {
+    input {
       font-family: inherit;
     }
 
@@ -123,10 +120,7 @@
       padding: 28px;
     }
 
-    .mobile-header {
-      display: none;
-    }
-
+    .mobile-header,
     .mobile-menu {
       display: none;
     }
@@ -288,15 +282,16 @@
       margin-top: 3px;
     }
 
-    .watch-button {
+    .watch-button,
+    .mini-watch {
       border: none;
       background: transparent;
       color: #617488;
       font-size: 19px;
-      cursor: pointer;
     }
 
-    .watch-button.active {
+    .watch-button.active,
+    .mini-watch.active {
       color: #facc15;
     }
 
@@ -394,7 +389,6 @@
       color: #718096;
       border-radius: 6px;
       padding: 7px 11px;
-      cursor: pointer;
       font-size: 10px;
     }
 
@@ -426,19 +420,18 @@
       top: 15px;
       left: 18px;
       display: flex;
-      gap: 14px;
+      gap: 10px;
       flex-wrap: wrap;
       pointer-events: none;
     }
 
     .chart-stat {
-      background: rgba(5,11,20,0.78);
+      background: rgba(5,11,20,0.82);
       border: 1px solid rgba(255,255,255,0.06);
       padding: 7px 10px;
       border-radius: 6px;
       font-size: 10px;
       color: #91a1b4;
-      backdrop-filter: blur(5px);
     }
 
     .chart-stat strong {
@@ -536,7 +529,7 @@
       background: #be123c;
     }
 
-    /* MARKET TABLE */
+    /* TABLE */
 
     .table-panel {
       background: #091522;
@@ -618,21 +611,9 @@
       margin-top: 2px;
     }
 
-    .mini-watch {
-      border: none;
-      background: transparent;
-      color: #617488;
-      font-size: 16px;
-    }
-
-    .mini-watch.active {
-      color: #facc15;
-    }
-
     /* RESPONSIVE */
 
     @media (max-width: 1050px) {
-
       .market-cards {
         grid-template-columns: 1fr 1fr;
       }
@@ -640,11 +621,9 @@
       .chart-area {
         height: 390px;
       }
-
     }
 
     @media (max-width: 950px) {
-
       .sidebar {
         width: 210px;
       }
@@ -653,15 +632,9 @@
         margin-left: 210px;
         width: calc(100% - 210px);
       }
-
-      .order-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
     }
 
     @media (max-width: 700px) {
-
       .sidebar {
         display: none;
       }
@@ -733,10 +706,7 @@
         flex-direction: column;
       }
 
-      .selected-price {
-        text-align: left;
-      }
-
+      .selected-price,
       .selected-change {
         text-align: left;
       }
@@ -756,11 +726,8 @@
       .welcome h1 {
         font-size: 24px;
       }
-
     }
-
   </style>
-
 </head>
 
 <body>
@@ -780,54 +747,24 @@
       </div>
 
       <nav class="nav">
-
-        <a href="./dashboard.html">
-          🏠 Dashboard
-        </a>
-
-        <a href="./portfolio.html">
-          💼 Portfolio
-        </a>
-
-        <a href="./wallet.html">
-          💰 Wallet
-        </a>
-
-        <a href="./transactions.html">
-          📊 Transactions
-        </a>
-
-        <a href="./markets.html" class="active">
-          📈 Markets
-        </a>
-
+        <a href="./dashboard.html">🏠 Dashboard</a>
+        <a href="./portfolio.html">💼 Portfolio</a>
+        <a href="./wallet.html">💰 Wallet</a>
+        <a href="./transactions.html">📊 Transactions</a>
+        <a href="./markets.html" class="active">📈 Markets</a>
       </nav>
 
-      <div
-        class="menu-title"
-        style="margin-top:30px;"
-      >
+      <div class="menu-title" style="margin-top:30px;">
         Account
       </div>
 
       <nav class="nav">
-
-        <a href="./settings.html">
-          ⚙️ Settings
-        </a>
-
-        <a href="./security.html">
-          🔐 Security
-        </a>
-
+        <a href="./settings.html">⚙️ Settings</a>
+        <a href="./security.html">🔐 Security</a>
       </nav>
 
       <div class="logout">
-
-        <a href="./index.html">
-          ← Log Out
-        </a>
-
+        <a href="./index.html">← Log Out</a>
       </div>
 
     </aside>
@@ -837,8 +774,6 @@
 
     <main class="main">
 
-      <!-- MOBILE HEADER -->
-
       <div class="mobile-header">
 
         <div class="logo">
@@ -847,7 +782,8 @@
 
         <button
           class="menu-button"
-          onclick="toggleMenu()"
+          id="menuButton"
+          type="button"
         >
           ☰
         </button>
@@ -855,45 +791,18 @@
       </div>
 
 
-      <!-- MOBILE MENU -->
-
       <div
         class="mobile-menu"
         id="mobileMenu"
       >
-
-        <a href="./dashboard.html">
-          🏠 Dashboard
-        </a>
-
-        <a href="./portfolio.html">
-          💼 Portfolio
-        </a>
-
-        <a href="./wallet.html">
-          💰 Wallet
-        </a>
-
-        <a href="./transactions.html">
-          📊 Transactions
-        </a>
-
-        <a href="./markets.html">
-          📈 Markets
-        </a>
-
-        <a href="./settings.html">
-          ⚙️ Settings
-        </a>
-
-        <a href="./security.html">
-          🔐 Security
-        </a>
-
-        <a href="./index.html">
-          ← Log Out
-        </a>
-
+        <a href="./dashboard.html">🏠 Dashboard</a>
+        <a href="./portfolio.html">💼 Portfolio</a>
+        <a href="./wallet.html">💰 Wallet</a>
+        <a href="./transactions.html">📊 Transactions</a>
+        <a href="./markets.html">📈 Markets</a>
+        <a href="./settings.html">⚙️ Settings</a>
+        <a href="./security.html">🔐 Security</a>
+        <a href="./index.html">← Log Out</a>
       </div>
 
 
@@ -902,25 +811,17 @@
       <div class="topbar">
 
         <div class="welcome">
-
-          <h1>
-            Markets
-          </h1>
-
+          <h1>Markets</h1>
           <p>
-            Explore digital asset prices and market movements.
+            Explore digital asset prices and simulated market movements.
           </p>
-
         </div>
 
         <div class="profile">
 
-          <div class="avatar">
-            U
-          </div>
+          <div class="avatar">U</div>
 
           <div>
-
             <div class="profile-name">
               CoinBridge User
             </div>
@@ -928,7 +829,6 @@
             <div class="profile-status">
               ● Account Active
             </div>
-
           </div>
 
         </div>
@@ -936,27 +836,25 @@
       </div>
 
 
-      <!-- MARKET TOOLBAR -->
+      <!-- SEARCH -->
 
       <div class="market-toolbar">
 
         <div class="search-box">
 
-          <span class="search-icon">
-            🔍
-          </span>
+          <span class="search-icon">🔍</span>
 
           <input
             type="text"
             id="marketSearch"
             placeholder="Search Bitcoin, Ethereum..."
-            oninput="searchMarkets()"
+            autocomplete="off"
           >
 
         </div>
 
         <div class="market-status">
-          ● <span>Market updates active</span>
+          ● <span>Market simulation active</span>
         </div>
 
       </div>
@@ -969,32 +867,20 @@
         id="marketCards"
       >
 
-        <!-- BTC -->
-
         <div
           class="market-card selected"
           data-coin="BTC"
-          onclick="selectCoin('BTC')"
         >
 
           <div class="market-card-top">
 
             <div class="coin-info">
 
-              <div class="coin-icon">
-                ₿
-              </div>
+              <div class="coin-icon">₿</div>
 
               <div>
-
-                <div class="coin-name">
-                  Bitcoin
-                </div>
-
-                <div class="coin-symbol">
-                  BTC
-                </div>
-
+                <div class="coin-name">Bitcoin</div>
+                <div class="coin-symbol">BTC</div>
               </div>
 
             </div>
@@ -1002,7 +888,7 @@
             <button
               class="watch-button"
               data-watch="BTC"
-              onclick="toggleWatch(event,'BTC')"
+              type="button"
             >
               ☆
             </button>
@@ -1026,32 +912,20 @@
         </div>
 
 
-        <!-- ETH -->
-
         <div
           class="market-card"
           data-coin="ETH"
-          onclick="selectCoin('ETH')"
         >
 
           <div class="market-card-top">
 
             <div class="coin-info">
 
-              <div class="coin-icon">
-                Ξ
-              </div>
+              <div class="coin-icon">Ξ</div>
 
               <div>
-
-                <div class="coin-name">
-                  Ethereum
-                </div>
-
-                <div class="coin-symbol">
-                  ETH
-                </div>
-
+                <div class="coin-name">Ethereum</div>
+                <div class="coin-symbol">ETH</div>
               </div>
 
             </div>
@@ -1059,7 +933,7 @@
             <button
               class="watch-button"
               data-watch="ETH"
-              onclick="toggleWatch(event,'ETH')"
+              type="button"
             >
               ☆
             </button>
@@ -1083,32 +957,20 @@
         </div>
 
 
-        <!-- USDC -->
-
         <div
           class="market-card"
           data-coin="USDC"
-          onclick="selectCoin('USDC')"
         >
 
           <div class="market-card-top">
 
             <div class="coin-info">
 
-              <div class="coin-icon">
-                $
-              </div>
+              <div class="coin-icon">$</div>
 
               <div>
-
-                <div class="coin-name">
-                  USD Coin
-                </div>
-
-                <div class="coin-symbol">
-                  USDC
-                </div>
-
+                <div class="coin-name">USD Coin</div>
+                <div class="coin-symbol">USDC</div>
               </div>
 
             </div>
@@ -1116,7 +978,7 @@
             <button
               class="watch-button"
               data-watch="USDC"
-              onclick="toggleWatch(event,'USDC')"
+              type="button"
             >
               ☆
             </button>
@@ -1127,7 +989,7 @@
             class="market-price"
             id="cardPriceUSDC"
           >
-            $1.00
+            $1.0000
           </div>
 
           <div
@@ -1142,7 +1004,7 @@
       </section>
 
 
-      <!-- CHART -->
+      <!-- CHART PANEL -->
 
       <section class="chart-panel">
 
@@ -1160,7 +1022,6 @@
               </div>
 
               <div>
-
                 <div
                   class="selected-name"
                   id="selectedName"
@@ -1174,10 +1035,10 @@
                 >
                   BTC / USD
                 </div>
-
               </div>
 
             </div>
+
 
             <div>
 
@@ -1204,28 +1065,32 @@
 
             <button
               class="timeframe active"
-              onclick="setTimeframe(this,'1H')"
+              data-timeframe="1H"
+              type="button"
             >
               1H
             </button>
 
             <button
               class="timeframe"
-              onclick="setTimeframe(this,'4H')"
+              data-timeframe="4H"
+              type="button"
             >
               4H
             </button>
 
             <button
               class="timeframe"
-              onclick="setTimeframe(this,'1D')"
+              data-timeframe="1D"
+              type="button"
             >
               1D
             </button>
 
             <button
               class="timeframe"
-              onclick="setTimeframe(this,'1W')"
+              data-timeframe="1W"
+              type="button"
             >
               1W
             </button>
@@ -1235,6 +1100,8 @@
         </div>
 
 
+        <!-- CHART -->
+
         <div
           class="chart-area"
           id="chartArea"
@@ -1242,52 +1109,42 @@
 
           <canvas id="marketChart"></canvas>
 
-
           <div class="chart-overlay">
 
             <div class="chart-stat">
               24H High
-              <strong id="highValue">
-                $68,210
-              </strong>
+              <strong id="highValue">$68,210</strong>
             </div>
 
             <div class="chart-stat">
               24H Low
-              <strong id="lowValue">
-                $64,890
-              </strong>
+              <strong id="lowValue">$64,890</strong>
             </div>
 
             <div class="chart-stat">
               Volume
-              <strong id="volumeValue">
-                2.84B
-              </strong>
+              <strong id="volumeValue">2.84B</strong>
             </div>
 
           </div>
 
-
           <div class="chart-help">
-            Drag chart to explore price history
+            Drag chart left or right to explore price history
           </div>
 
         </div>
 
 
-        <!-- ORDER AREA -->
+        <!-- MARKET OVERVIEW -->
 
         <div class="order-panel">
 
           <div class="order-header">
 
-            <h3>
-              Market Overview
-            </h3>
+            <h3>Market Overview</h3>
 
             <span id="marketClock">
-              Updating
+              Initializing...
             </span>
 
           </div>
@@ -1297,34 +1154,27 @@
 
             <div class="order-box">
 
-              <h4>
-                Buy
-              </h4>
+              <h4>Buy</h4>
 
               <div class="order-row">
                 <span>Asset</span>
-                <strong id="buyAsset">
-                  BTC
-                </strong>
+                <strong id="buyAsset">BTC</strong>
               </div>
 
               <div class="order-row">
                 <span>Price</span>
-                <strong id="buyPrice">
-                  $67,420.20
-                </strong>
+                <strong id="buyPrice">$67,420.20</strong>
               </div>
 
               <div class="order-row">
                 <span>Available</span>
-                <strong>
-                  $12,480.50
-                </strong>
+                <strong>$12,480.50</strong>
               </div>
 
               <button
                 class="buy-button"
-                onclick="marketAction('Buy')"
+                id="buyButton"
+                type="button"
               >
                 Buy Asset
               </button>
@@ -1334,34 +1184,27 @@
 
             <div class="order-box">
 
-              <h4>
-                Sell
-              </h4>
+              <h4>Sell</h4>
 
               <div class="order-row">
                 <span>Asset</span>
-                <strong id="sellAsset">
-                  BTC
-                </strong>
+                <strong id="sellAsset">BTC</strong>
               </div>
 
               <div class="order-row">
                 <span>Price</span>
-                <strong id="sellPrice">
-                  $67,420.20
-                </strong>
+                <strong id="sellPrice">$67,420.20</strong>
               </div>
 
               <div class="order-row">
                 <span>Holding</span>
-                <strong>
-                  0.110 BTC
-                </strong>
+                <strong>0.110 BTC</strong>
               </div>
 
               <button
                 class="sell-button"
-                onclick="marketAction('Sell')"
+                id="sellButton"
+                type="button"
               >
                 Sell Asset
               </button>
@@ -1381,12 +1224,10 @@
 
         <div class="table-header">
 
-          <h2>
-            Market Overview
-          </h2>
+          <h2>Market Overview</h2>
 
           <p>
-            Current asset prices and market performance.
+            Simulated asset prices and market performance.
           </p>
 
         </div>
@@ -1399,27 +1240,11 @@
             <thead>
 
               <tr>
-
-                <th>
-                  Asset
-                </th>
-
-                <th>
-                  Price
-                </th>
-
-                <th>
-                  24H Change
-                </th>
-
-                <th>
-                  Market Range
-                </th>
-
-                <th>
-                  Watch
-                </th>
-
+                <th>Asset</th>
+                <th>Price</th>
+                <th>24H Change</th>
+                <th>Market Range</th>
+                <th>Watch</th>
               </tr>
 
             </thead>
@@ -1433,29 +1258,18 @@
 
                   <div class="table-coin">
 
-                    <div class="table-icon">
-                      ₿
-                    </div>
+                    <div class="table-icon">₿</div>
 
                     <div>
-
-                      <div class="table-name">
-                        Bitcoin
-                      </div>
-
-                      <div class="table-symbol">
-                        BTC
-                      </div>
-
+                      <div class="table-name">Bitcoin</div>
+                      <div class="table-symbol">BTC</div>
                     </div>
 
                   </div>
 
                 </td>
 
-                <td id="tablePriceBTC">
-                  $67,420.20
-                </td>
+                <td id="tablePriceBTC">$67,420.20</td>
 
                 <td
                   class="positive"
@@ -1464,7 +1278,7 @@
                   +4.82%
                 </td>
 
-                <td>
+                <td id="rangeBTC">
                   $64,890 — $68,210
                 </td>
 
@@ -1473,7 +1287,7 @@
                   <button
                     class="mini-watch"
                     data-mini-watch="BTC"
-                    onclick="toggleMiniWatch('BTC')"
+                    type="button"
                   >
                     ☆
                   </button>
@@ -1489,29 +1303,18 @@
 
                   <div class="table-coin">
 
-                    <div class="table-icon">
-                      Ξ
-                    </div>
+                    <div class="table-icon">Ξ</div>
 
                     <div>
-
-                      <div class="table-name">
-                        Ethereum
-                      </div>
-
-                      <div class="table-symbol">
-                        ETH
-                      </div>
-
+                      <div class="table-name">Ethereum</div>
+                      <div class="table-symbol">ETH</div>
                     </div>
 
                   </div>
 
                 </td>
 
-                <td id="tablePriceETH">
-                  $3,210.70
-                </td>
+                <td id="tablePriceETH">$3,210.70</td>
 
                 <td
                   class="positive"
@@ -1520,7 +1323,7 @@
                   +3.17%
                 </td>
 
-                <td>
+                <td id="rangeETH">
                   $3,080 — $3,280
                 </td>
 
@@ -1529,7 +1332,7 @@
                   <button
                     class="mini-watch"
                     data-mini-watch="ETH"
-                    onclick="toggleMiniWatch('ETH')"
+                    type="button"
                   >
                     ☆
                   </button>
@@ -1545,29 +1348,18 @@
 
                   <div class="table-coin">
 
-                    <div class="table-icon">
-                      $
-                    </div>
+                    <div class="table-icon">$</div>
 
                     <div>
-
-                      <div class="table-name">
-                        USD Coin
-                      </div>
-
-                      <div class="table-symbol">
-                        USDC
-                      </div>
-
+                      <div class="table-name">USD Coin</div>
+                      <div class="table-symbol">USDC</div>
                     </div>
 
                   </div>
 
                 </td>
 
-                <td id="tablePriceUSDC">
-                  $1.00
-                </td>
+                <td id="tablePriceUSDC">$1.0000</td>
 
                 <td
                   class="positive"
@@ -1576,7 +1368,7 @@
                   +0.02%
                 </td>
 
-                <td>
+                <td id="rangeUSDC">
                   $0.998 — $1.002
                 </td>
 
@@ -1585,7 +1377,7 @@
                   <button
                     class="mini-watch"
                     data-mini-watch="USDC"
-                    onclick="toggleMiniWatch('USDC')"
+                    type="button"
                   >
                     ☆
                   </button>
@@ -1607,830 +1399,1469 @@
   </div>
 
 
-  <!-- JAVASCRIPT -->
-
   <script>
 
-    const coins = {
+    /*
+      COINBRIDGE MARKETS
+      Classroom simulation only.
+      No external API required.
+    */
 
-      BTC: {
-        name: "Bitcoin",
-        symbol: "BTC / USD",
-        icon: "₿",
-        price: 67420.20,
-        change: 4.82,
-        base: 67420.20,
-        decimals: 2,
-        volume: "2.84B"
-      },
+    document.addEventListener("DOMContentLoaded", function () {
 
-      ETH: {
-        name: "Ethereum",
-        symbol: "ETH / USD",
-        icon: "Ξ",
-        price: 3210.70,
-        change: 3.17,
-        base: 3210.70,
-        decimals: 2,
-        volume: "1.42B"
-      },
-
-      USDC: {
-        name: "USD Coin",
-        symbol: "USDC / USD",
-        icon: "$",
-        price: 1.00,
-        change: 0.02,
-        base: 1.00,
-        decimals: 2,
-        volume: "684M"
-      }
-
-    };
+      "use strict";
 
 
-    let selectedCoin = "BTC";
+      /* =========================
+         DATA
+      ========================= */
 
-    let timeframe = "1H";
+      const coins = {
 
-    let candles = [];
+        BTC: {
+          name: "Bitcoin",
+          symbol: "BTC / USD",
+          short: "BTC",
+          icon: "₿",
+          price: 67420.20,
+          change: 4.82,
+          base: 67420.20,
+          volume: "2.84B"
+        },
 
-    let dragStartX = null;
+        ETH: {
+          name: "Ethereum",
+          symbol: "ETH / USD",
+          short: "ETH",
+          icon: "Ξ",
+          price: 3210.70,
+          change: 3.17,
+          base: 3210.70,
+          volume: "1.42B"
+        },
 
-    let dragOffset = 0;
-
-    let animationTimer = null;
-
-
-    /* MOBILE MENU */
-
-    function toggleMenu() {
-
-      const menu =
-        document.getElementById("mobileMenu");
-
-      menu.classList.toggle("open");
-
-    }
-
-
-    /* FORMAT PRICE */
-
-    function formatPrice(value) {
-
-      if (selectedCoin === "USDC") {
-
-        return "$" + value.toFixed(4);
-
-      }
-
-      return "$" + value.toLocaleString(
-        "en-US",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
+        USDC: {
+          name: "USD Coin",
+          symbol: "USDC / USD",
+          short: "USDC",
+          icon: "$",
+          price: 1.0000,
+          change: 0.02,
+          base: 1.0000,
+          volume: "684M"
         }
-      );
 
-    }
-
-
-    /* CREATE HISTORICAL CANDLES */
-
-    function createCandles() {
-
-      const coin = coins[selectedCoin];
-
-      candles = [];
-
-      let price = coin.base * 0.94;
-
-      const total = 150;
-
-      for (
-        let i = 0;
-        i < total;
-        i++
-      ) {
-
-        const movement =
-          (Math.random() - 0.46) *
-          coin.base *
-          0.012;
-
-        const open = price;
-
-        const close =
-          Math.max(
-            coin.base * 0.86,
-            Math.min(
-              coin.base * 1.07,
-              price + movement
-            )
-          );
-
-        const high =
-          Math.max(open, close) +
-          Math.random() *
-          coin.base *
-          0.006;
-
-        const low =
-          Math.min(open, close) -
-          Math.random() *
-          coin.base *
-          0.006;
-
-        candles.push({
-          open: open,
-          high: high,
-          low: low,
-          close: close
-        });
-
-        price = close;
-
-      }
-
-      const finalCandle =
-        candles[candles.length - 1];
-
-      const correction =
-        coin.base /
-        finalCandle.close;
-
-      candles =
-        candles.map(function(candle) {
-
-          return {
-            open: candle.open * correction,
-            high: candle.high * correction,
-            low: candle.low * correction,
-            close: candle.close * correction
-          };
-
-        });
-
-      dragOffset = 0;
-
-    }
+      };
 
 
-    /* DRAW CHART */
+      let selectedCoin = "BTC";
+      let timeframe = "1H";
+      let candles = [];
+      let dragStartX = null;
+      let dragOffset = 0;
+      let animationTimer = null;
 
-    function drawChart() {
+
+      /* =========================
+         ELEMENTS
+      ========================= */
+
+      const chartArea =
+        document.getElementById("chartArea");
 
       const canvas =
-        document.getElementById(
-          "marketChart"
-        );
-
-      const area =
-        document.getElementById(
-          "chartArea"
-        );
-
-      if (!canvas || !area) {
-        return;
-      }
-
-      const rect =
-        area.getBoundingClientRect();
-
-      const dpr =
-        window.devicePixelRatio || 1;
-
-      canvas.width =
-        rect.width * dpr;
-
-      canvas.height =
-        rect.height * dpr;
-
-      canvas.style.width =
-        rect.width + "px";
-
-      canvas.style.height =
-        rect.height + "px";
+        document.getElementById("marketChart");
 
       const ctx =
-        canvas.getContext("2d");
+        canvas ? canvas.getContext("2d") : null;
 
-      ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-      );
 
-      const width = rect.width;
+      /* =========================
+         MOBILE MENU
+      ========================= */
 
-      const height = rect.height;
+      const menuButton =
+        document.getElementById("menuButton");
 
-      ctx.clearRect(
-        0,
-        0,
-        width,
+      const mobileMenu =
+        document.getElementById("mobileMenu");
+
+
+      if (menuButton && mobileMenu) {
+
+        menuButton.addEventListener(
+          "click",
+          function () {
+
+            mobileMenu.classList.toggle("open");
+
+          }
+        );
+
+      }
+
+
+      /* =========================
+         PRICE FORMATTING
+      ========================= */
+
+      function formatPrice(value, symbol) {
+
+        if (symbol === "USDC") {
+
+          return "$" + Number(value).toFixed(4);
+
+        }
+
+        return "$" +
+          Number(value).toLocaleString(
+            "en-US",
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }
+          );
+
+      }
+
+
+      function formatChartPrice(value) {
+
+        if (selectedCoin === "USDC") {
+
+          return "$" + value.toFixed(4);
+
+        }
+
+        if (value >= 1000) {
+
+          return "$" +
+            Math.round(value).toLocaleString();
+
+        }
+
+        return "$" + value.toFixed(2);
+
+      }
+
+
+      /* =========================
+         CREATE CANDLES
+      ========================= */
+
+      function createCandles() {
+
+        const coin =
+          coins[selectedCoin];
+
+        candles = [];
+
+        let price =
+          coin.base * 0.94;
+
+        const total =
+          timeframe === "1H"
+            ? 160
+            : timeframe === "4H"
+              ? 140
+              : timeframe === "1D"
+                ? 120
+                : 100;
+
+
+        for (
+          let i = 0;
+          i < total;
+          i++
+        ) {
+
+          const volatility =
+            selectedCoin === "USDC"
+              ? coin.base * 0.0015
+              : coin.base * 0.009;
+
+
+          const movement =
+            (Math.random() - 0.45) *
+            volatility;
+
+
+          const open =
+            price;
+
+
+          const close =
+            Math.max(
+              coin.base * 0.86,
+              Math.min(
+                coin.base * 1.08,
+                price + movement
+              )
+            );
+
+
+          const wick =
+            selectedCoin === "USDC"
+              ? coin.base * 0.0007
+              : coin.base * 0.0045;
+
+
+          const high =
+            Math.max(open, close) +
+            Math.random() * wick;
+
+
+          const low =
+            Math.min(open, close) -
+            Math.random() * wick;
+
+
+          candles.push({
+            open: open,
+            high: high,
+            low: low,
+            close: close
+          });
+
+
+          price = close;
+
+        }
+
+
+        /*
+          Bring the final candle
+          exactly to the displayed
+          simulated market price.
+        */
+
+        const last =
+          candles[candles.length - 1];
+
+
+        if (last) {
+
+          const correction =
+            coin.price / last.close;
+
+
+          candles =
+            candles.map(
+              function (candle) {
+
+                return {
+                  open: candle.open * correction,
+                  high: candle.high * correction,
+                  low: candle.low * correction,
+                  close: candle.close * correction
+                };
+
+              }
+            );
+
+        }
+
+
+        dragOffset = 0;
+
+      }
+
+
+      /* =========================
+         PRICE TO Y
+      ========================= */
+
+      function priceToY(
+        price,
+        min,
+        max,
         height
-      );
-
-
-      /* BACKGROUND */
-
-      ctx.fillStyle = "#06101a";
-
-      ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-
-      /* PRICE RANGE */
-
-      const visibleCount =
-        width < 600 ? 55 : 85;
-
-      let end =
-        candles.length -
-        Math.round(dragOffset);
-
-      if (end < visibleCount) {
-        end = visibleCount;
-      }
-
-      if (end > candles.length) {
-        end = candles.length;
-      }
-
-      const start =
-        Math.max(
-          0,
-          end - visibleCount
-        );
-
-      const visible =
-        candles.slice(
-          start,
-          end
-        );
-
-      if (!visible.length) {
-        return;
-      }
-
-
-      let minPrice =
-        Math.min.apply(
-          null,
-          visible.map(function(c) {
-            return c.low;
-          })
-        );
-
-      let maxPrice =
-        Math.max.apply(
-          null,
-          visible.map(function(c) {
-            return c.high;
-          })
-        );
-
-      const padding =
-        (maxPrice - minPrice) *
-        0.12;
-
-      minPrice -= padding;
-
-      maxPrice += padding;
-
-
-      /* GRID */
-
-      ctx.strokeStyle =
-        "rgba(130,160,185,0.09)";
-
-      ctx.lineWidth = 1;
-
-      const horizontalLines = 6;
-
-      for (
-        let i = 0;
-        i <= horizontalLines;
-        i++
       ) {
 
-        const y =
-          25 +
-          ((height - 55) /
-          horizontalLines) *
-          i;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-          0,
-          y
-        );
-
-        ctx.lineTo(
-          width,
-          y
-        );
-
-        ctx.stroke();
+        return 25 +
+          ((max - price) /
+          (max - min)) *
+          (height - 55);
 
       }
 
 
-      const verticalLines =
-        width < 600 ? 7 : 10;
+      /* =========================
+         DRAW CHART
+      ========================= */
 
-      for (
-        let i = 0;
-        i <= verticalLines;
-        i++
-      ) {
+      function drawChart() {
 
-        const x =
-          (width /
-          verticalLines) *
-          i;
+        if (!canvas || !ctx || !chartArea) {
+          return;
+        }
 
-        ctx.beginPath();
 
-        ctx.moveTo(
-          x,
+        const rect =
+          chartArea.getBoundingClientRect();
+
+
+        if (
+          rect.width <= 0 ||
+          rect.height <= 0
+        ) {
+          return;
+        }
+
+
+        const dpr =
+          window.devicePixelRatio || 1;
+
+
+        canvas.width =
+          Math.floor(rect.width * dpr);
+
+        canvas.height =
+          Math.floor(rect.height * dpr);
+
+
+        canvas.style.width =
+          rect.width + "px";
+
+        canvas.style.height =
+          rect.height + "px";
+
+
+        ctx.setTransform(
+          dpr,
+          0,
+          0,
+          dpr,
+          0,
           0
         );
 
-        ctx.lineTo(
-          x,
+
+        const width =
+          rect.width;
+
+        const height =
+          rect.height;
+
+
+        /* BACKGROUND */
+
+        ctx.fillStyle =
+          "#06101a";
+
+        ctx.fillRect(
+          0,
+          0,
+          width,
           height
         );
 
-        ctx.stroke();
 
-      }
-
-
-      /* PRICE LABELS */
-
-      ctx.fillStyle = "#607489";
-
-      ctx.font = "10px Arial";
-
-      for (
-        let i = 0;
-        i <= horizontalLines;
-        i++
-      ) {
-
-        const price =
-          maxPrice -
-          ((maxPrice - minPrice) /
-          horizontalLines) *
-          i;
-
-        const y =
-          25 +
-          ((height - 55) /
-          horizontalLines) *
-          i;
-
-        ctx.fillText(
-          formatChartPrice(price),
-          width - 70,
-          y - 3
-        );
-
-      }
+        if (!candles.length) {
+          return;
+        }
 
 
-      /* CANDLE WIDTH */
+        /* VISIBLE CANDLES */
 
-      const chartWidth =
-        width - 78;
-
-      const candleSpace =
-        chartWidth /
-        visible.length;
-
-      const candleWidth =
-        Math.max(
-          3,
-          candleSpace * 0.58
-        );
+        const visibleCount =
+          width < 600 ? 52 : 88;
 
 
-      /* CANDLES */
+        let end =
+          candles.length -
+          Math.round(dragOffset);
 
-      visible.forEach(
-        function(candle, index) {
+
+        end =
+          Math.max(
+            visibleCount,
+            Math.min(
+              candles.length,
+              end
+            )
+          );
+
+
+        const start =
+          Math.max(
+            0,
+            end - visibleCount
+          );
+
+
+        const visible =
+          candles.slice(
+            start,
+            end
+          );
+
+
+        if (!visible.length) {
+          return;
+        }
+
+
+        /* RANGE */
+
+        let minPrice =
+          Math.min.apply(
+            null,
+            visible.map(
+              function (candle) {
+                return candle.low;
+              }
+            )
+          );
+
+
+        let maxPrice =
+          Math.max.apply(
+            null,
+            visible.map(
+              function (candle) {
+                return candle.high;
+              }
+            )
+          );
+
+
+        let range =
+          maxPrice - minPrice;
+
+
+        if (range <= 0) {
+          range = 1;
+        }
+
+
+        const padding =
+          range * 0.12;
+
+
+        minPrice -= padding;
+        maxPrice += padding;
+
+
+        /* GRID */
+
+        ctx.strokeStyle =
+          "rgba(130,160,185,0.09)";
+
+        ctx.lineWidth = 1;
+
+
+        const horizontalLines = 6;
+
+
+        for (
+          let i = 0;
+          i <= horizontalLines;
+          i++
+        ) {
+
+          const y =
+            25 +
+            ((height - 55) /
+            horizontalLines) * i;
+
+
+          ctx.beginPath();
+
+          ctx.moveTo(
+            0,
+            y
+          );
+
+          ctx.lineTo(
+            width,
+            y
+          );
+
+          ctx.stroke();
+
+        }
+
+
+        const verticalLines =
+          width < 600 ? 7 : 10;
+
+
+        for (
+          let i = 0;
+          i <= verticalLines;
+          i++
+        ) {
 
           const x =
-            index *
-            candleSpace +
-            candleSpace / 2;
+            (width /
+            verticalLines) * i;
 
-          const highY =
-            priceToY(
-              candle.high,
-              minPrice,
-              maxPrice,
-              height
-            );
-
-          const lowY =
-            priceToY(
-              candle.low,
-              minPrice,
-              maxPrice,
-              height
-            );
-
-          const openY =
-            priceToY(
-              candle.open,
-              minPrice,
-              maxPrice,
-              height
-            );
-
-          const closeY =
-            priceToY(
-              candle.close,
-              minPrice,
-              maxPrice,
-              height
-            );
-
-          const rising =
-            candle.close >=
-            candle.open;
-
-          ctx.strokeStyle =
-            rising
-              ? "#34d399"
-              : "#fb7185";
-
-          ctx.fillStyle =
-            rising
-              ? "#34d399"
-              : "#fb7185";
-
-          /* WICK */
-
-          ctx.lineWidth = 1;
 
           ctx.beginPath();
 
           ctx.moveTo(
             x,
-            highY
+            0
           );
 
           ctx.lineTo(
             x,
-            lowY
+            height
           );
 
           ctx.stroke();
 
+        }
 
-          /* BODY */
 
-          const bodyTop =
-            Math.min(
-              openY,
-              closeY
-            );
+        /* PRICE LABELS */
 
-          const bodyHeight =
-            Math.max(
-              1,
-              Math.abs(
-                closeY -
-                openY
-              )
-            );
+        ctx.fillStyle =
+          "#607489";
 
-          ctx.fillRect(
-            x -
-            candleWidth / 2,
-            bodyTop,
-            candleWidth,
-            bodyHeight
+        ctx.font =
+          "10px Arial";
+
+
+        for (
+          let i = 0;
+          i <= horizontalLines;
+          i++
+        ) {
+
+          const price =
+            maxPrice -
+            ((maxPrice - minPrice) /
+            horizontalLines) * i;
+
+
+          const y =
+            25 +
+            ((height - 55) /
+            horizontalLines) * i;
+
+
+          ctx.fillText(
+            formatChartPrice(price),
+            Math.max(5, width - 72),
+            y - 3
           );
 
         }
-      );
 
 
-      /* CURRENT PRICE LINE */
+        /* CANDLE DIMENSIONS */
 
-      const current =
-        candles[
-          candles.length - 1
-        ].close;
-
-      const currentY =
-        priceToY(
-          current,
-          minPrice,
-          maxPrice,
-          height
-        );
-
-      ctx.setLineDash(
-        [5,5]
-      );
-
-      ctx.strokeStyle =
-        "rgba(34,211,238,0.65)";
-
-      ctx.beginPath();
-
-      ctx.moveTo(
-        0,
-        currentY
-      );
-
-      ctx.lineTo(
-        width - 75,
-        currentY
-      );
-
-      ctx.stroke();
-
-      ctx.setLineDash([]);
+        const chartWidth =
+          Math.max(
+            100,
+            width - 78
+          );
 
 
-      /* CURRENT PRICE LABEL */
-
-      ctx.fillStyle =
-        "#22d3ee";
-
-      ctx.fillRect(
-        width - 74,
-        currentY - 10,
-        74,
-        20
-      );
-
-      ctx.fillStyle =
-        "#031018";
-
-      ctx.font =
-        "bold 9px Arial";
-
-      ctx.fillText(
-        formatChartPrice(current),
-        width - 69,
-        currentY + 3
-      );
-
-    }
+        const candleSpace =
+          chartWidth /
+          visible.length;
 
 
-    function formatChartPrice(price) {
-
-      if (
-        selectedCoin ===
-        "USDC"
-      ) {
-
-        return "$" +
-          price.toFixed(4);
-
-      }
-
-      if (
-        price >= 1000
-      ) {
-
-        return "$" +
-          Math.round(
-            price
-          ).toLocaleString();
-
-      }
-
-      return "$" +
-        price.toFixed(2);
-
-    }
+        const candleWidth =
+          Math.max(
+            3,
+            candleSpace * 0.58
+          );
 
 
-    function priceToY(
-      price,
-      min,
-      max,
-      height
-    ) {
+        /* DRAW CANDLES */
 
-      return 25 +
-        ((max - price) /
-        (max - min)) *
-        (height - 55);
+        visible.forEach(
+          function (candle, index) {
 
-    }
+            const x =
+              index *
+              candleSpace +
+              candleSpace / 2;
 
 
-    /* SELECT COIN */
+            const highY =
+              priceToY(
+                candle.high,
+                minPrice,
+                maxPrice,
+                height
+              );
 
-    function selectCoin(symbol) {
 
-      selectedCoin =
-        symbol;
+            const lowY =
+              priceToY(
+                candle.low,
+                minPrice,
+                maxPrice,
+                height
+              );
 
-      document
-        .querySelectorAll(
-          ".market-card"
-        )
-        .forEach(
-          function(card) {
 
-            card.classList.toggle(
-              "selected",
-              card.dataset.coin ===
-              symbol
+            const openY =
+              priceToY(
+                candle.open,
+                minPrice,
+                maxPrice,
+                height
+              );
+
+
+            const closeY =
+              priceToY(
+                candle.close,
+                minPrice,
+                maxPrice,
+                height
+              );
+
+
+            const rising =
+              candle.close >=
+              candle.open;
+
+
+            const candleColor =
+              rising
+                ? "#34d399"
+                : "#fb7185";
+
+
+            /* WICK */
+
+            ctx.strokeStyle =
+              candleColor;
+
+            ctx.lineWidth = 1;
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+              x,
+              highY
+            );
+
+            ctx.lineTo(
+              x,
+              lowY
+            );
+
+            ctx.stroke();
+
+
+            /* BODY */
+
+            ctx.fillStyle =
+              candleColor;
+
+
+            const bodyTop =
+              Math.min(
+                openY,
+                closeY
+              );
+
+
+            const bodyHeight =
+              Math.max(
+                1,
+                Math.abs(
+                  closeY - openY
+                )
+              );
+
+
+            ctx.fillRect(
+              x - candleWidth / 2,
+              bodyTop,
+              candleWidth,
+              bodyHeight
             );
 
           }
         );
 
-      updateSelectedCoin();
 
-      createCandles();
+        /* CURRENT PRICE */
 
-      drawChart();
-
-    }
+        const current =
+          coins[selectedCoin].price;
 
 
-    function updateSelectedCoin() {
+        const currentY =
+          priceToY(
+            current,
+            minPrice,
+            maxPrice,
+            height
+          );
 
-      const coin =
-        coins[selectedCoin];
 
-      document.getElementById(
-        "selectedIcon"
-      ).textContent =
-        coin.icon;
-
-      document.getElementById(
-        "selectedName"
-      ).textContent =
-        coin.name;
-
-      document.getElementById(
-        "selectedSymbol"
-      ).textContent =
-        coin.symbol;
-
-      document.getElementById(
-        "selectedPrice"
-      ).textContent =
-        formatPrice(
-          coin.price
+        ctx.setLineDash(
+          [5, 5]
         );
 
-      document.getElementById(
-        "selectedChange"
-      ).textContent =
-        "+" +
-        coin.change.toFixed(2) +
-        "% today";
 
-      document.getElementById(
-        "selectedChange"
-      ).className =
-        "selected-change positive";
+        ctx.strokeStyle =
+          "rgba(34,211,238,0.65)";
 
-      document.getElementById(
-        "buyAsset"
-      ).textContent =
-        coin.symbol.split(
-          " "
-        )[0];
 
-      document.getElementById(
-        "sellAsset"
-      ).textContent =
-        coin.symbol.split(
-          " "
-        )[0];
+        ctx.beginPath();
 
-      document.getElementById(
-        "buyPrice"
-      ).textContent =
-        formatPrice(
-          coin.price
+        ctx.moveTo(
+          0,
+          currentY
         );
 
-      document.getElementById(
-        "sellPrice"
-      ).textContent =
-        formatPrice(
-          coin.price
+        ctx.lineTo(
+          Math.max(
+            0,
+            width - 75
+          ),
+          currentY
         );
 
-      updateStats();
-
-    }
+        ctx.stroke();
 
 
-    /* UPDATE MARKET STATS */
-
-    function updateStats() {
-
-      const coin =
-        coins[selectedCoin];
-
-      const high =
-        coin.price *
-        1.011;
-
-      const low =
-        coin.price *
-        0.962;
-
-      document.getElementById(
-        "highValue"
-      ).textContent =
-        formatPrice(high);
-
-      document.getElementById(
-        "lowValue"
-      ).textContent =
-        formatPrice(low);
-
-      document.getElementById(
-        "volumeValue"
-      ).textContent =
-        coin.volume;
-
-    }
+        ctx.setLineDash([]);
 
 
-    /* SIMULATED PRICE MOVEMENT */
+        /* CURRENT PRICE LABEL */
 
-    function updateMarket() {
+        const labelX =
+          Math.max(
+            0,
+            width - 74
+          );
 
-      Object.keys(coins)
+
+        ctx.fillStyle =
+          "#22d3ee";
+
+
+        ctx.fillRect(
+          labelX,
+          currentY - 10,
+          74,
+          20
+        );
+
+
+        ctx.fillStyle =
+          "#031018";
+
+
+        ctx.font =
+          "bold 9px Arial";
+
+
+        ctx.fillText(
+          formatChartPrice(current),
+          labelX + 5,
+          currentY + 3
+        );
+
+      }
+
+
+      /* =========================
+         UPDATE SELECTED COIN
+      ========================= */
+
+      function updateSelectedCoin() {
+
+        const coin =
+          coins[selectedCoin];
+
+
+        document.getElementById(
+          "selectedIcon"
+        ).textContent =
+          coin.icon;
+
+
+        document.getElementById(
+          "selectedName"
+        ).textContent =
+          coin.name;
+
+
+        document.getElementById(
+          "selectedSymbol"
+        ).textContent =
+          coin.symbol;
+
+
+        document.getElementById(
+          "selectedPrice"
+        ).textContent =
+          formatPrice(
+            coin.price,
+            selectedCoin
+          );
+
+
+        const changeElement =
+          document.getElementById(
+            "selectedChange"
+          );
+
+
+        changeElement.textContent =
+          (coin.change >= 0 ? "+" : "") +
+          coin.change.toFixed(2) +
+          "% today";
+
+
+        changeElement.className =
+          "selected-change " +
+          (
+            coin.change >= 0
+              ? "positive"
+              : "negative"
+          );
+
+
+        document.getElementById(
+          "buyAsset"
+        ).textContent =
+          coin.short;
+
+
+        document.getElementById(
+          "sellAsset"
+        ).textContent =
+          coin.short;
+
+
+        document.getElementById(
+          "buyPrice"
+        ).textContent =
+          formatPrice(
+            coin.price,
+            selectedCoin
+          );
+
+
+        document.getElementById(
+          "sellPrice"
+        ).textContent =
+          formatPrice(
+            coin.price,
+            selectedCoin
+          );
+
+
+        updateStats();
+
+      }
+
+
+      /* =========================
+         MARKET STATS
+      ========================= */
+
+      function updateStats() {
+
+        const coin =
+          coins[selectedCoin];
+
+
+        const high =
+          coin.price *
+          1.011;
+
+
+        const low =
+          coin.price *
+          0.962;
+
+
+        document.getElementById(
+          "highValue"
+        ).textContent =
+          formatPrice(
+            high,
+            selectedCoin
+          );
+
+
+        document.getElementById(
+          "lowValue"
+        ).textContent =
+          formatPrice(
+            low,
+            selectedCoin
+          );
+
+
+        document.getElementById(
+          "volumeValue"
+        ).textContent =
+          coin.volume;
+
+
+        document.getElementById(
+          "range" + selectedCoin
+        ).textContent =
+          formatPrice(
+            low,
+            selectedCoin
+          ) +
+          " — " +
+          formatPrice(
+            high,
+            selectedCoin
+          );
+
+      }
+
+
+      /* =========================
+         UPDATE CARDS + TABLE
+      ========================= */
+
+      function updateCoinDisplays(symbol) {
+
+        const coin =
+          coins[symbol];
+
+
+        const price =
+          formatPrice(
+            coin.price,
+            symbol
+          );
+
+
+        const cardPrice =
+          document.getElementById(
+            "cardPrice" + symbol
+          );
+
+
+        const tablePrice =
+          document.getElementById(
+            "tablePrice" + symbol
+          );
+
+
+        const cardChange =
+          document.getElementById(
+            "cardChange" + symbol
+          );
+
+
+        const tableChange =
+          document.getElementById(
+            "tableChange" + symbol
+          );
+
+
+        if (cardPrice) {
+          cardPrice.textContent = price;
+        }
+
+
+        if (tablePrice) {
+          tablePrice.textContent = price;
+        }
+
+
+        const changeText =
+          (coin.change >= 0 ? "+" : "") +
+          coin.change.toFixed(2) +
+          "%";
+
+
+        if (cardChange) {
+
+          cardChange.textContent =
+            changeText;
+
+          cardChange.className =
+            "market-change " +
+            (
+              coin.change >= 0
+                ? "positive"
+                : "negative"
+            );
+
+        }
+
+
+        if (tableChange) {
+
+          tableChange.textContent =
+            changeText;
+
+          tableChange.className =
+            coin.change >= 0
+              ? "positive"
+              : "negative";
+
+        }
+
+      }
+
+
+      /* =========================
+         SELECT COIN
+      ========================= */
+
+      document
+        .querySelectorAll(".market-card")
         .forEach(
-          function(symbol) {
+          function (card) {
+
+            card.addEventListener(
+              "click",
+              function () {
+
+                selectedCoin =
+                  card.dataset.coin;
+
+
+                document
+                  .querySelectorAll(
+                    ".market-card"
+                  )
+                  .forEach(
+                    function (item) {
+
+                      item.classList.toggle(
+                        "selected",
+                        item.dataset.coin ===
+                        selectedCoin
+                      );
+
+                    }
+                  );
+
+
+                createCandles();
+
+                updateSelectedCoin();
+
+                drawChart();
+
+              }
+            );
+
+          }
+        );
+
+
+      /* =========================
+         TIMEFRAMES
+      ========================= */
+
+      document
+        .querySelectorAll(".timeframe")
+        .forEach(
+          function (button) {
+
+            button.addEventListener(
+              "click",
+              function () {
+
+                document
+                  .querySelectorAll(
+                    ".timeframe"
+                  )
+                  .forEach(
+                    function (item) {
+
+                      item.classList.remove(
+                        "active"
+                      );
+
+                    }
+                  );
+
+
+                button.classList.add(
+                  "active"
+                );
+
+
+                timeframe =
+                  button.dataset.timeframe;
+
+
+                createCandles();
+
+                drawChart();
+
+              }
+            );
+
+          }
+        );
+
+
+      /* =========================
+         SEARCH
+      ========================= */
+
+      const searchInput =
+        document.getElementById(
+          "marketSearch"
+        );
+
+
+      if (searchInput) {
+
+        searchInput.addEventListener(
+          "input",
+          function () {
+
+            const query =
+              searchInput.value
+                .toLowerCase()
+                .trim();
+
+
+            document
+              .querySelectorAll(
+                ".market-card"
+              )
+              .forEach(
+                function (card) {
+
+                  const text =
+                    card.textContent
+                      .toLowerCase();
+
+
+                  card.classList.toggle(
+                    "hidden",
+                    query !== "" &&
+                    !text.includes(query)
+                  );
+
+                }
+              );
+
+          }
+        );
+
+      }
+
+
+      /* =========================
+         WATCHLIST
+      ========================= */
+
+      function toggleWatch(symbol) {
+
+        const buttons =
+          document.querySelectorAll(
+            '[data-watch="' +
+            symbol +
+            '"], ' +
+            '[data-mini-watch="' +
+            symbol +
+            '"]'
+          );
+
+
+        buttons.forEach(
+          function (button) {
+
+            button.classList.toggle(
+              "active"
+            );
+
+
+            button.textContent =
+              button.classList.contains(
+                "active"
+              )
+                ? "★"
+                : "☆";
+
+          }
+        );
+
+      }
+
+
+      document
+        .querySelectorAll(
+          ".watch-button"
+        )
+        .forEach(
+          function (button) {
+
+            button.addEventListener(
+              "click",
+              function (event) {
+
+                event.stopPropagation();
+
+                toggleWatch(
+                  button.dataset.watch
+                );
+
+              }
+            );
+
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          ".mini-watch"
+        )
+        .forEach(
+          function (button) {
+
+            button.addEventListener(
+              "click",
+              function () {
+
+                toggleWatch(
+                  button.dataset.miniWatch
+                );
+
+              }
+            );
+
+          }
+        );
+
+
+      /* =========================
+         BUY / SELL
+      ========================= */
+
+      document
+        .getElementById("buyButton")
+        .addEventListener(
+          "click",
+          function () {
 
             const coin =
-              coins[symbol];
+              coins[selectedCoin];
 
-            if (
-              symbol ===
-              "USDC"
-            ) {
 
-              coin.price =
-                1 +
-                (Math.random() -
-                0.5) *
-                0.001;
+            alert(
+              "BUY\n\n" +
+              coin.name +
+              "\nCurrent price: " +
+              formatPrice(
+                coin.price,
+                selectedCoin
+              ) +
+              "\n\nClassroom illustration only."
+            );
 
-            } else {
+          }
+        );
 
-              const movement =
-                (Math.random() -
-                0.48) *
-                coin.base *
-                0.00045;
 
-              coin.price +=
-                movement;
+      document
+        .getElementById("sellButton")
+        .addEventListener(
+          "click",
+          function () {
 
+            const coin =
+              coins[selectedCoin];
+
+
+            alert(
+              "SELL\n\n" +
+              coin.name +
+              "\nCurrent price: " +
+              formatPrice(
+                coin.price,
+                selectedCoin
+              ) +
+              "\n\nClassroom illustration only."
+            );
+
+          }
+        );
+
+
+      /* =========================
+         DRAG / SCROLL CHART
+      ========================= */
+
+      if (chartArea) {
+
+        chartArea.addEventListener(
+          "pointerdown",
+          function (event) {
+
+            dragStartX =
+              event.clientX;
+
+
+            try {
+
+              chartArea.setPointerCapture(
+                event.pointerId
+              );
+
+            } catch (error) {
+              /* Safe fallback */
             }
 
+          }
+        );
+
+
+        chartArea.addEventListener(
+          "pointermove",
+          function (event) {
+
             if (
-              symbol ===
-              selectedCoin
+              dragStartX === null
             ) {
+              return;
+            }
 
-              const last =
-                candles[
-                  candles.length - 1
-                ];
 
-              if (last) {
+            const movement =
+              event.clientX -
+              dragStartX;
+
+
+            const sensitivity =
+              window.innerWidth < 700
+                ? 0.25
+                : 0.45;
+
+
+            dragOffset -=
+              movement *
+              sensitivity;
+
+
+            const maxOffset =
+              Math.max(
+                0,
+                candles.length - 20
+              );
+
+
+            dragOffset =
+              Math.max(
+                0,
+                Math.min(
+                  maxOffset,
+                  dragOffset
+                )
+              );
+
+
+            dragStartX =
+              event.clientX;
+
+
+            drawChart();
+
+          }
+        );
+
+
+        chartArea.addEventListener(
+          "pointerup",
+          function () {
+
+            dragStartX = null;
+
+          }
+        );
+
+
+        chartArea.addEventListener(
+          "pointercancel",
+          function () {
+
+            dragStartX = null;
+
+          }
+        );
+
+      }
+
+
+      /* =========================
+         SIMULATED MARKET UPDATE
+      ========================= */
+
+      function updateMarket() {
+
+        Object.keys(coins)
+          .forEach(
+            function (symbol) {
+
+              const coin =
+                coins[symbol];
+
+
+              if (symbol === "USDC") {
+
+                coin.price =
+                  1 +
+                  (Math.random() - 0.5) *
+                  0.001;
+
+              } else {
+
+                const movement =
+                  (Math.random() - 0.48) *
+                  coin.base *
+                  0.00045;
+
+
+                coin.price +=
+                  movement;
+
+
+                coin.price =
+                  Math.max(
+                    coin.base * 0.82,
+                    Math.min(
+                      coin.base * 1.18,
+                      coin.price
+                    )
+                  );
+
+              }
+
+
+              if (
+                symbol === selectedCoin &&
+                candles.length
+              ) {
+
+                const last =
+                  candles[
+                    candles.length - 1
+                  ];
+
 
                 last.close =
                   coin.price;
+
 
                 last.high =
                   Math.max(
                     last.high,
                     coin.price
                   );
+
 
                 last.low =
                   Math.min(
@@ -2440,7 +2871,54 @@
 
               }
 
+
+              updateCoinDisplays(symbol);
+
             }
+          );
+
+
+        updateSelectedCoin();
+
+        drawChart();
+
+
+        const clock =
+          document.getElementById(
+            "marketClock"
+          );
+
+
+        if (clock) {
+
+          clock.textContent =
+            "Updated " +
+            new Date().toLocaleTimeString(
+              [],
+              {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+              }
+            );
+
+        }
+
+      }
+
+
+      /* =========================
+         INITIALIZE
+      ========================= */
+
+      createCandles();
+
+      updateSelectedCoin();
+
+
+      Object.keys(coins)
+        .forEach(
+          function (symbol) {
 
             updateCoinDisplays(
               symbol
@@ -2449,413 +2927,49 @@
           }
         );
 
-      updateSelectedCoin();
 
-      drawChart();
+      /*
+        Wait one frame before drawing.
+        This gives the browser time to
+        calculate the chart dimensions.
+      */
 
-      const clock =
-        document.getElementById(
-          "marketClock"
-        );
+      window.requestAnimationFrame(
+        function () {
 
-      clock.textContent =
-        "Updated " +
-        new Date()
-          .toLocaleTimeString(
-            [],
-            {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit"
-            }
-          );
-
-    }
-
-
-    function updateCoinDisplays(
-      symbol
-    ) {
-
-      const coin =
-        coins[symbol];
-
-      const cardPrice =
-        document.getElementById(
-          "cardPrice" +
-          symbol
-        );
-
-      const tablePrice =
-        document.getElementById(
-          "tablePrice" +
-          symbol
-        );
-
-      if (cardPrice) {
-
-        cardPrice.textContent =
-          formatCoinPrice(
-            coin.price,
-            symbol
-          );
-
-      }
-
-      if (tablePrice) {
-
-        tablePrice.textContent =
-          formatCoinPrice(
-            coin.price,
-            symbol
-          );
-
-      }
-
-    }
-
-
-    function formatCoinPrice(
-      price,
-      symbol
-    ) {
-
-      if (
-        symbol ===
-        "USDC"
-      ) {
-
-        return "$" +
-          price.toFixed(4);
-
-      }
-
-      return "$" +
-        price.toLocaleString(
-          "en-US",
-          {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }
-        );
-
-    }
-
-
-    /* TIMEFRAME */
-
-    function setTimeframe(
-      button,
-      selectedTimeframe
-    ) {
-
-      document
-        .querySelectorAll(
-          ".timeframe"
-        )
-        .forEach(
-          function(item) {
-
-            item.classList.remove(
-              "active"
-            );
-
-          }
-        );
-
-      button.classList.add(
-        "active"
-      );
-
-      timeframe =
-        selectedTimeframe;
-
-      createCandles();
-
-      drawChart();
-
-    }
-
-
-    /* SEARCH */
-
-    function searchMarkets() {
-
-      const query =
-        document.getElementById(
-          "marketSearch"
-        ).value
-        .toLowerCase()
-        .trim();
-
-      document
-        .querySelectorAll(
-          ".market-card"
-        )
-        .forEach(
-          function(card) {
-
-            const text =
-              card.textContent
-              .toLowerCase();
-
-            if (
-              text.includes(
-                query
-              )
-            ) {
-
-              card.classList.remove(
-                "hidden"
-              );
-
-            } else {
-
-              card.classList.add(
-                "hidden"
-              );
-
-            }
-
-          }
-        );
-
-    }
-
-
-    /* WATCHLIST */
-
-    function toggleWatch(
-      event,
-      symbol
-    ) {
-
-      event.stopPropagation();
-
-      const buttons =
-        document.querySelectorAll(
-          '[data-watch="' +
-          symbol +
-          '"]'
-        );
-
-      buttons.forEach(
-        function(button) {
-
-          button.classList.toggle(
-            "active"
-          );
-
-          button.textContent =
-            button.classList.contains(
-              "active"
-            )
-              ? "★"
-              : "☆";
+          drawChart();
 
         }
       );
 
-    }
 
+      /* =========================
+         AUTO UPDATE
+      ========================= */
 
-    function toggleMiniWatch(
-      symbol
-    ) {
-
-      const buttons =
-        document.querySelectorAll(
-          '[data-watch="' +
-          symbol +
-          '"], ' +
-          '[data-mini-watch="' +
-          symbol +
-          '"]'
+      animationTimer =
+        window.setInterval(
+          updateMarket,
+          3000
         );
 
-      buttons.forEach(
-        function(button) {
 
-          button.classList.toggle(
-            "active"
-          );
+      /* =========================
+         RESIZE
+      ========================= */
 
-          button.textContent =
-            button.classList.contains(
-              "active"
-            )
-              ? "★"
-              : "☆";
+      window.addEventListener(
+        "resize",
+        function () {
+
+          drawChart();
 
         }
       );
 
-    }
-
-
-    /* MARKET ACTION */
-
-    function marketAction(
-      action
-    ) {
-
-      const coin =
-        coins[selectedCoin];
-
-      alert(
-        action +
-        " " +
-        coin.name +
-        "\n\n" +
-        "Current price: " +
-        formatPrice(
-          coin.price
-        ) +
-        "\n\n" +
-        "This interface is for classroom illustration."
-      );
-
-    }
-
-
-    /* DRAG CHART */
-
-    const chartArea =
-      document.getElementById(
-        "chartArea"
-      );
-
-
-    chartArea.addEventListener(
-      "pointerdown",
-      function(event) {
-
-        dragStartX =
-          event.clientX;
-
-        chartArea.setPointerCapture(
-          event.pointerId
-        );
-
-      }
-    );
-
-
-    chartArea.addEventListener(
-      "pointermove",
-      function(event) {
-
-        if (
-          dragStartX ===
-          null
-        ) {
-
-          return;
-
-        }
-
-        const movement =
-          event.clientX -
-          dragStartX;
-
-        const sensitivity =
-          window.innerWidth <
-          700
-            ? 0.25
-            : 0.45;
-
-        dragOffset -=
-          movement *
-          sensitivity;
-
-        const maxOffset =
-          Math.max(
-            0,
-            candles.length - 20
-          );
-
-        dragOffset =
-          Math.max(
-            0,
-            Math.min(
-              maxOffset,
-              dragOffset
-            )
-          );
-
-        dragStartX =
-          event.clientX;
-
-        drawChart();
-
-      }
-    );
-
-
-    chartArea.addEventListener(
-      "pointerup",
-      function() {
-
-        dragStartX =
-          null;
-
-      }
-    );
-
-
-    chartArea.addEventListener(
-      "pointercancel",
-      function() {
-
-        dragStartX =
-          null;
-
-      }
-    );
-
-
-    /* INITIALISE */
-
-    createCandles();
-
-    updateSelectedCoin();
-
-    drawChart();
-
-    updateCoinDisplays(
-      "BTC"
-    );
-
-    updateCoinDisplays(
-      "ETH"
-    );
-
-    updateCoinDisplays(
-      "USDC"
-    );
-
-
-    /* AUTO UPDATE */
-
-    animationTimer =
-      setInterval(
-        updateMarket,
-        3000
-      );
-
-
-    /* RESIZE */
-
-    window.addEventListener(
-      "resize",
-      function() {
-
-        drawChart();
-
-      }
-    );
+  
 
   </script>
 
 </body>
-        </html>
+</html>

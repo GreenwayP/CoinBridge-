@@ -4,172 +4,244 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Log In | CoinBridge</title>
+  <title>Sign In | CoinBridge</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #050b14;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 18px;
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(circle at top left,#17345f 0%,transparent 38%),
+        radial-gradient(circle at bottom right,#102c49 0%,transparent 40%),
+        #050b14;
+      color:#fff;
+      padding:24px;
     }
 
-    .container {
-      width: 100%;
-      max-width: 450px;
+    .page{
+      width:100%;
+      max-width:470px;
     }
 
-    .logo {
-      text-align: center;
-      font-size: 27px;
-      font-weight: 800;
-      margin-bottom: 28px;
+    .brand{
+      text-align:center;
+      margin-bottom:24px;
     }
 
-    .logo span {
-      color: #22d3ee;
+    .brand-icon{
+      width:58px;
+      height:58px;
+      margin:0 auto 14px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#2d8cff,#6b5cff);
+      box-shadow:0 15px 35px rgba(45,140,255,.25);
+      font-size:27px;
+      font-weight:800;
     }
 
-    .card {
-      background: #091522;
-      border: 1px solid #20394d;
-      border-radius: 18px;
-      padding: 35px;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+    .brand h1{
+      font-size:29px;
+      letter-spacing:-.5px;
     }
 
-    .card h1 {
-      font-size: 29px;
-      margin-bottom: 8px;
+    .brand p{
+      color:#91a0b5;
+      margin-top:7px;
+      font-size:14px;
     }
 
-    .subtitle {
-      color: #8798ab;
-      font-size: 14px;
-      margin-bottom: 28px;
+    .card{
+      background:rgba(10,20,34,.88);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:24px;
+      padding:32px;
+      box-shadow:
+        0 25px 70px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.04);
+      backdrop-filter:blur(18px);
     }
 
-    .form-group {
-      margin-bottom: 18px;
+    .card h2{
+      font-size:23px;
+      margin-bottom:7px;
     }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #d8e0e8;
-      font-size: 14px;
+    .subtitle{
+      color:#91a0b5;
+      font-size:14px;
+      line-height:1.5;
+      margin-bottom:25px;
     }
 
-    input {
-      width: 100%;
-      padding: 13px 14px;
-      background: #07111d;
-      border: 1px solid #294052;
-      border-radius: 8px;
-      color: #ffffff;
-      font-size: 15px;
-      outline: none;
+    .field{
+      margin-bottom:17px;
     }
 
-    input:focus {
-      border-color: #22d3ee;
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-size:13px;
+      color:#dce5f2;
+      font-weight:600;
     }
 
-    .password-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+    input{
+      width:100%;
+      height:49px;
+      padding:0 14px;
+      border-radius:12px;
+      border:1px solid #26364d;
+      outline:none;
+      background:#08111f;
+      color:#fff;
+      font-size:14px;
+      transition:.2s;
     }
 
-    .password-row label {
-      margin-bottom: 0;
+    input::placeholder{
+      color:#65758b;
     }
 
-    .forgot {
-      color: #22d3ee;
-      font-size: 12px;
+    input:focus{
+      border-color:#328cff;
+      box-shadow:0 0 0 3px rgba(50,140,255,.12);
     }
 
-    button {
-      width: 100%;
-      border: none;
-      padding: 14px;
-      border-radius: 9px;
-      background: #22d3ee;
-      color: #041018;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-top: 5px;
+    .password-box{
+      position:relative;
     }
 
-    button:hover {
-      opacity: 0.9;
+    .password-box input{
+      padding-right:48px;
     }
 
-    .signup {
-      text-align: center;
-      color: #8798ab;
-      font-size: 14px;
-      margin-top: 23px;
+    .eye{
+      position:absolute;
+      right:13px;
+      top:50%;
+      transform:translateY(-50%);
+      border:0;
+      background:none;
+      color:#8292a8;
+      cursor:pointer;
+      font-size:18px;
+      padding:5px;
     }
 
-    .signup a {
-      color: #22d3ee;
-      font-weight: bold;
+    .eye:hover{
+      color:#fff;
     }
 
-    .back-home {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 13px;
+    .forgot{
+      display:block;
+      text-align:right;
+      margin-top:-7px;
+      margin-bottom:20px;
+      color:#61a7ff;
+      text-decoration:none;
+      font-size:12px;
     }
 
-    .back-home a {
-      color: #8798ab;
+    .forgot:hover{
+      text-decoration:underline;
     }
 
-    .back-home a:hover {
-      color: #22d3ee;
+    .button{
+      width:100%;
+      height:50px;
+      border:0;
+      border-radius:13px;
+      background:linear-gradient(135deg,#2d8cff,#665cff);
+      color:#fff;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+      box-shadow:0 12px 25px rgba(45,140,255,.18);
     }
 
-    .notice {
-      margin-top: 22px;
-      padding: 12px;
-      background: rgba(34,211,238,0.06);
-      border: 1px solid rgba(34,211,238,0.15);
-      border-radius: 8px;
-      color: #8da0b3;
-      font-size: 12px;
-      text-align: center;
+    .button:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(45,140,255,.28);
     }
 
-    .demo-message {
-      display: none;
-      margin-top: 15px;
-      padding: 11px;
-      border-radius: 8px;
-      background: rgba(52,211,153,0.08);
-      border: 1px solid rgba(52,211,153,0.2);
-      color: #34d399;
-      font-size: 12px;
-      text-align: center;
+    .button:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+      transform:none;
     }
 
-    @media (max-width: 480px) {
-      .card {
-        padding: 25px 20px;
+    .message{
+      display:none;
+      margin-bottom:18px;
+      padding:12px 14px;
+      border-radius:11px;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .message.error{
+      display:block;
+      color:#ffb8bd;
+      background:rgba(220,50,65,.10);
+      border:1px solid rgba(220,50,65,.25);
+    }
+
+    .message.success{
+      display:block;
+      color:#a9f3ca;
+      background:rgba(35,190,115,.10);
+      border:1px solid rgba(35,190,115,.25);
+    }
+
+    .signup-link{
+      text-align:center;
+      margin-top:22px;
+      color:#8292a8;
+      font-size:13px;
+    }
+
+    .signup-link a{
+      color:#61a7ff;
+      font-weight:700;
+      text-decoration:none;
+    }
+
+    .signup-link a:hover{
+      text-decoration:underline;
+    }
+
+    .security{
+      margin-top:20px;
+      text-align:center;
+      color:#5f7087;
+      font-size:11px;
+    }
+
+    @media(max-width:500px){
+      body{
+        padding:15px;
+      }
+
+      .card{
+        padding:25px 20px;
+        border-radius:20px;
+      }
+
+      .brand h1{
+        font-size:26px;
       }
     }
   </style>
@@ -177,117 +249,348 @@
 
 <body>
 
-  <div class="container">
+  <main class="page">
 
-    <div class="logo">
-      Coin<span>Bridge</span>
+    <div class="brand">
+      <div class="brand-icon">C</div>
+      <h1>CoinBridge</h1>
+      <p>Secure access to your account</p>
     </div>
 
-    <div class="card">
+    <section class="card">
 
-      <h1>Welcome back</h1>
+      <h2>Welcome back</h2>
 
       <p class="subtitle">
-        Log in to access your CoinBridge account.
+        Sign in to securely access your CoinBridge account.
       </p>
 
+      <div id="message" class="message"></div>
 
       <form id="loginForm">
 
-        <div class="form-group">
-
-          <label for="email">
-            Email Address
-          </label>
+        <div class="field">
+          <label for="email">Email address</label>
 
           <input
-            type="email"
             id="email"
-            name="email"
+            type="email"
             placeholder="Enter your email address"
             autocomplete="email"
             required
           >
-
         </div>
 
+        <div class="field">
 
-        <div class="form-group">
+          <label for="password">Password</label>
 
-          <div class="password-row">
+          <div class="password-box">
 
-            <label for="password">
-              Password
-            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
 
-            <a href="#" class="forgot">
-              Forgot password?
-            </a>
+            <button
+              type="button"
+              class="eye"
+              id="passwordEye"
+              aria-label="Show password"
+            >👁️</button>
 
           </div>
 
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-          >
-
         </div>
 
+        <a
+          href="#"
+          class="forgot"
+          id="forgotPassword"
+        >
+          Forgot password?
+        </a>
 
-        <button type="submit">
-          Log In
+        <button
+          type="submit"
+          class="button"
+          id="loginButton"
+        >
+          Sign In
         </button>
 
       </form>
 
-
-      <div id="demoMessage" class="demo-message">
-        Demo login successful. Opening dashboard...
-      </div>
-
-
-      <div class="signup">
+      <div class="signup-link">
         Don't have an account?
-        <a href="signup.html">Create Account</a>
+        <a href="signup.html">Create account</a>
       </div>
 
-
-      <div class="back-home">
-        <a href="index.html">
-          ← Back to CoinBridge
-        </a>
+      <div class="security">
+        🔒 Your account information is protected by secure authentication.
       </div>
 
+    </section>
 
-      <div class="notice">
-        Demo mode: authentication is not connected yet.
-        Do not enter real passwords or sensitive information.
-      </div>
+  </main>
 
-    </div>
 
-  </div>
+  <!-- =====================================================
+       SUPABASE
+  ====================================================== -->
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    const loginForm = document.getElementById("loginForm");
-    const demoMessage = document.getElementById("demoMessage");
 
-    loginForm.addEventListener("submit", function(event) {
+    /* =====================================================
+       COINBRIDGE SUPABASE CONFIGURATION
+    ===================================================== */
 
-      event.preventDefault();
+    const SUPABASE_URL =
+      "https://jgvpbbuslpwupjwxqfmz.supabase.co";
 
-      demoMessage.style.display = "block";
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_69Rflk-FZvhbtAbZ_RGRCg_cJHfexEc";
 
-      setTimeout(function() {
-        window.location.href = "dashboard.html";
-      }, 700);
 
-    });
+    /* =====================================================
+       CREATE SUPABASE CLIENT
+    ===================================================== */
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const form =
+      document.getElementById("loginForm");
+
+    const message =
+      document.getElementById("message");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const password =
+      document.getElementById("password");
+
+    const passwordEye =
+      document.getElementById("passwordEye");
+
+    const forgotPassword =
+      document.getElementById("forgotPassword");
+
+
+    /* =====================================================
+       MESSAGE
+    ===================================================== */
+
+    function showMessage(text,type){
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    function clearMessage(){
+
+      message.textContent = "";
+
+      message.className =
+        "message";
+
+    }
+
+
+    /* =====================================================
+       PASSWORD VISIBILITY
+    ===================================================== */
+
+    passwordEye.addEventListener(
+      "click",
+      function(){
+
+        if(password.type === "password"){
+
+          password.type = "text";
+
+          passwordEye.textContent = "🙈";
+
+        }else{
+
+          password.type = "password";
+
+          passwordEye.textContent = "👁️";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    form.addEventListener(
+      "submit",
+      async function(event){
+
+        event.preventDefault();
+
+        clearMessage();
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
+
+        const passwordValue =
+          password.value;
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+          "Signing in...";
+
+        try{
+
+          const {
+            data,
+            error
+          } =
+            await supabaseClient.auth.signInWithPassword({
+
+              email: email,
+
+              password: passwordValue
+
+            });
+
+
+          if(error){
+
+            throw error;
+
+          }
+
+
+          if(!data.user){
+
+            throw new Error(
+              "Unable to sign in. Please try again."
+            );
+
+          }
+
+
+          showMessage(
+            "Sign in successful. Redirecting...",
+            "success"
+          );
+
+
+          /*
+             Change this filename later if your
+             customer dashboard uses a different name.
+          */
+
+          setTimeout(function(){
+
+            window.location.href =
+              "dashboard.html";
+
+          },700);
+
+
+        }catch(error){
+
+          console.error(
+            "CoinBridge login error:",
+            error
+          );
+
+
+          let errorMessage =
+            error.message ||
+            "Unable to sign in.";
+
+
+          if(
+            errorMessage
+              .toLowerCase()
+              .includes("email not confirmed")
+          ){
+
+            errorMessage =
+              "Please confirm your email address before signing in.";
+
+          }
+
+
+          if(
+            errorMessage
+              .toLowerCase()
+              .includes("invalid login credentials")
+          ){
+
+            errorMessage =
+              "The email address or password is incorrect.";
+
+          }
+
+
+          showMessage(
+            errorMessage,
+            "error"
+          );
+
+        }finally{
+
+          loginButton.disabled = false;
+
+          loginButton.textContent =
+            "Sign In";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       FORGOT PASSWORD
+       ===================================================== */
+
+    forgotPassword.addEventListener(
+      "click",
+      function(event){
+
+        event.preventDefault();
+
+        showMessage(
+          "Password recovery will be available soon.",
+          "error"
+        );
+
+      }
+    );
+
   </script>
 
 </body>

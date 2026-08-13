@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -177,7 +176,7 @@
     }
 
     .panel-header {
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .panel-header h2 {
@@ -214,37 +213,23 @@
       font-size: 11px;
     }
 
-    /* INPUTS */
-
-    .input-group {
-      margin-bottom: 18px;
-    }
-
-    .input-group label {
-      display: block;
-      color: #8798ab;
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-
-    .input-group input,
-    .input-group select {
-      width: 100%;
-      padding: 12px 13px;
-      background: #07111d;
+    .setting-button {
+      padding: 9px 13px;
+      border-radius: 7px;
+      background: #0b1b2a;
       border: 1px solid #294052;
-      border-radius: 8px;
       color: #ffffff;
-      outline: none;
-      font-size: 13px;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
-    .input-group input:focus,
-    .input-group select:focus {
+    .setting-button:hover {
       border-color: #22d3ee;
+      color: #22d3ee;
     }
 
-    /* TOGGLE */
+    /* SWITCH */
 
     .switch {
       position: relative;
@@ -288,32 +273,20 @@
       transform: translateX(22px);
     }
 
-    /* SAVE */
+    /* SELECT */
 
-    .save-area {
-      margin-top: 5px;
+    .select {
+      padding: 9px 12px;
+      border-radius: 7px;
+      background: #07111d;
+      border: 1px solid #294052;
+      color: #ffffff;
+      font-size: 11px;
+      outline: none;
     }
 
-    .save-button {
-      padding: 12px 22px;
-      border: none;
-      border-radius: 8px;
-      background: #22d3ee;
-      color: #041018;
-      font-weight: 700;
-      font-size: 13px;
-      cursor: pointer;
-    }
-
-    .save-button:hover {
-      opacity: 0.9;
-    }
-
-    .save-message {
-      display: none;
-      margin-top: 12px;
-      color: #34d399;
-      font-size: 12px;
+    .select:focus {
+      border-color: #22d3ee;
     }
 
     /* NOTICE */
@@ -327,6 +300,7 @@
       color: #8798ab;
       font-size: 12px;
       text-align: center;
+      max-width: 900px;
     }
 
     /* MOBILE */
@@ -454,7 +428,7 @@
           ⚙️ Settings
         </a>
 
-        <a href="#">
+        <a href="./security.html">
           🔐 Security
         </a>
 
@@ -475,6 +449,8 @@
 
     <main class="main">
 
+      <!-- MOBILE HEADER -->
+
       <div class="mobile-header">
 
         <div class="logo">
@@ -488,23 +464,41 @@
       </div>
 
 
+      <!-- MOBILE MENU -->
+
       <div class="mobile-menu" id="mobileMenu">
 
-        <a href="./dashboard.html">🏠 Dashboard</a>
+        <a href="./dashboard.html">
+          🏠 Dashboard
+        </a>
 
-        <a href="./portfolio.html">💼 Portfolio</a>
+        <a href="./portfolio.html">
+          💼 Portfolio
+        </a>
 
-        <a href="./wallet.html">💰 Wallet</a>
+        <a href="./wallet.html">
+          💰 Wallet
+        </a>
 
-        <a href="./transactions.html">📊 Transactions</a>
+        <a href="./transactions.html">
+          📊 Transactions
+        </a>
 
-        <a href="./markets.html">📈 Markets</a>
+        <a href="./markets.html">
+          📈 Markets
+        </a>
 
-        <a href="./settings.html">⚙️ Settings</a>
+        <a href="./settings.html">
+          ⚙️ Settings
+        </a>
 
-        <a href="#">🔐 Security</a>
+        <a href="./security.html">
+          🔐 Security
+        </a>
 
-        <a href="./index.html">← Log Out</a>
+        <a href="./index.html">
+          ← Log Out
+        </a>
 
       </div>
 
@@ -515,14 +509,15 @@
 
         <div class="welcome">
 
-          <h1>Settings</h1>
+          <h1>
+            Settings
+          </h1>
 
           <p>
             Manage your CoinBridge account preferences.
           </p>
 
         </div>
-
 
         <div class="profile">
 
@@ -547,69 +542,48 @@
       </div>
 
 
-      <!-- SETTINGS -->
+      <!-- SETTINGS CONTENT -->
 
       <div class="settings-grid">
 
 
-        <!-- PROFILE -->
+        <!-- ACCOUNT SETTINGS -->
 
         <section class="panel">
 
           <div class="panel-header">
 
-            <h2>Profile</h2>
+            <h2>
+              Account Preferences
+            </h2>
 
             <p>
-              Update your basic account information.
+              Manage your basic account preferences.
             </p>
 
           </div>
 
 
-          <div class="input-group">
+          <div class="setting-row">
 
-            <label>
-              Display Name
-            </label>
+            <div class="setting-info">
 
-            <input
-              type="text"
-              id="displayName"
-              value="CoinBridge User"
+              <strong>
+                Display Name
+              </strong>
+
+              <span>
+                CoinBridge User
+              </span>
+
+            </div>
+
+            <button
+              class="setting-button"
+              onclick="editDisplayName()"
             >
-
-          </div>
-
-
-          <div class="input-group">
-
-            <label>
-              Email Address
-            </label>
-
-            <input
-              type="email"
-              id="email"
-              value="user@coinbridge.demo"
-            >
-
-          </div>
-
-        </section>
-
-
-        <!-- PREFERENCES -->
-
-        <section class="panel">
-
-          <div class="panel-header">
-
-            <h2>Preferences</h2>
-
-            <p>
-              Customize how CoinBridge behaves.
-            </p>
+              Edit
+            </button>
 
           </div>
 
@@ -623,11 +597,10 @@
               </strong>
 
               <span>
-                Receive notifications about account activity.
+                Receive updates about your account.
               </span>
 
             </div>
-
 
             <label class="switch">
 
@@ -653,11 +626,10 @@
               </strong>
 
               <span>
-                Get alerts when transactions are recorded.
+                Get notified about account activity.
               </span>
 
             </div>
-
 
             <label class="switch">
 
@@ -673,13 +645,32 @@
 
           </div>
 
+        </section>
+
+
+        <!-- DISPLAY SETTINGS -->
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <h2>
+              Display Settings
+            </h2>
+
+            <p>
+              Choose how information is displayed.
+            </p>
+
+          </div>
+
 
           <div class="setting-row">
 
             <div class="setting-info">
 
               <strong>
-                Appearance
+                Theme
               </strong>
 
               <span>
@@ -688,10 +679,10 @@
 
             </div>
 
-
             <select
-              id="appearance"
-              style="width:150px;padding:9px;background:#07111d;border:1px solid #294052;border-radius:7px;color:#ffffff;"
+              class="select"
+              id="themeSelect"
+              onchange="changeTheme()"
             >
 
               <option value="dark">
@@ -712,23 +703,74 @@
             <div class="setting-info">
 
               <strong>
-                Display Currency
+                Compact Mode
               </strong>
 
               <span>
-                Choose the currency used for balances.
+                Use a more compact dashboard layout.
               </span>
 
             </div>
 
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="compactMode"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+        </section>
+
+
+        <!-- CURRENCY SETTINGS -->
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <h2>
+              Currency
+            </h2>
+
+            <p>
+              Select your preferred display currency.
+            </p>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div class="setting-info">
+
+              <strong>
+                Display Currency
+              </strong>
+
+              <span>
+                Used for portfolio values and balances.
+              </span>
+
+            </div>
 
             <select
-              id="currency"
-              style="width:150px;padding:9px;background:#07111d;border:1px solid #294052;border-radius:7px;color:#ffffff;"
+              class="select"
+              id="currencySelect"
+              onchange="changeCurrency()"
             >
 
               <option value="USD">
                 USD
+              </option>
+
+              <option value="NGN">
+                NGN
               </option>
 
               <option value="EUR">
@@ -739,67 +781,7 @@
                 GBP
               </option>
 
-              <option value="NGN">
-                NGN
-              </option>
-
             </select>
-
-          </div>
-
-
-          <div class="setting-row">
-
-            <div class="setting-info">
-
-              <strong>
-                Language
-              </strong>
-
-              <span>
-                Select your preferred language.
-              </span>
-
-            </div>
-
-
-            <select
-              id="language"
-              style="width:150px;padding:9px;background:#07111d;border:1px solid #294052;border-radius:7px;color:#ffffff;"
-            >
-
-              <option value="en">
-                English
-              </option>
-
-              <option value="fr">
-                French
-              </option>
-
-              <option value="pt">
-                Portuguese
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="save-area">
-
-            <button
-              class="save-button"
-              onclick="saveSettings()"
-            >
-              Save Changes
-            </button>
-
-            <div
-              class="save-message"
-              id="saveMessage"
-            >
-              ✓ Settings saved successfully.
-            </div>
 
           </div>
 
@@ -809,11 +791,13 @@
       </div>
 
 
+      <!-- NOTICE -->
+
       <div class="notice">
 
-        ⚠️ Demo Settings — preferences shown here are for
-        demonstration purposes and are not connected to a
-        real account system.
+        ⚠️ Demo Settings — these preferences are currently
+        stored only for demonstration. They are not connected
+        to a real account or database yet.
 
       </div>
 
@@ -822,9 +806,9 @@
   </div>
 
 
-  <script>
+  <!-- JAVASCRIPT -->
 
-    /* MOBILE MENU */
+  <script>
 
     function toggleMenu() {
 
@@ -836,60 +820,121 @@
     }
 
 
-    /* SAVE SETTINGS */
+    function editDisplayName() {
 
-    function saveSettings() {
+      const newName =
+        prompt(
+          "Enter your new display name:",
+          "CoinBridge User"
+        );
 
-      const name =
-        document.getElementById("displayName").value;
+      if (newName) {
 
-      const email =
-        document.getElementById("email").value;
+        alert(
+          "Demo only: display name changed to " + newName
+        );
 
-      const notifications =
-        document.getElementById("emailNotifications").checked;
+      }
 
-      const alerts =
-        document.getElementById("transactionAlerts").checked;
-
-      const appearance =
-        document.getElementById("appearance").value;
-
-      const currency =
-        document.getElementById("currency").value;
-
-      const language =
-        document.getElementById("language").value;
+    }
 
 
-      localStorage.setItem(
-        "coinbridgeSettings",
-        JSON.stringify({
-          name,
-          email,
-          notifications,
-          alerts,
-          appearance,
-          currency,
-          language
-        })
+    document
+      .getElementById("emailNotifications")
+      .addEventListener(
+        "change",
+        function() {
+
+          if (this.checked) {
+
+            alert(
+              "Demo email notifications enabled."
+            );
+
+          } else {
+
+            alert(
+              "Demo email notifications disabled."
+            );
+
+          }
+
+        }
       );
 
 
-      const message =
-        document.getElementById("saveMessage");
+    document
+      .getElementById("transactionAlerts")
+      .addEventListener(
+        "change",
+        function() {
 
-      message.style.display = "block";
+          if (this.checked) {
 
-      setTimeout(function() {
+            alert(
+              "Demo transaction alerts enabled."
+            );
 
-        message.style.display = "none";
+          } else {
 
-      }, 3000);
+            alert(
+              "Demo transaction alerts disabled."
+            );
+
+          }
+
+        }
+      );
+
+
+    document
+      .getElementById("compactMode")
+      .addEventListener(
+        "change",
+        function() {
+
+          if (this.checked) {
+
+            alert(
+              "Demo compact mode enabled."
+            );
+
+          } else {
+
+            alert(
+              "Demo compact mode disabled."
+            );
+
+          }
+
+        }
+      );
+
+
+    function changeTheme() {
+
+      const theme =
+        document.getElementById("themeSelect").value;
+
+      alert(
+        "Demo theme changed to " + theme + "."
+      );
+
+    }
+
+
+    function changeCurrency() {
+
+      const currency =
+        document.getElementById("currencySelect").value;
+
+      alert(
+        "Demo currency changed to " + currency + "."
+      );
 
     }
 
   </script>
 
 </body>
-</html>
+  </html>

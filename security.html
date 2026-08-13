@@ -30,6 +30,8 @@
       min-height: 100vh;
     }
 
+    /* SIDEBAR */
+
     .sidebar {
       width: 245px;
       background: #07111d;
@@ -101,6 +103,8 @@
       color: #ffffff;
     }
 
+    /* MAIN */
+
     .main {
       margin-left: 245px;
       width: calc(100% - 245px);
@@ -154,6 +158,8 @@
       color: #34d399;
       font-size: 11px;
     }
+
+    /* SECURITY */
 
     .security-grid {
       display: grid;
@@ -231,6 +237,51 @@
       color: #22d3ee;
     }
 
+    /* PASSWORD FORM */
+
+    .password-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #294052;
+      background: #07111d;
+      color: #ffffff;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .password-input:focus {
+      border-color: #22d3ee;
+    }
+
+    .password-input::placeholder {
+      color: #617488;
+    }
+
+    .update-button {
+      width: fit-content;
+      padding: 10px 15px;
+      border-radius: 7px;
+      border: none;
+      background: #22d3ee;
+      color: #041018;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .update-button:hover {
+      opacity: 0.9;
+    }
+
+    /* SWITCH */
+
     .switch {
       position: relative;
       width: 46px;
@@ -273,6 +324,8 @@
       transform: translateX(22px);
     }
 
+    /* SESSIONS */
+
     .session {
       padding: 15px 0;
       border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -293,6 +346,8 @@
       font-size: 11px;
     }
 
+    /* NOTICE */
+
     .notice {
       margin-top: 20px;
       padding: 14px;
@@ -304,6 +359,8 @@
       text-align: center;
       max-width: 900px;
     }
+
+    /* MOBILE */
 
     @media (max-width: 700px) {
 
@@ -449,6 +506,8 @@
 
     <main class="main">
 
+      <!-- MOBILE HEADER -->
+
       <div class="mobile-header">
 
         <div class="logo">
@@ -462,16 +521,41 @@
       </div>
 
 
+      <!-- MOBILE MENU -->
+
       <div class="mobile-menu" id="mobileMenu">
 
-        <a href="./dashboard.html">🏠 Dashboard</a>
-        <a href="./portfolio.html">💼 Portfolio</a>
-        <a href="./wallet.html">💰 Wallet</a>
-        <a href="./transactions.html">📊 Transactions</a>
-        <a href="./markets.html">📈 Markets</a>
-        <a href="./settings.html">⚙️ Settings</a>
-        <a href="./security.html">🔐 Security</a>
-        <a href="./index.html">← Log Out</a>
+        <a href="./dashboard.html">
+          🏠 Dashboard
+        </a>
+
+        <a href="./portfolio.html">
+          💼 Portfolio
+        </a>
+
+        <a href="./wallet.html">
+          💰 Wallet
+        </a>
+
+        <a href="./transactions.html">
+          📊 Transactions
+        </a>
+
+        <a href="./markets.html">
+          📈 Markets
+        </a>
+
+        <a href="./settings.html">
+          ⚙️ Settings
+        </a>
+
+        <a href="./security.html">
+          🔐 Security
+        </a>
+
+        <a href="./index.html">
+          ← Log Out
+        </a>
 
       </div>
 
@@ -482,14 +566,15 @@
 
         <div class="welcome">
 
-          <h1>Security</h1>
+          <h1>
+            Security
+          </h1>
 
           <p>
             Protect your CoinBridge account and manage security preferences.
           </p>
 
         </div>
-
 
         <div class="profile">
 
@@ -514,6 +599,8 @@
       </div>
 
 
+      <!-- SECURITY CONTENT -->
+
       <div class="security-grid">
 
 
@@ -523,7 +610,9 @@
 
           <div class="panel-header">
 
-            <h2>Account Security</h2>
+            <h2>
+              Account Security
+            </h2>
 
             <p>
               Review and manage your account protection.
@@ -548,7 +637,7 @@
 
             <button
               class="security-button"
-              onclick="changePassword()"
+              onclick="focusPassword()"
             >
               Change
             </button>
@@ -607,13 +696,67 @@
         </section>
 
 
+        <!-- CHANGE PASSWORD -->
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <h2>
+              Change Password
+            </h2>
+
+            <p>
+              Update your account password.
+            </p>
+
+          </div>
+
+
+          <div class="password-form">
+
+            <input
+              type="password"
+              id="currentPassword"
+              class="password-input"
+              placeholder="Current password"
+            >
+
+            <input
+              type="password"
+              id="newPassword"
+              class="password-input"
+              placeholder="New password"
+            >
+
+            <input
+              type="password"
+              id="confirmPassword"
+              class="password-input"
+              placeholder="Confirm new password"
+            >
+
+            <button
+              class="update-button"
+              onclick="savePassword()"
+            >
+              Update Password
+            </button>
+
+          </div>
+
+        </section>
+
+
         <!-- LOGIN ACTIVITY -->
 
         <section class="panel">
 
           <div class="panel-header">
 
-            <h2>Login Activity</h2>
+            <h2>
+              Login Activity
+            </h2>
 
             <p>
               Recent sessions associated with this demo account.
@@ -677,6 +820,8 @@
       </div>
 
 
+      <!-- NOTICE -->
+
       <div class="notice">
 
         ⚠️ Demo Security — these security controls are for
@@ -690,6 +835,8 @@
   </div>
 
 
+  <!-- JAVASCRIPT -->
+
   <script>
 
     function toggleMenu() {
@@ -702,10 +849,55 @@
     }
 
 
-    function changePassword() {
+    function focusPassword() {
+
+      document
+        .getElementById("currentPassword")
+        .focus();
+
+    }
+
+
+    function savePassword() {
+
+      const currentPassword =
+        document.getElementById("currentPassword").value;
+
+      const newPassword =
+        document.getElementById("newPassword").value;
+
+      const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+
+      if (
+        !currentPassword ||
+        !newPassword ||
+        !confirmPassword
+      ) {
+
+        alert(
+          "Please fill in all password fields."
+        );
+
+        return;
+
+      }
+
+
+      if (newPassword !== confirmPassword) {
+
+        alert(
+          "New passwords do not match."
+        );
+
+        return;
+
+      }
+
 
       alert(
-        "Demo only: password management will be connected when the authentication system is added."
+        "Demo only: your password would be updated here when the authentication system is connected."
       );
 
     }
@@ -722,25 +914,28 @@
 
     document
       .getElementById("twoFactor")
-      .addEventListener("change", function() {
+      .addEventListener(
+        "change",
+        function() {
 
-        if (this.checked) {
+          if (this.checked) {
 
-          alert(
-            "Demo 2FA enabled."
-          );
+            alert(
+              "Demo 2FA enabled."
+            );
 
-        } else {
+          } else {
 
-          alert(
-            "Demo 2FA disabled."
-          );
+            alert(
+              "Demo 2FA disabled."
+            );
+
+          }
 
         }
-
-      });
+      );
 
   </script>
 
 </body>
-</html>
+              </html>

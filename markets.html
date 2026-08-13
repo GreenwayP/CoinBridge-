@@ -1,2371 +1,2528 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Markets | CoinBridge</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #050b14;
-      color: #ffffff;
-      min-height: 100vh;
-    }
-
-    button,
-    input {
-      font-family: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .layout {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-      width: 245px;
-      background: #07111d;
-      border-right: 1px solid #1b3042;
-      padding: 25px 16px;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      padding: 0 12px;
-      margin-bottom: 40px;
-    }
-
-    .logo span {
-      color: #22d3ee;
-    }
-
-    .menu-title {
-      color: #617488;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 0 12px;
-      margin-bottom: 10px;
-    }
-
-    .nav {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .nav a {
-      color: #91a1b4;
-      padding: 12px;
-      border-radius: 9px;
-      font-size: 14px;
-    }
-
-    .nav a:hover,
-    .nav a.active {
-      background: rgba(34, 211, 238, 0.09);
-      color: #22d3ee;
-    }
-
-    .logout {
-      position: absolute;
-      bottom: 25px;
-      left: 16px;
-      right: 16px;
-    }
-
-    .logout a {
-      display: block;
-      padding: 12px;
-      color: #8798ab;
-      font-size: 14px;
-      border-radius: 9px;
-    }
-
-    .logout a:hover {
-      background: rgba(255,255,255,0.04);
-      color: #ffffff;
-    }
-
-    /* MAIN */
-
-    .main {
-      margin-left: 245px;
-      width: calc(100% - 245px);
-      padding: 28px;
-    }
-
-    .mobile-header,
-    .mobile-menu {
-      display: none;
-    }
-
-    /* TOPBAR */
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-      gap: 20px;
-    }
-
-    .welcome h1 {
-      font-size: 28px;
-      margin-bottom: 6px;
-    }
-
-    .welcome p {
-      color: #718096;
-      font-size: 13px;
-    }
-
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #153247;
-      display: grid;
-      place-items: center;
-      color: #22d3ee;
-      font-weight: 800;
-    }
-
-    .profile-name {
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .profile-status {
-      color: #34d399;
-      font-size: 11px;
-      margin-top: 3px;
-    }
-
-    /* TOOLBAR */
-
-    .market-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-
-    .search-box {
-      position: relative;
-      width: 300px;
-    }
-
-    .search-box input {
-      width: 100%;
-      background: #091522;
-      border: 1px solid #1d3448;
-      color: #ffffff;
-      border-radius: 9px;
-      padding: 12px 14px 12px 38px;
-      outline: none;
-    }
-
-    .search-box input:focus {
-      border-color: #22d3ee;
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 13px;
-      top: 11px;
-      color: #718096;
-    }
-
-    .market-status {
-      color: #718096;
-      font-size: 11px;
-    }
-
-    .market-status span {
-      color: #34d399;
-    }
-
-    /* MARKET CARDS */
-
-    .market-cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-
-    .market-card {
-      background: #091522;
-      border: 1px solid #1d3448;
-      border-radius: 14px;
-      padding: 18px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .market-card:hover,
-    .market-card.selected {
-      border-color: #22d3ee;
-      transform: translateY(-1px);
-    }
-
-    .market-card.hidden {
-      display: none;
-    }
-
-    .market-card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .coin-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .coin-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #132b3d;
-      display: grid;
-      place-items: center;
-      color: #22d3ee;
-      font-weight: bold;
-    }
-
-    .coin-name {
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .coin-symbol {
-      color: #718096;
-      font-size: 10px;
-      margin-top: 3px;
-    }
-
-    .watch-button,
-    .mini-watch {
-      border: none;
-      background: transparent;
-      color: #617488;
-      font-size: 19px;
-    }
-
-    .watch-button.active,
-    .mini-watch.active {
-      color: #facc15;
-    }
-
-    .market-price {
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .market-change {
-      font-size: 11px;
-    }
-
-    .positive {
-      color: #34d399;
-    }
-
-    .negative {
-      color: #fb7185;
-    }
-
-    /* CHART */
-
-    .chart-panel {
-      background: #091522;
-      border: 1px solid #1d3448;
-      border-radius: 15px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    .chart-header {
-      padding: 20px;
-      border-bottom: 1px solid #1b3042;
-    }
-
-    .chart-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 18px;
-    }
-
-    .selected-coin {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .selected-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #132b3d;
-      display: grid;
-      place-items: center;
-      color: #22d3ee;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .selected-name {
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    .selected-symbol {
-      color: #718096;
-      font-size: 10px;
-      margin-top: 4px;
-    }
-
-    .selected-price {
-      font-size: 24px;
-      font-weight: 800;
-      text-align: right;
-    }
-
-    .selected-change {
-      font-size: 11px;
-      text-align: right;
-      margin-top: 4px;
-    }
-
-    .timeframes {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
-    .timeframe {
-      border: 1px solid #1d3448;
-      background: #07111d;
-      color: #718096;
-      border-radius: 6px;
-      padding: 7px 11px;
-      font-size: 10px;
-    }
-
-    .timeframe:hover,
-    .timeframe.active {
-      color: #22d3ee;
-      border-color: #22d3ee;
-      background: rgba(34,211,238,0.06);
-    }
-
-    .chart-area {
-      position: relative;
-      height: 430px;
-      background: #06101a;
-      overflow: hidden;
-      touch-action: none;
-    }
-
-    #marketChart {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    .chart-overlay {
-      position: absolute;
-      top: 15px;
-      left: 18px;
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      pointer-events: none;
-    }
-
-    .chart-stat {
-      background: rgba(5,11,20,0.78);
-      border: 1px solid rgba(255,255,255,0.06);
-      padding: 7px 10px;
-      border-radius: 6px;
-      font-size: 10px;
-      color: #91a1b4;
-      backdrop-filter: blur(5px);
-    }
-
-    .chart-stat strong {
-      color: #ffffff;
-      margin-left: 4px;
-    }
-
-    .chart-help {
-      position: absolute;
-      bottom: 12px;
-      left: 15px;
-      color: #526579;
-      font-size: 9px;
-      pointer-events: none;
-    }
-
-    /* ORDER AREA */
-
-    .order-panel {
-      padding: 20px;
-      border-top: 1px solid #1b3042;
-    }
-
-    .order-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .order-header h3 {
-      font-size: 15px;
-    }
-
-    .order-header span {
-      color: #718096;
-      font-size: 10px;
-    }
-
-    .order-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .order-box {
-      background: #07111d;
-      border: 1px solid #1d3448;
-      border-radius: 10px;
-      padding: 15px;
-    }
-
-    .order-box h4 {
-      font-size: 12px;
-      margin-bottom: 12px;
-    }
-
-    .order-row {
-      display: flex;
-      justify-content: space-between;
-      color: #718096;
-      font-size: 10px;
-      margin-bottom: 7px;
-    }
-
-    .order-row strong {
-      color: #ffffff;
-    }
-
-    .buy-button,
-    .sell-button {
-      width: 100%;
-      border: none;
-      border-radius: 7px;
-      padding: 10px;
-      color: #ffffff;
-      font-weight: bold;
-      font-size: 11px;
-      margin-top: 6px;
-    }
-
-    .buy-button {
-      background: #059669;
-    }
-
-    .sell-button {
-      background: #e11d48;
-    }
-
-    /* TABLE */
-
-    .table-panel {
-      background: #091522;
-      border: 1px solid #1d3448;
-      border-radius: 15px;
-      overflow: hidden;
-    }
-
-    .table-header {
-      padding: 20px;
-      border-bottom: 1px solid #1b3042;
-    }
-
-    .table-header h2 {
-      font-size: 17px;
-    }
-
-    .table-header p {
-      color: #718096;
-      font-size: 11px;
-      margin-top: 5px;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 650px;
-    }
-
-    th {
-      text-align: left;
-      color: #617488;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      padding: 13px 20px;
-      border-bottom: 1px solid #1b3042;
-    }
-
-    td {
-      padding: 15px 20px;
-      font-size: 11px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .table-coin {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .table-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: #132b3d;
-      display: grid;
-      place-items: center;
-      color: #22d3ee;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .table-name {
-      font-weight: bold;
-    }
-
-    .table-symbol {
-      color: #718096;
-      font-size: 9px;
-      margin-top: 2px;
-    }
-
-    /* MODAL */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.72);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 500;
-      backdrop-filter: blur(5px);
-    }
-
-    .modal.open {
-      display: flex;
-    }
-
-    .trade-modal {
-      width: 100%;
-      max-width: 430px;
-      background: #091522;
-      border: 1px solid #243c50;
-      border-radius: 16px;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.5);
-      overflow: hidden;
-    }
-
-    .modal-header {
-      padding: 20px;
-      border-bottom: 1px solid #1b3042;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .modal-title {
-      font-size: 17px;
-      font-weight: 800;
-    }
-
-    .modal-subtitle {
-      color: #718096;
-      font-size: 10px;
-      margin-top: 4px;
-    }
-
-    .close-modal {
-      border: none;
-      background: transparent;
-      color: #718096;
-      font-size: 23px;
-    }
-
-    .trade-body {
-      padding: 20px;
-    }
-
-    .trade-asset {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #07111d;
-      border: 1px solid #1d3448;
-      padding: 13px;
-      border-radius: 10px;
-      margin-bottom: 16px;
-    }
-
-    .trade-asset-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #132b3d;
-      color: #22d3ee;
-      display: grid;
-      place-items: center;
-      font-weight: bold;
-    }
-
-    .trade-asset-name {
-      font-weight: bold;
-      font-size: 13px;
-    }
-
-    .trade-asset-symbol {
-      color: #718096;
-      font-size: 10px;
-      margin-top: 3px;
-    }
-
-    .field-label {
-      color: #91a1b4;
-      font-size: 10px;
-      margin-bottom: 7px;
-      display: block;
-    }
-
-    .amount-input {
-      width: 100%;
-      background: #07111d;
-      border: 1px solid #1d3448;
-      color: #ffffff;
-      border-radius: 8px;
-      padding: 13px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .amount-input:focus {
-      border-color: #22d3ee;
-    }
-
-    .estimate {
-      display: flex;
-      justify-content: space-between;
-      color: #718096;
-      font-size: 11px;
-      margin-top: 10px;
-      margin-bottom: 18px;
-    }
-
-    .estimate strong {
-      color: #ffffff;
-    }
-
-    .review-button {
-      width: 100%;
-      border: none;
-      background: #22d3ee;
-      color: #031018;
-      border-radius: 8px;
-      padding: 12px;
-      font-weight: 800;
-      font-size: 12px;
-    }
-
-    .review-button.sell-mode {
-      background: #fb7185;
-      color: #ffffff;
-    }
-
-    /* CONFIRMATION */
-
-    .confirmation {
-      text-align: center;
-      padding: 30px 20px;
-      display: none;
-    }
-
-    .confirmation.show {
-      display: block;
-    }
-
-    .success-icon {
-      width: 55px;
-      height: 55px;
-      margin: 0 auto 15px;
-      border-radius: 50%;
-      background: rgba(52,211,153,0.12);
-      color: #34d399;
-      display: grid;
-      place-items: center;
-      font-size: 25px;
-    }
-
-    .confirmation h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-
-    .confirmation p {
-      color: #718096;
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .done-button {
-      width: 100%;
-      border: none;
-      background: #22d3ee;
-      color: #031018;
-      border-radius: 8px;
-      padding: 11px;
-      font-weight: 800;
-      margin-top: 20px;
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 1050px) {
-      .market-cards {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .sidebar {
-        display: none;
-      }
-
-      .main {
-        margin-left: 0;
-        width: 100%;
-        padding: 18px;
-      }
-
-      .mobile-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 18px;
-      }
-
-      .mobile-header .logo {
-        padding: 0;
-        margin: 0;
-      }
-
-      .menu-button {
-        background: none;
-        border: none;
-        color: #ffffff;
-        font-size: 25px;
-      }
-
-      .mobile-menu.open {
-        display: flex;
-        flex-direction: column;
-        background: #07111d;
-        border: 1px solid #1b3042;
-        border-radius: 12px;
-        padding: 10px;
-        margin-bottom: 20px;
-      }
-
-      .mobile-menu a {
-        color: #91a1b4;
-        padding: 13px;
-        border-radius: 8px;
-        font-size: 14px;
-      }
-
-      .topbar .profile {
-        display: none;
-      }
-
-      .search-box {
-        width: 100%;
-      }
-
-      .market-cards {
-        grid-template-columns: 1fr;
-      }
-
-      .chart-title-row {
-        flex-direction: column;
-      }
-
-      .selected-price,
-      .selected-change {
-        text-align: left;
-      }
-
-      .chart-area {
-        height: 330px;
-      }
-
-      .chart-overlay {
-        display: none;
-      }
-
-      .order-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .welcome h1 {
-        font-size: 24px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Markets | CoinBridge</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#050b14;
+  color:#fff;
+  min-height:100vh;
+}
+
+button,input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.layout{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:245px;
+  background:#07111d;
+  border-right:1px solid #1b3042;
+  padding:25px 16px;
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  z-index:100;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+  padding:0 12px;
+  margin-bottom:40px;
+}
+
+.logo span{
+  color:#22d3ee;
+}
+
+.menu-title{
+  color:#617488;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  padding:0 12px;
+  margin-bottom:10px;
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.nav a{
+  color:#91a1b4;
+  padding:12px;
+  border-radius:9px;
+  font-size:14px;
+}
+
+.nav a:hover,
+.nav a.active{
+  background:rgba(34,211,238,.09);
+  color:#22d3ee;
+}
+
+.logout{
+  position:absolute;
+  bottom:25px;
+  left:16px;
+  right:16px;
+}
+
+.logout a{
+  display:block;
+  padding:12px;
+  color:#8798ab;
+  font-size:14px;
+  border-radius:9px;
+}
+
+/* MAIN */
+
+.main{
+  margin-left:245px;
+  width:calc(100% - 245px);
+  padding:28px;
+}
+
+.mobile-header,
+.mobile-menu{
+  display:none;
+}
+
+/* TOPBAR */
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.welcome h1{
+  font-size:28px;
+  margin-bottom:6px;
+}
+
+.welcome p{
+  color:#718096;
+  font-size:13px;
+}
+
+.profile{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#153247;
+  display:grid;
+  place-items:center;
+  color:#22d3ee;
+  font-weight:800;
+}
+
+.profile-name{
+  font-size:13px;
+  font-weight:bold;
+}
+
+.profile-status{
+  color:#34d399;
+  font-size:11px;
+  margin-top:3px;
+}
+
+/* TOOLBAR */
+
+.market-toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+
+.search-box{
+  position:relative;
+  width:300px;
+}
+
+.search-box input{
+  width:100%;
+  background:#091522;
+  border:1px solid #1d3448;
+  color:#fff;
+  border-radius:9px;
+  padding:12px 14px 12px 38px;
+  outline:none;
+}
+
+.search-box input:focus{
+  border-color:#22d3ee;
+}
+
+.search-icon{
+  position:absolute;
+  left:13px;
+  top:11px;
+  color:#718096;
+}
+
+.market-status{
+  color:#718096;
+  font-size:11px;
+}
+
+.market-status span{
+  color:#34d399;
+}
+
+/* MARKET CARDS */
+
+.market-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.market-card{
+  background:#091522;
+  border:1px solid #1d3448;
+  border-radius:14px;
+  padding:18px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.market-card:hover,
+.market-card.selected{
+  border-color:#22d3ee;
+  transform:translateY(-1px);
+}
+
+.market-card.hidden{
+  display:none;
+}
+
+.market-card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.coin-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.coin-icon{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#132b3d;
+  display:grid;
+  place-items:center;
+  color:#22d3ee;
+  font-weight:bold;
+}
+
+.coin-name{
+  font-size:12px;
+  font-weight:bold;
+}
+
+.coin-symbol{
+  color:#718096;
+  font-size:10px;
+  margin-top:3px;
+}
+
+.watch-button,
+.mini-watch{
+  border:none;
+  background:transparent;
+  color:#617488;
+  font-size:19px;
+}
+
+.watch-button.active,
+.mini-watch.active{
+  color:#facc15;
+}
+
+.market-price{
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.market-change{
+  font-size:11px;
+}
+
+.positive{
+  color:#34d399;
+}
+
+.negative{
+  color:#fb7185;
+}
+
+/* CHART */
+
+.chart-panel{
+  background:#091522;
+  border:1px solid #1d3448;
+  border-radius:15px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.chart-header{
+  padding:20px;
+  border-bottom:1px solid #1b3042;
+}
+
+.chart-title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+  margin-bottom:18px;
+}
+
+.selected-coin{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.selected-icon{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#132b3d;
+  display:grid;
+  place-items:center;
+  color:#22d3ee;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.selected-name{
+  font-size:17px;
+  font-weight:bold;
+}
+
+.selected-symbol{
+  color:#718096;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.selected-price{
+  font-size:24px;
+  font-weight:800;
+  text-align:right;
+}
+
+.selected-change{
+  font-size:11px;
+  text-align:right;
+  margin-top:4px;
+}
+
+.timeframes{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.timeframe{
+  border:1px solid #1d3448;
+  background:#07111d;
+  color:#718096;
+  border-radius:6px;
+  padding:7px 11px;
+  font-size:10px;
+}
+
+.timeframe.active{
+  color:#22d3ee;
+  border-color:#22d3ee;
+  background:rgba(34,211,238,.06);
+}
+
+.chart-area{
+  position:relative;
+  height:430px;
+  background:#06101a;
+  overflow:hidden;
+  touch-action:none;
+}
+
+#marketChart{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.chart-overlay{
+  position:absolute;
+  top:15px;
+  left:18px;
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  pointer-events:none;
+}
+
+.chart-stat{
+  background:rgba(5,11,20,.78);
+  border:1px solid rgba(255,255,255,.06);
+  padding:7px 10px;
+  border-radius:6px;
+  font-size:10px;
+  color:#91a1b4;
+}
+
+.chart-stat strong{
+  color:#fff;
+  margin-left:4px;
+}
+
+/* ORDER */
+
+.order-panel{
+  padding:20px;
+  border-top:1px solid #1b3042;
+}
+
+.order-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.order-header h3{
+  font-size:15px;
+}
+
+.order-header span{
+  color:#718096;
+  font-size:10px;
+}
+
+.order-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.order-box{
+  background:#07111d;
+  border:1px solid #1d3448;
+  border-radius:10px;
+  padding:15px;
+}
+
+.order-box h4{
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.order-row{
+  display:flex;
+  justify-content:space-between;
+  color:#718096;
+  font-size:10px;
+  margin-bottom:7px;
+}
+
+.order-row strong{
+  color:#fff;
+}
+
+.buy-button,
+.sell-button{
+  width:100%;
+  border:none;
+  border-radius:7px;
+  padding:10px;
+  color:#fff;
+  font-weight:bold;
+  font-size:11px;
+  margin-top:6px;
+}
+
+.buy-button{
+  background:#059669;
+}
+
+.sell-button{
+  background:#e11d48;
+}
+
+.buy-button:hover{
+  background:#047857;
+}
+
+.sell-button:hover{
+  background:#be123c;
+}
+
+/* TABLE */
+
+.table-panel{
+  background:#091522;
+  border:1px solid #1d3448;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.table-header{
+  padding:20px;
+  border-bottom:1px solid #1b3042;
+}
+
+.table-header h2{
+  font-size:17px;
+}
+
+.table-header p{
+  color:#718096;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th{
+  text-align:left;
+  color:#617488;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  padding:13px 20px;
+  border-bottom:1px solid #1b3042;
+}
+
+td{
+  padding:15px 20px;
+  font-size:11px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.table-coin{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.table-icon{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#132b3d;
+  display:grid;
+  place-items:center;
+  color:#22d3ee;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.table-name{
+  font-weight:bold;
+}
+
+.table-symbol{
+  color:#718096;
+  font-size:9px;
+  margin-top:2px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1050px){
+  .market-cards{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:950px){
+
+  .sidebar{
+    width:210px;
+  }
+
+  .main{
+    margin-left:210px;
+    width:calc(100% - 210px);
+  }
+}
+
+@media(max-width:700px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:18px;
+  }
+
+  .mobile-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+  }
+
+  .mobile-header .logo{
+    padding:0;
+    margin:0;
+  }
+
+  .menu-button{
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:25px;
+  }
+
+  .mobile-menu.open{
+    display:flex;
+    flex-direction:column;
+    background:#07111d;
+    border:1px solid #1b3042;
+    border-radius:12px;
+    padding:10px;
+    margin-bottom:20px;
+  }
+
+  .mobile-menu a{
+    color:#91a1b4;
+    padding:13px;
+    font-size:14px;
+  }
+
+  .topbar .profile{
+    display:none;
+  }
+
+  .search-box{
+    width:100%;
+  }
+
+  .market-cards{
+    grid-template-columns:1fr;
+  }
+
+  .chart-title-row{
+    flex-direction:column;
+  }
+
+  .selected-price,
+  .selected-change{
+    text-align:left;
+  }
+
+  .chart-area{
+    height:330px;
+  }
+
+  .chart-overlay{
+    display:none;
+  }
+
+  .order-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="layout">
+<div class="layout">
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-      <div class="logo">
-        Coin<span>Bridge</span>
-      </div>
+  <div class="logo">
+    Coin<span>Bridge</span>
+  </div>
 
-      <div class="menu-title">Main Menu</div>
+  <div class="menu-title">Main Menu</div>
 
-      <nav class="nav">
-        <a href="./dashboard.html">🏠 Dashboard</a>
-        <a href="./portfolio.html">💼 Portfolio</a>
-        <a href="./wallet.html">💰 Wallet</a>
-        <a href="./transactions.html">📊 Transactions</a>
-        <a href="./markets.html" class="active">📈 Markets</a>
-      </nav>
+  <nav class="nav">
+    <a href="./dashboard.html">🏠 Dashboard</a>
+    <a href="./portfolio.html">💼 Portfolio</a>
+    <a href="./wallet.html">💰 Wallet</a>
+    <a href="./transactions.html">📊 Transactions</a>
+    <a href="./markets.html" class="active">📈 Markets</a>
+  </nav>
 
-      <div class="menu-title" style="margin-top:30px;">Account</div>
+  <div class="menu-title" style="margin-top:30px;">
+    Account
+  </div>
 
-      <nav class="nav">
-        <a href="./settings.html">⚙️ Settings</a>
-        <a href="./security.html">🔐 Security</a>
-      </nav>
+  <nav class="nav">
+    <a href="./settings.html">⚙️ Settings</a>
+    <a href="./security.html">🔐 Security</a>
+  </nav>
 
-      <div class="logout">
-        <a href="./index.html">← Log Out</a>
-      </div>
+  <div class="logout">
+    <a href="./index.html">← Log Out</a>
+  </div>
 
-    </aside>
+</aside>
 
-    <main class="main">
+<main class="main">
 
-      <div class="mobile-header">
+<div class="mobile-header">
 
-        <div class="logo">
-          Coin<span>Bridge</span>
-        </div>
+  <div class="logo">
+    Coin<span>Bridge</span>
+  </div>
 
-        <button class="menu-button" onclick="toggleMenu()">☰</button>
+  <button class="menu-button" onclick="toggleMenu()">☰</button>
 
-      </div>
+</div>
 
-      <div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu">
 
-        <a href="./dashboard.html">🏠 Dashboard</a>
-        <a href="./portfolio.html">💼 Portfolio</a>
-        <a href="./wallet.html">💰 Wallet</a>
-        <a href="./transactions.html">📊 Transactions</a>
-        <a href="./markets.html">📈 Markets</a>
-        <a href="./settings.html">⚙️ Settings</a>
-        <a href="./security.html">🔐 Security</a>
-        <a href="./index.html">← Log Out</a>
+  <a href="./dashboard.html">🏠 Dashboard</a>
+  <a href="./portfolio.html">💼 Portfolio</a>
+  <a href="./wallet.html">💰 Wallet</a>
+  <a href="./transactions.html">📊 Transactions</a>
+  <a href="./markets.html">📈 Markets</a>
+  <a href="./settings.html">⚙️ Settings</a>
+  <a href="./security.html">🔐 Security</a>
+  <a href="./index.html">← Log Out</a>
 
-      </div>
+</div>
 
-      <div class="topbar">
+<div class="topbar">
 
-        <div class="welcome">
-          <h1>Markets</h1>
-          <p>Explore digital asset prices and market movements.</p>
-        </div>
+  <div class="welcome">
 
-        <div class="profile">
+    <h1>Markets</h1>
 
-          <div class="avatar">U</div>
-
-          <div>
-            <div class="profile-name">CoinBridge User</div>
-            <div class="profile-status">● Account Active</div>
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="market-toolbar">
-
-        <div class="search-box">
-
-          <span class="search-icon">🔍</span>
-
-          <input
-            type="text"
-            id="marketSearch"
-            placeholder="Search Bitcoin, Ethereum..."
-            oninput="searchMarkets()"
-          >
-
-        </div>
-
-        <div class="market-status">
-          ● <span>Market updates active</span>
-        </div>
-
-      </div>
-
-      <section class="market-cards" id="marketCards">
-
-        <div
-          class="market-card selected"
-          data-coin="BTC"
-          onclick="selectCoin('BTC')"
-        >
-
-          <div class="market-card-top">
-
-            <div class="coin-info">
-
-              <div class="coin-icon">₿</div>
-
-              <div>
-                <div class="coin-name">Bitcoin</div>
-                <div class="coin-symbol">BTC</div>
-              </div>
-
-            </div>
-
-            <button
-              class="watch-button"
-              data-watch="BTC"
-              onclick="toggleWatch(event,'BTC')"
-            >☆</button>
-
-          </div>
-
-          <div class="market-price" id="cardPriceBTC">$67,420.20</div>
-          <div class="market-change positive" id="cardChangeBTC">+4.82%</div>
-
-        </div>
-
-        <div
-          class="market-card"
-          data-coin="ETH"
-          onclick="selectCoin('ETH')"
-        >
-
-          <div class="market-card-top">
-
-            <div class="coin-info">
-
-              <div class="coin-icon">Ξ</div>
-
-              <div>
-                <div class="coin-name">Ethereum</div>
-                <div class="coin-symbol">ETH</div>
-              </div>
-
-            </div>
-
-            <button
-              class="watch-button"
-              data-watch="ETH"
-              onclick="toggleWatch(event,'ETH')"
-            >☆</button>
-
-          </div>
-
-          <div class="market-price" id="cardPriceETH">$3,210.70</div>
-          <div class="market-change positive" id="cardChangeETH">+3.17%</div>
-
-        </div>
-
-        <div
-          class="market-card"
-          data-coin="USDC"
-          onclick="selectCoin('USDC')"
-        >
-
-          <div class="market-card-top">
-
-            <div class="coin-info">
-
-              <div class="coin-icon">$</div>
-
-              <div>
-                <div class="coin-name">USD Coin</div>
-                <div class="coin-symbol">USDC</div>
-              </div>
-
-            </div>
-
-            <button
-              class="watch-button"
-              data-watch="USDC"
-              onclick="toggleWatch(event,'USDC')"
-            >☆</button>
-
-          </div>
-
-          <div class="market-price" id="cardPriceUSDC">$1.0000</div>
-          <div class="market-change positive" id="cardChangeUSDC">+0.02%</div>
-
-        </div>
-
-      </section>
-
-      <section class="chart-panel">
-
-        <div class="chart-header">
-
-          <div class="chart-title-row">
-
-            <div class="selected-coin">
-
-              <div class="selected-icon" id="selectedIcon">₿</div>
-
-              <div>
-                <div class="selected-name" id="selectedName">Bitcoin</div>
-                <div class="selected-symbol" id="selectedSymbol">BTC / USD</div>
-              </div>
-
-            </div>
-
-            <div>
-
-              <div class="selected-price" id="selectedPrice">$67,420.20</div>
-
-              <div
-                class="selected-change positive"
-                id="selectedChange"
-              >
-                +4.82% today
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="timeframes">
-
-            <button class="timeframe active" onclick="setTimeframe(this,'1H')">1H</button>
-            <button class="timeframe" onclick="setTimeframe(this,'4H')">4H</button>
-            <button class="timeframe" onclick="setTimeframe(this,'1D')">1D</button>
-            <button class="timeframe" onclick="setTimeframe(this,'1W')">1W</button>
-
-          </div>
-
-        </div>
-
-        <div class="chart-area" id="chartArea">
-
-          <canvas id="marketChart"></canvas>
-
-          <div class="chart-overlay">
-
-            <div class="chart-stat">
-              24H High
-              <strong id="highValue">$68,210</strong>
-            </div>
-
-            <div class="chart-stat">
-              24H Low
-              <strong id="lowValue">$64,890</strong>
-            </div>
-
-            <div class="chart-stat">
-              Volume
-              <strong id="volumeValue">2.84B</strong>
-            </div>
-
-          </div>
-
-          <div class="chart-help">
-            Drag chart to explore price history
-          </div>
-
-        </div>
-
-        <div class="order-panel">
-
-          <div class="order-header">
-
-            <h3>Market Overview</h3>
-
-            <span id="marketClock">Updating</span>
-
-          </div>
-
-          <div class="order-grid">
-
-            <div class="order-box">
-
-              <h4>Buy</h4>
-
-              <div class="order-row">
-                <span>Asset</span>
-                <strong id="buyAsset">BTC</strong>
-              </div>
-
-              <div class="order-row">
-                <span>Price</span>
-                <strong id="buyPrice">$67,420.20</strong>
-              </div>
-
-              <div class="order-row">
-                <span>Available</span>
-                <strong>$12,480.50</strong>
-              </div>
-
-              <button
-                class="buy-button"
-                onclick="openTrade('Buy')"
-              >
-                Buy Asset
-              </button>
-
-            </div>
-
-            <div class="order-box">
-
-              <h4>Sell</h4>
-
-              <div class="order-row">
-                <span>Asset</span>
-                <strong id="sellAsset">BTC</strong>
-              </div>
-
-              <div class="order-row">
-                <span>Price</span>
-                <strong id="sellPrice">$67,420.20</strong>
-              </div>
-
-              <div class="order-row">
-                <span>Holding</span>
-                <strong id="holdingAmount">0.110 BTC</strong>
-              </div>
-
-              <button
-                class="sell-button"
-                onclick="openTrade('Sell')"
-              >
-                Sell Asset
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <section class="table-panel">
-
-        <div class="table-header">
-
-          <h2>Market Overview</h2>
-
-          <p>Current asset prices and market performance.</p>
-
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Asset</th>
-                <th>Price</th>
-                <th>24H Change</th>
-                <th>Market Range</th>
-                <th>Watch</th>
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              <tr>
-
-                <td>
-
-                  <div class="table-coin">
-
-                    <div class="table-icon">₿</div>
-
-                    <div>
-                      <div class="table-name">Bitcoin</div>
-                      <div class="table-symbol">BTC</div>
-                    </div>
-
-                  </div>
-
-                </td>
-
-                <td id="tablePriceBTC">$67,420.20</td>
-
-                <td class="positive" id="tableChangeBTC">+4.82%</td>
-
-                <td>$64,890 — $68,210</td>
-
-                <td>
-                  <button
-                    class="mini-watch"
-                    data-mini-watch="BTC"
-                    onclick="toggleMiniWatch('BTC')"
-                  >☆</button>
-                </td>
-
-              </tr>
-
-              <tr>
-
-                <td>
-
-                  <div class="table-coin">
-
-                    <div class="table-icon">Ξ</div>
-
-                    <div>
-                      <div class="table-name">Ethereum</div>
-                      <div class="table-symbol">ETH</div>
-                    </div>
-
-                  </div>
-
-                </td>
-
-                <td id="tablePriceETH">$3,210.70</td>
-
-                <td class="positive" id="tableChangeETH">+3.17%</td>
-
-                <td>$3,080 — $3,280</td>
-
-                <td>
-                  <button
-                    class="mini-watch"
-                    data-mini-watch="ETH"
-                    onclick="toggleMiniWatch('ETH')"
-                  >☆</button>
-                </td>
-
-              </tr>
-
-              <tr>
-
-                <td>
-
-                  <div class="table-coin">
-
-                    <div class="table-icon">$</div>
-
-                    <div>
-                      <div class="table-name">USD Coin</div>
-                      <div class="table-symbol">USDC</div>
-                    </div>
-
-                  </div>
-
-                </td>
-
-                <td id="tablePriceUSDC">$1.0000</td>
-
-                <td class="positive" id="tableChangeUSDC">+0.02%</td>
-
-                <td>$0.998 — $1.002</td>
-
-                <td>
-                  <button
-                    class="mini-watch"
-                    data-mini-watch="USDC"
-                    onclick="toggleMiniWatch('USDC')"
-                  >☆</button>
-                </td>
-
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </section>
-
-    </main>
+    <p>
+      Explore digital asset prices and market movements.
+    </p>
 
   </div>
 
-  <!-- TRADE MODAL -->
+  <div class="profile">
 
-  <div class="modal" id="tradeModal">
+    <div class="avatar">U</div>
 
-    <div class="trade-modal">
+    <div>
 
-      <div class="modal-header">
-
-        <div>
-          <div class="modal-title" id="modalTitle">Buy Bitcoin</div>
-          <div class="modal-subtitle">Review your order details</div>
-        </div>
-
-        <button class="close-modal" onclick="closeTrade()">×</button>
-
+      <div class="profile-name">
+        CoinBridge User
       </div>
 
-      <div class="trade-body" id="tradeBody">
-
-        <div class="trade-asset">
-
-          <div class="trade-asset-icon" id="tradeIcon">₿</div>
-
-          <div>
-            <div class="trade-asset-name" id="tradeName">Bitcoin</div>
-            <div class="trade-asset-symbol" id="tradeSymbol">BTC / USD</div>
-          </div>
-
-        </div>
-
-        <label class="field-label">
-          Amount in USD
-        </label>
-
-        <input
-          class="amount-input"
-          type="number"
-          id="tradeAmount"
-          placeholder="0.00"
-          min="0"
-          step="0.01"
-          oninput="calculateEstimate()"
-        >
-
-        <div class="estimate">
-
-          <span>Current price</span>
-
-          <strong id="modalPrice">
-            $67,420.20
-          </strong>
-
-        </div>
-
-        <div class="estimate">
-
-          <span>Estimated amount</span>
-
-          <strong id="estimatedAmount">
-            0 BTC
-          </strong>
-
-        </div>
-
-        <button
-          class="review-button"
-          id="reviewButton"
-          onclick="reviewTrade()"
-        >
-          Review Order
-        </button>
-
-      </div>
-
-      <div class="confirmation" id="confirmation">
-
-        <div class="success-icon">✓</div>
-
-        <h3 id="confirmationTitle">Order Confirmed</h3>
-
-        <p id="confirmationText">
-          Your order has been processed successfully.
-        </p>
-
-        <button class="done-button" onclick="closeTrade()">
-          Done
-        </button>
-
+      <div class="profile-status">
+        ● Account Active
       </div>
 
     </div>
 
   </div>
 
-  <script>
-
-    const coins = {
-
-      BTC: {
-        name: "Bitcoin",
-        symbol: "BTC",
-        pair: "BTC / USD",
-        icon: "₿",
-        price: 67420.20,
-        change: 4.82,
-        base: 67420.20,
-        volume: "2.84B"
-      },
-
-      ETH: {
-        name: "Ethereum",
-        symbol: "ETH",
-        pair: "ETH / USD",
-        icon: "Ξ",
-        price: 3210.70,
-        change: 3.17,
-        base: 3210.70,
-        volume: "1.42B"
-      },
-
-      USDC: {
-        name: "USD Coin",
-        symbol: "USDC",
-        pair: "USDC / USD",
-        icon: "$",
-        price: 1.00,
-        change: 0.02,
-        base: 1.00,
-        volume: "684M"
-      }
-
-    };
-
-    let selectedCoin = "BTC";
-    let timeframe = "1H";
-    let candles = [];
-    let dragStartX = null;
-    let dragOffset = 0;
-    let tradeType = "Buy";
-
-    function toggleMenu() {
-
-      document
-        .getElementById("mobileMenu")
-        .classList.toggle("open");
+</div>
 
-    }
+<div class="market-toolbar">
 
-    function formatCoinPrice(price, symbol) {
+  <div class="search-box">
 
-      if (symbol === "USDC") {
-        return "$" + price.toFixed(4);
-      }
+    <span class="search-icon">🔍</span>
 
-      return "$" + price.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
+    <input
+      id="marketSearch"
+      type="text"
+      placeholder="Search Bitcoin, Ethereum..."
+      oninput="searchMarkets()"
+    >
 
-    }
+  </div>
 
-    function formatSelectedPrice(price) {
-      return formatCoinPrice(price, selectedCoin);
-    }
+  <div class="market-status">
+    ● <span>Market updates active</span>
+  </div>
 
-    function createCandles() {
+</div>
 
-      const coin = coins[selectedCoin];
+<section class="market-cards">
 
-      candles = [];
+<div
+  class="market-card selected"
+  data-coin="BTC"
+  onclick="selectCoin('BTC')"
+>
 
-      let price = coin.base * 0.94;
+<div class="market-card-top">
 
-      for (let i = 0; i < 180; i++) {
+<div class="coin-info">
 
-        const movement =
-          (Math.random() - 0.46) *
-          coin.base *
-          0.012;
+<div class="coin-icon">₿</div>
 
-        const open = price;
+<div>
 
-        const close = Math.max(
-          coin.base * 0.86,
-          Math.min(
-            coin.base * 1.07,
-            price + movement
-          )
-        );
+<div class="coin-name">
+Bitcoin
+</div>
 
-        const high =
-          Math.max(open, close) +
-          Math.random() *
-          coin.base *
-          0.006;
+<div class="coin-symbol">
+BTC
+</div>
 
-        const low =
-          Math.min(open, close) -
-          Math.random() *
-          coin.base *
-          0.006;
+</div>
 
-        candles.push({
-          open,
-          high,
-          low,
-          close
-        });
+</div>
 
-        price = close;
+<button
+  class="watch-button"
+  data-watch="BTC"
+  onclick="toggleWatch(event,'BTC')"
+>☆</button>
 
-      }
+</div>
 
-      const finalCandle =
-        candles[candles.length - 1];
+<div
+  class="market-price"
+  id="cardPriceBTC"
+>
+$67,420.20
+</div>
 
-      const correction =
-        coin.base / finalCandle.close;
+<div class="market-change positive">
++4.82%
+</div>
 
-      candles = candles.map(candle => ({
-        open: candle.open * correction,
-        high: candle.high * correction,
-        low: candle.low * correction,
-        close: candle.close * correction
-      }));
+</div>
 
-      dragOffset = 0;
 
-    }
+<div
+  class="market-card"
+  data-coin="ETH"
+  onclick="selectCoin('ETH')"
+>
 
-    function formatChartPrice(price) {
+<div class="market-card-top">
 
-      if (selectedCoin === "USDC") {
-        return "$" + price.toFixed(4);
-      }
+<div class="coin-info">
 
-      if (price >= 1000) {
-        return "$" + Math.round(price).toLocaleString();
-      }
+<div class="coin-icon">Ξ</div>
 
-      return "$" + price.toFixed(2);
+<div>
 
-    }
+<div class="coin-name">
+Ethereum
+</div>
 
-    function priceToY(price, min, max, height) {
+<div class="coin-symbol">
+ETH
+</div>
 
-      return 25 +
-        ((max - price) / (max - min)) *
-        (height - 55);
+</div>
 
-    }
+</div>
 
-    function drawChart() {
+<button
+  class="watch-button"
+  data-watch="ETH"
+  onclick="toggleWatch(event,'ETH')"
+>☆</button>
 
-      const canvas =
-        document.getElementById("marketChart");
+</div>
 
-      const area =
-        document.getElementById("chartArea");
+<div
+  class="market-price"
+  id="cardPriceETH"
+>
+$3,210.70
+</div>
 
-      if (!canvas || !area || !candles.length) {
-        return;
-      }
+<div class="market-change positive">
++3.17%
+</div>
 
-      const rect =
-        area.getBoundingClientRect();
+</div>
 
-      const dpr =
-        window.devicePixelRatio || 1;
 
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+<div
+  class="market-card"
+  data-coin="USDC"
+  onclick="selectCoin('USDC')"
+>
 
-      canvas.style.width = rect.width + "px";
-      canvas.style.height = rect.height + "px";
+<div class="market-card-top">
 
-      const ctx = canvas.getContext("2d");
+<div class="coin-info">
 
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+<div class="coin-icon">$</div>
 
-      const width = rect.width;
-      const height = rect.height;
+<div>
 
-      ctx.clearRect(0, 0, width, height);
+<div class="coin-name">
+USD Coin
+</div>
 
-      ctx.fillStyle = "#06101a";
-      ctx.fillRect(0, 0, width, height);
+<div class="coin-symbol">
+USDC
+</div>
 
-      const visibleCount =
-        width < 600 ? 55 : 90;
+</div>
 
-      let end =
-        candles.length -
-        Math.round(dragOffset);
+</div>
 
-      end = Math.max(visibleCount, end);
-      end = Math.min(candles.length, end);
+<button
+  class="watch-button"
+  data-watch="USDC"
+  onclick="toggleWatch(event,'USDC')"
+>☆</button>
 
-      const start =
-        Math.max(0, end - visibleCount);
+</div>
 
-      const visible =
-        candles.slice(start, end);
+<div
+  class="market-price"
+  id="cardPriceUSDC"
+>
+$1.0000
+</div>
 
-      if (!visible.length) {
-        return;
-      }
+<div class="market-change positive">
++0.02%
+</div>
 
-      let minPrice =
-        Math.min(...visible.map(c => c.low));
+</div>
 
-      let maxPrice =
-        Math.max(...visible.map(c => c.high));
+</section>
 
-      const padding =
-        (maxPrice - minPrice) * 0.12;
 
-      minPrice -= padding;
-      maxPrice += padding;
+<section class="chart-panel">
 
-      ctx.strokeStyle =
-        "rgba(130,160,185,0.09)";
+<div class="chart-header">
 
-      ctx.lineWidth = 1;
+<div class="chart-title-row">
 
-      const horizontalLines = 6;
+<div class="selected-coin">
 
-      for (let i = 0; i <= horizontalLines; i++) {
+<div
+  class="selected-icon"
+  id="selectedIcon"
+>
+₿
+</div>
 
-        const y =
-          25 +
-          ((height - 55) /
-          horizontalLines) * i;
+<div>
 
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
+<div
+  class="selected-name"
+  id="selectedName"
+>
+Bitcoin
+</div>
 
-      }
+<div
+  class="selected-symbol"
+  id="selectedSymbol"
+>
+BTC / USD
+</div>
 
-      const verticalLines =
-        width < 600 ? 7 : 10;
+</div>
 
-      for (let i = 0; i <= verticalLines; i++) {
+</div>
 
-        const x =
-          (width / verticalLines) * i;
+<div>
 
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
+<div
+  class="selected-price"
+  id="selectedPrice"
+>
+$67,420.20
+</div>
 
-      }
+<div
+  class="selected-change positive"
+  id="selectedChange"
+>
++4.82% today
+</div>
 
-      ctx.fillStyle = "#607489";
-      ctx.font = "10px Arial";
+</div>
 
-      for (let i = 0; i <= horizontalLines; i++) {
+</div>
 
-        const price =
-          maxPrice -
-          ((maxPrice - minPrice) /
-          horizontalLines) * i;
+<div class="timeframes">
 
-        const y =
-          25 +
-          ((height - 55) /
-          horizontalLines) * i;
+<button
+  class="timeframe active"
+  onclick="setTimeframe(this,'1H')"
+>
+1H
+</button>
 
-        ctx.fillText(
-          formatChartPrice(price),
-          width - 70,
-          y - 3
-        );
+<button
+  class="timeframe"
+  onclick="setTimeframe(this,'4H')"
+>
+4H
+</button>
 
-      }
+<button
+  class="timeframe"
+  onclick="setTimeframe(this,'1D')"
+>
+1D
+</button>
 
-      const chartWidth = width - 78;
+<button
+  class="timeframe"
+  onclick="setTimeframe(this,'1W')"
+>
+1W
+</button>
 
-      const candleSpace =
-        chartWidth / visible.length;
+</div>
 
-      const candleWidth =
-        Math.max(3, candleSpace * 0.58);
+</div>
 
-      visible.forEach((candle, index) => {
 
-        const x =
-          index * candleSpace +
-          candleSpace / 2;
+<div
+  class="chart-area"
+  id="chartArea"
+>
 
-        const highY =
-          priceToY(
-            candle.high,
-            minPrice,
-            maxPrice,
-            height
-          );
+<canvas id="marketChart"></canvas>
 
-        const lowY =
-          priceToY(
-            candle.low,
-            minPrice,
-            maxPrice,
-            height
-          );
+<div class="chart-overlay">
 
-        const openY =
-          priceToY(
-            candle.open,
-            minPrice,
-            maxPrice,
-            height
-          );
+<div class="chart-stat">
 
-        const closeY =
-          priceToY(
-            candle.close,
-            minPrice,
-            maxPrice,
-            height
-          );
+24H High
 
-        const rising =
-          candle.close >= candle.open;
+<strong id="highValue">
+$68,210
+</strong>
 
-        ctx.strokeStyle =
-          rising ? "#34d399" : "#fb7185";
+</div>
 
-        ctx.fillStyle =
-          rising ? "#34d399" : "#fb7185";
+<div class="chart-stat">
 
-        ctx.beginPath();
-        ctx.moveTo(x, highY);
-        ctx.lineTo(x, lowY);
-        ctx.stroke();
+24H Low
 
-        const bodyTop =
-          Math.min(openY, closeY);
+<strong id="lowValue">
+$64,890
+</strong>
 
-        const bodyHeight =
-          Math.max(
-            1,
-            Math.abs(closeY - openY)
-          );
+</div>
 
-        ctx.fillRect(
-          x - candleWidth / 2,
-          bodyTop,
-          candleWidth,
-          bodyHeight
-        );
+<div class="chart-stat">
 
-      });
+Volume
 
-      const current =
-        candles[candles.length - 1].close;
+<strong id="volumeValue">
+2.84B
+</strong>
 
-      const currentY =
-        priceToY(
-          current,
-          minPrice,
-          maxPrice,
-          height
-        );
+</div>
 
-      ctx.setLineDash([5, 5]);
+</div>
 
-      ctx.strokeStyle =
-        "rgba(34,211,238,0.65)";
+</div>
 
-      ctx.beginPath();
-      ctx.moveTo(0, currentY);
-      ctx.lineTo(width - 75, currentY);
-      ctx.stroke();
 
-      ctx.setLineDash([]);
+<div class="order-panel">
 
-      ctx.fillStyle = "#22d3ee";
+<div class="order-header">
 
-      ctx.fillRect(
-        width - 74,
-        currentY - 10,
-        74,
-        20
-      );
+<h3>
+Market Overview
+</h3>
 
-      ctx.fillStyle = "#031018";
-      ctx.font = "bold 9px Arial";
+<span id="marketClock">
+Updating
+</span>
 
-      ctx.fillText(
-        formatChartPrice(current),
-        width - 69,
-        currentY + 3
-      );
+</div>
 
-    }
+<div class="order-grid">
 
-    function selectCoin(symbol) {
+<div class="order-box">
 
-      selectedCoin = symbol;
+<h4>
+Buy
+</h4>
 
-      document
-        .querySelectorAll(".market-card")
-        .forEach(card => {
+<div class="order-row">
 
-          card.classList.toggle(
-            "selected",
-            card.dataset.coin === symbol
-          );
+<span>
+Asset
+</span>
 
-        });
+<strong id="buyAsset">
+BTC
+</strong>
 
-      createCandles();
-      updateSelectedCoin();
-      drawChart();
+</div>
 
-    }
+<div class="order-row">
 
-    function updateSelectedCoin() {
+<span>
+Price
+</span>
 
-      const coin = coins[selectedCoin];
+<strong id="buyPrice">
+$67,420.20
+</strong>
 
-      document.getElementById("selectedIcon").textContent =
-        coin.icon;
+</div>
 
-      document.getElementById("selectedName").textContent =
-        coin.name;
+<div class="order-row">
 
-      document.getElementById("selectedSymbol").textContent =
-        coin.pair;
+<span>
+Available
+</span>
 
-      document.getElementById("selectedPrice").textContent =
-        formatSelectedPrice(coin.price);
+<strong>
+$12,480.50
+</strong>
 
-      document.getElementById("selectedChange").textContent =
-        "+" + coin.change.toFixed(2) + "% today";
+</div>
 
-      document.getElementById("buyAsset").textContent =
-        coin.symbol;
+<button
+  class="buy-button"
+  onclick="submitMarketOrder('Buy')"
+>
+Buy Asset
+</button>
 
-      document.getElementById("sellAsset").textContent =
-        coin.symbol;
+</div>
 
-      document.getElementById("buyPrice").textContent =
-        formatSelectedPrice(coin.price);
 
-      document.getElementById("sellPrice").textContent =
-        formatSelectedPrice(coin.price);
+<div class="order-box">
 
-      updateStats();
+<h4>
+Sell
+</h4>
 
-    }
+<div class="order-row">
 
-    function updateStats() {
+<span>
+Asset
+</span>
 
-      const coin = coins[selectedCoin];
+<strong id="sellAsset">
+BTC
+</strong>
 
-      document.getElementById("highValue").textContent =
-        formatSelectedPrice(coin.price * 1.011);
+</div>
 
-      document.getElementById("lowValue").textContent =
-        formatSelectedPrice(coin.price * 0.962);
+<div class="order-row">
 
-      document.getElementById("volumeValue").textContent =
-        coin.volume;
+<span>
+Price
+</span>
 
-    }
+<strong id="sellPrice">
+$67,420.20
+</strong>
 
-    function updateCoinDisplays(symbol) {
+</div>
 
-      const coin = coins[symbol];
+<div class="order-row">
 
-      const cardPrice =
-        document.getElementById(
-          "cardPrice" + symbol
-        );
+<span>
+Holding
+</span>
 
-      const tablePrice =
-        document.getElementById(
-          "tablePrice" + symbol
-        );
+<strong>
+0.110 BTC
+</strong>
 
-      if (cardPrice) {
-        cardPrice.textContent =
-          formatCoinPrice(
-            coin.price,
-            symbol
-          );
-      }
+</div>
 
-      if (tablePrice) {
-        tablePrice.textContent =
-          formatCoinPrice(
-            coin.price,
-            symbol
-          );
-      }
+<button
+  class="sell-button"
+  onclick="submitMarketOrder('Sell')"
+>
+Sell Asset
+</button>
 
-    }
+</div>
 
-    function updateMarket() {
+</div>
 
-      Object.keys(coins).forEach(symbol => {
+</div>
 
-        const coin = coins[symbol];
+</section>
 
-        if (symbol === "USDC") {
 
-          coin.price =
-            1 +
-            (Math.random() - 0.5) *
-            0.001;
+<section class="table-panel">
 
-        } else {
+<div class="table-header">
 
-          const movement =
-            (Math.random() - 0.48) *
-            coin.base *
-            0.00045;
+<h2>
+Market Overview
+</h2>
 
-          coin.price += movement;
+<p>
+Current asset prices and market performance.
+</p>
 
-        }
+</div>
 
-        if (symbol === selectedCoin) {
+<div class="table-wrap">
 
-          const last =
-            candles[candles.length - 1];
+<table>
 
-          if (last) {
+<thead>
 
-            last.close = coin.price;
+<tr>
 
-            last.high =
-              Math.max(
-                last.high,
-                coin.price
-              );
+<th>
+Asset
+</th>
 
-            last.low =
-              Math.min(
-                last.low,
-                coin.price
-              );
+<th>
+Price
+</th>
 
-          }
+<th>
+24H Change
+</th>
 
-        }
+<th>
+Market Range
+</th>
 
-        updateCoinDisplays(symbol);
+<th>
+Watch
+</th>
 
-      });
+</tr>
 
-      updateSelectedCoin();
-      drawChart();
+</thead>
 
-      document.getElementById("marketClock").textContent =
-        "Updated " +
-        new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit"
-        });
+<tbody>
 
-    }
+<tr>
 
-    function setTimeframe(button, selectedTimeframe) {
+<td>
 
-      document
-        .querySelectorAll(".timeframe")
-        .forEach(item => {
-          item.classList.remove("active");
-        });
+<div class="table-coin">
 
-      button.classList.add("active");
+<div class="table-icon">
+₿
+</div>
 
-      timeframe = selectedTimeframe;
+<div>
 
-      createCandles();
-      drawChart();
+<div class="table-name">
+Bitcoin
+</div>
 
-    }
+<div class="table-symbol">
+BTC
+</div>
 
-    function searchMarkets() {
+</div>
 
-      const query =
-        document
-          .getElementById("marketSearch")
-          .value
-          .toLowerCase()
-          .trim();
+</div>
 
-      document
-        .querySelectorAll(".market-card")
-        .forEach(card => {
+</td>
 
-          const text =
-            card.textContent.toLowerCase();
+<td id="tablePriceBTC">
+$67,420.20
+</td>
 
-          card.classList.toggle(
-            "hidden",
-            !text.includes(query)
-          );
+<td class="positive">
++4.82%
+</td>
 
-        });
+<td>
+$64,890 — $68,210
+</td>
 
-    }
+<td>
 
-    function toggleWatch(event, symbol) {
+<button
+  class="mini-watch"
+  data-mini-watch="BTC"
+  onclick="toggleMiniWatch('BTC')"
+>
+☆
+</button>
 
-      event.stopPropagation();
+</td>
 
-      const buttons =
-        document.querySelectorAll(
-          '[data-watch="' + symbol + '"], ' +
-          '[data-mini-watch="' + symbol + '"]'
-        );
+</tr>
 
-      buttons.forEach(button => {
 
-        button.classList.toggle("active");
+<tr>
 
-        button.textContent =
-          button.classList.contains("active")
-            ? "★"
-            : "☆";
+<td>
 
-      });
+<div class="table-coin">
 
-    }
+<div class="table-icon">
+Ξ
+</div>
 
-    function toggleMiniWatch(symbol) {
+<div>
 
-      const buttons =
-        document.querySelectorAll(
-          '[data-watch="' + symbol + '"], ' +
-          '[data-mini-watch="' + symbol + '"]'
-        );
+<div class="table-name">
+Ethereum
+</div>
 
-      buttons.forEach(button => {
+<div class="table-symbol">
+ETH
+</div>
 
-        button.classList.toggle("active");
+</div>
 
-        button.textContent =
-          button.classList.contains("active")
-            ? "★"
-            : "☆";
+</div>
 
-      });
+</td>
 
-    }
+<td id="tablePriceETH">
+$3,210.70
+</td>
 
-    /* TRADE MODAL */
+<td class="positive">
++3.17%
+</td>
 
-    function openTrade(type) {
+<td>
+$3,080 — $3,280
+</td>
 
-      tradeType = type;
+<td>
 
-      const coin = coins[selectedCoin];
+<button
+  class="mini-watch"
+  data-mini-watch="ETH"
+  onclick="toggleMiniWatch('ETH')"
+>
+☆
+</button>
 
-      document.getElementById("modalTitle").textContent =
-        type + " " + coin.name;
+</td>
 
-      document.getElementById("tradeIcon").textContent =
-        coin.icon;
+</tr>
 
-      document.getElementById("tradeName").textContent =
-        coin.name;
 
-      document.getElementById("tradeSymbol").textContent =
-        coin.pair;
+<tr>
 
-      document.getElementById("modalPrice").textContent =
-        formatSelectedPrice(coin.price);
+<td>
 
-      document.getElementById("tradeAmount").value = "";
+<div class="table-coin">
 
-      document.getElementById("estimatedAmount").textContent =
-        "0 " + coin.symbol;
+<div class="table-icon">
+$
+</div>
 
-      document.getElementById("reviewButton").textContent =
-        "Review " + type + " Order";
+<div>
 
-      document.getElementById("reviewButton").classList.toggle(
-        "sell-mode",
-        type === "Sell"
-      );
+<div class="table-name">
+USD Coin
+</div>
 
-      document.getElementById("tradeBody").style.display =
-        "block";
+<div class="table-symbol">
+USDC
+</div>
 
-      document.getElementById("confirmation").classList.remove(
-        "show"
-      );
+</div>
 
-      document.getElementById("tradeModal").classList.add(
-        "open"
-      );
+</div>
 
-    }
+</td>
 
-    function closeTrade() {
+<td id="tablePriceUSDC">
+$1.0000
+</td>
 
-      document
-        .getElementById("tradeModal")
-        .classList.remove("open");
+<td class="positive">
++0.02%
+</td>
 
-    }
+<td>
+$0.998 — $1.002
+</td>
 
-    function calculateEstimate() {
+<td>
 
-      const amount =
-        parseFloat(
-          document.getElementById("tradeAmount").value
-        ) || 0;
+<button
+  class="mini-watch"
+  data-mini-watch="USDC"
+  onclick="toggleMiniWatch('USDC')"
+>
+☆
+</button>
 
-      const coin =
-        coins[selectedCoin];
+</td>
 
-      const estimated =
-        coin.price > 0
-          ? amount / coin.price
-          : 0;
+</tr>
 
-      document.getElementById("estimatedAmount").textContent =
-        estimated.toFixed(
-          selectedCoin === "USDC" ? 4 : 8
-        ) +
-        " " +
-        coin.symbol;
+</tbody>
 
-    }
+</table>
 
-    function reviewTrade() {
+</div>
 
-      const amount =
-        parseFloat(
-          document.getElementById("tradeAmount").value
-        );
+</section>
 
-      if (!amount || amount <= 0) {
+</main>
 
-        alert("Please enter an amount.");
+</div>
 
-        return;
 
-      }
+<script>
 
-      const coin = coins[selectedCoin];
+const coins = {
 
-      const quantity =
-        amount / coin.price;
+BTC:{
+name:"Bitcoin",
+symbol:"BTC / USD",
+short:"BTC",
+icon:"₿",
+price:67420.20,
+change:4.82,
+base:67420.20,
+volume:"2.84B"
+},
 
-      document.getElementById("tradeBody").style.display =
-        "none";
+ETH:{
+name:"Ethereum",
+symbol:"ETH / USD",
+short:"ETH",
+icon:"Ξ",
+price:3210.70,
+change:3.17,
+base:3210.70,
+volume:"1.42B"
+},
 
-      document.getElementById("confirmation").classList.add(
-        "show"
-      );
+USDC:{
+name:"USD Coin",
+symbol:"USDC / USD",
+short:"USDC",
+icon:"$",
+price:1,
+change:0.02,
+base:1,
+volume:"684M"
+}
 
-      document.getElementById("confirmationTitle").textContent =
-        tradeType + " Order Confirmed";
+};
 
-      document.getElementById("confirmationText").textContent =
-        tradeType +
-        " order for " +
-        quantity.toFixed(
-          selectedCoin === "USDC" ? 4 : 8
-        ) +
-        " " +
-        coin.symbol +
-        " at " +
-        formatSelectedPrice(coin.price) +
-        " has been confirmed.";
+let selectedCoin="BTC";
 
-    }
+let candles=[];
 
-    /* CHART DRAGGING */
+let dragStartX=null;
 
-    const chartArea =
-      document.getElementById("chartArea");
+let dragOffset=0;
 
-    chartArea.addEventListener(
-      "pointerdown",
-      event => {
 
-        dragStartX = event.clientX;
+/* MOBILE MENU */
 
-        chartArea.setPointerCapture(
-          event.pointerId
-        );
+function toggleMenu(){
 
-      }
-    );
+document
+.getElementById("mobileMenu")
+.classList.toggle("open");
 
-    chartArea.addEventListener(
-      "pointermove",
-      event => {
+}
 
-        if (dragStartX === null) {
-          return;
-        }
 
-        const movement =
-          event.clientX - dragStartX;
+/* FORMAT */
 
-        const sensitivity =
-          window.innerWidth < 700
-            ? 0.25
-            : 0.45;
+function formatPrice(value){
 
-        dragOffset -=
-          movement * sensitivity;
+if(selectedCoin==="USDC"){
 
-        const maxOffset =
-          Math.max(
-            0,
-            candles.length - 20
-          );
+return "$"+value.toFixed(4);
 
-        dragOffset =
-          Math.max(
-            0,
-            Math.min(
-              maxOffset,
-              dragOffset
-            )
-          );
+}
 
-        dragStartX = event.clientX;
+return "$"+value.toLocaleString(
+"en-US",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+);
 
-        drawChart();
+}
 
-      }
-    );
 
-    chartArea.addEventListener(
-      "pointerup",
-      () => {
-        dragStartX = null;
-      }
-    );
+function formatCoinPrice(value,symbol){
 
-    chartArea.addEventListener(
-      "pointercancel",
-      () => {
-        dragStartX = null;
-      }
-    );
+if(symbol==="USDC"){
 
-    /* CLOSE MODAL WHEN CLICKING OUTSIDE */
+return "$"+value.toFixed(4);
 
-    document
-      .getElementById("tradeModal")
-      .addEventListener(
-        "click",
-        event => {
+}
 
-          if (
-            event.target.id === "tradeModal"
-          ) {
+return "$"+value.toLocaleString(
+"en-US",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+);
 
-            closeTrade();
+}
 
-          }
 
-        }
-      );
+/* CANDLES */
 
-    /* INITIALISE */
+function createCandles(){
 
-    createCandles();
-    updateSelectedCoin();
-    drawChart();
+const coin=coins[selectedCoin];
 
-    updateCoinDisplays("BTC");
-    updateCoinDisplays("ETH");
-    updateCoinDisplays("USDC");
+candles=[];
 
-    setInterval(
-      updateMarket,
-      3000
-    );
+let price=coin.base*0.94;
 
-    window.addEventListener(
-      "resize",
-      function () {
+for(let i=0;i<180;i++){
 
-        drawChart();
+const movement=
+(Math.random()-0.46)*
+coin.base*
+0.012;
 
-      }
-    );
+const open=price;
 
-  </script>
+const close=
+Math.max(
+coin.base*0.86,
+Math.min(
+coin.base*1.07,
+price+movement
+)
+);
+
+const high=
+Math.max(open,close)+
+Math.random()*coin.base*0.006;
+
+const low=
+Math.min(open,close)-
+Math.random()*coin.base*0.006;
+
+candles.push({
+open,
+high,
+low,
+close
+});
+
+price=close;
+
+}
+
+const finalClose=
+candles[candles.length-1].close;
+
+const correction=
+coin.base/finalClose;
+
+candles=candles.map(c=>({
+
+open:c.open*correction,
+high:c.high*correction,
+low:c.low*correction,
+close:c.close*correction
+
+}));
+
+dragOffset=0;
+
+}
+
+
+/* DRAW */
+
+function drawChart(){
+
+const canvas=
+document.getElementById("marketChart");
+
+const area=
+document.getElementById("chartArea");
+
+if(!canvas||!area||!candles.length)return;
+
+const rect=
+area.getBoundingClientRect();
+
+const dpr=
+window.devicePixelRatio||1;
+
+canvas.width=
+rect.width*dpr;
+
+canvas.height=
+rect.height*dpr;
+
+const ctx=
+canvas.getContext("2d");
+
+ctx.setTransform(
+dpr,
+0,
+0,
+dpr,
+0,
+0
+);
+
+const width=rect.width;
+
+const height=rect.height;
+
+ctx.clearRect(
+0,
+0,
+width,
+height
+);
+
+ctx.fillStyle="#06101a";
+
+ctx.fillRect(
+0,
+0,
+width,
+height
+);
+
+
+/* VISIBLE CANDLES */
+
+const visibleCount=
+width<600?55:85;
+
+let end=
+candles.length-
+Math.round(dragOffset);
+
+end=
+Math.max(
+visibleCount,
+Math.min(
+candles.length,
+end
+)
+);
+
+const start=
+Math.max(
+0,
+end-visibleCount
+);
+
+const visible=
+candles.slice(
+start,
+end
+);
+
+if(!visible.length)return;
+
+
+/* RANGE */
+
+let minPrice=
+Math.min(
+...visible.map(c=>c.low)
+);
+
+let maxPrice=
+Math.max(
+...visible.map(c=>c.high)
+);
+
+const padding=
+(maxPrice-minPrice)*0.12;
+
+minPrice-=padding;
+
+maxPrice+=padding;
+
+
+/* GRID */
+
+ctx.strokeStyle=
+"rgba(130,160,185,.09)";
+
+ctx.lineWidth=1;
+
+for(let i=0;i<=6;i++){
+
+const y=
+25+
+((height-55)/6)*i;
+
+ctx.beginPath();
+
+ctx.moveTo(0,y);
+
+ctx.lineTo(width,y);
+
+ctx.stroke();
+
+}
+
+for(let i=0;i<=10;i++){
+
+const x=
+(width/10)*i;
+
+ctx.beginPath();
+
+ctx.moveTo(x,0);
+
+ctx.lineTo(x,height);
+
+ctx.stroke();
+
+}
+
+
+/* PRICE LABELS */
+
+ctx.fillStyle="#607489";
+
+ctx.font="10px Arial";
+
+for(let i=0;i<=6;i++){
+
+const price=
+maxPrice-
+((maxPrice-minPrice)/6)*i;
+
+const y=
+25+
+((height-55)/6)*i;
+
+ctx.fillText(
+formatChartPrice(price),
+width-70,
+y-3
+);
+
+}
+
+
+/* CANDLE SIZE */
+
+const chartWidth=
+width-78;
+
+const candleSpace=
+chartWidth/visible.length;
+
+const candleWidth=
+Math.max(
+3,
+candleSpace*.58
+);
+
+
+/* CANDLES */
+
+visible.forEach(
+(candle,index)=>{
+
+const x=
+index*candleSpace+
+candleSpace/2;
+
+const highY=
+priceToY(
+candle.high,
+minPrice,
+maxPrice,
+height
+);
+
+const lowY=
+priceToY(
+candle.low,
+minPrice,
+maxPrice,
+height
+);
+
+const openY=
+priceToY(
+candle.open,
+minPrice,
+maxPrice,
+height
+);
+
+const closeY=
+priceToY(
+candle.close,
+minPrice,
+maxPrice,
+height
+);
+
+const rising=
+candle.close>=candle.open;
+
+ctx.strokeStyle=
+rising?"#34d399":"#fb7185";
+
+ctx.fillStyle=
+rising?"#34d399":"#fb7185";
+
+ctx.beginPath();
+
+ctx.moveTo(
+x,
+highY
+);
+
+ctx.lineTo(
+x,
+lowY
+);
+
+ctx.stroke();
+
+const bodyTop=
+Math.min(
+openY,
+closeY
+);
+
+const bodyHeight=
+Math.max(
+1,
+Math.abs(
+closeY-openY
+)
+);
+
+ctx.fillRect(
+x-candleWidth/2,
+bodyTop,
+candleWidth,
+bodyHeight
+);
+
+}
+);
+
+
+/* CURRENT PRICE */
+
+const current=
+coins[selectedCoin].price;
+
+const currentY=
+priceToY(
+current,
+minPrice,
+maxPrice,
+height
+);
+
+ctx.setLineDash(
+[5,5]
+);
+
+ctx.strokeStyle=
+"rgba(34,211,238,.65)";
+
+ctx.beginPath();
+
+ctx.moveTo(
+0,
+currentY
+);
+
+ctx.lineTo(
+width-75,
+currentY
+);
+
+ctx.stroke();
+
+ctx.setLineDash([]);
+
+ctx.fillStyle="#22d3ee";
+
+ctx.fillRect(
+width-74,
+currentY-10,
+74,
+20
+);
+
+ctx.fillStyle="#031018";
+
+ctx.font="bold 9px Arial";
+
+ctx.fillText(
+formatChartPrice(current),
+width-69,
+currentY+3
+);
+
+}
+
+
+function formatChartPrice(price){
+
+if(selectedCoin==="USDC"){
+
+return "$"+price.toFixed(4);
+
+}
+
+if(price>=1000){
+
+return "$"+
+Math.round(price)
+.toLocaleString();
+
+}
+
+return "$"+price.toFixed(2);
+
+}
+
+
+function priceToY(
+price,
+min,
+max,
+height
+){
+
+return 25+
+((max-price)/(max-min))*
+(height-55);
+
+}
+
+
+/* SELECT */
+
+function selectCoin(symbol){
+
+selectedCoin=symbol;
+
+document
+.querySelectorAll(".market-card")
+.forEach(card=>{
+
+card.classList.toggle(
+"selected",
+card.dataset.coin===symbol
+);
+
+});
+
+createCandles();
+
+updateSelectedCoin();
+
+drawChart();
+
+}
+
+
+function updateSelectedCoin(){
+
+const coin=
+coins[selectedCoin];
+
+document
+.getElementById("selectedIcon")
+.textContent=
+coin.icon;
+
+document
+.getElementById("selectedName")
+.textContent=
+coin.name;
+
+document
+.getElementById("selectedSymbol")
+.textContent=
+coin.symbol;
+
+document
+.getElementById("selectedPrice")
+.textContent=
+formatPrice(coin.price);
+
+document
+.getElementById("selectedChange")
+.textContent=
+"+"+
+coin.change.toFixed(2)+
+"% today";
+
+document
+.getElementById("buyAsset")
+.textContent=
+coin.short;
+
+document
+.getElementById("sellAsset")
+.textContent=
+coin.short;
+
+document
+.getElementById("buyPrice")
+.textContent=
+formatPrice(coin.price);
+
+document
+.getElementById("sellPrice")
+.textContent=
+formatPrice(coin.price);
+
+document
+.getElementById("highValue")
+.textContent=
+formatPrice(
+coin.price*1.011
+);
+
+document
+.getElementById("lowValue")
+.textContent=
+formatPrice(
+coin.price*.962
+);
+
+document
+.getElementById("volumeValue")
+.textContent=
+coin.volume;
+
+}
+
+
+/* MARKET */
+
+function updateMarket(){
+
+Object.keys(coins).forEach(
+symbol=>{
+
+const coin=
+coins[symbol];
+
+if(symbol==="USDC"){
+
+coin.price=
+1+
+(Math.random()-.5)*.001;
+
+}else{
+
+coin.price+=
+(Math.random()-.48)*
+coin.base*
+.00045;
+
+}
+
+updateCoinDisplays(symbol);
+
+});
+
+updateSelectedCoin();
+
+drawChart();
+
+document
+.getElementById("marketClock")
+.textContent=
+"Updated "+
+new Date()
+.toLocaleTimeString(
+[],
+{
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit"
+}
+);
+
+}
+
+
+function updateCoinDisplays(symbol){
+
+const coin=
+coins[symbol];
+
+const card=
+document.getElementById(
+"cardPrice"+symbol
+);
+
+const table=
+document.getElementById(
+"tablePrice"+symbol
+);
+
+if(card){
+
+card.textContent=
+formatCoinPrice(
+coin.price,
+symbol
+);
+
+}
+
+if(table){
+
+table.textContent=
+formatCoinPrice(
+coin.price,
+symbol
+);
+
+}
+
+}
+
+
+/* TIMEFRAME */
+
+function setTimeframe(
+button,
+value
+){
+
+document
+.querySelectorAll(".timeframe")
+.forEach(
+item=>
+item.classList.remove(
+"active"
+)
+);
+
+button.classList.add("active");
+
+createCandles();
+
+drawChart();
+
+}
+
+
+/* SEARCH */
+
+function searchMarkets(){
+
+const query=
+document
+.getElementById("marketSearch")
+.value
+.toLowerCase()
+.trim();
+
+document
+.querySelectorAll(".market-card")
+.forEach(card=>{
+
+const text=
+card.textContent
+.toLowerCase();
+
+card.classList.toggle(
+"hidden",
+!text.includes(query)
+);
+
+});
+
+}
+
+
+/* WATCHLIST */
+
+function toggleWatch(
+event,
+symbol
+){
+
+event.stopPropagation();
+
+toggleWatchState(symbol);
+
+}
+
+
+function toggleMiniWatch(symbol){
+
+toggleWatchState(symbol);
+
+}
+
+
+function toggleWatchState(symbol){
+
+const buttons=
+document.querySelectorAll(
+'[data-watch="'+symbol+'"],[data-mini-watch="'+symbol+'"]'
+);
+
+buttons.forEach(button=>{
+
+button.classList.toggle(
+"active"
+);
+
+button.textContent=
+button.classList.contains(
+"active"
+)
+?"★"
+:"☆";
+
+});
+
+}
+
+
+/* ==========================================
+   PENDING BUY / SELL ORDER
+   ========================================== */
+
+function submitMarketOrder(action){
+
+const coin=
+coins[selectedCoin];
+
+/*
+  Create a unique order ID.
+*/
+
+const orderId=
+"ORD-"+Date.now();
+
+/*
+  This is the customer order.
+
+  IMPORTANT:
+  The order is NOT completed here.
+
+  It stays Pending until your Admin page
+  approves or rejects it.
+*/
+
+const order={
+
+id:orderId,
+
+type:action,
+
+asset:coin.short,
+
+assetName:coin.name,
+
+price:Number(
+coin.price.toFixed(
+coin.short==="USDC"?4:2
+)
+),
+
+status:"Pending",
+
+customer:"CoinBridge User",
+
+createdAt:new Date().toISOString(),
+
+adminNote:""
+
+};
+
+
+/*
+  Get existing pending orders.
+*/
+
+let existingOrders=[];
+
+try{
+
+existingOrders=
+JSON.parse(
+localStorage.getItem(
+"coinbridge_pending_orders"
+)||"[]"
+);
+
+if(!Array.isArray(existingOrders)){
+
+existingOrders=[];
+
+}
+
+}catch(error){
+
+existingOrders=[];
+
+}
+
+
+/*
+  Add the new request.
+*/
+
+existingOrders.push(order);
+
+
+/*
+  Save it for the Admin page.
+*/
+
+localStorage.setItem(
+"coinbridge_pending_orders",
+JSON.stringify(
+existingOrders
+)
+);
+
+
+/*
+  Also keep a general order history.
+*/
+
+let history=[];
+
+try{
+
+history=
+JSON.parse(
+localStorage.getItem(
+"coinbridge_order_history"
+)||"[]"
+);
+
+if(!Array.isArray(history)){
+
+history=[];
+
+}
+
+}catch(error){
+
+history=[];
+
+}
+
+history.push(order);
+
+localStorage.setItem(
+"coinbridge_order_history",
+JSON.stringify(history)
+);
+
+
+/*
+  Professional confirmation.
+*/
+
+alert(
+
+"Order submitted successfully\n\n"+
+"Order ID: "+orderId+"\n"+
+action+" "+coin.name+"\n"+
+"Price: "+formatPrice(coin.price)+"\n"+
+"Status: PENDING\n\n"+
+"Your request has been sent to the admin for approval."
+
+);
+
+}
+
+
+/* DRAG CHART */
+
+const chartArea=
+document.getElementById(
+"chartArea"
+);
+
+chartArea.addEventListener(
+"pointerdown",
+event=>{
+
+dragStartX=
+event.clientX;
+
+chartArea.setPointerCapture(
+event.pointerId
+);
+
+}
+);
+
+
+chartArea.addEventListener(
+"pointermove",
+event=>{
+
+if(dragStartX===null)return;
+
+const movement=
+event.clientX-dragStartX;
+
+dragOffset-=
+movement*
+(window.innerWidth<700?
+.25:
+.45);
+
+const maxOffset=
+Math.max(
+0,
+candles.length-20
+);
+
+dragOffset=
+Math.max(
+0,
+Math.min(
+maxOffset,
+dragOffset
+)
+);
+
+dragStartX=
+event.clientX;
+
+drawChart();
+
+}
+);
+
+
+chartArea.addEventListener(
+"pointerup",
+()=>{
+
+dragStartX=null;
+
+}
+);
+
+
+chartArea.addEventListener(
+"pointercancel",
+()=>{
+
+dragStartX=null;
+
+}
+);
+
+
+/* START */
+
+createCandles();
+
+updateSelectedCoin();
+
+updateCoinDisplays("BTC");
+
+updateCoinDisplays("ETH");
+
+updateCoinDisplays("USDC");
+
+drawChart();
+
+
+/* SIMULATED MARKET MOVEMENT */
+
+setInterval(
+updateMarket,
+3000
+);
+
+
+/* RESIZE */
+
+window.addEventListener(
+"resize",
+()=>{
+drawChart();
+}
+);
+
+</script>
 
 </body>
 </html>

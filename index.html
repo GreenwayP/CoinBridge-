@@ -4,202 +4,321 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>CoinBridge | Digital Asset Exchange</title>
+  <title>CoinBridge | Your Digital Asset Gateway</title>
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background: #07111f;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #050b14;
       color: #ffffff;
       line-height: 1.6;
     }
 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* HEADER */
+
     header {
-      width: 100%;
-      padding: 20px 7%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5, 11, 20, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 25px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: #07111f;
     }
 
     .logo {
       font-size: 25px;
-      font-weight: bold;
-      letter-spacing: 0.5px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
     }
 
     .logo span {
-      color: #2dd4bf;
+      color: #22d3ee;
     }
 
-    nav {
+    .nav-links {
       display: flex;
-      gap: 25px;
       align-items: center;
+      gap: 28px;
     }
 
-    nav a {
-      color: #cbd5e1;
-      text-decoration: none;
-      font-size: 15px;
+    .nav-links a {
+      color: #b8c4d3;
+      font-size: 14px;
+      transition: 0.3s;
     }
 
-    nav a:hover {
-      color: #2dd4bf;
+    .nav-links a:hover {
+      color: #22d3ee;
     }
 
-    .nav-button {
-      background: #2dd4bf;
-      color: #041014;
+    .login-btn {
+      border: 1px solid #294052;
+      padding: 9px 17px;
+      border-radius: 8px;
+    }
+
+    .signup-btn {
+      background: #22d3ee;
+      color: #041018 !important;
       padding: 10px 18px;
       border-radius: 8px;
-      font-weight: bold;
+      font-weight: 700;
     }
+
+    .menu-btn {
+      display: none;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    /* HERO */
 
     .hero {
-      min-height: 78vh;
-      padding: 90px 7%;
-      display: flex;
+      max-width: 1200px;
+      margin: auto;
+      min-height: 720px;
+      padding: 100px 25px 80px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 70px;
       align-items: center;
-      justify-content: space-between;
-      gap: 50px;
     }
 
-    .hero-content {
-      max-width: 650px;
-    }
-
-    .badge {
+    .tag {
       display: inline-block;
-      padding: 7px 14px;
-      border: 1px solid rgba(45,212,191,0.35);
-      background: rgba(45,212,191,0.08);
-      color: #2dd4bf;
+      color: #22d3ee;
+      background: rgba(34,211,238,0.08);
+      border: 1px solid rgba(34,211,238,0.22);
+      padding: 8px 14px;
       border-radius: 30px;
       font-size: 13px;
-      margin-bottom: 22px;
+      margin-bottom: 25px;
     }
 
     .hero h1 {
-      font-size: clamp(42px, 6vw, 72px);
-      line-height: 1.05;
-      margin-bottom: 22px;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -2px;
+      margin-bottom: 25px;
     }
 
     .hero h1 span {
-      color: #2dd4bf;
+      color: #22d3ee;
     }
 
-    .hero p {
-      color: #94a3b8;
+    .hero-text {
+      max-width: 600px;
+      color: #91a1b4;
       font-size: 18px;
-      max-width: 580px;
-      margin-bottom: 32px;
+      margin-bottom: 35px;
     }
 
-    .buttons {
+    .hero-buttons {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
     }
 
-    .primary-button,
-    .secondary-button {
-      padding: 14px 24px;
+    .primary-btn {
+      background: #22d3ee;
+      color: #041018;
+      padding: 14px 25px;
       border-radius: 9px;
-      text-decoration: none;
-      font-weight: bold;
+      font-weight: 700;
+      display: inline-block;
     }
 
-    .primary-button {
-      background: #2dd4bf;
-      color: #041014;
-    }
-
-    .secondary-button {
-      border: 1px solid #334155;
+    .secondary-btn {
+      border: 1px solid #304457;
       color: #ffffff;
+      padding: 14px 25px;
+      border-radius: 9px;
+      display: inline-block;
     }
 
-    .hero-card {
-      width: 360px;
-      background: linear-gradient(145deg, #10233a, #0b1727);
-      border: 1px solid #1e3a50;
-      border-radius: 20px;
+    /* PORTFOLIO CARD */
+
+    .dashboard-card {
+      background: linear-gradient(145deg, #0d1d2d, #08121f);
+      border: 1px solid #20394d;
+      border-radius: 22px;
       padding: 28px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
     }
 
-    .card-top {
+    .card-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 35px;
-      color: #94a3b8;
-    }
-
-    .balance {
-      font-size: 34px;
-      font-weight: bold;
-      margin-bottom: 8px;
+      color: #91a1b4;
+      font-size: 14px;
+      margin-bottom: 30px;
     }
 
     .balance-label {
-      color: #94a3b8;
+      color: #91a1b4;
+      font-size: 13px;
+    }
+
+    .balance {
+      font-size: 40px;
+      font-weight: 800;
+      margin: 4px 0;
+    }
+
+    .profit {
+      color: #34d399;
       font-size: 14px;
+      margin-bottom: 28px;
     }
 
     .asset {
-      margin-top: 28px;
-      padding: 15px;
-      background: rgba(255,255,255,0.04);
-      border-radius: 12px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: rgba(255,255,255,0.035);
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .asset-left {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .coin-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #142a3c;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+      color: #22d3ee;
     }
 
     .asset-name {
       font-weight: bold;
+      font-size: 14px;
     }
 
-    .asset-price {
-      color: #2dd4bf;
+    .asset-code {
+      color: #718096;
+      font-size: 12px;
     }
+
+    .asset-value {
+      text-align: right;
+    }
+
+    .asset-value strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .asset-value small {
+      color: #34d399;
+    }
+
+    /* GENERAL */
 
     .section {
-      padding: 80px 7%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 100px 25px;
     }
 
-    .section-title {
+    .section-heading {
+      max-width: 650px;
+      margin-bottom: 50px;
+    }
+
+    .section-heading.center {
+      margin-left: auto;
+      margin-right: auto;
       text-align: center;
-      margin-bottom: 45px;
     }
 
-    .section-title h2 {
-      font-size: 38px;
-      margin-bottom: 10px;
+    .section-heading h2 {
+      font-size: 40px;
+      line-height: 1.15;
+      margin-bottom: 15px;
     }
 
-    .section-title p {
-      color: #94a3b8;
+    .section-heading p {
+      color: #8798ab;
     }
+
+    /* MARKET */
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .market-card {
+      padding: 24px;
+      background: #091522;
+      border: 1px solid #1c3144;
+      border-radius: 15px;
+    }
+
+    .market-top {
+      display: flex;
+      justify-content: space-between;
+      color: #9baabd;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .market-price {
+      font-size: 25px;
+      font-weight: 700;
+    }
+
+    .market-change {
+      color: #34d399;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    /* FEATURES */
 
     .features {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+      gap: 20px;
     }
 
     .feature {
-      background: #0c1a2b;
-      border: 1px solid #1c3045;
+      background: #091522;
+      border: 1px solid #1c3144;
       padding: 30px;
       border-radius: 16px;
     }
@@ -214,79 +333,198 @@
     }
 
     .feature p {
-      color: #94a3b8;
-      font-size: 15px;
+      color: #8798ab;
+      font-size: 14px;
     }
 
-    .cta {
-      margin: 40px 7% 80px;
-      padding: 60px 30px;
+    /* HOW IT WORKS */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .step {
+      position: relative;
+      padding: 30px;
+      border-left: 2px solid #22d3ee;
+      background: #08131f;
+    }
+
+    .step-number {
+      color: #22d3ee;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      color: #8798ab;
+      font-size: 14px;
+    }
+
+    /* SECURITY */
+
+    .security {
+      max-width: 1200px;
+      margin: 20px auto 100px;
+      padding: 70px 25px;
+    }
+
+    .security-box {
+      padding: 60px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #0b2430, #081522);
+      border: 1px solid #1d4450;
       text-align: center;
-      background: linear-gradient(135deg, #0d2635, #0b1829);
-      border: 1px solid #1c3b4d;
-      border-radius: 20px;
     }
 
-    .cta h2 {
+    .security-box h2 {
       font-size: 38px;
       margin-bottom: 15px;
     }
 
-    .cta p {
-      color: #94a3b8;
-      margin-bottom: 25px;
+    .security-box p {
+      max-width: 650px;
+      margin: auto;
+      color: #8da0b3;
     }
+
+    /* CTA */
+
+    .cta {
+      max-width: 1100px;
+      margin: 0 auto 100px;
+      padding: 70px 25px;
+      text-align: center;
+      background: #0a1725;
+      border: 1px solid #20394d;
+      border-radius: 22px;
+    }
+
+    .cta h2 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .cta p {
+      color: #8798ab;
+      margin-bottom: 28px;
+    }
+
+    /* FOOTER */
 
     footer {
       border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 25px 7%;
-      text-align: center;
-      color: #64748b;
-      font-size: 14px;
+      padding: 45px 25px;
+      color: #718096;
     }
 
+    .footer-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .footer-logo span {
+      color: #22d3ee;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: #22d3ee;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 35px;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
     @media (max-width: 850px) {
-      nav a:not(.nav-button) {
+
+      .nav-links {
         display: none;
       }
 
+      .menu-btn {
+        display: block;
+      }
+
       .hero {
-        flex-direction: column;
-        padding-top: 60px;
-      }
-
-      .hero-card {
-        width: 100%;
-        max-width: 400px;
-      }
-
-      .features {
         grid-template-columns: 1fr;
+        padding-top: 70px;
+      }
+
+      .dashboard-card {
+        max-width: 500px;
+        margin: auto;
+      }
+
+      .market-grid,
+      .features,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .security-box {
+        padding: 45px 25px;
       }
     }
 
-    @media (max-width: 480px) {
-      header {
-        padding: 18px 5%;
+    @media (max-width: 500px) {
+
+      .navbar {
+        padding: 17px 18px;
       }
 
       .hero,
       .section {
-        padding-left: 5%;
-        padding-right: 5%;
+        padding-left: 18px;
+        padding-right: 18px;
       }
 
       .hero h1 {
         font-size: 45px;
       }
 
-      .hero p {
+      .hero-text {
         font-size: 16px;
       }
 
+      .balance {
+        font-size: 32px;
+      }
+
       .cta {
-        margin-left: 5%;
-        margin-right: 5%;
+        margin-left: 18px;
+        margin-right: 18px;
+      }
+
+      .security {
+        padding-left: 18px;
+        padding-right: 18px;
       }
     }
   </style>
@@ -294,67 +532,136 @@
 
 <body>
 
-  <header>
-    <div class="logo">Coin<span>Bridge</span></div>
+  <!-- HEADER -->
 
-    <nav>
-      <a href="#features">Features</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="#" class="nav-button">Get Started</a>
-    </nav>
+  <header>
+    <div class="navbar">
+
+      <a href="#" class="logo">
+        Coin<span>Bridge</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#markets">Markets</a>
+        <a href="#features">Features</a>
+        <a href="#how">How It Works</a>
+        <a href="#" class="login-btn">Log In</a>
+        <a href="#" class="signup-btn">Create Account</a>
+      </nav>
+
+      <div class="menu-btn">☰</div>
+
+    </div>
   </header>
+
 
   <main>
 
+    <!-- HERO -->
+
     <section class="hero">
 
-      <div class="hero-content">
-        <div class="badge">The bridge to digital assets</div>
+      <div>
+
+        <div class="tag">
+          ● Built for the digital economy
+        </div>
 
         <h1>
-          Move your money into the
-          <span>digital future.</span>
+          Your bridge to the
+          <span>digital asset world.</span>
         </h1>
 
-        <p>
-          CoinBridge is designed to make digital asset management
-          simple, accessible and secure. Buy, sell and manage your
-          digital assets from one convenient platform.
+        <p class="hero-text">
+          CoinBridge is designed to give you a simple, secure and
+          modern way to manage digital assets from one convenient
+          platform.
         </p>
 
-        <div class="buttons">
-          <a href="#" class="primary-button">Get Started</a>
-          <a href="#features" class="secondary-button">Explore CoinBridge</a>
+        <div class="hero-buttons">
+          <a href="#" class="primary-btn">Create Account</a>
+          <a href="#how" class="secondary-btn">How It Works</a>
         </div>
+
       </div>
 
-      <div class="hero-card">
 
-        <div class="card-top">
-          <span>Portfolio</span>
-          <span>CB</span>
+      <!-- DEMO PORTFOLIO -->
+
+      <div class="dashboard-card">
+
+        <div class="card-header">
+          <span>Portfolio Overview</span>
+          <span>Demo</span>
         </div>
 
-        <div class="balance-label">Total Balance</div>
-        <div class="balance">$12,480.50</div>
-
-        <div class="asset">
-          <div>
-            <div class="asset-name">Bitcoin</div>
-            <small>BTC</small>
-          </div>
-
-          <div class="asset-price">+4.82%</div>
+        <div class="balance-label">
+          Total Portfolio
         </div>
 
+        <div class="balance">
+          $12,480.50
+        </div>
+
+        <div class="profit">
+          +$582.40 (4.82%)
+        </div>
+
+
         <div class="asset">
-          <div>
-            <div class="asset-name">Ethereum</div>
-            <small>ETH</small>
+
+          <div class="asset-left">
+            <div class="coin-icon">₿</div>
+
+            <div>
+              <div class="asset-name">Bitcoin</div>
+              <div class="asset-code">BTC</div>
+            </div>
           </div>
 
-          <div class="asset-price">+3.17%</div>
+          <div class="asset-value">
+            <strong>$7,420.20</strong>
+            <small>+4.82%</small>
+          </div>
+
+        </div>
+
+
+        <div class="asset">
+
+          <div class="asset-left">
+            <div class="coin-icon">Ξ</div>
+
+            <div>
+              <div class="asset-name">Ethereum</div>
+              <div class="asset-code">ETH</div>
+            </div>
+          </div>
+
+          <div class="asset-value">
+            <strong>$3,210.70</strong>
+            <small>+3.17%</small>
+          </div>
+
+        </div>
+
+
+        <div class="asset">
+
+          <div class="asset-left">
+            <div class="coin-icon">◎</div>
+
+            <div>
+              <div class="asset-name">Digital Asset</div>
+              <div class="asset-code">CB Demo</div>
+            </div>
+          </div>
+
+          <div class="asset-value">
+            <strong>$1,849.60</strong>
+            <small>+2.41%</small>
+          </div>
+
         </div>
 
       </div>
@@ -362,39 +669,126 @@
     </section>
 
 
+    <!-- MARKETS -->
+
+    <section class="section" id="markets">
+
+      <div class="section-heading center">
+
+        <h2>Explore digital markets</h2>
+
+        <p>
+          A preview of the market experience we're building
+          into CoinBridge.
+        </p>
+
+      </div>
+
+
+      <div class="market-grid">
+
+        <div class="market-card">
+          <div class="market-top">
+            <span>Bitcoin</span>
+            <span>BTC</span>
+          </div>
+
+          <div class="market-price">
+            $68,420
+          </div>
+
+          <div class="market-change">
+            ▲ +4.82%
+          </div>
+        </div>
+
+
+        <div class="market-card">
+          <div class="market-top">
+            <span>Ethereum</span>
+            <span>ETH</span>
+          </div>
+
+          <div class="market-price">
+            $3,420
+          </div>
+
+          <div class="market-change">
+            ▲ +3.17%
+          </div>
+        </div>
+
+
+        <div class="market-card">
+          <div class="market-top">
+            <span>USD Coin</span>
+            <span>USDC</span>
+          </div>
+
+          <div class="market-price">
+            $1.00
+          </div>
+
+          <div class="market-change">
+            ▲ +0.02%
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
     <section class="section" id="features">
 
-      <div class="section-title">
-        <h2>Why CoinBridge?</h2>
-        <p>Everything you need to manage your digital assets.</p>
+      <div class="section-heading center">
+
+        <h2>Everything in one place</h2>
+
+        <p>
+          We're designing CoinBridge around simplicity,
+          transparency and security.
+        </p>
+
       </div>
+
 
       <div class="features">
 
         <div class="feature">
           <div class="feature-icon">🔐</div>
-          <h3>Security First</h3>
+
+          <h3>Security Focused</h3>
+
           <p>
-            We are building CoinBridge with security and user
-            protection at the heart of the platform.
+            Security will be built into every important part
+            of the CoinBridge experience.
           </p>
         </div>
+
 
         <div class="feature">
           <div class="feature-icon">⚡</div>
-          <h3>Fast & Simple</h3>
+
+          <h3>Simple Experience</h3>
+
           <p>
-            A clean experience designed to make digital asset
-            management easier for everyday users.
+            A clean interface designed to make digital asset
+            management easier to understand.
           </p>
         </div>
+
 
         <div class="feature">
           <div class="feature-icon">📊</div>
-          <h3>Track Your Assets</h3>
+
+          <h3>Portfolio Tracking</h3>
+
           <p>
-            Keep an eye on your portfolio and transactions from
-            one convenient dashboard.
+            Monitor balances, assets and transaction activity
+            from one convenient dashboard.
           </p>
         </div>
 
@@ -403,37 +797,136 @@
     </section>
 
 
-    <section class="section" id="about">
+    <!-- HOW IT WORKS -->
 
-      <div class="section-title">
-        <h2>Built for the digital economy</h2>
+    <section class="section" id="how">
+
+      <div class="section-heading center">
+
+        <h2>How CoinBridge works</h2>
+
         <p>
-          CoinBridge aims to connect people with modern financial
-          technology through a simple and intuitive experience.
+          Getting started is designed to be simple.
         </p>
+
+      </div>
+
+
+      <div class="steps">
+
+        <div class="step">
+
+          <div class="step-number">
+            STEP 01
+          </div>
+
+          <h3>Create your account</h3>
+
+          <p>
+            Sign up and create your personal CoinBridge profile.
+          </p>
+
+        </div>
+
+
+        <div class="step">
+
+          <div class="step-number">
+            STEP 02
+          </div>
+
+          <h3>Fund your account</h3>
+
+          <p>
+            Add funds using supported payment methods once
+            our financial infrastructure is connected.
+          </p>
+
+        </div>
+
+
+        <div class="step">
+
+          <div class="step-number">
+            STEP 03
+          </div>
+
+          <h3>Manage your assets</h3>
+
+          <p>
+            View your portfolio and manage supported digital
+            assets from your dashboard.
+          </p>
+
+        </div>
+
       </div>
 
     </section>
 
 
-    <section class="cta" id="contact">
+    <!-- SECURITY -->
+
+    <section class="security">
+
+      <div class="security-box">
+
+        <h2>Security comes first.</h2>
+
+        <p>
+          CoinBridge is being designed with account protection,
+          secure authentication and responsible financial
+          infrastructure in mind.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="cta">
 
       <h2>Ready to cross the bridge?</h2>
 
       <p>
-        Join CoinBridge as we build a better way to interact
-        with digital assets.
+        Join us as we build a simpler digital asset experience.
       </p>
 
-      <a href="#" class="primary-button">Get Started</a>
+      <a href="#" class="primary-btn">
+        Create Your Account
+      </a>
 
     </section>
 
   </main>
 
 
+  <!-- FOOTER -->
+
   <footer>
-    © 2026 CoinBridge. All rights reserved.
+
+    <div class="footer-inner">
+
+      <div class="footer-logo">
+        Coin<span>Bridge</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#markets">Markets</a>
+        <a href="#features">Features</a>
+        <a href="#how">How It Works</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 CoinBridge. All rights reserved.
+    </div>
+
   </footer>
 
 </body>

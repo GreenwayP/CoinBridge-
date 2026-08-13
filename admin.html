@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CoinBridge | Admin Control Center</title>
+<title>CoinBridge | Admin</title>
 
 <style>
 *{
@@ -14,33 +13,17 @@
   box-sizing:border-box;
 }
 
-:root{
-  --bg:#040912;
-  --panel:#091522;
-  --panel2:#0c1b2a;
-  --border:#1b3347;
-  --text:#f5f9ff;
-  --muted:#71869a;
-  --cyan:#22d3ee;
-  --green:#34d399;
-  --red:#fb7185;
-  --yellow:#facc15;
-  --blue:#60a5fa;
-}
-
 body{
   font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at top right,rgba(34,211,238,.07),transparent 30%),
-    #040912;
-  color:var(--text);
+  background:#050b14;
+  color:#fff;
   min-height:100vh;
 }
 
 button,
 input,
-select,
-textarea{
+textarea,
+select{
   font-family:inherit;
 }
 
@@ -49,109 +32,80 @@ button{
 }
 
 .hidden{
-  display:none!important;
+  display:none !important;
 }
 
 /* =========================
    LOGIN
 ========================= */
 
-#loginScreen{
+.login-screen{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
+  background:
+    radial-gradient(circle at top right,rgba(34,211,238,.12),transparent 35%),
+    radial-gradient(circle at bottom left,rgba(16,185,129,.08),transparent 35%),
+    #050b14;
 }
 
 .login-box{
   width:100%;
   max-width:430px;
-  background:rgba(9,21,34,.96);
-  border:1px solid var(--border);
+  background:#091522;
+  border:1px solid #1d3448;
   border-radius:20px;
-  padding:34px;
+  padding:35px;
   box-shadow:0 25px 80px rgba(0,0,0,.45);
 }
 
 .login-logo{
   text-align:center;
   font-size:30px;
-  font-weight:900;
+  font-weight:800;
   margin-bottom:8px;
 }
 
 .login-logo span{
-  color:var(--cyan);
+  color:#22d3ee;
 }
 
 .login-subtitle{
   text-align:center;
-  color:var(--muted);
+  color:#718096;
   font-size:12px;
   margin-bottom:28px;
 }
 
-.lock-icon{
-  width:65px;
-  height:65px;
-  border-radius:18px;
-  background:rgba(34,211,238,.08);
-  border:1px solid rgba(34,211,238,.2);
-  display:grid;
-  place-items:center;
-  font-size:28px;
-  margin:0 auto 20px;
-}
-
 .form-group{
-  margin-bottom:16px;
+  margin-bottom:17px;
 }
 
 .form-group label{
   display:block;
-  color:#91a5b8;
+  color:#91a1b4;
   font-size:11px;
   margin-bottom:7px;
 }
 
 .form-group input,
-.form-group select,
 .form-group textarea,
-.modal-input{
+.form-group select{
   width:100%;
-  background:#06101a;
-  color:white;
-  border:1px solid var(--border);
+  background:#07111d;
+  border:1px solid #1d3448;
+  color:#fff;
   border-radius:9px;
   padding:12px;
   outline:none;
-  font-size:12px;
 }
 
 .form-group input:focus,
-.form-group select:focus,
 .form-group textarea:focus,
-.modal-input:focus{
-  border-color:var(--cyan);
-}
-
-.password-wrap{
-  position:relative;
-}
-
-.password-wrap input{
-  padding-right:48px;
-}
-
-.password-toggle{
-  position:absolute;
-  right:8px;
-  top:7px;
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  padding:7px;
+.form-group select:focus{
+  border-color:#22d3ee;
 }
 
 .login-button{
@@ -159,127 +113,98 @@ button{
   border:0;
   border-radius:9px;
   padding:13px;
-  background:linear-gradient(135deg,#0891b2,#22d3ee);
-  color:#031018;
-  font-weight:900;
+  background:#0891b2;
+  color:#fff;
+  font-weight:700;
   margin-top:5px;
 }
 
 .login-button:hover{
-  filter:brightness(1.08);
+  background:#0e7490;
 }
 
 .login-error{
-  color:var(--red);
-  background:rgba(251,113,133,.08);
-  border:1px solid rgba(251,113,133,.2);
+  color:#fb7185;
+  background:rgba(244,63,94,.08);
+  border:1px solid rgba(244,63,94,.2);
   padding:10px;
   border-radius:8px;
   font-size:11px;
-  margin-bottom:14px;
-  display:none;
-}
-
-.login-security{
-  text-align:center;
-  color:#52677a;
-  font-size:10px;
-  margin-top:18px;
+  margin-bottom:15px;
 }
 
 /* =========================
-   APP
+   LAYOUT
 ========================= */
 
-#adminApp{
+.layout{
   min-height:100vh;
+  display:flex;
 }
 
 .sidebar{
+  width:245px;
   position:fixed;
-  left:0;
   top:0;
   bottom:0;
-  width:245px;
+  left:0;
   background:#07111d;
-  border-right:1px solid var(--border);
-  padding:23px 15px;
+  border-right:1px solid #1b3042;
+  padding:24px 15px;
   z-index:100;
 }
 
-.brand{
+.logo{
   font-size:23px;
-  font-weight:900;
+  font-weight:800;
   padding:0 12px;
-  margin-bottom:34px;
+  margin-bottom:35px;
 }
 
-.brand span{
-  color:var(--cyan);
+.logo span{
+  color:#22d3ee;
 }
 
-.admin-badge{
-  margin:0 8px 22px;
-  background:rgba(34,211,238,.06);
-  border:1px solid rgba(34,211,238,.14);
-  border-radius:10px;
-  padding:11px;
-  display:flex;
-  align-items:center;
-  gap:9px;
-}
-
-.admin-avatar{
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  background:#123148;
-  color:var(--cyan);
-  display:grid;
-  place-items:center;
-  font-weight:900;
-}
-
-.admin-info strong{
-  display:block;
-  font-size:11px;
-}
-
-.admin-info small{
-  color:var(--green);
-  font-size:9px;
-}
-
-.nav-title{
-  color:#52677a;
-  text-transform:uppercase;
+.admin-label{
+  color:#34d399;
   font-size:9px;
   letter-spacing:1px;
+  text-transform:uppercase;
   padding:0 12px;
-  margin:20px 0 8px;
+  margin-top:-25px;
+  margin-bottom:28px;
+}
+
+.menu-title{
+  color:#617488;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  padding:0 12px;
+  margin-bottom:8px;
 }
 
 .nav{
   display:flex;
   flex-direction:column;
   gap:4px;
+  margin-bottom:27px;
 }
 
 .nav button{
-  width:100%;
   border:0;
   background:transparent;
-  color:#91a5b8;
+  color:#91a1b4;
+  padding:12px;
+  border-radius:9px;
   text-align:left;
-  padding:11px 12px;
-  border-radius:8px;
-  font-size:12px;
+  font-size:13px;
 }
 
 .nav button:hover,
 .nav button.active{
-  background:rgba(34,211,238,.08);
-  color:var(--cyan);
+  background:rgba(34,211,238,.09);
+  color:#22d3ee;
 }
 
 .sidebar-bottom{
@@ -291,211 +216,144 @@ button{
 
 .logout-button{
   width:100%;
-  border:1px solid var(--border);
-  background:transparent;
-  color:#91a5b8;
+  border:0;
+  background:#111f2d;
+  color:#91a1b4;
   padding:11px;
-  border-radius:8px;
+  border-radius:9px;
 }
 
 .logout-button:hover{
-  color:var(--red);
-  border-color:rgba(251,113,133,.4);
+  color:#fff;
 }
 
 .main{
   margin-left:245px;
-  padding:27px;
   width:calc(100% - 245px);
+  padding:25px;
 }
 
-.mobile-top{
-  display:none;
-}
+/* =========================
+   TOPBAR
+========================= */
 
 .topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:25px;
+  gap:15px;
 }
 
 .page-title h1{
   font-size:27px;
+  margin-bottom:6px;
 }
 
 .page-title p{
-  color:var(--muted);
+  color:#718096;
   font-size:12px;
-  margin-top:6px;
 }
 
-.top-actions{
+.admin-profile{
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:10px;
 }
 
-.icon-button{
-  width:38px;
-  height:38px;
-  border-radius:9px;
-  border:1px solid var(--border);
-  background:var(--panel);
-  color:#9aafc1;
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#153247;
+  color:#22d3ee;
+  display:grid;
+  place-items:center;
+  font-weight:800;
 }
 
-.icon-button:hover{
-  color:var(--cyan);
-  border-color:var(--cyan);
+.profile-text strong{
+  display:block;
+  font-size:12px;
 }
 
-.live{
+.profile-text span{
+  color:#34d399;
   font-size:10px;
-  color:var(--green);
-  padding:8px 11px;
-  border:1px solid rgba(52,211,153,.2);
-  background:rgba(52,211,153,.05);
-  border-radius:20px;
 }
 
 /* =========================
    SECTIONS
 ========================= */
 
-.section{
+.page-section{
   display:none;
 }
 
-.section.active{
+.page-section.active{
   display:block;
 }
 
 /* =========================
-   STATS
+   CARDS
 ========================= */
 
-.stats{
+.stats-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:13px;
-  margin-bottom:18px;
+  gap:14px;
+  margin-bottom:20px;
 }
 
-.stat{
-  background:var(--panel);
-  border:1px solid var(--border);
+.stat-card{
+  background:#091522;
+  border:1px solid #1d3448;
   border-radius:14px;
-  padding:17px;
-  position:relative;
-  overflow:hidden;
+  padding:18px;
 }
 
-.stat:after{
-  content:"";
-  position:absolute;
-  width:70px;
-  height:70px;
-  right:-25px;
-  bottom:-30px;
-  border-radius:50%;
-  background:rgba(34,211,238,.04);
-}
-
-.stat-label{
-  color:var(--muted);
+.stat-card p{
+  color:#718096;
   font-size:10px;
   margin-bottom:10px;
 }
 
-.stat-value{
+.stat-card h2{
   font-size:23px;
-  font-weight:900;
 }
 
-.stat-foot{
-  color:#5f7589;
+.stat-card small{
+  display:block;
+  color:#34d399;
   font-size:9px;
-  margin-top:6px;
+  margin-top:7px;
 }
 
-.green{
-  color:var(--green)!important;
-}
-
-.red{
-  color:var(--red)!important;
-}
-
-.yellow{
-  color:var(--yellow)!important;
-}
-
-.cyan{
-  color:var(--cyan)!important;
-}
-
-/* =========================
-   PANELS
-========================= */
-
-.grid-two{
-  display:grid;
-  grid-template-columns:1.5fr 1fr;
-  gap:15px;
-  margin-bottom:18px;
-}
-
-.panel{
-  background:var(--panel);
-  border:1px solid var(--border);
+.content-card{
+  background:#091522;
+  border:1px solid #1d3448;
   border-radius:15px;
   overflow:hidden;
-  margin-bottom:18px;
+  margin-bottom:20px;
 }
 
-.panel-head{
-  padding:17px 19px;
-  border-bottom:1px solid var(--border);
+.card-header{
+  padding:18px 20px;
+  border-bottom:1px solid #1b3042;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
+  gap:15px;
 }
 
-.panel-head h2{
-  font-size:14px;
+.card-header h2{
+  font-size:15px;
 }
 
-.panel-head p{
-  color:var(--muted);
+.card-header p{
+  color:#718096;
   font-size:10px;
   margin-top:4px;
-}
-
-.panel-body{
-  padding:18px;
-}
-
-.quick-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:9px;
-}
-
-.quick-button{
-  border:1px solid var(--border);
-  background:#07111d;
-  color:#9aafc1;
-  border-radius:9px;
-  padding:12px;
-  text-align:left;
-  font-size:10px;
-}
-
-.quick-button:hover{
-  border-color:var(--cyan);
-  color:var(--cyan);
 }
 
 /* =========================
@@ -509,173 +367,217 @@ button{
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:720px;
+  min-width:850px;
 }
 
 th{
-  color:#5f7589;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  font-size:8px;
   text-align:left;
-  padding:12px 18px;
-  border-bottom:1px solid var(--border);
+  color:#617488;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  padding:13px 18px;
+  border-bottom:1px solid #1b3042;
 }
 
 td{
-  padding:13px 18px;
-  font-size:10px;
-  border-bottom:1px solid rgba(255,255,255,.04);
-}
-
-tr:hover td{
-  background:rgba(255,255,255,.012);
+  padding:14px 18px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  font-size:11px;
+  vertical-align:middle;
 }
 
 .status{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  padding:5px 8px;
+  display:inline-block;
   border-radius:20px;
-  font-size:8px;
-  font-weight:bold;
+  padding:5px 8px;
+  font-size:9px;
 }
 
 .status.pending{
-  color:var(--yellow);
+  color:#facc15;
   background:rgba(250,204,21,.08);
 }
 
-.status.approved,
-.status.active{
-  color:var(--green);
+.status.approved{
+  color:#34d399;
   background:rgba(52,211,153,.08);
 }
 
-.status.rejected,
-.status.suspended{
-  color:var(--red);
+.status.rejected{
+  color:#fb7185;
   background:rgba(251,113,133,.08);
 }
 
-.status.info{
-  color:var(--cyan);
-  background:rgba(34,211,238,.08);
-}
-
-.actions{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-}
-
-.small-btn{
-  border:1px solid var(--border);
-  background:#07111d;
-  color:#9aafc1;
-  border-radius:6px;
-  padding:6px 8px;
-  font-size:8px;
-}
-
-.small-btn:hover{
-  border-color:var(--cyan);
-  color:var(--cyan);
-}
-
-.small-btn.approve:hover{
-  border-color:var(--green);
-  color:var(--green);
-}
-
-.small-btn.reject:hover,
-.small-btn.danger:hover{
-  border-color:var(--red);
-  color:var(--red);
+.status.suspended{
+  color:#fb7185;
+  background:rgba(251,113,133,.08);
 }
 
 /* =========================
-   TOOLBAR
+   BUTTONS
+========================= */
+
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  border:0;
+  border-radius:6px;
+  padding:7px 9px;
+  font-size:9px;
+  color:#fff;
+}
+
+.btn-primary{
+  background:#0891b2;
+}
+
+.btn-success{
+  background:#059669;
+}
+
+.btn-danger{
+  background:#be123c;
+}
+
+.btn-warning{
+  background:#a16207;
+}
+
+.btn-neutral{
+  background:#1e3346;
+}
+
+.btn:hover{
+  filter:brightness(1.15);
+}
+
+/* =========================
+   SEARCH
 ========================= */
 
 .toolbar{
+  padding:15px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
+  gap:12px;
   flex-wrap:wrap;
-  padding:16px 18px;
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid #1b3042;
 }
 
 .search{
-  position:relative;
-  min-width:260px;
-  flex:1;
+  width:280px;
 }
 
 .search input{
   width:100%;
-  background:#06101a;
-  border:1px solid var(--border);
+  background:#07111d;
+  border:1px solid #1d3448;
+  color:#fff;
+  padding:10px 12px;
   border-radius:8px;
-  color:white;
-  padding:10px 12px 10px 34px;
   outline:none;
-  font-size:10px;
 }
 
-.search span{
-  position:absolute;
-  left:11px;
-  top:9px;
-  color:#5f7589;
-}
-
-.filter{
-  background:#06101a;
-  border:1px solid var(--border);
-  color:#9aafc1;
-  border-radius:8px;
-  padding:9px;
-  font-size:10px;
-  outline:none;
+.search input:focus{
+  border-color:#22d3ee;
 }
 
 /* =========================
-   ACTIVITY
+   DASHBOARD GRID
 ========================= */
 
+.two-column{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:20px;
+}
+
 .activity{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+  padding:18px;
 }
 
 .activity-item{
   display:flex;
+  justify-content:space-between;
   gap:10px;
-  align-items:flex-start;
+  padding:13px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.activity-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--cyan);
-  margin-top:4px;
-  flex:none;
+.activity-item:last-child{
+  border-bottom:0;
 }
 
 .activity-item strong{
-  display:block;
-  font-size:10px;
+  font-size:11px;
 }
 
-.activity-item small{
-  color:var(--muted);
+.activity-item span{
+  display:block;
+  color:#718096;
   font-size:9px;
+  margin-top:4px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:500;
+}
+
+.modal.open{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:520px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:#091522;
+  border:1px solid #1d3448;
+  border-radius:16px;
+  padding:22px;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.modal-header h3{
+  font-size:16px;
+}
+
+.close-modal{
+  border:0;
+  background:none;
+  color:#718096;
+  font-size:20px;
+}
+
+.modal-footer{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:20px;
 }
 
 /* =========================
@@ -685,211 +587,125 @@ tr:hover td{
 .chat-layout{
   display:grid;
   grid-template-columns:280px 1fr;
-  min-height:500px;
+  min-height:560px;
 }
 
-.chat-list{
-  border-right:1px solid var(--border);
+.chat-users{
+  border-right:1px solid #1b3042;
 }
 
 .chat-user{
-  padding:13px;
-  border-bottom:1px solid rgba(255,255,255,.04);
-  cursor:pointer;
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#fff;
+  padding:15px;
+  text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .chat-user:hover,
-.chat-user.selected{
+.chat-user.active{
   background:rgba(34,211,238,.06);
 }
 
 .chat-user strong{
-  display:block;
-  font-size:10px;
-}
-
-.chat-user small{
-  color:var(--muted);
-  font-size:9px;
-}
-
-.chat-main{
-  display:flex;
-  flex-direction:column;
-}
-
-.chat-header{
-  padding:14px 18px;
-  border-bottom:1px solid var(--border);
-}
-
-.chat-header strong{
   font-size:11px;
 }
 
-.messages{
-  flex:1;
-  min-height:350px;
-  padding:18px;
+.chat-user span{
+  display:block;
+  color:#718096;
+  font-size:9px;
+  margin-top:4px;
+}
+
+.chat-area{
   display:flex;
   flex-direction:column;
-  gap:9px;
+}
+
+.chat-messages{
+  flex:1;
+  padding:18px;
+  min-height:430px;
+  max-height:430px;
   overflow-y:auto;
 }
 
 .message{
-  max-width:70%;
-  padding:9px 11px;
-  border-radius:10px;
+  max-width:75%;
+  padding:10px;
+  border-radius:9px;
+  margin-bottom:10px;
   font-size:10px;
-  line-height:1.4;
-}
-
-.message.admin{
-  align-self:flex-end;
-  background:#123346;
-  color:#dffbff;
+  line-height:1.5;
 }
 
 .message.customer{
-  align-self:flex-start;
-  background:#07111d;
-  border:1px solid var(--border);
-  color:#aab8c5;
+  background:#111f2d;
+  margin-right:auto;
 }
 
-.chat-compose{
-  padding:12px;
-  border-top:1px solid var(--border);
+.message.admin{
+  background:#075985;
+  margin-left:auto;
+}
+
+.chat-input{
   display:flex;
-  gap:7px;
+  gap:8px;
+  padding:15px;
+  border-top:1px solid #1b3042;
 }
 
-.chat-compose input{
+.chat-input input{
   flex:1;
-  background:#06101a;
-  border:1px solid var(--border);
-  color:white;
+  background:#07111d;
+  border:1px solid #1d3448;
+  color:#fff;
+  border-radius:8px;
   padding:10px;
-  border-radius:8px;
   outline:none;
-  font-size:10px;
-}
-
-.chat-compose button{
-  border:0;
-  border-radius:8px;
-  background:var(--cyan);
-  color:#031018;
-  font-weight:bold;
-  padding:0 16px;
 }
 
 /* =========================
-   MODALS
+   WALLET FORM
 ========================= */
 
-.modal-bg{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(4px);
-  z-index:500;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
+.wallet-info{
+  padding:20px;
 }
 
-.modal-bg.open{
-  display:flex;
+.wallet-balance{
+  font-size:30px;
+  font-weight:800;
+  margin:10px 0;
 }
 
-.modal{
-  width:100%;
-  max-width:500px;
-  max-height:90vh;
-  overflow:auto;
-  background:#091522;
-  border:1px solid var(--border);
-  border-radius:16px;
-  box-shadow:0 30px 100px rgba(0,0,0,.55);
-}
-
-.modal-head{
-  padding:17px 19px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.modal-head h3{
-  font-size:14px;
-}
-
-.close{
-  border:0;
-  background:transparent;
-  color:#71869a;
-  font-size:20px;
-}
-
-.modal-body{
-  padding:19px;
-}
-
-.modal-actions{
-  display:flex;
-  gap:8px;
-  justify-content:flex-end;
-  margin-top:18px;
-}
-
-.primary,
-.success,
-.danger,
-.secondary{
-  border:0;
-  border-radius:8px;
-  padding:10px 14px;
-  font-size:10px;
-  font-weight:bold;
-}
-
-.primary{
-  background:var(--cyan);
-  color:#031018;
-}
-
-.success{
-  background:#059669;
-  color:white;
-}
-
-.danger{
-  background:#be123c;
-  color:white;
-}
-
-.secondary{
-  background:#142536;
-  color:#9aafc1;
+.wallet-id{
+  color:#22d3ee;
+  font-size:12px;
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:1000px){
+.mobile-header{
+  display:none;
+}
 
-  .stats{
+@media(max-width:1100px){
+
+  .stats-grid{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .grid-two{
+  .two-column{
     grid-template-columns:1fr;
   }
+
 }
 
 @media(max-width:750px){
@@ -901,74 +717,34 @@ tr:hover td{
   .main{
     margin-left:0;
     width:100%;
-    padding:18px;
+    padding:16px;
   }
 
-  .mobile-top{
+  .mobile-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
     margin-bottom:18px;
   }
 
-  .mobile-brand{
-    font-size:20px;
-    font-weight:900;
-  }
-
-  .mobile-brand span{
-    color:var(--cyan);
-  }
-
   .mobile-menu-button{
-    width:38px;
-    height:38px;
-    background:var(--panel);
-    border:1px solid var(--border);
-    color:white;
-    border-radius:8px;
-    font-size:20px;
-  }
-
-  .mobile-nav{
-    display:none;
-    background:#07111d;
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:7px;
-    margin-bottom:18px;
-  }
-
-  .mobile-nav.open{
-    display:block;
-  }
-
-  .mobile-nav button{
-    display:block;
-    width:100%;
     border:0;
-    background:transparent;
-    color:#91a5b8;
-    padding:11px;
-    text-align:left;
-    border-radius:7px;
-    font-size:11px;
-  }
-
-  .mobile-nav button:hover{
-    background:rgba(34,211,238,.08);
-    color:var(--cyan);
+    background:#091522;
+    color:#22d3ee;
+    padding:10px;
+    border-radius:8px;
+    font-size:18px;
   }
 
   .topbar{
     align-items:flex-start;
   }
 
-  .live{
+  .admin-profile{
     display:none;
   }
 
-  .stats{
+  .stats-grid{
     grid-template-columns:1fr 1fr;
   }
 
@@ -976,31 +752,30 @@ tr:hover td{
     grid-template-columns:1fr;
   }
 
-  .chat-list{
+  .chat-users{
     border-right:0;
-    border-bottom:1px solid var(--border);
-    max-height:150px;
-    overflow:auto;
+    border-bottom:1px solid #1b3042;
+    max-height:180px;
+    overflow-y:auto;
   }
+
+  .chat-messages{
+    min-height:330px;
+    max-height:330px;
+  }
+
 }
 
 @media(max-width:480px){
 
-  .stats{
-    grid-template-columns:1fr;
-  }
-
-  .quick-grid{
+  .stats-grid{
     grid-template-columns:1fr;
   }
 
   .login-box{
-    padding:25px;
+    padding:25px 20px;
   }
 
-  .page-title h1{
-    font-size:22px;
-  }
 }
 </style>
 </head>
@@ -1008,73 +783,54 @@ tr:hover td{
 <body>
 
 <!-- =====================================================
-     LOGIN SCREEN
+     LOGIN
 ===================================================== -->
 
-<div id="loginScreen">
+<div id="loginScreen" class="login-screen">
 
   <div class="login-box">
-
-    <div class="lock-icon">🔐</div>
 
     <div class="login-logo">
       Coin<span>Bridge</span>
     </div>
 
     <div class="login-subtitle">
-      Secure Administrator Control Center
+      Administrator Access
     </div>
 
-    <div id="loginError" class="login-error">
-      Invalid administrator credentials.
+    <div id="loginError" class="login-error hidden">
+      Invalid email or password.
     </div>
 
-    <form id="loginForm">
+    <div class="form-group">
+      <label>Email Address</label>
 
-      <div class="form-group">
-        <label>ADMIN EMAIL</label>
-        <input
-          id="adminEmail"
-          type="email"
-          autocomplete="username"
-          placeholder="Admin email"
-          required
-        >
-      </div>
-
-      <div class="form-group">
-
-        <label>PASSWORD</label>
-
-        <div class="password-wrap">
-
-          <input
-            id="adminPassword"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Admin password"
-            required
-          >
-
-          <button
-            type="button"
-            class="password-toggle"
-            onclick="togglePassword()"
-          >👁</button>
-
-        </div>
-
-      </div>
-
-      <button class="login-button" type="submit">
-        Enter Admin Control Center
-      </button>
-
-    </form>
-
-    <div class="login-security">
-      🛡 Protected administrator area
+      <input
+        id="adminEmail"
+        type="email"
+        autocomplete="username"
+        placeholder="Enter admin email"
+      >
     </div>
+
+    <div class="form-group">
+      <label>Password</label>
+
+      <input
+        id="adminPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Enter admin password"
+      >
+    </div>
+
+    <button
+      class="login-button"
+      type="button"
+      onclick="login()"
+    >
+      Sign In
+    </button>
 
   </div>
 
@@ -1082,785 +838,733 @@ tr:hover td{
 
 
 <!-- =====================================================
-     ADMIN APPLICATION
+     ADMIN APP
 ===================================================== -->
 
 <div id="adminApp" class="hidden">
 
-  <aside class="sidebar">
+<div class="layout">
 
-    <div class="brand">
-      Coin<span>Bridge</span>
+<aside class="sidebar">
+
+  <div class="logo">
+    Coin<span>Bridge</span>
+  </div>
+
+  <div class="admin-label">
+    Administrator
+  </div>
+
+  <div class="menu-title">Overview</div>
+
+  <nav class="nav">
+
+    <button
+      class="active"
+      onclick="showSection('dashboard',this)"
+    >
+      📊 Dashboard
+    </button>
+
+  </nav>
+
+  <div class="menu-title">Management</div>
+
+  <nav class="nav">
+
+    <button onclick="showSection('customers',this)">
+      👥 Customers
+    </button>
+
+    <button onclick="showSection('accounts',this)">
+      ✅ Account Approvals
+    </button>
+
+    <button onclick="showSection('wallets',this)">
+      💰 Wallets
+    </button>
+
+    <button onclick="showSection('orders',this)">
+      🛒 Orders
+    </button>
+
+    <button onclick="showSection('transactions',this)">
+      📋 Transactions
+    </button>
+
+    <button onclick="showSection('chat',this)">
+      💬 Messages
+    </button>
+
+  </nav>
+
+  <div class="menu-title">System</div>
+
+  <nav class="nav">
+
+    <button onclick="showSection('notifications',this)">
+      🔔 Notifications
+    </button>
+
+  </nav>
+
+  <div class="sidebar-bottom">
+
+    <button
+      class="logout-button"
+      onclick="logout()"
+    >
+      ← Log Out
+    </button>
+
+  </div>
+
+</aside>
+
+
+<main class="main">
+
+<div class="mobile-header">
+
+  <div class="logo">
+    Coin<span>Bridge</span>
+  </div>
+
+  <button
+    class="mobile-menu-button"
+    onclick="toggleMobileNav()"
+  >
+    ☰
+  </button>
+
+</div>
+
+
+<div class="topbar">
+
+  <div class="page-title">
+
+    <h1 id="pageTitle">
+      Admin Dashboard
+    </h1>
+
+    <p id="pageSubtitle">
+      Manage accounts, wallets, orders and platform activity.
+    </p>
+
+  </div>
+
+  <div class="admin-profile">
+
+    <div class="avatar">
+      A
     </div>
 
-    <div class="admin-badge">
+    <div class="profile-text">
 
-      <div class="admin-avatar">A</div>
+      <strong>Administrator</strong>
 
-      <div class="admin-info">
-        <strong>Administrator</strong>
-        <small>● Online</small>
-      </div>
+      <span>● Active</span>
 
     </div>
 
-    <div class="nav-title">Control Center</div>
-
-    <nav class="nav">
-
-      <button class="active" onclick="showSection('dashboard',this)">
-        📊 Dashboard
-      </button>
-
-      <button onclick="showSection('customers',this)">
-        👥 Customers
-      </button>
-
-      <button onclick="showSection('orders',this)">
-        📈 Orders
-      </button>
-
-      <button onclick="showSection('wallets',this)">
-        💰 Wallets
-      </button>
-
-      <button onclick="showSection('transactions',this)">
-        📋 Transactions
-      </button>
-
-      <button onclick="showSection('chat',this)">
-        💬 Customer Chat
-      </button>
-
-      <button onclick="showSection('activity',this)">
-        🔔 Activity
-      </button>
-
-    </nav>
-
-    <div class="nav-title">System</div>
-
-    <nav class="nav">
-
-      <button onclick="showSection('settings',this)">
-        ⚙️ Admin Settings
-      </button>
-
-    </nav>
-
-    <div class="sidebar-bottom">
-
-      <button class="logout-button" onclick="logout()">
-        ← Log Out
-      </button>
-
-    </div>
-
-  </aside>
-
-
-  <main class="main">
-
-    <div class="mobile-top">
-
-      <div class="mobile-brand">
-        Coin<span>Bridge</span>
-      </div>
-
-      <button
-        class="mobile-menu-button"
-        onclick="toggleMobileNav()"
-      >☰</button>
-
-    </div>
-
-    <div id="mobileNav" class="mobile-nav">
-
-      <button onclick="mobileSection('dashboard')">📊 Dashboard</button>
-      <button onclick="mobileSection('customers')">👥 Customers</button>
-      <button onclick="mobileSection('orders')">📈 Orders</button>
-      <button onclick="mobileSection('wallets')">💰 Wallets</button>
-      <button onclick="mobileSection('transactions')">📋 Transactions</button>
-      <button onclick="mobileSection('chat')">💬 Customer Chat</button>
-      <button onclick="mobileSection('activity')">🔔 Activity</button>
-      <button onclick="mobileSection('settings')">⚙️ Settings</button>
-      <button onclick="logout()">← Log Out</button>
-
-    </div>
-
-
-    <header class="topbar">
-
-      <div class="page-title">
-
-        <h1 id="pageTitle">
-          Admin Dashboard
-        </h1>
-
-        <p id="pageDescription">
-          Monitor and control your CoinBridge platform.
-        </p>
-
-      </div>
-
-      <div class="top-actions">
-
-        <span class="live">
-          ● SYSTEM ONLINE
-        </span>
-
-        <button
-          class="icon-button"
-          onclick="refreshAll()"
-          title="Refresh"
-        >↻</button>
-
-        <button
-          class="icon-button"
-          onclick="showNotifications()"
-          title="Notifications"
-        >🔔</button>
-
-      </div>
-
-    </header>
-
-
-    <!-- =================================================
-         DASHBOARD
-    ================================================= -->
-
-    <section id="section-dashboard" class="section active">
-
-      <div class="stats">
-
-        <div class="stat">
-          <div class="stat-label">TOTAL CUSTOMERS</div>
-          <div class="stat-value" id="statCustomers">0</div>
-          <div class="stat-foot">Registered accounts</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">PENDING ORDERS</div>
-          <div class="stat-value yellow" id="statOrders">0</div>
-          <div class="stat-foot">Awaiting admin action</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">TOTAL BALANCE</div>
-          <div class="stat-value cyan" id="statBalance">$0.00</div>
-          <div class="stat-foot">Customer wallet balances</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">PENDING ACCOUNTS</div>
-          <div class="stat-value red" id="statPendingUsers">0</div>
-          <div class="stat-foot">Awaiting approval</div>
-        </div>
-
-      </div>
-
-
-      <div class="grid-two">
-
-        <div class="panel">
-
-          <div class="panel-head">
-
-            <div>
-              <h2>Quick Controls</h2>
-              <p>Frequently used administrator actions.</p>
-            </div>
-
-          </div>
-
-          <div class="panel-body">
-
-            <div class="quick-grid">
-
-              <button
-                class="quick-button"
-                onclick="showSectionByName('customers')"
-              >
-                👥 Manage Customers
-              </button>
-
-              <button
-                class="quick-button"
-                onclick="showSectionByName('orders')"
-              >
-                📈 Review Orders
-              </button>
-
-              <button
-                class="quick-button"
-                onclick="showSectionByName('wallets')"
-              >
-                💰 Manage Wallets
-              </button>
-
-              <button
-                class="quick-button"
-                onclick="showSectionByName('chat')"
-              >
-                💬 Open Customer Chat
-              </button>
-
-              <button
-                class="quick-button"
-                onclick="approveAllPending()"
-              >
-                ✅ Review Pending
-              </button>
-
-              <button
-                class="quick-button"
-                onclick="exportData()"
-              >
-                📥 Export Data
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="panel">
-
-          <div class="panel-head">
-
-            <div>
-              <h2>System Status</h2>
-              <p>Current platform state.</p>
-            </div>
-
-          </div>
-
-          <div class="panel-body">
-
-            <div class="activity">
-
-              <div class="activity-item">
-                <span class="activity-dot"></span>
-                <div>
-                  <strong>Admin authentication active</strong>
-                  <small>Private admin interface loaded</small>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <span class="activity-dot"></span>
-                <div>
-                  <strong>Order synchronization active</strong>
-                  <small>Reading CoinBridge order storage</small>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <span class="activity-dot"></span>
-                <div>
-                  <strong>Wallet management ready</strong>
-                  <small>Balance and wallet ID controls available</small>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="panel">
-
-        <div class="panel-head">
-
-          <div>
-            <h2>Latest Orders</h2>
-            <p>Most recent customer requests.</p>
-          </div>
-
-          <button
-            class="small-btn"
-            onclick="showSectionByName('orders')"
-          >
-            View All
-          </button>
-
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Order</th>
-                <th>Customer</th>
-                <th>Type</th>
-                <th>Asset</th>
-                <th>Price</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-
-            <tbody id="dashboardOrders"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         CUSTOMERS
-    ================================================= -->
-
-    <section id="section-customers" class="section">
-
-      <div class="panel">
-
-        <div class="toolbar">
-
-          <div class="search">
-            <span>🔍</span>
-            <input
-              id="customerSearch"
-              placeholder="Search customers..."
-              oninput="renderCustomers()"
-            >
-          </div>
-
-          <select
-            id="customerFilter"
-            class="filter"
-            onchange="renderCustomers()"
-          >
-            <option value="all">All accounts</option>
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Suspended">Suspended</option>
-          </select>
-
-          <button
-            class="small-btn"
-            onclick="openAddCustomer()"
-          >
-            + Add Customer
-          </button>
-
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Customer</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Balance</th>
-                <th>Wallet ID</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody id="customersTable"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         ORDERS
-    ================================================= -->
-
-    <section id="section-orders" class="section">
-
-      <div class="panel">
-
-        <div class="toolbar">
-
-          <div class="search">
-            <span>🔍</span>
-            <input
-              id="orderSearch"
-              placeholder="Search order, asset or customer..."
-              oninput="renderOrders()"
-            >
-          </div>
-
-          <select
-            id="orderFilter"
-            class="filter"
-            onchange="renderOrders()"
-          >
-            <option value="all">All orders</option>
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-          </select>
-
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Type</th>
-                <th>Asset</th>
-                <th>Customer Price</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody id="ordersTable"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         WALLETS
-    ================================================= -->
-
-    <section id="section-wallets" class="section">
-
-      <div class="panel">
-
-        <div class="panel-head">
-
-          <div>
-            <h2>Customer Wallet Management</h2>
-            <p>Edit balances, add/remove wallet IDs and manage customer funds.</p>
-          </div>
-
-        </div>
-
-        <div class="toolbar">
-
-          <div class="search">
-            <span>🔍</span>
-            <input
-              id="walletSearch"
-              placeholder="Search wallet/customer..."
-              oninput="renderWallets()"
-            >
-          </div>
-
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Customer</th>
-                <th>Wallet ID</th>
-                <th>Balance</th>
-                <th>Currency</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody id="walletsTable"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         TRANSACTIONS
-    ================================================= -->
-
-    <section id="section-transactions" class="section">
-
-      <div class="panel">
-
-        <div class="panel-head">
-
-          <div>
-            <h2>Transaction History</h2>
-            <p>Approved and rejected customer activity.</p>
-          </div>
-
-          <button
-            class="small-btn"
-            onclick="clearRejectedTransactions()"
-          >
-            Clear Rejected
-          </button>
-
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Transaction</th>
-                <th>Customer</th>
-                <th>Type</th>
-                <th>Asset</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-
-            <tbody id="transactionsTable"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         CHAT
-    ================================================= -->
-
-    <section id="section-chat" class="section">
-
-      <div class="panel">
-
-        <div class="chat-layout">
-
-          <div class="chat-list" id="chatUsers"></div>
-
-          <div class="chat-main">
-
-            <div class="chat-header">
-              <strong id="chatCustomerName">
-                Select a customer
-              </strong>
-            </div>
-
-            <div
-              class="messages"
-              id="messages"
-            >
-              <div class="message customer">
-                Select a customer to open the conversation.
-              </div>
-            </div>
-
-            <div class="chat-compose">
-
-              <input
-                id="chatInput"
-                placeholder="Write a message..."
-                onkeydown="chatEnter(event)"
-              >
-
-              <button onclick="sendAdminMessage()">
-                Send
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         ACTIVITY
-    ================================================= -->
-
-    <section id="section-activity" class="section">
-
-      <div class="panel">
-
-        <div class="panel-head">
-
-          <div>
-            <h2>Admin Activity</h2>
-            <p>Important actions performed in this browser.</p>
-          </div>
-
-          <button
-            class="small-btn danger"
-            onclick="clearActivity()"
-          >
-            Clear
-          </button>
-
-        </div>
-
-        <div class="panel-body">
-
-          <div
-            class="activity"
-            id="activityList"
-          ></div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         SETTINGS
-    ================================================= -->
-
-    <section id="section-settings" class="section">
-
-      <div class="panel">
-
-        <div class="panel-head">
-
-          <div>
-            <h2>Admin Settings</h2>
-            <p>Local administrator preferences.</p>
-          </div>
-
-        </div>
-
-        <div class="panel-body">
-
-          <div class="form-group">
-            <label>ADMIN DISPLAY NAME</label>
-            <input
-              id="adminDisplayName"
-              class="modal-input"
-              value="CoinBridge Administrator"
-            >
-          </div>
-
-          <div class="form-group">
-            <label>ADMIN EMAIL</label>
-            <input
-              id="adminDisplayEmail"
-              class="modal-input"
-              value="admin@coinbridge.com"
-            >
-          </div>
-
-          <button
-            class="primary"
-            onclick="saveAdminSettings()"
-          >
-            Save Settings
-          </button>
-
-          <button
-            class="secondary"
-            onclick="resetDemoData()"
-            style="margin-left:6px"
-          >
-            Reset Demo Data
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="panel">
-
-        <div class="panel-head">
-
-          <div>
-            <h2>Data Management</h2>
-            <p>Export your current prototype data.</p>
-          </div>
-
-        </div>
-
-        <div class="panel-body">
-
-          <button
-            class="primary"
-            onclick="exportData()"
-          >
-            📥 Export CoinBridge Data
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
+  </div>
 
 </div>
 
 
 <!-- =====================================================
-     GENERIC MODAL
+     DASHBOARD
 ===================================================== -->
 
-<div
-  id="modalBg"
-  class="modal-bg"
-  onclick="backgroundClose(event)"
+<section
+  id="dashboard"
+  class="page-section active"
 >
 
-  <div class="modal">
+<div class="stats-grid">
 
-    <div class="modal-head">
+  <div class="stat-card">
 
-      <h3 id="modalTitle">
-        CoinBridge
-      </h3>
+    <p>Total Customers</p>
 
-      <button
-        class="close"
-        onclick="closeModal()"
+    <h2 id="statCustomers">0</h2>
+
+    <small>Registered accounts</small>
+
+  </div>
+
+  <div class="stat-card">
+
+    <p>Pending Approvals</p>
+
+    <h2 id="statApprovals">0</h2>
+
+    <small>Require attention</small>
+
+  </div>
+
+  <div class="stat-card">
+
+    <p>Pending Orders</p>
+
+    <h2 id="statOrders">0</h2>
+
+    <small>Awaiting decision</small>
+
+  </div>
+
+  <div class="stat-card">
+
+    <p>Wallets</p>
+
+    <h2 id="statWallets">0</h2>
+
+    <small>Managed wallets</small>
+
+  </div>
+
+</div>
+
+
+<div class="two-column">
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Recent Activity</h2>
+      <p>Latest platform activity.</p>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      onclick="refreshDashboard()"
+    >
+      Refresh
+    </button>
+
+  </div>
+
+  <div
+    id="activityList"
+    class="activity"
+  ></div>
+
+</div>
+
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Quick Actions</h2>
+      <p>Administrative controls.</p>
+    </div>
+
+  </div>
+
+  <div style="padding:18px;display:grid;gap:9px;">
+
+    <button
+      class="btn btn-primary"
+      onclick="showSectionById('customers')"
+    >
+      Manage Customers
+    </button>
+
+    <button
+      class="btn btn-success"
+      onclick="showSectionById('accounts')"
+    >
+      Review Accounts
+    </button>
+
+    <button
+      class="btn btn-warning"
+      onclick="showSectionById('orders')"
+    >
+      Review Orders
+    </button>
+
+    <button
+      class="btn btn-neutral"
+      onclick="showSectionById('wallets')"
+    >
+      Manage Wallets
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     CUSTOMERS
+===================================================== -->
+
+<section
+  id="customers"
+  class="page-section"
+>
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Customer Management</h2>
+      <p>View and manage customer accounts.</p>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      onclick="openCustomerModal()"
+    >
+      + Add Customer
+    </button>
+
+  </div>
+
+  <div class="toolbar">
+
+    <div class="search">
+      <input
+        id="customerSearch"
+        placeholder="Search customers..."
+        oninput="renderCustomers()"
       >
-        ×
-      </button>
+    </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Customer</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Balance</th>
+          <th>Wallet ID</th>
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="customersTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ACCOUNT APPROVALS
+===================================================== -->
+
+<section
+  id="accounts"
+  class="page-section"
+>
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Account Approvals</h2>
+      <p>Review newly submitted accounts.</p>
+    </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Created</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="accountsTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     WALLETS
+===================================================== -->
+
+<section
+  id="wallets"
+  class="page-section"
+>
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Wallet Management</h2>
+      <p>Administrator-controlled wallet balances and IDs.</p>
+    </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Customer</th>
+          <th>Wallet ID</th>
+          <th>Balance</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="walletsTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ORDERS
+===================================================== -->
+
+<section
+  id="orders"
+  class="page-section"
+>
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Order Management</h2>
+      <p>Review pending buy and sell requests.</p>
+    </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th>Asset</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="ordersTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     TRANSACTIONS
+===================================================== -->
+
+<section
+  id="transactions"
+  class="page-section"
+>
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Transactions</h2>
+      <p>Review platform transaction records.</p>
+    </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>ID</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th>Asset</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="transactionsTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     CHAT
+===================================================== -->
+
+<section
+  id="chat"
+  class="page-section"
+>
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Customer Messages</h2>
+      <p>Communicate directly with customers.</p>
+    </div>
+
+  </div>
+
+  <div class="chat-layout">
+
+    <div
+      id="chatUsers"
+      class="chat-users"
+    ></div>
+
+    <div class="chat-area">
+
+      <div
+        id="chatMessages"
+        class="chat-messages"
+      ></div>
+
+      <div class="chat-input">
+
+        <input
+          id="chatMessage"
+          placeholder="Type a message..."
+          onkeydown="handleChatKey(event)"
+        >
+
+        <button
+          class="btn btn-primary"
+          onclick="sendMessage()"
+        >
+          Send
+        </button>
+
+      </div>
 
     </div>
 
-    <div
-      id="modalBody"
-      class="modal-body"
-    ></div>
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     NOTIFICATIONS
+===================================================== -->
+
+<section
+  id="notifications"
+  class="page-section"
+>
+
+<div class="content-card">
+
+  <div class="card-header">
+
+    <div>
+      <h2>Notifications</h2>
+      <p>Platform alerts and administrative events.</p>
+    </div>
+
+    <button
+      class="btn btn-neutral"
+      onclick="clearNotifications()"
+    >
+      Clear
+    </button>
 
   </div>
+
+  <div
+    id="notificationsList"
+    class="activity"
+  ></div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CUSTOMER MODAL
+===================================================== -->
+
+<div
+  id="customerModal"
+  class="modal"
+>
+
+<div class="modal-box">
+
+  <div class="modal-header">
+
+    <h3 id="customerModalTitle">
+      Customer
+    </h3>
+
+    <button
+      class="close-modal"
+      onclick="closeModal('customerModal')"
+    >
+      ×
+    </button>
+
+  </div>
+
+  <input
+    type="hidden"
+    id="editCustomerId"
+  >
+
+  <div class="form-group">
+
+    <label>Customer Name</label>
+
+    <input id="customerName">
+
+  </div>
+
+  <div class="form-group">
+
+    <label>Email</label>
+
+    <input id="customerEmail" type="email">
+
+  </div>
+
+  <div class="form-group">
+
+    <label>Wallet ID</label>
+
+    <input id="customerWallet">
+
+  </div>
+
+  <div class="form-group">
+
+    <label>Balance</label>
+
+    <input id="customerBalance" type="number" step="0.01">
+
+  </div>
+
+  <div class="form-group">
+
+    <label>Status</label>
+
+    <select id="customerStatus">
+
+      <option value="Active">Active</option>
+      <option value="Suspended">Suspended</option>
+      <option value="Pending">Pending</option>
+
+    </select>
+
+  </div>
+
+  <div class="modal-footer">
+
+    <button
+      class="btn btn-neutral"
+      onclick="closeModal('customerModal')"
+    >
+      Cancel
+    </button>
+
+    <button
+      class="btn btn-success"
+      onclick="saveCustomer()"
+    >
+      Save Changes
+    </button>
+
+  </div>
+
+</div>
 
 </div>
 
@@ -1868,76 +1572,52 @@ tr:hover td{
 <script>
 
 /* =====================================================
-   CONFIGURATION
+   ADMIN CREDENTIALS
 ===================================================== */
 
-const ADMIN_EMAIL="admin@coinbridge.com";
-const ADMIN_PASSWORD="CoinBridge@2026";
+const ADMIN_EMAIL = "michgeorge0452@gmail.com";
 
-let selectedChatCustomer=null;
+/*
+ IMPORTANT:
+ Put the CoinBridge-only password you chose between
+ the quotation marks below.
+*/
 
-
-/* =====================================================
-   STORAGE HELPERS
-===================================================== */
-
-function read(key,fallback){
-
-  try{
-
-    const value=JSON.parse(
-      localStorage.getItem(key)
-    );
-
-    return value===null?fallback:value;
-
-  }catch(error){
-
-    return fallback;
-
-  }
-
-}
-
-
-function write(key,value){
-
-  localStorage.setItem(
-    key,
-    JSON.stringify(value)
-  );
-
-}
+const ADMIN_PASSWORD = "PASTE_YOUR_COINBRIDGE_PASSWORD_HERE";
 
 
 /* =====================================================
    AUTHENTICATION
 ===================================================== */
-const ADMIN_EMAIL = "michgeorge0452@gmail.com";
-const ADMIN_PASSWORD = "GC.259592";
+
 function isLoggedIn(){
 
   return sessionStorage.getItem(
     "coinbridge_admin_authenticated"
-  )==="true";
+  ) === "true";
 
 }
 
 
 function login(){
 
-  const email=
-    document.getElementById("adminEmail").value.trim();
+  const email =
+    document
+      .getElementById("adminEmail")
+      .value
+      .trim();
 
-  const password=
-    document.getElementById("adminPassword").value;
+  const password =
+    document
+      .getElementById("adminPassword")
+      .value;
 
-  const error=
+  const error =
     document.getElementById("loginError");
 
   if(
-    email===ADMIN_EMAIL &&
-    password===ADMIN_PASSWORD
+    email === ADMIN_EMAIL &&
+    password === ADMIN_PASSWORD
   ){
 
     sessionStorage.setItem(
@@ -1953,58 +1633,23 @@ function login(){
       .getElementById("adminApp")
       .classList.remove("hidden");
 
-    seedDemoData();
+    error.classList.add("hidden");
 
     loadEverything();
 
-    addActivity(
-      "Administrator logged in",
-      "Secure admin session started"
-    );
-
   }else{
 
-    error.style.display="block";
+    error.textContent =
+      "Invalid email or password.";
+
+    error.classList.remove("hidden");
 
   }
 
 }
 
 
-document
-  .getElementById("loginForm")
-  .addEventListener(
-    "submit",
-    function(event){
-
-      event.preventDefault();
-
-      login();
-
-    }
-  );
-
-
-function togglePassword(){
-
-  const input=
-    document.getElementById("adminPassword");
-
-  input.type=
-    input.type==="password"
-      ?"text"
-      :"password";
-
-}
-
-
 function logout(){
-
-  if(
-    !confirm(
-      "Log out of the CoinBridge Admin Control Center?"
-    )
-  )return;
 
   sessionStorage.removeItem(
     "coinbridge_admin_authenticated"
@@ -2016,171 +1661,57 @@ function logout(){
 
 
 /* =====================================================
-   NAVIGATION
+   STORAGE HELPERS
 ===================================================== */
 
-const sectionInfo={
+function readJSON(key,fallback){
 
-  dashboard:[
-    "Admin Dashboard",
-    "Monitor and control your CoinBridge platform."
-  ],
+  try{
 
-  customers:[
-    "Customer Management",
-    "Approve, suspend and manage customer accounts."
-  ],
+    const data =
+      JSON.parse(
+        localStorage.getItem(key)
+      );
 
-  orders:[
-    "Order Management",
-    "Review customer Buy and Sell requests."
-  ],
+    return data ?? fallback;
 
-  wallets:[
-    "Wallet Management",
-    "Manage customer balances and wallet IDs."
-  ],
+  }catch(error){
 
-  transactions:[
-    "Transactions",
-    "Review customer transaction history."
-  ],
-
-  chat:[
-    "Customer Chat",
-    "Communicate directly with CoinBridge customers."
-  ],
-
-  activity:[
-    "Admin Activity",
-    "Review administrator actions."
-  ],
-
-  settings:[
-    "Admin Settings",
-    "Manage local administrator preferences."
-  ]
-
-};
-
-
-function showSection(name,button){
-
-  document
-    .querySelectorAll(".section")
-    .forEach(
-      section=>
-        section.classList.remove("active")
-    );
-
-  const target=
-    document.getElementById(
-      "section-"+name
-    );
-
-  if(target){
-    target.classList.add("active");
-  }
-
-  document
-    .querySelectorAll(".nav button")
-    .forEach(
-      b=>b.classList.remove("active")
-    );
-
-  if(button){
-    button.classList.add("active");
-  }
-
-  if(sectionInfo[name]){
-
-    document.getElementById(
-      "pageTitle"
-    ).textContent=
-      sectionInfo[name][0];
-
-    document.getElementById(
-      "pageDescription"
-    ).textContent=
-      sectionInfo[name][1];
+    return fallback;
 
   }
-
-  if(name==="customers")renderCustomers();
-  if(name==="orders")renderOrders();
-  if(name==="wallets")renderWallets();
-  if(name==="transactions")renderTransactions();
-  if(name==="chat")renderChatUsers();
-  if(name==="activity")renderActivity();
 
 }
 
 
-function showSectionByName(name){
+function saveJSON(key,data){
 
-  const button=
-    [...document.querySelectorAll(".nav button")]
-    .find(
-      b=>b.getAttribute("onclick") &&
-      b.getAttribute("onclick").includes(
-        "'"+name+"'"
-      )
-    );
-
-  showSection(name,button);
-
-}
-
-
-function mobileSection(name){
-
-  showSectionByName(name);
-
-  document
-    .getElementById("mobileNav")
-    .classList.remove("open");
-
-}
-
-
-function toggleMobileNav(){
-
-  document
-    .getElementById("mobileNav")
-    .classList.toggle("open");
+  localStorage.setItem(
+    key,
+    JSON.stringify(data)
+  );
 
 }
 
 
 /* =====================================================
-   DEMO DATA
+   DEMO DATA INITIALIZATION
 ===================================================== */
 
 function seedDemoData(){
 
   if(!localStorage.getItem("coinbridge_customers")){
 
-    write(
+    saveJSON(
       "coinbridge_customers",
       [
         {
-          id:"CUS-001",
+          id:"CUS-1001",
           name:"CoinBridge User",
-          email:"customer@coinbridge.com",
-          status:"Approved",
+          email:"customer@example.com",
+          walletId:"CBW-100001",
           balance:12480.50,
-          currency:"USD",
-          walletId:"CB-WALLET-001",
-          createdAt:new Date().toISOString()
-        },
-        {
-          id:"CUS-002",
-          name:"Demo Customer",
-          email:"demo@coinbridge.com",
-          status:"Pending",
-          balance:2500,
-          currency:"USD",
-          walletId:"",
+          status:"Active",
           createdAt:new Date().toISOString()
         }
       ]
@@ -2188,19 +1719,50 @@ function seedDemoData(){
 
   }
 
+
+  if(!localStorage.getItem("coinbridge_accounts")){
+
+    saveJSON(
+      "coinbridge_accounts",
+      []
+    );
+
+  }
+
+
+  if(!localStorage.getItem("coinbridge_transactions")){
+
+    saveJSON(
+      "coinbridge_transactions",
+      []
+    );
+
+  }
+
+
+  if(!localStorage.getItem("coinbridge_notifications")){
+
+    saveJSON(
+      "coinbridge_notifications",
+      []
+    );
+
+  }
+
+
   if(!localStorage.getItem("coinbridge_messages")){
 
-    write(
+    saveJSON(
       "coinbridge_messages",
-      {
-        "CUS-001":[
-          {
-            from:"customer",
-            text:"Hello admin, I need help with my account.",
-            time:new Date().toISOString()
-          }
-        ]
-      }
+      [
+        {
+          id:"MSG-1",
+          customer:"CoinBridge User",
+          from:"customer",
+          text:"Hello, I need assistance with my account.",
+          createdAt:new Date().toISOString()
+        }
+      ]
     );
 
   }
@@ -2208,66 +1770,98 @@ function seedDemoData(){
 }
 
 
-function getCustomers(){
-
-  return read(
-    "coinbridge_customers",
-    []
-  );
-
-}
-
-
-function saveCustomers(customers){
-
-  write(
-    "coinbridge_customers",
-    customers
-  );
-
-}
-
-
 /* =====================================================
-   ORDERS
+   NAVIGATION
 ===================================================== */
 
-function getOrders(){
+function showSection(id,button){
 
-  return read(
-    "coinbridge_pending_orders",
-    []
-  );
+  document
+    .querySelectorAll(".page-section")
+    .forEach(section=>{
+      section.classList.remove("active");
+    });
+
+  const target =
+    document.getElementById(id);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(item=>{
+      item.classList.remove("active");
+    });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  const titles={
+    dashboard:["Admin Dashboard","Manage accounts, wallets, orders and platform activity."],
+    customers:["Customers","View and manage customer accounts."],
+    accounts:["Account Approvals","Review newly submitted accounts."],
+    wallets:["Wallet Management","Manage customer wallet IDs and balances."],
+    orders:["Order Management","Review pending buy and sell requests."],
+    transactions:["Transactions","Review platform transaction records."],
+    chat:["Customer Messages","Communicate directly with customers."],
+    notifications:["Notifications","Platform alerts and administrative events."]
+  };
+
+  if(titles[id]){
+
+    document.getElementById("pageTitle").textContent =
+      titles[id][0];
+
+    document.getElementById("pageSubtitle").textContent =
+      titles[id][1];
+
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
 
-function saveOrders(orders){
+function showSectionById(id){
 
-  write(
-    "coinbridge_pending_orders",
-    orders
-  );
+  const button =
+    [...document.querySelectorAll(".nav button")]
+      .find(item =>
+        item.getAttribute("onclick") &&
+        item.getAttribute("onclick").includes(
+          "'" + id + "'"
+        )
+      );
 
-}
-
-
-function getHistory(){
-
-  return read(
-    "coinbridge_order_history",
-    []
-  );
+  showSection(id,button);
 
 }
 
 
-function saveHistory(history){
+function toggleMobileNav(){
 
-  write(
-    "coinbridge_order_history",
-    history
-  );
+  const sidebar =
+    document.querySelector(".sidebar");
+
+  if(
+    sidebar.style.display === "block"
+  ){
+
+    sidebar.style.display="none";
+
+  }else{
+
+    sidebar.style.display="block";
+    sidebar.style.position="fixed";
+    sidebar.style.height="100vh";
+
+  }
 
 }
 
@@ -2276,120 +1870,110 @@ function saveHistory(history){
    DASHBOARD
 ===================================================== */
 
-function updateDashboard(){
+function refreshDashboard(){
 
-  const customers=getCustomers();
-  const orders=getOrders();
+  loadEverything();
 
-  const balance=
-    customers.reduce(
-      (sum,c)=>sum+Number(c.balance||0),
-      0
+  alert("Dashboard refreshed.");
+
+}
+
+
+function renderDashboard(){
+
+  const customers =
+    readJSON(
+      "coinbridge_customers",
+      []
     );
 
-  document.getElementById(
-    "statCustomers"
-  ).textContent=
+  const accounts =
+    readJSON(
+      "coinbridge_accounts",
+      []
+    );
+
+  const orders =
+    readJSON(
+      "coinbridge_pending_orders",
+      []
+    );
+
+  document.getElementById("statCustomers").textContent =
     customers.length;
 
-  document.getElementById(
-    "statOrders"
-  ).textContent=
+  document.getElementById("statApprovals").textContent =
+    accounts.filter(
+      item =>
+        String(item.status||"Pending")
+          .toLowerCase()==="pending"
+    ).length;
+
+  document.getElementById("statOrders").textContent =
     orders.filter(
-      o=>o.status==="Pending"
+      item =>
+        String(item.status||"Pending")
+          .toLowerCase()==="pending"
     ).length;
 
-  document.getElementById(
-    "statBalance"
-  ).textContent=
-    "$"+
-    balance.toLocaleString(
-      "en-US",
-      {
-        minimumFractionDigits:2,
-        maximumFractionDigits:2
-      }
-    );
-
-  document.getElementById(
-    "statPendingUsers"
-  ).textContent=
+  document.getElementById("statWallets").textContent =
     customers.filter(
-      c=>c.status==="Pending"
+      item => item.walletId
     ).length;
 
 
-  const latest=
-    [...orders]
-    .sort(
-      (a,b)=>
-        new Date(b.createdAt)-
-        new Date(a.createdAt)
-    )
-    .slice(0,8);
+  const activity =
+    document.getElementById("activityList");
 
-  const tbody=
-    document.getElementById(
-      "dashboardOrders"
+  const history =
+    readJSON(
+      "coinbridge_order_history",
+      []
     );
 
-  if(!latest.length){
+  if(!history.length){
 
-    tbody.innerHTML=
-      `<tr>
-        <td colspan="6" style="color:#71869a">
-          No customer orders yet.
-        </td>
-      </tr>`;
+    activity.innerHTML =
+      `<div class="activity-item">
+        <div>
+          <strong>No recent orders</strong>
+          <span>Activity will appear here.</span>
+        </div>
+      </div>`;
 
     return;
 
   }
 
-  tbody.innerHTML=
-    latest.map(
-      order=>`
+  activity.innerHTML =
+    history
+      .slice(-8)
+      .reverse()
+      .map(order=>`
 
-      <tr>
+        <div class="activity-item">
 
-        <td>
-          <strong>${escapeHTML(order.id||"N/A")}</strong>
-        </td>
+          <div>
 
-        <td>
-          ${escapeHTML(order.customer||"Customer")}
-        </td>
+            <strong>
+              ${escapeHTML(order.type||"Order")}
+              ${escapeHTML(order.asset||"")}
+            </strong>
 
-        <td>
-          <span class="${order.type==="Buy"?"green":"red"}">
-            ${escapeHTML(order.type||"")}
-          </span>
-        </td>
+            <span>
+              ${escapeHTML(order.customer||"Customer")}
+            </span>
 
-        <td>
-          ${escapeHTML(order.asset||"")}
-        </td>
+          </div>
 
-        <td>
-          $${Number(order.price||0).toLocaleString(
-            "en-US",
-            {
-              minimumFractionDigits:
-                order.asset==="USDC"?4:2,
-              maximumFractionDigits:
-                order.asset==="USDC"?4:2
-            }
-          )}
-        </td>
+          <div>
+            ${statusHTML(order.status||"Pending")}
+          </div>
 
-        <td>
-          ${statusHTML(order.status)}
-        </td>
+        </div>
 
-      </tr>
-
-      `
-    ).join("");
+      `)
+      .join("");
 
 }
 
@@ -2400,53 +1984,47 @@ function updateDashboard(){
 
 function renderCustomers(){
 
-  const tbody=
+  const customers =
+    readJSON(
+      "coinbridge_customers",
+      []
+    );
+
+  const query =
+    (
+      document
+        .getElementById("customerSearch")
+        ?.value || ""
+    )
+    .toLowerCase()
+    .trim();
+
+  const filtered =
+    customers.filter(customer=>{
+
+      const text =
+        [
+          customer.name,
+          customer.email,
+          customer.walletId
+        ]
+        .join(" ")
+        .toLowerCase();
+
+      return text.includes(query);
+
+    });
+
+  const tbody =
     document.getElementById(
       "customersTable"
     );
 
-  const query=
-    (
-      document.getElementById(
-        "customerSearch"
-      )?.value||""
-    ).toLowerCase();
+  if(!filtered.length){
 
-  const filter=
-    document.getElementById(
-      "customerFilter"
-    )?.value||"all";
-
-  const customers=
-    getCustomers().filter(
-      customer=>{
-
-        const text=
-          (
-            customer.name+" "+
-            customer.email+" "+
-            customer.id+" "+
-            customer.walletId
-          ).toLowerCase();
-
-        const matchesSearch=
-          text.includes(query);
-
-        const matchesFilter=
-          filter==="all" ||
-          customer.status===filter;
-
-        return matchesSearch &&
-               matchesFilter;
-
-      }
-    );
-
-  if(!customers.length){
-
-    tbody.innerHTML=
+    tbody.innerHTML =
       `<tr>
-        <td colspan="6" style="color:#71869a">
+        <td colspan="6">
           No customers found.
         </td>
       </tr>`;
@@ -2455,609 +2033,65 @@ function renderCustomers(){
 
   }
 
-  tbody.innerHTML=
-    customers.map(
-      c=>`
+  tbody.innerHTML =
+    filtered.map(customer=>`
 
       <tr>
 
         <td>
-          <strong>${escapeHTML(c.name)}</strong>
-          <br>
-          <span style="color:#71869a">
-            ${escapeHTML(c.id)}
-          </span>
-        </td>
-
-        <td>${escapeHTML(c.email)}</td>
-
-        <td>${statusHTML(c.status)}</td>
-
-        <td>
-          $${Number(c.balance||0).toLocaleString(
-            "en-US",
-            {
-              minimumFractionDigits:2,
-              maximumFractionDigits:2
-            }
-          )}
+          <strong>
+            ${escapeHTML(customer.name)}
+          </strong>
         </td>
 
         <td>
-          ${
-            c.walletId
-            ?escapeHTML(c.walletId)
-            :'<span style="color:#71869a">Not assigned</span>'
-          }
+          ${escapeHTML(customer.email)}
+        </td>
+
+        <td>
+          ${statusHTML(customer.status)}
+        </td>
+
+        <td>
+          $${Number(customer.balance||0)
+            .toLocaleString(
+              "en-US",
+              {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+              }
+            )}
+        </td>
+
+        <td>
+          ${escapeHTML(customer.walletId||"—")}
         </td>
 
         <td>
 
           <div class="actions">
 
-            ${
-              c.status==="Pending"
-              ?`
-                <button
-                  class="small-btn approve"
-                  onclick="changeCustomerStatus('${c.id}','Approved')"
-                >Approve</button>
-
-                <button
-                  class="small-btn danger"
-                  onclick="changeCustomerStatus('${c.id}','Rejected')"
-                >Reject</button>
-              `
-              :""
-            }
-
-            ${
-              c.status==="Approved"
-              ?`
-                <button
-                  class="small-btn"
-                  onclick="changeCustomerStatus('${c.id}','Suspended')"
-                >Suspend</button>
-              `
-              :""
-            }
-
-            ${
-              c.status==="Suspended"
-              ?`
-                <button
-                  class="small-btn approve"
-                  onclick="changeCustomerStatus('${c.id}','Approved')"
-                >Activate</button>
-              `
-              :""
-            }
-
             <button
-              class="small-btn"
-              onclick="editCustomer('${c.id}')"
-            >Edit</button>
-
-            <button
-              class="small-btn danger"
-              onclick="deleteCustomer('${c.id}')"
-            >Delete</button>
-
-          </div>
-
-        </td>
-
-      </tr>
-
-      `
-    ).join("");
-
-}
-
-
-/* =====================================================
-   CUSTOMER STATUS
-===================================================== */
-
-function changeCustomerStatus(id,status){
-
-  const customers=getCustomers();
-
-  const customer=
-    customers.find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  const action=
-    status==="Approved"
-      ?"approve this customer"
-      :status==="Rejected"
-      ?"reject this customer"
-      :status==="Suspended"
-      ?"suspend this customer"
-      :"activate this customer";
-
-  if(!confirm(
-    "Are you sure you want to "+
-    action+"?"
-  ))return;
-
-  customer.status=status;
-
-  saveCustomers(customers);
-
-  addActivity(
-    "Customer status changed",
-    customer.name+" → "+status
-  );
-
-  loadEverything();
-
-}
-
-
-/* =====================================================
-   EDIT CUSTOMER
-===================================================== */
-
-function editCustomer(id){
-
-  const customer=
-    getCustomers().find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  openModal(
-    "Edit Customer",
-    `
-
-    <div class="form-group">
-      <label>FULL NAME</label>
-      <input
-        id="editName"
-        class="modal-input"
-        value="${escapeAttribute(customer.name)}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>EMAIL</label>
-      <input
-        id="editEmail"
-        class="modal-input"
-        value="${escapeAttribute(customer.email)}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>WALLET ID</label>
-      <input
-        id="editWallet"
-        class="modal-input"
-        value="${escapeAttribute(customer.walletId||"")}"
-        placeholder="Enter wallet ID"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>BALANCE</label>
-      <input
-        id="editBalance"
-        class="modal-input"
-        type="number"
-        step="0.01"
-        value="${Number(customer.balance||0)}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>ACCOUNT STATUS</label>
-      <select
-        id="editStatus"
-        class="modal-input"
-      >
-        <option ${
-          customer.status==="Pending"?"selected":""
-        }>Pending</option>
-
-        <option ${
-          customer.status==="Approved"?"selected":""
-        }>Approved</option>
-
-        <option ${
-          customer.status==="Suspended"?"selected":""
-        }>Suspended</option>
-
-        <option ${
-          customer.status==="Rejected"?"selected":""
-        }>Rejected</option>
-
-      </select>
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="secondary"
-        onclick="closeModal()"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="primary"
-        onclick="saveCustomer('${id}')"
-      >
-        Save Changes
-      </button>
-
-    </div>
-
-    `
-  );
-
-}
-
-
-function saveCustomer(id){
-
-  const customers=getCustomers();
-
-  const customer=
-    customers.find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  customer.name=
-    document.getElementById("editName").value.trim();
-
-  customer.email=
-    document.getElementById("editEmail").value.trim();
-
-  customer.walletId=
-    document.getElementById("editWallet").value.trim();
-
-  customer.balance=
-    Number(
-      document.getElementById("editBalance").value||0
-    );
-
-  customer.status=
-    document.getElementById("editStatus").value;
-
-  saveCustomers(customers);
-
-  addActivity(
-    "Customer profile edited",
-    customer.name
-  );
-
-  closeModal();
-
-  loadEverything();
-
-}
-
-
-/* =====================================================
-   ADD CUSTOMER
-===================================================== */
-
-function openAddCustomer(){
-
-  openModal(
-    "Add Customer",
-    `
-
-    <div class="form-group">
-      <label>FULL NAME</label>
-      <input
-        id="newName"
-        class="modal-input"
-        placeholder="Customer name"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>EMAIL</label>
-      <input
-        id="newEmail"
-        class="modal-input"
-        placeholder="customer@example.com"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>INITIAL BALANCE</label>
-      <input
-        id="newBalance"
-        class="modal-input"
-        type="number"
-        value="0"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>WALLET ID</label>
-      <input
-        id="newWallet"
-        class="modal-input"
-        placeholder="Optional wallet ID"
-      >
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="secondary"
-        onclick="closeModal()"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="primary"
-        onclick="createCustomer()"
-      >
-        Create Customer
-      </button>
-
-    </div>
-
-    `
-  );
-
-}
-
-
-function createCustomer(){
-
-  const name=
-    document.getElementById("newName").value.trim();
-
-  const email=
-    document.getElementById("newEmail").value.trim();
-
-  if(!name||!email){
-
-    alert("Please enter the customer's name and email.");
-
-    return;
-
-  }
-
-  const customers=getCustomers();
-
-  const customer={
-
-    id:
-      "CUS-"+Date.now(),
-
-    name:name,
-
-    email:email,
-
-    status:"Approved",
-
-    balance:
-      Number(
-        document.getElementById(
-          "newBalance"
-        ).value||0
-      ),
-
-    currency:"USD",
-
-    walletId:
-      document.getElementById(
-        "newWallet"
-      ).value.trim(),
-
-    createdAt:
-      new Date().toISOString()
-
-  };
-
-  customers.push(customer);
-
-  saveCustomers(customers);
-
-  addActivity(
-    "Customer created",
-    customer.name
-  );
-
-  closeModal();
-
-  loadEverything();
-
-}
-
-
-/* =====================================================
-   DELETE CUSTOMER
-===================================================== */
-
-function deleteCustomer(id){
-
-  const customers=getCustomers();
-
-  const customer=
-    customers.find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  if(!confirm(
-    "Delete "+customer.name+
-    " from the local CoinBridge prototype?"
-  ))return;
-
-  saveCustomers(
-    customers.filter(
-      c=>c.id!==id
-    )
-  );
-
-  addActivity(
-    "Customer deleted",
-    customer.name
-  );
-
-  loadEverything();
-
-}
-
-
-/* =====================================================
-   ORDERS
-===================================================== */
-
-function renderOrders(){
-
-  const tbody=
-    document.getElementById(
-      "ordersTable"
-    );
-
-  const query=
-    (
-      document.getElementById(
-        "orderSearch"
-      )?.value||""
-    ).toLowerCase();
-
-  const filter=
-    document.getElementById(
-      "orderFilter"
-    )?.value||"all";
-
-  const orders=
-    getOrders()
-    .filter(
-      order=>{
-
-        const text=
-          (
-            order.id+" "+
-            order.customer+" "+
-            order.asset+" "+
-            order.type
-          ).toLowerCase();
-
-        return(
-          text.includes(query) &&
-          (
-            filter==="all" ||
-            order.status===filter
-          )
-        );
-
-      }
-    )
-    .sort(
-      (a,b)=>
-        new Date(b.createdAt)-
-        new Date(a.createdAt)
-    );
-
-  if(!orders.length){
-
-    tbody.innerHTML=
-      `<tr>
-        <td colspan="8" style="color:#71869a">
-          No orders found.
-        </td>
-      </tr>`;
-
-    return;
-
-  }
-
-  tbody.innerHTML=
-    orders.map(
-      o=>`
-
-      <tr>
-
-        <td>
-          <strong>${escapeHTML(o.id||"N/A")}</strong>
-        </td>
-
-        <td>${escapeHTML(o.customer||"Customer")}</td>
-
-        <td>
-          <span class="${
-            o.type==="Buy"
-              ?"green"
-              :"red"
-          }">
-            ${escapeHTML(o.type||"")}
-          </span>
-        </td>
-
-        <td>${escapeHTML(o.asset||"")}</td>
-
-        <td>
-          $${Number(o.price||0).toLocaleString(
-            "en-US",
-            {
-              minimumFractionDigits:
-                o.asset==="USDC"?4:2,
-              maximumFractionDigits:
-                o.asset==="USDC"?4:2
-            }
-          )}
-        </td>
-
-        <td>
-          ${
-            o.createdAt
-            ?new Date(o.createdAt).toLocaleString()
-            :"N/A"
-          }
-        </td>
-
-        <td>${statusHTML(o.status)}</td>
-
-        <td>
-
-          <div class="actions">
-
-            ${
-              o.status==="Pending"
-              ?`
-
-                <button
-                  class="small-btn approve"
-                  onclick="processOrder('${o.id}','Approved')"
-                >
-                  Approve
-                </button>
-
-                <button
-                  class="small-btn danger"
-                  onclick="processOrder('${o.id}','Rejected')"
-                >
-                  Reject
-                </button>
-
-              `
-              :""
-            }
-
-            <button
-              class="small-btn"
-              onclick="viewOrder('${o.id}')"
+              class="btn btn-primary"
+              onclick="editCustomer('${escapeAttribute(customer.id)}')"
             >
-              View
+              Edit
+            </button>
+
+            <button
+              class="btn btn-warning"
+              onclick="toggleCustomerStatus('${escapeAttribute(customer.id)}')"
+            >
+              ${String(customer.status).toLowerCase()==="suspended"
+                ?"Activate"
+                :"Suspend"}
+            </button>
+
+            <button
+              class="btn btn-danger"
+              onclick="removeCustomer('${escapeAttribute(customer.id)}')"
+            >
+              Remove
             </button>
 
           </div>
@@ -3066,65 +2100,269 @@ function renderOrders(){
 
       </tr>
 
-      `
-    ).join("");
+    `).join("");
 
 }
 
 
-/* =====================================================
-   PROCESS ORDER
-===================================================== */
+function openCustomerModal(){
 
-function processOrder(id,status){
+  document.getElementById(
+    "customerModalTitle"
+  ).textContent =
+    "Add Customer";
 
-  const orders=getOrders();
+  document.getElementById(
+    "editCustomerId"
+  ).value="";
 
-  const order=
-    orders.find(
-      o=>o.id===id
+  document.getElementById(
+    "customerName"
+  ).value="";
+
+  document.getElementById(
+    "customerEmail"
+  ).value="";
+
+  document.getElementById(
+    "customerWallet"
+  ).value="";
+
+  document.getElementById(
+    "customerBalance"
+  ).value="0";
+
+  document.getElementById(
+    "customerStatus"
+  ).value="Active";
+
+  openModal("customerModal");
+
+}
+
+
+function editCustomer(id){
+
+  const customers =
+    readJSON(
+      "coinbridge_customers",
+      []
     );
 
-  if(!order)return;
-
-  if(!confirm(
-    status==="Approved"
-      ?"Approve this order?"
-      :"Reject this order?"
-  ))return;
-
-  order.status=status;
-
-  order.adminProcessedAt=
-    new Date().toISOString();
-
-  saveOrders(orders);
-
-  let history=getHistory();
-
-  const existing=
-    history.find(
-      h=>h.id===id
+  const customer =
+    customers.find(
+      item => item.id === id
     );
 
-  if(existing){
+  if(!customer)return;
 
-    existing.status=status;
-    existing.adminProcessedAt=
-      order.adminProcessedAt;
+  document.getElementById(
+    "customerModalTitle"
+  ).textContent =
+    "Edit Customer";
 
-  }else{
+  document.getElementById(
+    "editCustomerId"
+  ).value =
+    customer.id;
 
-    history.push(order);
+  document.getElementById(
+    "customerName"
+  ).value =
+    customer.name || "";
+
+  document.getElementById(
+    "customerEmail"
+  ).value =
+    customer.email || "";
+
+  document.getElementById(
+    "customerWallet"
+  ).value =
+    customer.walletId || "";
+
+  document.getElementById(
+    "customerBalance"
+  ).value =
+    customer.balance || 0;
+
+  document.getElementById(
+    "customerStatus"
+  ).value =
+    customer.status || "Active";
+
+  openModal("customerModal");
+
+}
+
+
+function saveCustomer(){
+
+  let customers =
+    readJSON(
+      "coinbridge_customers",
+      []
+    );
+
+  const id =
+    document
+      .getElementById("editCustomerId")
+      .value;
+
+  const customer={
+
+    id:
+      id ||
+      "CUS-"+Date.now(),
+
+    name:
+      document
+        .getElementById("customerName")
+        .value
+        .trim(),
+
+    email:
+      document
+        .getElementById("customerEmail")
+        .value
+        .trim(),
+
+    walletId:
+      document
+        .getElementById("customerWallet")
+        .value
+        .trim(),
+
+    balance:
+      Number(
+        document
+          .getElementById("customerBalance")
+          .value || 0
+      ),
+
+    status:
+      document
+        .getElementById("customerStatus")
+        .value,
+
+    createdAt:
+      new Date().toISOString()
+
+  };
+
+  if(!customer.name){
+
+    alert("Enter a customer name.");
+
+    return;
 
   }
 
-  saveHistory(history);
+  const index =
+    customers.findIndex(
+      item => item.id === id
+    );
 
-  addActivity(
-    "Order "+status.toLowerCase(),
-    order.type+" "+order.asset+
-    " at "+order.price
+  if(index >= 0){
+
+    customers[index]={
+      ...customers[index],
+      ...customer
+    };
+
+  }else{
+
+    customers.push(customer);
+
+  }
+
+  saveJSON(
+    "coinbridge_customers",
+    customers
+  );
+
+  addNotification(
+    "Customer record updated."
+  );
+
+  closeModal("customerModal");
+
+  loadEverything();
+
+}
+
+
+function toggleCustomerStatus(id){
+
+  const customers =
+    readJSON(
+      "coinbridge_customers",
+      []
+    );
+
+  const customer =
+    customers.find(
+      item => item.id === id
+    );
+
+  if(!customer)return;
+
+  customer.status =
+    String(customer.status)
+      .toLowerCase()==="suspended"
+      ? "Active"
+      : "Suspended";
+
+  saveJSON(
+    "coinbridge_customers",
+    customers
+  );
+
+  addNotification(
+    customer.name+
+    " status changed to "+
+    customer.status
+  );
+
+  loadEverything();
+
+}
+
+
+function removeCustomer(id){
+
+  const customers =
+    readJSON(
+      "coinbridge_customers",
+      []
+    );
+
+  const customer =
+    customers.find(
+      item => item.id === id
+    );
+
+  if(!customer)return;
+
+  if(
+    !confirm(
+      "Remove "+customer.name+"?"
+    )
+  )return;
+
+  const remaining =
+    customers.filter(
+      item => item.id !== id
+    );
+
+  saveJSON(
+    "coinbridge_customers",
+    remaining
+  );
+
+  addNotification(
+    "Customer removed: "+
+    customer.name
   );
 
   loadEverything();
@@ -3133,148 +2371,27 @@ function processOrder(id,status){
 
 
 /* =====================================================
-   VIEW ORDER
-===================================================== */
-
-function viewOrder(id){
-
-  const order=
-    getOrders().find(
-      o=>o.id===id
-    );
-
-  if(!order)return;
-
-  openModal(
-    "Order Details",
-    `
-
-    <div class="form-group">
-      <label>ORDER ID</label>
-      <input
-        class="modal-input"
-        readonly
-        value="${escapeAttribute(order.id||"")}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>CUSTOMER</label>
-      <input
-        class="modal-input"
-        readonly
-        value="${escapeAttribute(order.customer||"")}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>ORDER TYPE</label>
-      <input
-        class="modal-input"
-        readonly
-        value="${escapeAttribute(order.type||"")}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>ASSET</label>
-      <input
-        class="modal-input"
-        readonly
-        value="${escapeAttribute(order.assetName||order.asset||"")}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>CUSTOMER'S REQUESTED PRICE</label>
-      <input
-        class="modal-input"
-        readonly
-        value="$${Number(order.price||0).toLocaleString()}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>STATUS</label>
-      <div>
-        ${statusHTML(order.status)}
-      </div>
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="secondary"
-        onclick="closeModal()"
-      >
-        Close
-      </button>
-
-      ${
-        order.status==="Pending"
-        ?`
-          <button
-            class="success"
-            onclick="closeModal();processOrder('${order.id}','Approved')"
-          >
-            Approve
-          </button>
-
-          <button
-            class="danger"
-            onclick="closeModal();processOrder('${order.id}','Rejected')"
-          >
-            Reject
-          </button>
-        `
-        :""
-      }
-
-    </div>
-
-    `
-  );
-
-}
-
-
-/* =====================================================
-   WALLETS
+   WALLET MANAGEMENT
 ===================================================== */
 
 function renderWallets(){
 
-  const tbody=
+  const customers =
+    readJSON(
+      "coinbridge_customers",
+      []
+    );
+
+  const tbody =
     document.getElementById(
       "walletsTable"
     );
 
-  const query=
-    (
-      document.getElementById(
-        "walletSearch"
-      )?.value||""
-    ).toLowerCase();
-
-  const customers=
-    getCustomers()
-    .filter(
-      c=>
-        (
-          c.name+" "+
-          c.email+" "+
-          c.walletId+" "+
-          c.id
-        )
-        .toLowerCase()
-        .includes(query)
-    );
-
   if(!customers.length){
 
-    tbody.innerHTML=
+    tbody.innerHTML =
       `<tr>
-        <td colspan="6" style="color:#71869a">
+        <td colspan="5">
           No wallets found.
         </td>
       </tr>`;
@@ -3283,46 +2400,34 @@ function renderWallets(){
 
   }
 
-  tbody.innerHTML=
-    customers.map(
-      c=>`
+  tbody.innerHTML =
+    customers.map(customer=>`
 
       <tr>
 
         <td>
-          <strong>${escapeHTML(c.name)}</strong>
-          <br>
-          <span style="color:#71869a">
-            ${escapeHTML(c.email)}
-          </span>
-        </td>
-
-        <td>
-          ${
-            c.walletId
-            ?escapeHTML(c.walletId)
-            :'<span style="color:#71869a">No wallet ID</span>'
-          }
+          ${escapeHTML(customer.name)}
         </td>
 
         <td>
           <strong>
-            $${Number(c.balance||0).toLocaleString(
+            ${escapeHTML(customer.walletId||"—")}
+          </strong>
+        </td>
+
+        <td>
+          $${Number(customer.balance||0)
+            .toLocaleString(
               "en-US",
               {
                 minimumFractionDigits:2,
                 maximumFractionDigits:2
               }
             )}
-          </strong>
         </td>
 
         <td>
-          ${escapeHTML(c.currency||"USD")}
-        </td>
-
-        <td>
-          ${statusHTML(c.status)}
+          ${statusHTML(customer.status)}
         </td>
 
         <td>
@@ -3330,22 +2435,15 @@ function renderWallets(){
           <div class="actions">
 
             <button
-              class="small-btn"
-              onclick="editWallet('${c.id}')"
+              class="btn btn-primary"
+              onclick="editCustomer('${escapeAttribute(customer.id)}')"
             >
-              Edit
+              Edit Wallet
             </button>
 
             <button
-              class="small-btn"
-              onclick="walletAdjustment('${c.id}')"
-            >
-              Funds
-            </button>
-
-            <button
-              class="small-btn danger"
-              onclick="removeWalletId('${c.id}')"
+              class="btn btn-danger"
+              onclick="removeWalletId('${escapeAttribute(customer.id)}')"
             >
               Remove ID
             </button>
@@ -3356,318 +2454,448 @@ function renderWallets(){
 
       </tr>
 
-      `
-    ).join("");
+    `).join("");
 
 }
 
-
-/* =====================================================
-   EDIT WALLET
-===================================================== */
-
-function editWallet(id){
-
-  const customer=
-    getCustomers().find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  openModal(
-    "Edit Customer Wallet",
-    `
-
-    <div class="form-group">
-      <label>CUSTOMER</label>
-      <input
-        class="modal-input"
-        readonly
-        value="${escapeAttribute(customer.name)}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>WALLET ID</label>
-      <input
-        id="walletEditId"
-        class="modal-input"
-        value="${escapeAttribute(customer.walletId||"")}"
-        placeholder="Wallet ID"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>BALANCE</label>
-      <input
-        id="walletEditBalance"
-        class="modal-input"
-        type="number"
-        step="0.01"
-        value="${Number(customer.balance||0)}"
-      >
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="secondary"
-        onclick="closeModal()"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="primary"
-        onclick="saveWallet('${id}')"
-      >
-        Save Wallet
-      </button>
-
-    </div>
-
-    `
-  );
-
-}
-
-
-function saveWallet(id){
-
-  const customers=getCustomers();
-
-  const customer=
-    customers.find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  customer.walletId=
-    document.getElementById(
-      "walletEditId"
-    ).value.trim();
-
-  customer.balance=
-    Number(
-      document.getElementById(
-        "walletEditBalance"
-      ).value||0
-    );
-
-  saveCustomers(customers);
-
-  addActivity(
-    "Wallet edited",
-    customer.name+
-    " balance: $"+
-    customer.balance
-  );
-
-  closeModal();
-
-  loadEverything();
-
-}
-
-
-/* =====================================================
-   FUNDS
-===================================================== */
-
-function walletAdjustment(id){
-
-  const customer=
-    getCustomers().find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  openModal(
-    "Wallet Funds",
-    `
-
-    <div class="form-group">
-      <label>CUSTOMER</label>
-      <input
-        class="modal-input"
-        readonly
-        value="${escapeAttribute(customer.name)}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>ACTION</label>
-      <select
-        id="fundAction"
-        class="modal-input"
-      >
-        <option value="add">Add Funds</option>
-        <option value="deduct">Deduct Funds</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>AMOUNT</label>
-      <input
-        id="fundAmount"
-        class="modal-input"
-        type="number"
-        min="0"
-        step="0.01"
-        placeholder="0.00"
-      >
-    </div>
-
-    <div class="form-group">
-      <label>NOTE</label>
-      <input
-        id="fundNote"
-        class="modal-input"
-        placeholder="Reason for adjustment"
-      >
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="secondary"
-        onclick="closeModal()"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="primary"
-        onclick="applyFunds('${id}')"
-      >
-        Apply
-      </button>
-
-    </div>
-
-    `
-  );
-
-}
-
-
-function applyFunds(id){
-
-  const customers=getCustomers();
-
-  const customer=
-    customers.find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  const action=
-    document.getElementById(
-      "fundAction"
-    ).value;
-
-  const amount=
-    Number(
-      document.getElementById(
-        "fundAmount"
-      ).value||0
-    );
-
-  const note=
-    document.getElementById(
-      "fundNote"
-    ).value.trim();
-
-  if(amount<=0){
-
-    alert("Enter a valid amount.");
-
-    return;
-
-  }
-
-  if(
-    action==="deduct" &&
-    amount>Number(customer.balance||0)
-  ){
-
-    alert(
-      "The deduction is greater than the customer's balance."
-    );
-
-    return;
-
-  }
-
-  if(action==="add"){
-
-    customer.balance=
-      Number(customer.balance||0)+amount;
-
-  }else{
-
-    customer.balance=
-      Number(customer.balance||0)-amount;
-
-  }
-
-  saveCustomers(customers);
-
-  addActivity(
-    action==="add"
-      ?"Funds added"
-      :"Funds deducted",
-    customer.name+
-    " | $"+amount+
-    (note?" | "+note:"")
-  );
-
-  closeModal();
-
-  loadEverything();
-
-}
-
-
-/* =====================================================
-   REMOVE WALLET ID
-===================================================== */
 
 function removeWalletId(id){
 
-  const customers=getCustomers();
+  const customers =
+    readJSON(
+      "coinbridge_customers",
+      []
+    );
 
-  const customer=
+  const customer =
     customers.find(
-      c=>c.id===id
+      item => item.id === id
     );
 
   if(!customer)return;
 
-  if(!customer.walletId){
+  if(
+    !confirm(
+      "Remove this customer's wallet ID?"
+    )
+  )return;
 
-    alert("This customer has no wallet ID.");
+  customer.walletId="";
+
+  saveJSON(
+    "coinbridge_customers",
+    customers
+  );
+
+  addNotification(
+    "Wallet ID removed for "+
+    customer.name
+  );
+
+  loadEverything();
+
+}
+
+
+/* =====================================================
+   ACCOUNT APPROVALS
+===================================================== */
+
+function renderAccounts(){
+
+  const accounts =
+    readJSON(
+      "coinbridge_accounts",
+      []
+    );
+
+  const tbody =
+    document.getElementById(
+      "accountsTable"
+    );
+
+  if(!accounts.length){
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="5">
+          No account applications pending.
+        </td>
+      </tr>`;
 
     return;
 
   }
 
-  if(!confirm(
-    "Remove the wallet ID for "+
-    customer.name+"?"
-  ))return;
+  tbody.innerHTML =
+    accounts.map(account=>`
 
-  customer.walletId="";
+      <tr>
 
-  saveCustomers(customers);
+        <td>
+          ${escapeHTML(
+            account.name ||
+            account.fullName ||
+            "Unknown"
+          )}
+        </td>
 
-  addActivity(
-    "Wallet ID removed",
-    customer.name
+        <td>
+          ${escapeHTML(
+            account.email ||
+            "—"
+          )}
+        </td>
+
+        <td>
+          ${formatDate(
+            account.createdAt
+          )}
+        </td>
+
+        <td>
+          ${statusHTML(account.status)}
+        </td>
+
+        <td>
+
+          <div class="actions">
+
+            ${
+              String(account.status||"Pending")
+                .toLowerCase()==="pending"
+              ? `
+                <button
+                  class="btn btn-success"
+                  onclick="approveAccount('${escapeAttribute(account.id||"")}')"
+                >
+                  Approve
+                </button>
+
+                <button
+                  class="btn btn-danger"
+                  onclick="rejectAccount('${escapeAttribute(account.id||"")}')"
+                >
+                  Reject
+                </button>
+              `
+              :
+              `<span style="color:#718096">
+                Reviewed
+              </span>`
+            }
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+function approveAccount(id){
+
+  const accounts =
+    readJSON(
+      "coinbridge_accounts",
+      []
+    );
+
+  const account =
+    accounts.find(
+      item =>
+        String(item.id)===String(id)
+    );
+
+  if(!account)return;
+
+  account.status="Approved";
+
+  saveJSON(
+    "coinbridge_accounts",
+    accounts
+  );
+
+  let customers =
+    readJSON(
+      "coinbridge_customers",
+      []
+    );
+
+  const exists =
+    customers.some(
+      customer =>
+        customer.email === account.email
+    );
+
+  if(!exists){
+
+    customers.push({
+
+      id:"CUS-"+Date.now(),
+
+      name:
+        account.name ||
+        account.fullName ||
+        "Customer",
+
+      email:
+        account.email || "",
+
+      walletId:
+        account.walletId ||
+        "CBW-"+Date.now(),
+
+      balance:
+        Number(account.balance||0),
+
+      status:"Active",
+
+      createdAt:
+        new Date().toISOString()
+
+    });
+
+    saveJSON(
+      "coinbridge_customers",
+      customers
+    );
+
+  }
+
+  addNotification(
+    "Account approved: "+
+    (account.email||"")
+  );
+
+  loadEverything();
+
+}
+
+
+function rejectAccount(id){
+
+  const accounts =
+    readJSON(
+      "coinbridge_accounts",
+      []
+    );
+
+  const account =
+    accounts.find(
+      item =>
+        String(item.id)===String(id)
+    );
+
+  if(!account)return;
+
+  account.status="Rejected";
+
+  saveJSON(
+    "coinbridge_accounts",
+    accounts
+  );
+
+  addNotification(
+    "Account rejected: "+
+    (account.email||"")
+  );
+
+  loadEverything();
+
+}
+
+
+/* =====================================================
+   ORDER MANAGEMENT
+===================================================== */
+
+function renderOrders(){
+
+  const orders =
+    readJSON(
+      "coinbridge_pending_orders",
+      []
+    );
+
+  const tbody =
+    document.getElementById(
+      "ordersTable"
+    );
+
+  if(!orders.length){
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="7">
+          No orders found.
+        </td>
+      </tr>`;
+
+    return;
+
+  }
+
+  tbody.innerHTML =
+    orders
+      .slice()
+      .reverse()
+      .map(order=>`
+
+        <tr>
+
+          <td>
+            ${escapeHTML(order.id||"—")}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              order.customer||
+              "CoinBridge User"
+            )}
+          </td>
+
+          <td>
+            <strong>
+              ${escapeHTML(order.type||"—")}
+            </strong>
+          </td>
+
+          <td>
+            ${escapeHTML(order.asset||"—")}
+          </td>
+
+          <td>
+            $${Number(order.price||0)
+              .toLocaleString(
+                "en-US",
+                {
+                  minimumFractionDigits:2,
+                  maximumFractionDigits:4
+                }
+              )}
+          </td>
+
+          <td>
+            ${statusHTML(order.status)}
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              ${
+                String(order.status||"Pending")
+                  .toLowerCase()==="pending"
+                ?
+                `
+                  <button
+                    class="btn btn-success"
+                    onclick="approveOrder('${escapeAttribute(order.id)}')"
+                  >
+                    Approve
+                  </button>
+
+                  <button
+                    class="btn btn-danger"
+                    onclick="rejectOrder('${escapeAttribute(order.id)}')"
+                  >
+                    Reject
+                  </button>
+                `
+                :
+                `<span style="color:#718096">
+                  Reviewed
+                </span>`
+              }
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `).join("");
+
+}
+
+
+function approveOrder(id){
+
+  updateOrderStatus(
+    id,
+    "Approved"
+  );
+
+}
+
+
+function rejectOrder(id){
+
+  updateOrderStatus(
+    id,
+    "Rejected"
+  );
+
+}
+
+
+function updateOrderStatus(
+  id,
+  status
+){
+
+  let orders =
+    readJSON(
+      "coinbridge_pending_orders",
+      []
+    );
+
+  const order =
+    orders.find(
+      item => item.id === id
+    );
+
+  if(!order)return;
+
+  order.status=status;
+
+  saveJSON(
+    "coinbridge_pending_orders",
+    orders
+  );
+
+  let history =
+    readJSON(
+      "coinbridge_order_history",
+      []
+    );
+
+  const historyOrder =
+    history.find(
+      item => item.id === id
+    );
+
+  if(historyOrder){
+
+    historyOrder.status=status;
+
+  }
+
+  saveJSON(
+    "coinbridge_order_history",
+    history
+  );
+
+  addNotification(
+    order.type+
+    " "+
+    order.asset+
+    " order "+
+    status.toLowerCase()+"."
   );
 
   loadEverything();
@@ -3681,19 +2909,23 @@ function removeWalletId(id){
 
 function renderTransactions(){
 
-  const tbody=
+  const transactions =
+    readJSON(
+      "coinbridge_transactions",
+      []
+    );
+
+  const tbody =
     document.getElementById(
       "transactionsTable"
     );
 
-  const history=getHistory();
+  if(!transactions.length){
 
-  if(!history.length){
-
-    tbody.innerHTML=
+    tbody.innerHTML =
       `<tr>
-        <td colspan="7" style="color:#71869a">
-          No transactions yet.
+        <td colspan="7">
+          No transactions recorded.
         </td>
       </tr>`;
 
@@ -3701,69 +2933,50 @@ function renderTransactions(){
 
   }
 
-  tbody.innerHTML=
-    history
-    .slice()
-    .reverse()
-    .map(
-      o=>`
+  tbody.innerHTML =
+    transactions
+      .slice()
+      .reverse()
+      .map(tx=>`
 
-      <tr>
+        <tr>
 
-        <td>${escapeHTML(o.id||"N/A")}</td>
+          <td>
+            ${escapeHTML(tx.id||"—")}
+          </td>
 
-        <td>${escapeHTML(o.customer||"Customer")}</td>
+          <td>
+            ${escapeHTML(
+              tx.customer||
+              "Customer"
+            )}
+          </td>
 
-        <td>
-          <span class="${
-            o.type==="Buy"
-              ?"green"
-              :"red"
-          }">
-            ${escapeHTML(o.type||"")}
-          </span>
-        </td>
+          <td>
+            ${escapeHTML(tx.type||"—")}
+          </td>
 
-        <td>${escapeHTML(o.asset||"")}</td>
+          <td>
+            ${escapeHTML(tx.asset||"—")}
+          </td>
 
-        <td>
-          $${Number(o.price||0).toLocaleString()}
-        </td>
+          <td>
+            ${escapeHTML(
+              String(tx.amount||"—")
+            )}
+          </td>
 
-        <td>${statusHTML(o.status)}</td>
+          <td>
+            ${statusHTML(tx.status)}
+          </td>
 
-        <td>
-          ${
-            o.adminProcessedAt
-            ?new Date(o.adminProcessedAt).toLocaleString()
-            :"Pending"
-          }
-        </td>
+          <td>
+            ${formatDate(tx.createdAt)}
+          </td>
 
-      </tr>
+        </tr>
 
-      `
-    ).join("");
-
-}
-
-
-function clearRejectedTransactions(){
-
-  const history=
-    getHistory()
-    .filter(
-      h=>h.status!=="Rejected"
-    );
-
-  saveHistory(history);
-
-  addActivity(
-    "Rejected transaction history cleared",
-    "Local history cleanup"
-  );
-
-  renderTransactions();
+      `).join("");
 
 }
 
@@ -3772,123 +2985,105 @@ function clearRejectedTransactions(){
    CHAT
 ===================================================== */
 
-function getMessages(){
-
-  return read(
-    "coinbridge_messages",
-    {}
-  );
-
-}
-
-
-function saveMessages(messages){
-
-  write(
-    "coinbridge_messages",
-    messages
-  );
-
-}
+let selectedChatCustomer="CoinBridge User";
 
 
 function renderChatUsers(){
 
-  const box=
+  const messages =
+    readJSON(
+      "coinbridge_messages",
+      []
+    );
+
+  const names =
+    [
+      ...new Set(
+        messages.map(
+          message =>
+            message.customer ||
+            "CoinBridge User"
+        )
+      )
+    ];
+
+  if(!names.includes(selectedChatCustomer)){
+
+    names.push(
+      selectedChatCustomer
+    );
+
+  }
+
+  const container =
     document.getElementById(
       "chatUsers"
     );
 
-  const customers=getCustomers();
+  container.innerHTML =
+    names.map(name=>`
 
-  if(!customers.length){
-
-    box.innerHTML=
-      `<div style="padding:15px;color:#71869a;font-size:10px">
-        No customers available.
-      </div>`;
-
-    return;
-
-  }
-
-  box.innerHTML=
-    customers.map(
-      c=>`
-
-      <div
+      <button
         class="chat-user ${
-          selectedChatCustomer===c.id
-            ?"selected"
-            :""
+          name===selectedChatCustomer
+          ?"active"
+          :""
         }"
-        onclick="selectChatCustomer('${c.id}')"
+        onclick="selectChatCustomer('${escapeAttribute(name)}')"
       >
 
         <strong>
-          ${escapeHTML(c.name)}
+          ${escapeHTML(name)}
         </strong>
 
-        <small>
-          ${escapeHTML(c.email)}
-        </small>
+        <span>
+          Open conversation
+        </span>
 
-      </div>
+      </button>
 
-      `
-    ).join("");
+    `).join("");
 
 }
 
 
-function selectChatCustomer(id){
+function selectChatCustomer(name){
 
-  selectedChatCustomer=id;
-
-  const customer=
-    getCustomers().find(
-      c=>c.id===id
-    );
-
-  if(!customer)return;
-
-  document.getElementById(
-    "chatCustomerName"
-  ).textContent=
-    customer.name;
+  selectedChatCustomer=name;
 
   renderChatUsers();
 
-  renderMessages();
+  renderChatMessages();
 
 }
 
 
-function renderMessages(){
+function renderChatMessages(){
 
-  const box=
-    document.getElementById(
-      "messages"
+  const messages =
+    readJSON(
+      "coinbridge_messages",
+      []
     );
 
-  if(!selectedChatCustomer){
+  const filtered =
+    messages.filter(
+      message =>
+        (
+          message.customer ||
+          "CoinBridge User"
+        ) === selectedChatCustomer
+    );
 
-    box.innerHTML=
-      `<div class="message customer">
-        Select a customer to open the conversation.
-      </div>`;
+  const container =
+    document.getElementById(
+      "chatMessages"
+    );
 
-    return;
+  if(!filtered.length){
 
-  }
-
-  const messages=
-    getMessages()[selectedChatCustomer]||[];
-
-  if(!messages.length){
-
-    box.innerHTML=
-      `<div class="message customer">
+    container.innerHTML =
+      `<div style="color:#718096;font-size:11px">
         No messages yet.
       </div>`;
 
@@ -3896,201 +3091,87 @@ function renderMessages(){
 
   }
 
-  box.innerHTML=
-    messages.map(
-      m=>`
+  container.innerHTML =
+    filtered.map(message=>`
 
-      <div class="message ${
-        m.from==="admin"
+      <div
+        class="message ${
+          message.from==="admin"
           ?"admin"
           :"customer"
-      }">
+        }"
+      >
 
-        ${escapeHTML(m.text)}
-
-        <div
-          style="
-            margin-top:4px;
-            opacity:.5;
-            font-size:8px;
-          "
-        >
-          ${new Date(m.time).toLocaleTimeString()}
-        </div>
+        ${escapeHTML(message.text)}
 
       </div>
 
-      `
-    ).join("");
+    `).join("");
 
-  box.scrollTop=box.scrollHeight;
+  container.scrollTop =
+    container.scrollHeight;
 
 }
 
 
-function sendAdminMessage(){
+function sendMessage(){
 
-  if(!selectedChatCustomer){
-
-    alert("Select a customer first.");
-
-    return;
-
-  }
-
-  const input=
+  const input =
     document.getElementById(
-      "chatInput"
+      "chatMessage"
     );
 
-  const text=input.value.trim();
+  const text =
+    input.value.trim();
 
   if(!text)return;
 
-  const messages=getMessages();
+  const messages =
+    readJSON(
+      "coinbridge_messages",
+      []
+    );
 
-  if(!messages[selectedChatCustomer]){
-    messages[selectedChatCustomer]=[];
-  }
+  messages.push({
 
-  messages[selectedChatCustomer].push({
+    id:"MSG-"+Date.now(),
+
+    customer:
+      selectedChatCustomer,
 
     from:"admin",
 
     text:text,
 
-    time:new Date().toISOString()
+    createdAt:
+      new Date().toISOString()
 
   });
 
-  saveMessages(messages);
+  saveJSON(
+    "coinbridge_messages",
+    messages
+  );
 
   input.value="";
 
-  addActivity(
-    "Customer message sent",
-    "Customer ID: "+selectedChatCustomer
-  );
+  renderChatMessages();
 
-  renderMessages();
+  addNotification(
+    "Message sent to "+
+    selectedChatCustomer
+  );
 
 }
 
 
-function chatEnter(event){
+function handleChatKey(event){
 
   if(event.key==="Enter"){
 
-    event.preventDefault();
-
-    sendAdminMessage();
+    sendMessage();
 
   }
-
-}
-
-
-/* =====================================================
-   ACTIVITY
-===================================================== */
-
-function getActivity(){
-
-  return read(
-    "coinbridge_admin_activity",
-    []
-  );
-
-}
-
-
-function addActivity(title,description){
-
-  const activities=getActivity();
-
-  activities.push({
-
-    title:title,
-
-    description:description,
-
-    time:new Date().toISOString()
-
-  });
-
-  write(
-    "coinbridge_admin_activity",
-    activities.slice(-100)
-  );
-
-}
-
-
-function renderActivity(){
-
-  const box=
-    document.getElementById(
-      "activityList"
-    );
-
-  const activities=
-    getActivity()
-    .slice()
-    .reverse();
-
-  if(!activities.length){
-
-    box.innerHTML=
-      `<div style="color:#71869a;font-size:10px">
-        No administrator activity yet.
-      </div>`;
-
-    return;
-
-  }
-
-  box.innerHTML=
-    activities.map(
-      a=>`
-
-      <div class="activity-item">
-
-        <span class="activity-dot"></span>
-
-        <div>
-
-          <strong>
-            ${escapeHTML(a.title)}
-          </strong>
-
-          <small>
-            ${escapeHTML(a.description)}
-            ·
-            ${new Date(a.time).toLocaleString()}
-          </small>
-
-        </div>
-
-      </div>
-
-      `
-    ).join("");
-
-}
-
-
-function clearActivity(){
-
-  if(!confirm(
-    "Clear the administrator activity history?"
-  ))return;
-
-  write(
-    "coinbridge_admin_activity",
-    []
-  );
-
-  renderActivity();
 
 }
 
@@ -4099,409 +3180,136 @@ function clearActivity(){
    NOTIFICATIONS
 ===================================================== */
 
-function showNotifications(){
+function addNotification(text){
 
-  const pendingOrders=
-    getOrders()
-    .filter(
-      o=>o.status==="Pending"
-    ).length;
+  const notifications =
+    readJSON(
+      "coinbridge_notifications",
+      []
+    );
 
-  const pendingCustomers=
-    getCustomers()
-    .filter(
-      c=>c.status==="Pending"
-    ).length;
+  notifications.push({
 
-  openModal(
-    "Admin Notifications",
-    `
+    id:"NOT-"+Date.now(),
 
-    <div class="activity">
+    text:text,
 
-      <div class="activity-item">
-        <span class="activity-dot"></span>
-        <div>
-          <strong>${pendingOrders} pending order(s)</strong>
-          <small>Customer orders awaiting review.</small>
-        </div>
-      </div>
+    createdAt:
+      new Date().toISOString()
 
-      <div class="activity-item">
-        <span class="activity-dot"></span>
-        <div>
-          <strong>${pendingCustomers} pending account(s)</strong>
-          <small>Customer accounts awaiting approval.</small>
-        </div>
-      </div>
+  });
 
-      <div class="activity-item">
-        <span class="activity-dot"></span>
-        <div>
-          <strong>System online</strong>
-          <small>CoinBridge admin interface is active.</small>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="primary"
-        onclick="closeModal()"
-      >
-        Mark Read
-      </button>
-
-    </div>
-
-    `
+  saveJSON(
+    "coinbridge_notifications",
+    notifications
   );
 
 }
 
 
-/* =====================================================
-   APPROVE ALL PENDING
-===================================================== */
+function renderNotifications(){
 
-function approveAllPending(){
-
-  const pending=
-    getOrders()
-    .filter(
-      o=>o.status==="Pending"
+  const notifications =
+    readJSON(
+      "coinbridge_notifications",
+      []
     );
 
-  const customers=
-    getCustomers()
-    .filter(
-      c=>c.status==="Pending"
+  const container =
+    document.getElementById(
+      "notificationsList"
     );
 
-  if(
-    !pending.length &&
-    !customers.length
-  ){
+  if(!notifications.length){
 
-    alert("There are no pending items.");
+    container.innerHTML =
+      `<div class="activity-item">
+        <div>
+          <strong>No notifications</strong>
+          <span>New events will appear here.</span>
+        </div>
+      </div>`;
 
     return;
 
   }
 
-  if(!confirm(
-    "Approve all pending orders and customer accounts?"
-  ))return;
+  container.innerHTML =
+    notifications
+      .slice()
+      .reverse()
+      .map(item=>`
 
-  const orders=getOrders();
+        <div class="activity-item">
 
-  orders.forEach(
-    o=>{
-      if(o.status==="Pending"){
-        o.status="Approved";
-        o.adminProcessedAt=
-          new Date().toISOString();
-      }
-    }
-  );
+          <div>
 
-  saveOrders(orders);
+            <strong>
+              ${escapeHTML(item.text)}
+            </strong>
 
-  const history=getHistory();
+            <span>
+              ${formatDate(item.createdAt)}
+            </span>
 
-  orders.forEach(
-    order=>{
+          </div>
 
-      const existing=
-        history.find(
-          h=>h.id===order.id
-        );
+        </div>
 
-      if(
-        order.status==="Approved" &&
-        !existing
-      ){
-
-        history.push(order);
-
-      }
-
-    }
-  );
-
-  saveHistory(history);
-
-  const allCustomers=getCustomers();
-
-  allCustomers.forEach(
-    c=>{
-      if(c.status==="Pending"){
-        c.status="Approved";
-      }
-    }
-  );
-
-  saveCustomers(allCustomers);
-
-  addActivity(
-    "Pending items approved",
-    pending.length+
-    " orders and "+
-    customers.length+
-    " accounts processed"
-  );
-
-  loadEverything();
+      `).join("");
 
 }
 
 
-/* =====================================================
-   SETTINGS
-===================================================== */
-
-function saveAdminSettings(){
-
-  const name=
-    document.getElementById(
-      "adminDisplayName"
-    ).value.trim();
-
-  const email=
-    document.getElementById(
-      "adminDisplayEmail"
-    ).value.trim();
-
-  write(
-    "coinbridge_admin_settings",
-    {
-      name:name,
-      email:email
-    }
-  );
-
-  addActivity(
-    "Admin settings saved",
-    email
-  );
-
-  alert("Admin settings saved.");
-
-}
-
-
-function loadAdminSettings(){
-
-  const settings=
-    read(
-      "coinbridge_admin_settings",
-      null
-    );
-
-  if(!settings)return;
-
-  document.getElementById(
-    "adminDisplayName"
-  ).value=
-    settings.name||"CoinBridge Administrator";
-
-  document.getElementById(
-    "adminDisplayEmail"
-  ).value=
-    settings.email||ADMIN_EMAIL;
-
-}
-
-
-/* =====================================================
-   EXPORT
-===================================================== */
-
-function exportData(){
-
-  const data={
-
-    exportedAt:
-      new Date().toISOString(),
-
-    customers:
-      getCustomers(),
-
-    pendingOrders:
-      getOrders(),
-
-    transactionHistory:
-      getHistory(),
-
-    messages:
-      getMessages(),
-
-    activity:
-      getActivity()
-
-  };
-
-  const blob=
-    new Blob(
-      [
-        JSON.stringify(
-          data,
-          null,
-          2
-        )
-      ],
-      {
-        type:"application/json"
-      }
-    );
-
-  const url=
-    URL.createObjectURL(blob);
-
-  const link=
-    document.createElement("a");
-
-  link.href=url;
-
-  link.download=
-    "coinbridge-admin-data.json";
-
-  link.click();
-
-  URL.revokeObjectURL(url);
-
-  addActivity(
-    "Data exported",
-    "CoinBridge local data export"
-  );
-
-}
-
-
-/* =====================================================
-   RESET DEMO DATA
-===================================================== */
-
-function resetDemoData(){
-
-  if(!confirm(
-    "Reset the CoinBridge prototype demo data? This will remove local customer/order changes."
-  ))return;
-
-  [
-    "coinbridge_customers",
-    "coinbridge_pending_orders",
-    "coinbridge_order_history",
-    "coinbridge_messages",
-    "coinbridge_admin_activity"
-  ].forEach(
-    key=>localStorage.removeItem(key)
-  );
-
-  seedDemoData();
-
-  addActivity(
-    "Demo data reset",
-    "Prototype data restored"
-  );
-
-  loadEverything();
-
-}
-
-
-/* =====================================================
-   MODAL
-===================================================== */
-
-function openModal(title,body){
-
-  document.getElementById(
-    "modalTitle"
-  ).textContent=title;
-
-  document.getElementById(
-    "modalBody"
-  ).innerHTML=body;
-
-  document.getElementById(
-    "modalBg"
-  ).classList.add("open");
-
-}
-
-
-function closeModal(){
-
-  document.getElementById(
-    "modalBg"
-  ).classList.remove("open");
-
-}
-
-
-function backgroundClose(event){
+function clearNotifications(){
 
   if(
-    event.target===
-    document.getElementById("modalBg")
-  ){
+    !confirm(
+      "Clear all notifications?"
+    )
+  )return;
 
-    closeModal();
-
-  }
-
-}
-
-
-/* =====================================================
-   REFRESH
-===================================================== */
-
-function refreshAll(){
-
-  loadEverything();
-
-  addActivity(
-    "Admin dashboard refreshed",
-    "Data synchronized"
+  saveJSON(
+    "coinbridge_notifications",
+    []
   );
 
-}
-
-
-function loadEverything(){
-
-  updateDashboard();
-
-  renderCustomers();
-
-  renderOrders();
-
-  renderWallets();
-
-  renderTransactions();
-
-  renderChatUsers();
-
-  renderActivity();
-
-  loadAdminSettings();
+  renderNotifications();
 
 }
 
 
 /* =====================================================
-   STATUS HTML
+   MODALS
+===================================================== */
+
+function openModal(id){
+
+  document
+    .getElementById(id)
+    .classList.add("open");
+
+}
+
+
+function closeModal(id){
+
+  document
+    .getElementById(id)
+    .classList.remove("open");
+
+}
+
+
+/* =====================================================
+   STATUS
 ===================================================== */
 
 function statusHTML(status){
 
-  const normalized=
+  const normalized =
     String(status||"Pending")
-    .toLowerCase();
+      .toLowerCase();
 
   let cls="pending";
 
@@ -4523,7 +3331,7 @@ function statusHTML(status){
 
   }
 
-  return`
+  return `
     <span class="status ${cls}">
       ● ${escapeHTML(status||"Pending")}
     </span>
@@ -4533,7 +3341,35 @@ function statusHTML(status){
 
 
 /* =====================================================
-   SECURITY / HTML ESCAPING
+   DATE
+===================================================== */
+
+function formatDate(value){
+
+  if(!value)return "—";
+
+  const date =
+    new Date(value);
+
+  if(isNaN(date.getTime()))
+    return "—";
+
+  return date.toLocaleString(
+    [],
+    {
+      year:"numeric",
+      month:"short",
+      day:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+/* =====================================================
+   SECURITY / ESCAPING
 ===================================================== */
 
 function escapeHTML(value){
@@ -4556,6 +3392,35 @@ function escapeAttribute(value){
 
 
 /* =====================================================
+   LOAD EVERYTHING
+===================================================== */
+
+function loadEverything(){
+
+  seedDemoData();
+
+  renderDashboard();
+
+  renderCustomers();
+
+  renderAccounts();
+
+  renderWallets();
+
+  renderOrders();
+
+  renderTransactions();
+
+  renderChatUsers();
+
+  renderChatMessages();
+
+  renderNotifications();
+
+}
+
+
+/* =====================================================
    STARTUP
 ===================================================== */
 
@@ -4568,8 +3433,6 @@ if(isLoggedIn()){
   document
     .getElementById("adminApp")
     .classList.remove("hidden");
-
-  seedDemoData();
 
   loadEverything();
 

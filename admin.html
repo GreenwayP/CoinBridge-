@@ -20,11 +20,8 @@ body{
   min-height:100vh;
 }
 
-button,
-input,
-textarea,
-select{
-  font-family:inherit;
+button,input,select,textarea{
+  font:inherit;
 }
 
 button{
@@ -32,12 +29,12 @@ button{
 }
 
 .hidden{
-  display:none !important;
+  display:none!important;
 }
 
-/* =========================
+/* ==============================
    LOGIN
-========================= */
+============================== */
 
 .login-screen{
   min-height:100vh;
@@ -46,69 +43,102 @@ button{
   justify-content:center;
   padding:20px;
   background:
-    radial-gradient(circle at top right,rgba(34,211,238,.12),transparent 35%),
-    radial-gradient(circle at bottom left,rgba(16,185,129,.08),transparent 35%),
+    radial-gradient(circle at top right,rgba(34,211,238,.14),transparent 35%),
+    radial-gradient(circle at bottom left,rgba(16,185,129,.10),transparent 35%),
     #050b14;
 }
 
 .login-box{
   width:100%;
-  max-width:430px;
+  max-width:420px;
   background:#091522;
-  border:1px solid #1d3448;
+  border:1px solid #1c3448;
   border-radius:20px;
-  padding:35px;
-  box-shadow:0 25px 80px rgba(0,0,0,.45);
+  padding:32px;
+  box-shadow:0 25px 80px rgba(0,0,0,.5);
 }
 
-.login-logo{
+.brand{
   text-align:center;
   font-size:30px;
   font-weight:800;
-  margin-bottom:8px;
 }
 
-.login-logo span{
+.brand span{
   color:#22d3ee;
 }
 
-.login-subtitle{
+.login-title{
   text-align:center;
-  color:#718096;
+  color:#94a3b8;
   font-size:12px;
-  margin-bottom:28px;
+  margin:8px 0 28px;
 }
 
-.form-group{
+.field{
   margin-bottom:17px;
 }
 
-.form-group label{
+.field label{
   display:block;
-  color:#91a1b4;
+  color:#94a3b8;
   font-size:11px;
   margin-bottom:7px;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select{
+.input-wrap{
+  position:relative;
+}
+
+.field input,
+.field select,
+.field textarea{
   width:100%;
   background:#07111d;
-  border:1px solid #1d3448;
   color:#fff;
+  border:1px solid #1d3448;
   border-radius:9px;
   padding:12px;
   outline:none;
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
+.input-wrap input{
+  padding-right:48px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
   border-color:#22d3ee;
 }
 
-.login-button{
+.eye{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:transparent;
+  color:#94a3b8;
+  padding:7px;
+  font-size:17px;
+}
+
+.eye:hover{
+  color:#22d3ee;
+}
+
+.login-error{
+  background:rgba(244,63,94,.08);
+  border:1px solid rgba(244,63,94,.25);
+  color:#fb7185;
+  padding:10px;
+  border-radius:8px;
+  font-size:11px;
+  margin-bottom:15px;
+}
+
+.login-btn{
   width:100%;
   border:0;
   border-radius:9px;
@@ -116,26 +146,15 @@ button{
   background:#0891b2;
   color:#fff;
   font-weight:700;
-  margin-top:5px;
 }
 
-.login-button:hover{
+.login-btn:hover{
   background:#0e7490;
 }
 
-.login-error{
-  color:#fb7185;
-  background:rgba(244,63,94,.08);
-  border:1px solid rgba(244,63,94,.2);
-  padding:10px;
-  border-radius:8px;
-  font-size:11px;
-  margin-bottom:15px;
-}
-
-/* =========================
-   LAYOUT
-========================= */
+/* ==============================
+   SIDEBAR
+============================== */
 
 .layout{
   min-height:100vh;
@@ -154,51 +173,46 @@ button{
   z-index:100;
 }
 
-.logo{
-  font-size:23px;
-  font-weight:800;
+.sidebar .brand{
+  text-align:left;
   padding:0 12px;
-  margin-bottom:35px;
+  font-size:23px;
+  margin-bottom:5px;
 }
 
-.logo span{
-  color:#22d3ee;
-}
-
-.admin-label{
+.admin-tag{
   color:#34d399;
   font-size:9px;
   letter-spacing:1px;
   text-transform:uppercase;
   padding:0 12px;
-  margin-top:-25px;
-  margin-bottom:28px;
+  margin-bottom:30px;
 }
 
 .menu-title{
-  color:#617488;
-  font-size:10px;
+  color:#60748a;
+  font-size:9px;
   text-transform:uppercase;
   letter-spacing:1px;
   padding:0 12px;
-  margin-bottom:8px;
+  margin:18px 0 7px;
 }
 
 .nav{
   display:flex;
   flex-direction:column;
   gap:4px;
-  margin-bottom:27px;
 }
 
 .nav button{
+  width:100%;
   border:0;
   background:transparent;
-  color:#91a1b4;
-  padding:12px;
-  border-radius:9px;
+  color:#94a3b8;
+  padding:11px 12px;
+  border-radius:8px;
   text-align:left;
-  font-size:13px;
+  font-size:12px;
 }
 
 .nav button:hover,
@@ -207,25 +221,25 @@ button{
   color:#22d3ee;
 }
 
-.sidebar-bottom{
+.logout{
   position:absolute;
   left:15px;
   right:15px;
   bottom:20px;
-}
-
-.logout-button{
-  width:100%;
   border:0;
   background:#111f2d;
-  color:#91a1b4;
+  color:#94a3b8;
   padding:11px;
-  border-radius:9px;
+  border-radius:8px;
 }
 
-.logout-button:hover{
+.logout:hover{
   color:#fff;
 }
+
+/* ==============================
+   MAIN
+============================== */
 
 .main{
   margin-left:245px;
@@ -233,16 +247,11 @@ button{
   padding:25px;
 }
 
-/* =========================
-   TOPBAR
-========================= */
-
 .topbar{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   margin-bottom:25px;
-  gap:15px;
 }
 
 .page-title h1{
@@ -252,10 +261,10 @@ button{
 
 .page-title p{
   color:#718096;
-  font-size:12px;
+  font-size:11px;
 }
 
-.admin-profile{
+.profile{
   display:flex;
   align-items:center;
   gap:10px;
@@ -265,100 +274,100 @@ button{
   width:40px;
   height:40px;
   border-radius:50%;
-  background:#153247;
-  color:#22d3ee;
   display:grid;
   place-items:center;
+  background:#153247;
+  color:#22d3ee;
   font-weight:800;
 }
 
-.profile-text strong{
+.profile strong{
   display:block;
-  font-size:12px;
+  font-size:11px;
 }
 
-.profile-text span{
+.profile span{
   color:#34d399;
-  font-size:10px;
+  font-size:9px;
 }
 
-/* =========================
+/* ==============================
    SECTIONS
-========================= */
+============================== */
 
-.page-section{
+.section{
   display:none;
 }
 
-.page-section.active{
+.section.active{
   display:block;
 }
 
-/* =========================
+/* ==============================
    CARDS
-========================= */
+============================== */
 
-.stats-grid{
+.stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:14px;
   margin-bottom:20px;
 }
 
-.stat-card{
+.stat{
   background:#091522;
   border:1px solid #1d3448;
   border-radius:14px;
   padding:18px;
 }
 
-.stat-card p{
+.stat p{
   color:#718096;
   font-size:10px;
   margin-bottom:10px;
 }
 
-.stat-card h2{
+.stat h2{
   font-size:23px;
 }
 
-.stat-card small{
+.stat small{
   display:block;
   color:#34d399;
   font-size:9px;
-  margin-top:7px;
+  margin-top:6px;
 }
 
-.content-card{
+.card{
   background:#091522;
   border:1px solid #1d3448;
-  border-radius:15px;
+  border-radius:14px;
   overflow:hidden;
   margin-bottom:20px;
 }
 
-.card-header{
-  padding:18px 20px;
+.card-head{
+  padding:17px 20px;
   border-bottom:1px solid #1b3042;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
+  gap:12px;
 }
 
-.card-header h2{
+.card-head h2{
   font-size:15px;
 }
 
-.card-header p{
+.card-head p{
   color:#718096;
   font-size:10px;
   margin-top:4px;
 }
 
-/* =========================
-   TABLES
-========================= */
+/* ==============================
+   TABLE
+============================== */
 
 .table-wrap{
   overflow-x:auto;
@@ -366,8 +375,8 @@ button{
 
 table{
   width:100%;
-  border-collapse:collapse;
   min-width:850px;
+  border-collapse:collapse;
 }
 
 th{
@@ -375,52 +384,19 @@ th{
   color:#617488;
   font-size:9px;
   text-transform:uppercase;
-  letter-spacing:.6px;
   padding:13px 18px;
   border-bottom:1px solid #1b3042;
 }
 
 td{
-  padding:14px 18px;
+  padding:13px 18px;
   border-bottom:1px solid rgba(255,255,255,.05);
   font-size:11px;
-  vertical-align:middle;
 }
-
-.status{
-  display:inline-block;
-  border-radius:20px;
-  padding:5px 8px;
-  font-size:9px;
-}
-
-.status.pending{
-  color:#facc15;
-  background:rgba(250,204,21,.08);
-}
-
-.status.approved{
-  color:#34d399;
-  background:rgba(52,211,153,.08);
-}
-
-.status.rejected{
-  color:#fb7185;
-  background:rgba(251,113,133,.08);
-}
-
-.status.suspended{
-  color:#fb7185;
-  background:rgba(251,113,133,.08);
-}
-
-/* =========================
-   BUTTONS
-========================= */
 
 .actions{
   display:flex;
-  gap:6px;
+  gap:5px;
   flex-wrap:wrap;
 }
 
@@ -428,71 +404,76 @@ td{
   border:0;
   border-radius:6px;
   padding:7px 9px;
-  font-size:9px;
   color:#fff;
+  font-size:9px;
 }
 
-.btn-primary{
-  background:#0891b2;
-}
-
-.btn-success{
-  background:#059669;
-}
-
-.btn-danger{
-  background:#be123c;
-}
-
-.btn-warning{
-  background:#a16207;
-}
-
-.btn-neutral{
-  background:#1e3346;
-}
+.primary{background:#0891b2}
+.success{background:#059669}
+.danger{background:#be123c}
+.warning{background:#a16207}
+.neutral{background:#1e3346}
 
 .btn:hover{
   filter:brightness(1.15);
 }
 
-/* =========================
+/* ==============================
+   STATUS
+============================== */
+
+.status{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:9px;
+}
+
+.status.active,
+.status.approved{
+  color:#34d399;
+  background:rgba(52,211,153,.08);
+}
+
+.status.pending{
+  color:#facc15;
+  background:rgba(250,204,21,.08);
+}
+
+.status.rejected,
+.status.suspended{
+  color:#fb7185;
+  background:rgba(251,113,133,.08);
+}
+
+/* ==============================
    SEARCH
-========================= */
+============================== */
 
 .toolbar{
-  padding:15px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
+  padding:14px 20px;
   border-bottom:1px solid #1b3042;
 }
 
 .search{
-  width:280px;
+  max-width:320px;
 }
 
 .search input{
   width:100%;
   background:#07111d;
-  border:1px solid #1d3448;
   color:#fff;
-  padding:10px 12px;
+  border:1px solid #1d3448;
   border-radius:8px;
+  padding:10px 12px;
   outline:none;
 }
 
-.search input:focus{
-  border-color:#22d3ee;
-}
+/* ==============================
+   DASHBOARD
+============================== */
 
-/* =========================
-   DASHBOARD GRID
-========================= */
-
-.two-column{
+.columns{
   display:grid;
   grid-template-columns:1.3fr .7fr;
   gap:20px;
@@ -502,37 +483,37 @@ td{
   padding:18px;
 }
 
-.activity-item{
+.activity-row{
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
   display:flex;
   justify-content:space-between;
   gap:10px;
-  padding:13px 0;
-  border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.activity-item:last-child{
+.activity-row:last-child{
   border-bottom:0;
 }
 
-.activity-item strong{
+.activity-row strong{
   font-size:11px;
 }
 
-.activity-item span{
+.activity-row span{
   display:block;
   color:#718096;
   font-size:9px;
   margin-top:4px;
 }
 
-/* =========================
+/* ==============================
    MODAL
-========================= */
+============================== */
 
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.72);
+  background:rgba(0,0,0,.75);
   display:none;
   align-items:center;
   justify-content:center;
@@ -546,48 +527,47 @@ td{
 
 .modal-box{
   width:100%;
-  max-width:520px;
+  max-width:500px;
   max-height:90vh;
-  overflow-y:auto;
+  overflow:auto;
   background:#091522;
   border:1px solid #1d3448;
-  border-radius:16px;
+  border-radius:15px;
   padding:22px;
 }
 
-.modal-header{
+.modal-head{
   display:flex;
   justify-content:space-between;
-  align-items:center;
   margin-bottom:20px;
 }
 
-.modal-header h3{
+.modal-head h3{
   font-size:16px;
 }
 
-.close-modal{
+.close{
   border:0;
   background:none;
   color:#718096;
-  font-size:20px;
+  font-size:22px;
 }
 
-.modal-footer{
+.modal-actions{
   display:flex;
   justify-content:flex-end;
   gap:8px;
   margin-top:20px;
 }
 
-/* =========================
+/* ==============================
    CHAT
-========================= */
+============================== */
 
-.chat-layout{
+.chat{
   display:grid;
-  grid-template-columns:280px 1fr;
-  min-height:560px;
+  grid-template-columns:260px 1fr;
+  min-height:550px;
 }
 
 .chat-users{
@@ -599,14 +579,14 @@ td{
   border:0;
   background:transparent;
   color:#fff;
-  padding:15px;
   text-align:left;
+  padding:14px;
   border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.chat-user:hover,
-.chat-user.active{
-  background:rgba(34,211,238,.06);
+.chat-user.active,
+.chat-user:hover{
+  background:rgba(34,211,238,.07);
 }
 
 .chat-user strong{
@@ -625,26 +605,25 @@ td{
   flex-direction:column;
 }
 
-.chat-messages{
+.messages{
   flex:1;
   padding:18px;
-  min-height:430px;
-  max-height:430px;
+  min-height:420px;
+  max-height:420px;
   overflow-y:auto;
 }
 
 .message{
   max-width:75%;
   padding:10px;
-  border-radius:9px;
   margin-bottom:10px;
+  border-radius:9px;
   font-size:10px;
   line-height:1.5;
 }
 
 .message.customer{
   background:#111f2d;
-  margin-right:auto;
 }
 
 .message.admin{
@@ -654,55 +633,36 @@ td{
 
 .chat-input{
   display:flex;
-  gap:8px;
-  padding:15px;
+  gap:7px;
+  padding:14px;
   border-top:1px solid #1b3042;
 }
 
 .chat-input input{
   flex:1;
   background:#07111d;
-  border:1px solid #1d3448;
   color:#fff;
+  border:1px solid #1d3448;
   border-radius:8px;
   padding:10px;
   outline:none;
 }
 
-/* =========================
-   WALLET FORM
-========================= */
-
-.wallet-info{
-  padding:20px;
-}
-
-.wallet-balance{
-  font-size:30px;
-  font-weight:800;
-  margin:10px 0;
-}
-
-.wallet-id{
-  color:#22d3ee;
-  font-size:12px;
-}
-
-/* =========================
+/* ==============================
    MOBILE
-========================= */
+============================== */
 
-.mobile-header{
+.mobile-top{
   display:none;
 }
 
 @media(max-width:1100px){
 
-  .stats-grid{
+  .stats{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .two-column{
+  .columns{
     grid-template-columns:1fr;
   }
 
@@ -720,55 +680,45 @@ td{
     padding:16px;
   }
 
-  .mobile-header{
+  .mobile-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
     margin-bottom:18px;
   }
 
-  .mobile-menu-button{
+  .mobile-top .brand{
+    font-size:21px;
+  }
+
+  .mobile-menu{
     border:0;
     background:#091522;
     color:#22d3ee;
-    padding:10px;
+    padding:9px;
     border-radius:8px;
-    font-size:18px;
   }
 
-  .topbar{
-    align-items:flex-start;
-  }
-
-  .admin-profile{
+  .profile{
     display:none;
   }
 
-  .stats-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .chat-layout{
+  .chat{
     grid-template-columns:1fr;
   }
 
   .chat-users{
     border-right:0;
     border-bottom:1px solid #1b3042;
-    max-height:180px;
+    max-height:170px;
     overflow-y:auto;
-  }
-
-  .chat-messages{
-    min-height:330px;
-    max-height:330px;
   }
 
 }
 
 @media(max-width:480px){
 
-  .stats-grid{
+  .stats{
     grid-template-columns:1fr;
   }
 
@@ -782,50 +732,67 @@ td{
 
 <body>
 
-<!-- =====================================================
-     LOGIN
-===================================================== -->
+<!-- ==================================================
+     LOGIN SCREEN
+================================================== -->
 
 <div id="loginScreen" class="login-screen">
 
   <div class="login-box">
 
-    <div class="login-logo">
+    <div class="brand">
       Coin<span>Bridge</span>
     </div>
 
-    <div class="login-subtitle">
+    <div class="login-title">
       Administrator Access
     </div>
 
     <div id="loginError" class="login-error hidden">
-      Invalid email or password.
+      Invalid credentials.
     </div>
 
-    <div class="form-group">
+    <div class="field">
+
       <label>Email Address</label>
 
       <input
         id="adminEmail"
         type="email"
         autocomplete="username"
-        placeholder="Enter admin email"
+        placeholder="Enter email"
       >
+
     </div>
 
-    <div class="form-group">
+    <div class="field">
+
       <label>Password</label>
 
-      <input
-        id="adminPassword"
-        type="password"
-        autocomplete="current-password"
-        placeholder="Enter admin password"
-      >
+      <div class="input-wrap">
+
+        <input
+          id="adminPassword"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Enter password"
+        >
+
+        <button
+          class="eye"
+          type="button"
+          onclick="togglePassword()"
+          aria-label="Show or hide password"
+        >
+          👁️
+        </button>
+
+      </div>
+
     </div>
 
     <button
-      class="login-button"
+      class="login-btn"
       type="button"
       onclick="login()"
     >
@@ -837,9 +804,9 @@ td{
 </div>
 
 
-<!-- =====================================================
-     ADMIN APP
-===================================================== -->
+<!-- ==================================================
+     ADMIN APPLICATION
+================================================== -->
 
 <div id="adminApp" class="hidden">
 
@@ -847,17 +814,17 @@ td{
 
 <aside class="sidebar">
 
-  <div class="logo">
+  <div class="brand">
     Coin<span>Bridge</span>
   </div>
 
-  <div class="admin-label">
+  <div class="admin-tag">
     Administrator
   </div>
 
   <div class="menu-title">Overview</div>
 
-  <nav class="nav">
+  <div class="nav">
 
     <button
       class="active"
@@ -866,17 +833,17 @@ td{
       📊 Dashboard
     </button>
 
-  </nav>
+  </div>
 
   <div class="menu-title">Management</div>
 
-  <nav class="nav">
+  <div class="nav">
 
     <button onclick="showSection('customers',this)">
       👥 Customers
     </button>
 
-    <button onclick="showSection('accounts',this)">
+    <button onclick="showSection('approvals',this)">
       ✅ Account Approvals
     </button>
 
@@ -892,47 +859,43 @@ td{
       📋 Transactions
     </button>
 
-    <button onclick="showSection('chat',this)">
+    <button onclick="showSection('messages',this)">
       💬 Messages
     </button>
 
-  </nav>
+  </div>
 
   <div class="menu-title">System</div>
 
-  <nav class="nav">
+  <div class="nav">
 
     <button onclick="showSection('notifications',this)">
       🔔 Notifications
     </button>
 
-  </nav>
-
-  <div class="sidebar-bottom">
-
-    <button
-      class="logout-button"
-      onclick="logout()"
-    >
-      ← Log Out
-    </button>
-
   </div>
+
+  <button
+    class="logout"
+    onclick="logout()"
+  >
+    ← Log Out
+  </button>
 
 </aside>
 
 
 <main class="main">
 
-<div class="mobile-header">
+<div class="mobile-top">
 
-  <div class="logo">
+  <div class="brand">
     Coin<span>Bridge</span>
   </div>
 
   <button
-    class="mobile-menu-button"
-    onclick="toggleMobileNav()"
+    class="mobile-menu"
+    onclick="toggleMobileMenu()"
   >
     ☰
   </button>
@@ -954,13 +917,11 @@ td{
 
   </div>
 
-  <div class="admin-profile">
+  <div class="profile">
 
-    <div class="avatar">
-      A
-    </div>
+    <div class="avatar">A</div>
 
-    <div class="profile-text">
+    <div>
 
       <strong>Administrator</strong>
 
@@ -973,74 +934,55 @@ td{
 </div>
 
 
-<!-- =====================================================
+<!-- ==================================================
      DASHBOARD
-===================================================== -->
+================================================== -->
 
-<section
-  id="dashboard"
-  class="page-section active"
->
+<section id="dashboard" class="section active">
 
-<div class="stats-grid">
+<div class="stats">
 
-  <div class="stat-card">
-
+  <div class="stat">
     <p>Total Customers</p>
-
-    <h2 id="statCustomers">0</h2>
-
+    <h2 id="totalCustomers">0</h2>
     <small>Registered accounts</small>
-
   </div>
 
-  <div class="stat-card">
-
+  <div class="stat">
     <p>Pending Approvals</p>
-
-    <h2 id="statApprovals">0</h2>
-
+    <h2 id="pendingAccounts">0</h2>
     <small>Require attention</small>
-
   </div>
 
-  <div class="stat-card">
-
+  <div class="stat">
     <p>Pending Orders</p>
-
-    <h2 id="statOrders">0</h2>
-
+    <h2 id="pendingOrders">0</h2>
     <small>Awaiting decision</small>
-
   </div>
 
-  <div class="stat-card">
-
+  <div class="stat">
     <p>Wallets</p>
-
-    <h2 id="statWallets">0</h2>
-
+    <h2 id="totalWallets">0</h2>
     <small>Managed wallets</small>
-
   </div>
 
 </div>
 
 
-<div class="two-column">
+<div class="columns">
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Recent Activity</h2>
-      <p>Latest platform activity.</p>
+      <p>Latest platform events.</p>
     </div>
 
     <button
-      class="btn btn-primary"
-      onclick="refreshDashboard()"
+      class="btn primary"
+      onclick="refreshAll()"
     >
       Refresh
     </button>
@@ -1048,16 +990,16 @@ td{
   </div>
 
   <div
-    id="activityList"
+    id="activity"
     class="activity"
   ></div>
 
 </div>
 
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Quick Actions</h2>
@@ -1066,32 +1008,32 @@ td{
 
   </div>
 
-  <div style="padding:18px;display:grid;gap:9px;">
+  <div style="padding:18px;display:grid;gap:8px;">
 
     <button
-      class="btn btn-primary"
-      onclick="showSectionById('customers')"
+      class="btn primary"
+      onclick="goTo('customers')"
     >
       Manage Customers
     </button>
 
     <button
-      class="btn btn-success"
-      onclick="showSectionById('accounts')"
+      class="btn success"
+      onclick="goTo('approvals')"
     >
       Review Accounts
     </button>
 
     <button
-      class="btn btn-warning"
-      onclick="showSectionById('orders')"
+      class="btn warning"
+      onclick="goTo('orders')"
     >
       Review Orders
     </button>
 
     <button
-      class="btn btn-neutral"
-      onclick="showSectionById('wallets')"
+      class="btn neutral"
+      onclick="goTo('wallets')"
     >
       Manage Wallets
     </button>
@@ -1105,26 +1047,23 @@ td{
 </section>
 
 
-<!-- =====================================================
+<!-- ==================================================
      CUSTOMERS
-===================================================== -->
+================================================== -->
 
-<section
-  id="customers"
-  class="page-section"
->
+<section id="customers" class="section">
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Customer Management</h2>
-      <p>View and manage customer accounts.</p>
+      <p>Manage customer account information.</p>
     </div>
 
     <button
-      class="btn btn-primary"
+      class="btn primary"
       onclick="openCustomerModal()"
     >
       + Add Customer
@@ -1135,11 +1074,13 @@ td{
   <div class="toolbar">
 
     <div class="search">
+
       <input
         id="customerSearch"
         placeholder="Search customers..."
         oninput="renderCustomers()"
       >
+
     </div>
 
   </div>
@@ -1151,14 +1092,12 @@ td{
       <thead>
 
         <tr>
-
           <th>Customer</th>
           <th>Email</th>
           <th>Status</th>
           <th>Balance</th>
           <th>Wallet ID</th>
           <th>Actions</th>
-
         </tr>
 
       </thead>
@@ -1174,22 +1113,19 @@ td{
 </section>
 
 
-<!-- =====================================================
+<!-- ==================================================
      ACCOUNT APPROVALS
-===================================================== -->
+================================================== -->
 
-<section
-  id="accounts"
-  class="page-section"
->
+<section id="approvals" class="section">
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Account Approvals</h2>
-      <p>Review newly submitted accounts.</p>
+      <p>Review submitted account applications.</p>
     </div>
 
   </div>
@@ -1203,14 +1139,14 @@ td{
         <tr>
           <th>Name</th>
           <th>Email</th>
-          <th>Created</th>
+          <th>Date</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
 
       </thead>
 
-      <tbody id="accountsTable"></tbody>
+      <tbody id="approvalsTable"></tbody>
 
     </table>
 
@@ -1221,22 +1157,19 @@ td{
 </section>
 
 
-<!-- =====================================================
+<!-- ==================================================
      WALLETS
-===================================================== -->
+================================================== -->
 
-<section
-  id="wallets"
-  class="page-section"
->
+<section id="wallets" class="section">
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Wallet Management</h2>
-      <p>Administrator-controlled wallet balances and IDs.</p>
+      <p>Wallet IDs and balances are controlled by administrators.</p>
     </div>
 
   </div>
@@ -1257,7 +1190,7 @@ td{
 
       </thead>
 
-      <tbody id="walletsTable"></tbody>
+      <tbody id="walletTable"></tbody>
 
     </table>
 
@@ -1268,22 +1201,19 @@ td{
 </section>
 
 
-<!-- =====================================================
+<!-- ==================================================
      ORDERS
-===================================================== -->
+================================================== -->
 
-<section
-  id="orders"
-  class="page-section"
->
+<section id="orders" class="section">
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Order Management</h2>
-      <p>Review pending buy and sell requests.</p>
+      <p>Review customer buy and sell requests.</p>
     </div>
 
   </div>
@@ -1317,22 +1247,19 @@ td{
 </section>
 
 
-<!-- =====================================================
+<!-- ==================================================
      TRANSACTIONS
-===================================================== -->
+================================================== -->
 
-<section
-  id="transactions"
-  class="page-section"
->
+<section id="transactions" class="section">
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Transactions</h2>
-      <p>Review platform transaction records.</p>
+      <p>Review transaction records.</p>
     </div>
 
   </div>
@@ -1366,18 +1293,15 @@ td{
 </section>
 
 
-<!-- =====================================================
-     CHAT
-===================================================== -->
+<!-- ==================================================
+     MESSAGES
+================================================== -->
 
-<section
-  id="chat"
-  class="page-section"
->
+<section id="messages" class="section">
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Customer Messages</h2>
@@ -1386,7 +1310,7 @@ td{
 
   </div>
 
-  <div class="chat-layout">
+  <div class="chat">
 
     <div
       id="chatUsers"
@@ -1396,20 +1320,20 @@ td{
     <div class="chat-area">
 
       <div
-        id="chatMessages"
-        class="chat-messages"
+        id="messagesList"
+        class="messages"
       ></div>
 
       <div class="chat-input">
 
         <input
-          id="chatMessage"
+          id="messageInput"
           placeholder="Type a message..."
-          onkeydown="handleChatKey(event)"
+          onkeydown="messageKey(event)"
         >
 
         <button
-          class="btn btn-primary"
+          class="btn primary"
           onclick="sendMessage()"
         >
           Send
@@ -1426,26 +1350,23 @@ td{
 </section>
 
 
-<!-- =====================================================
+<!-- ==================================================
      NOTIFICATIONS
-===================================================== -->
+================================================== -->
 
-<section
-  id="notifications"
-  class="page-section"
->
+<section id="notifications" class="section">
 
-<div class="content-card">
+<div class="card">
 
-  <div class="card-header">
+  <div class="card-head">
 
     <div>
       <h2>Notifications</h2>
-      <p>Platform alerts and administrative events.</p>
+      <p>Administrative activity alerts.</p>
     </div>
 
     <button
-      class="btn btn-neutral"
+      class="btn neutral"
       onclick="clearNotifications()"
     >
       Clear
@@ -1469,9 +1390,9 @@ td{
 </div>
 
 
-<!-- =====================================================
+<!-- ==================================================
      CUSTOMER MODAL
-===================================================== -->
+================================================== -->
 
 <div
   id="customerModal"
@@ -1480,15 +1401,15 @@ td{
 
 <div class="modal-box">
 
-  <div class="modal-header">
+  <div class="modal-head">
 
-    <h3 id="customerModalTitle">
+    <h3 id="modalTitle">
       Customer
     </h3>
 
     <button
-      class="close-modal"
-      onclick="closeModal('customerModal')"
+      class="close"
+      onclick="closeModal()"
     >
       ×
     </button>
@@ -1496,11 +1417,11 @@ td{
   </div>
 
   <input
+    id="editId"
     type="hidden"
-    id="editCustomerId"
   >
 
-  <div class="form-group">
+  <div class="field">
 
     <label>Customer Name</label>
 
@@ -1508,7 +1429,7 @@ td{
 
   </div>
 
-  <div class="form-group">
+  <div class="field">
 
     <label>Email</label>
 
@@ -1516,7 +1437,7 @@ td{
 
   </div>
 
-  <div class="form-group">
+  <div class="field">
 
     <label>Wallet ID</label>
 
@@ -1524,15 +1445,19 @@ td{
 
   </div>
 
-  <div class="form-group">
+  <div class="field">
 
     <label>Balance</label>
 
-    <input id="customerBalance" type="number" step="0.01">
+    <input
+      id="customerBalance"
+      type="number"
+      step="0.01"
+    >
 
   </div>
 
-  <div class="form-group">
+  <div class="field">
 
     <label>Status</label>
 
@@ -1546,17 +1471,17 @@ td{
 
   </div>
 
-  <div class="modal-footer">
+  <div class="modal-actions">
 
     <button
-      class="btn btn-neutral"
-      onclick="closeModal('customerModal')"
+      class="btn neutral"
+      onclick="closeModal()"
     >
       Cancel
     </button>
 
     <button
-      class="btn btn-success"
+      class="btn success"
       onclick="saveCustomer()"
     >
       Save Changes
@@ -1571,33 +1496,50 @@ td{
 
 <script>
 
-/* =====================================================
-   ADMIN CREDENTIALS
-===================================================== */
+/* ==================================================
+   ADMIN LOGIN SETTINGS
+   ==================================================
+   IMPORTANT:
+   PASSWORD IS THE ONLY VALUE YOU NEED TO CHANGE.
+   ================================================== */
 
 const ADMIN_EMAIL = "michgeorge0452@gmail.com";
 
-/*
- IMPORTANT:
- Put the CoinBridge-only password you chose between
- the quotation marks below.
-*/
-
-const ADMIN_PASSWORD = "GC.259592;
+const ADMIN_PASSWORD = "CHANGE_THIS_PASSWORD";
 
 
-/* =====================================================
-   AUTHENTICATION
-===================================================== */
+/* ==================================================
+   PASSWORD EYE
+================================================== */
 
-function isLoggedIn(){
+function togglePassword(){
 
-  return sessionStorage.getItem(
-    "coinbridge_admin_authenticated"
-  ) === "true";
+  const input =
+    document.getElementById("adminPassword");
+
+  const button =
+    document.querySelector(".eye");
+
+  if(input.type === "password"){
+
+    input.type = "text";
+
+    button.textContent = "🙈";
+
+  }else{
+
+    input.type = "password";
+
+    button.textContent = "👁️";
+
+  }
 
 }
 
+
+/* ==================================================
+   LOGIN
+================================================== */
 
 function login(){
 
@@ -1640,11 +1582,24 @@ function login(){
   }else{
 
     error.textContent =
-      "Invalid email or password.";
+      "Invalid credentials.";
 
     error.classList.remove("hidden");
 
   }
+
+}
+
+
+/* ==================================================
+   SESSION
+================================================== */
+
+function loggedIn(){
+
+  return sessionStorage.getItem(
+    "coinbridge_admin_authenticated"
+  ) === "true";
 
 }
 
@@ -1660,11 +1615,11 @@ function logout(){
 }
 
 
-/* =====================================================
-   STORAGE HELPERS
-===================================================== */
+/* ==================================================
+   STORAGE
+================================================== */
 
-function readJSON(key,fallback){
+function getData(key, fallback=[]){
 
   try{
 
@@ -1673,7 +1628,7 @@ function readJSON(key,fallback){
         localStorage.getItem(key)
       );
 
-    return data ?? fallback;
+    return data || fallback;
 
   }catch(error){
 
@@ -1684,7 +1639,7 @@ function readJSON(key,fallback){
 }
 
 
-function saveJSON(key,data){
+function setData(key,data){
 
   localStorage.setItem(
     key,
@@ -1694,75 +1649,53 @@ function saveJSON(key,data){
 }
 
 
-/* =====================================================
-   DEMO DATA INITIALIZATION
-===================================================== */
+/* ==================================================
+   INITIAL DATA
+================================================== */
 
-function seedDemoData(){
+function initialize(){
 
   if(!localStorage.getItem("coinbridge_customers")){
 
-    saveJSON(
+    setData(
       "coinbridge_customers",
-      [
-        {
-          id:"CUS-1001",
-          name:"CoinBridge User",
-          email:"customer@example.com",
-          walletId:"CBW-100001",
-          balance:12480.50,
-          status:"Active",
-          createdAt:new Date().toISOString()
-        }
-      ]
+      []
     );
 
   }
 
-
   if(!localStorage.getItem("coinbridge_accounts")){
 
-    saveJSON(
+    setData(
       "coinbridge_accounts",
       []
     );
 
   }
 
-
   if(!localStorage.getItem("coinbridge_transactions")){
 
-    saveJSON(
+    setData(
       "coinbridge_transactions",
       []
     );
 
   }
 
+  if(!localStorage.getItem("coinbridge_messages")){
 
-  if(!localStorage.getItem("coinbridge_notifications")){
-
-    saveJSON(
-      "coinbridge_notifications",
+    setData(
+      "coinbridge_messages",
       []
     );
 
   }
 
+  if(!localStorage.getItem("coinbridge_notifications")){
 
-  if(!localStorage.getItem("coinbridge_messages")){
-
-    saveJSON(
-      "coinbridge_messages",
-      [
-        {
-          id:"MSG-1",
-          customer:"CoinBridge User",
-          from:"customer",
-          text:"Hello, I need assistance with my account.",
-          createdAt:new Date().toISOString()
-        }
-      ]
+    setData(
+      "coinbridge_notifications",
+      []
     );
 
   }
@@ -1770,23 +1703,23 @@ function seedDemoData(){
 }
 
 
-/* =====================================================
+/* ==================================================
    NAVIGATION
-===================================================== */
+================================================== */
 
 function showSection(id,button){
 
   document
-    .querySelectorAll(".page-section")
+    .querySelectorAll(".section")
     .forEach(section=>{
       section.classList.remove("active");
     });
 
-  const target =
+  const section =
     document.getElementById(id);
 
-  if(target){
-    target.classList.add("active");
+  if(section){
+    section.classList.add("active");
   }
 
   document
@@ -1799,44 +1732,73 @@ function showSection(id,button){
     button.classList.add("active");
   }
 
-  const titles={
-    dashboard:["Admin Dashboard","Manage accounts, wallets, orders and platform activity."],
-    customers:["Customers","View and manage customer accounts."],
-    accounts:["Account Approvals","Review newly submitted accounts."],
-    wallets:["Wallet Management","Manage customer wallet IDs and balances."],
-    orders:["Order Management","Review pending buy and sell requests."],
-    transactions:["Transactions","Review platform transaction records."],
-    chat:["Customer Messages","Communicate directly with customers."],
-    notifications:["Notifications","Platform alerts and administrative events."]
+  const names={
+
+    dashboard:[
+      "Admin Dashboard",
+      "Manage accounts, wallets, orders and platform activity."
+    ],
+
+    customers:[
+      "Customers",
+      "View and manage customer accounts."
+    ],
+
+    approvals:[
+      "Account Approvals",
+      "Review submitted account applications."
+    ],
+
+    wallets:[
+      "Wallet Management",
+      "Manage customer wallet IDs and balances."
+    ],
+
+    orders:[
+      "Order Management",
+      "Review customer orders."
+    ],
+
+    transactions:[
+      "Transactions",
+      "Review transaction records."
+    ],
+
+    messages:[
+      "Customer Messages",
+      "Communicate directly with customers."
+    ],
+
+    notifications:[
+      "Notifications",
+      "Administrative activity alerts."
+    ]
+
   };
 
-  if(titles[id]){
+  if(names[id]){
 
-    document.getElementById("pageTitle").textContent =
-      titles[id][0];
+    document.getElementById(
+      "pageTitle"
+    ).textContent = names[id][0];
 
-    document.getElementById("pageSubtitle").textContent =
-      titles[id][1];
+    document.getElementById(
+      "pageSubtitle"
+    ).textContent = names[id][1];
 
   }
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
 
 }
 
 
-function showSectionById(id){
+function goTo(id){
 
   const button =
     [...document.querySelectorAll(".nav button")]
       .find(item =>
         item.getAttribute("onclick") &&
-        item.getAttribute("onclick").includes(
-          "'" + id + "'"
-        )
+        item.getAttribute("onclick")
+          .includes("'" + id + "'")
       );
 
   showSection(id,button);
@@ -1844,7 +1806,7 @@ function showSectionById(id){
 }
 
 
-function toggleMobileNav(){
+function toggleMobileMenu(){
 
   const sidebar =
     document.querySelector(".sidebar");
@@ -1858,86 +1820,78 @@ function toggleMobileNav(){
   }else{
 
     sidebar.style.display="block";
-    sidebar.style.position="fixed";
-    sidebar.style.height="100vh";
 
   }
 
 }
 
 
-/* =====================================================
+/* ==================================================
    DASHBOARD
-===================================================== */
-
-function refreshDashboard(){
-
-  loadEverything();
-
-  alert("Dashboard refreshed.");
-
-}
-
+================================================== */
 
 function renderDashboard(){
 
   const customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+    getData(
+      "coinbridge_customers"
     );
 
   const accounts =
-    readJSON(
-      "coinbridge_accounts",
-      []
+    getData(
+      "coinbridge_accounts"
     );
 
   const orders =
-    readJSON(
-      "coinbridge_pending_orders",
-      []
+    getData(
+      "coinbridge_pending_orders"
     );
 
-  document.getElementById("statCustomers").textContent =
+  document.getElementById(
+    "totalCustomers"
+  ).textContent =
     customers.length;
 
-  document.getElementById("statApprovals").textContent =
+  document.getElementById(
+    "pendingAccounts"
+  ).textContent =
     accounts.filter(
       item =>
         String(item.status||"Pending")
           .toLowerCase()==="pending"
     ).length;
 
-  document.getElementById("statOrders").textContent =
+  document.getElementById(
+    "pendingOrders"
+  ).textContent =
     orders.filter(
       item =>
         String(item.status||"Pending")
           .toLowerCase()==="pending"
     ).length;
 
-  document.getElementById("statWallets").textContent =
+  document.getElementById(
+    "totalWallets"
+  ).textContent =
     customers.filter(
-      item => item.walletId
+      item=>item.walletId
     ).length;
 
-
   const activity =
-    document.getElementById("activityList");
+    document.getElementById("activity");
 
-  const history =
-    readJSON(
-      "coinbridge_order_history",
-      []
+  const notifications =
+    getData(
+      "coinbridge_notifications"
     );
 
-  if(!history.length){
+  if(!notifications.length){
 
     activity.innerHTML =
-      `<div class="activity-item">
+      `<div class="activity-row">
         <div>
-          <strong>No recent orders</strong>
-          <span>Activity will appear here.</span>
+          <strong>No recent activity</strong>
+          <span>New activity will appear here.</span>
         </div>
       </div>`;
 
@@ -1946,28 +1900,24 @@ function renderDashboard(){
   }
 
   activity.innerHTML =
-    history
-      .slice(-8)
+    notifications
+      .slice()
       .reverse()
-      .map(order=>`
+      .slice(0,8)
+      .map(item=>`
 
-        <div class="activity-item">
+        <div class="activity-row">
 
           <div>
 
             <strong>
-              ${escapeHTML(order.type||"Order")}
-              ${escapeHTML(order.asset||"")}
+              ${escapeHTML(item.text)}
             </strong>
 
             <span>
-              ${escapeHTML(order.customer||"Customer")}
+              ${formatDate(item.createdAt)}
             </span>
 
-          </div>
-
-          <div>
-            ${statusHTML(order.status||"Pending")}
           </div>
 
         </div>
@@ -1978,51 +1928,56 @@ function renderDashboard(){
 }
 
 
-/* =====================================================
+function refreshAll(){
+
+  loadEverything();
+
+}
+
+
+/* ==================================================
    CUSTOMERS
-===================================================== */
+================================================== */
 
 function renderCustomers(){
 
   const customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+    getData(
+      "coinbridge_customers"
     );
 
-  const query =
+  const search =
     (
-      document
-        .getElementById("customerSearch")
-        ?.value || ""
+      document.getElementById(
+        "customerSearch"
+      )?.value || ""
     )
-    .toLowerCase()
-    .trim();
+    .toLowerCase();
 
   const filtered =
     customers.filter(customer=>{
 
-      const text =
-        [
-          customer.name,
-          customer.email,
-          customer.walletId
-        ]
-        .join(" ")
-        .toLowerCase();
+      return [
 
-      return text.includes(query);
+        customer.name,
+        customer.email,
+        customer.walletId
+
+      ]
+      .join(" ")
+      .toLowerCase()
+      .includes(search);
 
     });
 
-  const tbody =
+  const table =
     document.getElementById(
       "customersTable"
     );
 
   if(!filtered.length){
 
-    tbody.innerHTML =
+    table.innerHTML =
       `<tr>
         <td colspan="6">
           No customers found.
@@ -2033,7 +1988,7 @@ function renderCustomers(){
 
   }
 
-  tbody.innerHTML =
+  table.innerHTML =
     filtered.map(customer=>`
 
       <tr>
@@ -2053,14 +2008,7 @@ function renderCustomers(){
         </td>
 
         <td>
-          $${Number(customer.balance||0)
-            .toLocaleString(
-              "en-US",
-              {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-              }
-            )}
+          $${money(customer.balance)}
         </td>
 
         <td>
@@ -2072,23 +2020,26 @@ function renderCustomers(){
           <div class="actions">
 
             <button
-              class="btn btn-primary"
+              class="btn primary"
               onclick="editCustomer('${escapeAttribute(customer.id)}')"
             >
               Edit
             </button>
 
             <button
-              class="btn btn-warning"
-              onclick="toggleCustomerStatus('${escapeAttribute(customer.id)}')"
+              class="btn warning"
+              onclick="toggleStatus('${escapeAttribute(customer.id)}')"
             >
-              ${String(customer.status).toLowerCase()==="suspended"
+              ${
+                String(customer.status)
+                  .toLowerCase()==="suspended"
                 ?"Activate"
-                :"Suspend"}
+                :"Suspend"
+              }
             </button>
 
             <button
-              class="btn btn-danger"
+              class="btn danger"
               onclick="removeCustomer('${escapeAttribute(customer.id)}')"
             >
               Remove
@@ -2108,35 +2059,20 @@ function renderCustomers(){
 function openCustomerModal(){
 
   document.getElementById(
-    "customerModalTitle"
+    "modalTitle"
   ).textContent =
     "Add Customer";
 
-  document.getElementById(
-    "editCustomerId"
-  ).value="";
+  document.getElementById("editId").value="";
+  document.getElementById("customerName").value="";
+  document.getElementById("customerEmail").value="";
+  document.getElementById("customerWallet").value="";
+  document.getElementById("customerBalance").value="0";
+  document.getElementById("customerStatus").value="Active";
 
-  document.getElementById(
-    "customerName"
-  ).value="";
-
-  document.getElementById(
-    "customerEmail"
-  ).value="";
-
-  document.getElementById(
-    "customerWallet"
-  ).value="";
-
-  document.getElementById(
-    "customerBalance"
-  ).value="0";
-
-  document.getElementById(
-    "customerStatus"
-  ).value="Active";
-
-  openModal("customerModal");
+  document
+    .getElementById("customerModal")
+    .classList.add("open");
 
 }
 
@@ -2144,70 +2080,70 @@ function openCustomerModal(){
 function editCustomer(id){
 
   const customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+    getData(
+      "coinbridge_customers"
     );
 
   const customer =
     customers.find(
-      item => item.id === id
+      item=>item.id===id
     );
 
   if(!customer)return;
 
   document.getElementById(
-    "customerModalTitle"
+    "modalTitle"
   ).textContent =
     "Edit Customer";
 
   document.getElementById(
-    "editCustomerId"
+    "editId"
   ).value =
     customer.id;
 
   document.getElementById(
     "customerName"
   ).value =
-    customer.name || "";
+    customer.name||"";
 
   document.getElementById(
     "customerEmail"
   ).value =
-    customer.email || "";
+    customer.email||"";
 
   document.getElementById(
     "customerWallet"
   ).value =
-    customer.walletId || "";
+    customer.walletId||"";
 
   document.getElementById(
     "customerBalance"
   ).value =
-    customer.balance || 0;
+    customer.balance||0;
 
   document.getElementById(
     "customerStatus"
   ).value =
-    customer.status || "Active";
+    customer.status||"Active";
 
-  openModal("customerModal");
+  document
+    .getElementById("customerModal")
+    .classList.add("open");
 
 }
 
 
 function saveCustomer(){
 
-  let customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+  const customers =
+    getData(
+      "coinbridge_customers"
     );
 
   const id =
-    document
-      .getElementById("editCustomerId")
-      .value;
+    document.getElementById(
+      "editId"
+    ).value;
 
   const customer={
 
@@ -2216,34 +2152,31 @@ function saveCustomer(){
       "CUS-"+Date.now(),
 
     name:
-      document
-        .getElementById("customerName")
-        .value
-        .trim(),
+      document.getElementById(
+        "customerName"
+      ).value.trim(),
 
     email:
-      document
-        .getElementById("customerEmail")
-        .value
-        .trim(),
+      document.getElementById(
+        "customerEmail"
+      ).value.trim(),
 
     walletId:
-      document
-        .getElementById("customerWallet")
-        .value
-        .trim(),
+      document.getElementById(
+        "customerWallet"
+      ).value.trim(),
 
     balance:
       Number(
-        document
-          .getElementById("customerBalance")
-          .value || 0
+        document.getElementById(
+          "customerBalance"
+        ).value||0
       ),
 
     status:
-      document
-        .getElementById("customerStatus")
-        .value,
+      document.getElementById(
+        "customerStatus"
+      ).value,
 
     createdAt:
       new Date().toISOString()
@@ -2252,7 +2185,7 @@ function saveCustomer(){
 
   if(!customer.name){
 
-    alert("Enter a customer name.");
+    alert("Customer name is required.");
 
     return;
 
@@ -2260,10 +2193,10 @@ function saveCustomer(){
 
   const index =
     customers.findIndex(
-      item => item.id === id
+      item=>item.id===id
     );
 
-  if(index >= 0){
+  if(index>=0){
 
     customers[index]={
       ...customers[index],
@@ -2276,7 +2209,7 @@ function saveCustomer(){
 
   }
 
-  saveJSON(
+  setData(
     "coinbridge_customers",
     customers
   );
@@ -2285,24 +2218,23 @@ function saveCustomer(){
     "Customer record updated."
   );
 
-  closeModal("customerModal");
+  closeModal();
 
   loadEverything();
 
 }
 
 
-function toggleCustomerStatus(id){
+function toggleStatus(id){
 
   const customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+    getData(
+      "coinbridge_customers"
     );
 
   const customer =
     customers.find(
-      item => item.id === id
+      item=>item.id===id
     );
 
   if(!customer)return;
@@ -2310,17 +2242,17 @@ function toggleCustomerStatus(id){
   customer.status =
     String(customer.status)
       .toLowerCase()==="suspended"
-      ? "Active"
-      : "Suspended";
+      ?"Active"
+      :"Suspended";
 
-  saveJSON(
+  setData(
     "coinbridge_customers",
     customers
   );
 
   addNotification(
     customer.name+
-    " status changed to "+
+    " is now "+
     customer.status
   );
 
@@ -2332,14 +2264,13 @@ function toggleCustomerStatus(id){
 function removeCustomer(id){
 
   const customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+    getData(
+      "coinbridge_customers"
     );
 
   const customer =
     customers.find(
-      item => item.id === id
+      item=>item.id===id
     );
 
   if(!customer)return;
@@ -2350,14 +2281,11 @@ function removeCustomer(id){
     )
   )return;
 
-  const remaining =
-    customers.filter(
-      item => item.id !== id
-    );
-
-  saveJSON(
+  setData(
     "coinbridge_customers",
-    remaining
+    customers.filter(
+      item=>item.id!==id
+    )
   );
 
   addNotification(
@@ -2370,26 +2298,25 @@ function removeCustomer(id){
 }
 
 
-/* =====================================================
-   WALLET MANAGEMENT
-===================================================== */
+/* ==================================================
+   WALLETS
+================================================== */
 
 function renderWallets(){
 
   const customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+    getData(
+      "coinbridge_customers"
     );
 
-  const tbody =
+  const table =
     document.getElementById(
-      "walletsTable"
+      "walletTable"
     );
 
   if(!customers.length){
 
-    tbody.innerHTML =
+    table.innerHTML =
       `<tr>
         <td colspan="5">
           No wallets found.
@@ -2400,7 +2327,7 @@ function renderWallets(){
 
   }
 
-  tbody.innerHTML =
+  table.innerHTML =
     customers.map(customer=>`
 
       <tr>
@@ -2410,20 +2337,11 @@ function renderWallets(){
         </td>
 
         <td>
-          <strong>
-            ${escapeHTML(customer.walletId||"—")}
-          </strong>
+          ${escapeHTML(customer.walletId||"—")}
         </td>
 
         <td>
-          $${Number(customer.balance||0)
-            .toLocaleString(
-              "en-US",
-              {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-              }
-            )}
+          $${money(customer.balance)}
         </td>
 
         <td>
@@ -2435,15 +2353,15 @@ function renderWallets(){
           <div class="actions">
 
             <button
-              class="btn btn-primary"
+              class="btn primary"
               onclick="editCustomer('${escapeAttribute(customer.id)}')"
             >
               Edit Wallet
             </button>
 
             <button
-              class="btn btn-danger"
-              onclick="removeWalletId('${escapeAttribute(customer.id)}')"
+              class="btn danger"
+              onclick="removeWallet('${escapeAttribute(customer.id)}')"
             >
               Remove ID
             </button>
@@ -2459,30 +2377,29 @@ function renderWallets(){
 }
 
 
-function removeWalletId(id){
+function removeWallet(id){
 
   const customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+    getData(
+      "coinbridge_customers"
     );
 
   const customer =
     customers.find(
-      item => item.id === id
+      item=>item.id===id
     );
 
   if(!customer)return;
 
   if(
     !confirm(
-      "Remove this customer's wallet ID?"
+      "Remove this wallet ID?"
     )
   )return;
 
   customer.walletId="";
 
-  saveJSON(
+  setData(
     "coinbridge_customers",
     customers
   );
@@ -2497,29 +2414,28 @@ function removeWalletId(id){
 }
 
 
-/* =====================================================
+/* ==================================================
    ACCOUNT APPROVALS
-===================================================== */
+================================================== */
 
-function renderAccounts(){
+function renderApprovals(){
 
   const accounts =
-    readJSON(
-      "coinbridge_accounts",
-      []
+    getData(
+      "coinbridge_accounts"
     );
 
-  const tbody =
+  const table =
     document.getElementById(
-      "accountsTable"
+      "approvalsTable"
     );
 
   if(!accounts.length){
 
-    tbody.innerHTML =
+    table.innerHTML =
       `<tr>
         <td colspan="5">
-          No account applications pending.
+          No account applications found.
         </td>
       </tr>`;
 
@@ -2527,23 +2443,22 @@ function renderAccounts(){
 
   }
 
-  tbody.innerHTML =
+  table.innerHTML =
     accounts.map(account=>`
 
       <tr>
 
         <td>
           ${escapeHTML(
-            account.name ||
-            account.fullName ||
+            account.name||
+            account.fullName||
             "Unknown"
           )}
         </td>
 
         <td>
           ${escapeHTML(
-            account.email ||
-            "—"
+            account.email||"—"
           )}
         </td>
 
@@ -2559,33 +2474,34 @@ function renderAccounts(){
 
         <td>
 
-          <div class="actions">
+          ${
+            String(account.status||"Pending")
+              .toLowerCase()==="pending"
+            ?
+            `
+              <div class="actions">
 
-            ${
-              String(account.status||"Pending")
-                .toLowerCase()==="pending"
-              ? `
                 <button
-                  class="btn btn-success"
+                  class="btn success"
                   onclick="approveAccount('${escapeAttribute(account.id||"")}')"
                 >
                   Approve
                 </button>
 
                 <button
-                  class="btn btn-danger"
+                  class="btn danger"
                   onclick="rejectAccount('${escapeAttribute(account.id||"")}')"
                 >
                   Reject
                 </button>
-              `
-              :
-              `<span style="color:#718096">
-                Reviewed
-              </span>`
-            }
 
-          </div>
+              </div>
+            `
+            :
+            `<span style="color:#718096">
+              Reviewed
+            </span>`
+          }
 
         </td>
 
@@ -2599,54 +2515,52 @@ function renderAccounts(){
 function approveAccount(id){
 
   const accounts =
-    readJSON(
-      "coinbridge_accounts",
-      []
+    getData(
+      "coinbridge_accounts"
     );
 
   const account =
     accounts.find(
-      item =>
-        String(item.id)===String(id)
+      item=>String(item.id)===String(id)
     );
 
   if(!account)return;
 
   account.status="Approved";
 
-  saveJSON(
+  setData(
     "coinbridge_accounts",
     accounts
   );
 
   let customers =
-    readJSON(
-      "coinbridge_customers",
-      []
+    getData(
+      "coinbridge_customers"
     );
 
   const exists =
     customers.some(
-      customer =>
-        customer.email === account.email
+      customer=>
+        customer.email===account.email
     );
 
   if(!exists){
 
     customers.push({
 
-      id:"CUS-"+Date.now(),
+      id:
+        "CUS-"+Date.now(),
 
       name:
-        account.name ||
-        account.fullName ||
+        account.name||
+        account.fullName||
         "Customer",
 
       email:
-        account.email || "",
+        account.email||"",
 
       walletId:
-        account.walletId ||
+        account.walletId||
         "CBW-"+Date.now(),
 
       balance:
@@ -2659,7 +2573,7 @@ function approveAccount(id){
 
     });
 
-    saveJSON(
+    setData(
       "coinbridge_customers",
       customers
     );
@@ -2679,22 +2593,20 @@ function approveAccount(id){
 function rejectAccount(id){
 
   const accounts =
-    readJSON(
-      "coinbridge_accounts",
-      []
+    getData(
+      "coinbridge_accounts"
     );
 
   const account =
     accounts.find(
-      item =>
-        String(item.id)===String(id)
+      item=>String(item.id)===String(id)
     );
 
   if(!account)return;
 
   account.status="Rejected";
 
-  saveJSON(
+  setData(
     "coinbridge_accounts",
     accounts
   );
@@ -2709,26 +2621,25 @@ function rejectAccount(id){
 }
 
 
-/* =====================================================
-   ORDER MANAGEMENT
-===================================================== */
+/* ==================================================
+   ORDERS
+================================================== */
 
 function renderOrders(){
 
   const orders =
-    readJSON(
-      "coinbridge_pending_orders",
-      []
+    getData(
+      "coinbridge_pending_orders"
     );
 
-  const tbody =
+  const table =
     document.getElementById(
       "ordersTable"
     );
 
   if(!orders.length){
 
-    tbody.innerHTML =
+    table.innerHTML =
       `<tr>
         <td colspan="7">
           No orders found.
@@ -2739,7 +2650,7 @@ function renderOrders(){
 
   }
 
-  tbody.innerHTML =
+  table.innerHTML =
     orders
       .slice()
       .reverse()
@@ -2748,35 +2659,32 @@ function renderOrders(){
         <tr>
 
           <td>
-            ${escapeHTML(order.id||"—")}
+            ${escapeHTML(
+              order.id||"—"
+            )}
           </td>
 
           <td>
             ${escapeHTML(
               order.customer||
-              "CoinBridge User"
+              "Customer"
             )}
           </td>
 
           <td>
-            <strong>
-              ${escapeHTML(order.type||"—")}
-            </strong>
+            ${escapeHTML(
+              order.type||"—"
+            )}
           </td>
 
           <td>
-            ${escapeHTML(order.asset||"—")}
+            ${escapeHTML(
+              order.asset||"—"
+            )}
           </td>
 
           <td>
-            $${Number(order.price||0)
-              .toLocaleString(
-                "en-US",
-                {
-                  minimumFractionDigits:2,
-                  maximumFractionDigits:4
-                }
-              )}
+            $${money(order.price)}
           </td>
 
           <td>
@@ -2785,34 +2693,34 @@ function renderOrders(){
 
           <td>
 
-            <div class="actions">
+            ${
+              String(order.status||"Pending")
+                .toLowerCase()==="pending"
+              ?
+              `
+                <div class="actions">
 
-              ${
-                String(order.status||"Pending")
-                  .toLowerCase()==="pending"
-                ?
-                `
                   <button
-                    class="btn btn-success"
-                    onclick="approveOrder('${escapeAttribute(order.id)}')"
+                    class="btn success"
+                    onclick="updateOrder('${escapeAttribute(order.id)}','Approved')"
                   >
                     Approve
                   </button>
 
                   <button
-                    class="btn btn-danger"
-                    onclick="rejectOrder('${escapeAttribute(order.id)}')"
+                    class="btn danger"
+                    onclick="updateOrder('${escapeAttribute(order.id)}','Rejected')"
                   >
                     Reject
                   </button>
-                `
-                :
-                `<span style="color:#718096">
-                  Reviewed
-                </span>`
-              }
 
-            </div>
+                </div>
+              `
+              :
+              `<span style="color:#718096">
+                Reviewed
+              </span>`
+            }
 
           </td>
 
@@ -2823,79 +2731,52 @@ function renderOrders(){
 }
 
 
-function approveOrder(id){
+function updateOrder(id,status){
 
-  updateOrderStatus(
-    id,
-    "Approved"
-  );
-
-}
-
-
-function rejectOrder(id){
-
-  updateOrderStatus(
-    id,
-    "Rejected"
-  );
-
-}
-
-
-function updateOrderStatus(
-  id,
-  status
-){
-
-  let orders =
-    readJSON(
-      "coinbridge_pending_orders",
-      []
+  const orders =
+    getData(
+      "coinbridge_pending_orders"
     );
 
   const order =
     orders.find(
-      item => item.id === id
+      item=>item.id===id
     );
 
   if(!order)return;
 
   order.status=status;
 
-  saveJSON(
+  setData(
     "coinbridge_pending_orders",
     orders
   );
 
   let history =
-    readJSON(
-      "coinbridge_order_history",
-      []
+    getData(
+      "coinbridge_order_history"
     );
 
-  const historyOrder =
+  const old =
     history.find(
-      item => item.id === id
+      item=>item.id===id
     );
 
-  if(historyOrder){
-
-    historyOrder.status=status;
-
+  if(old){
+    old.status=status;
   }
 
-  saveJSON(
+  setData(
     "coinbridge_order_history",
     history
   );
 
   addNotification(
-    order.type+
+    (order.type||"Order")+
     " "+
-    order.asset+
-    " order "+
-    status.toLowerCase()+"."
+    (order.asset||"")+
+    " "+
+    status.toLowerCase()
   );
 
   loadEverything();
@@ -2903,29 +2784,28 @@ function updateOrderStatus(
 }
 
 
-/* =====================================================
+/* ==================================================
    TRANSACTIONS
-===================================================== */
+================================================== */
 
 function renderTransactions(){
 
   const transactions =
-    readJSON(
-      "coinbridge_transactions",
-      []
+    getData(
+      "coinbridge_transactions"
     );
 
-  const tbody =
+  const table =
     document.getElementById(
       "transactionsTable"
     );
 
   if(!transactions.length){
 
-    tbody.innerHTML =
+    table.innerHTML =
       `<tr>
         <td colspan="7">
-          No transactions recorded.
+          No transactions found.
         </td>
       </tr>`;
 
@@ -2933,7 +2813,7 @@ function renderTransactions(){
 
   }
 
-  tbody.innerHTML =
+  table.innerHTML =
     transactions
       .slice()
       .reverse()
@@ -2947,8 +2827,7 @@ function renderTransactions(){
 
           <td>
             ${escapeHTML(
-              tx.customer||
-              "Customer"
+              tx.customer||"Customer"
             )}
           </td>
 
@@ -2981,37 +2860,34 @@ function renderTransactions(){
 }
 
 
-/* =====================================================
-   CHAT
-===================================================== */
+/* ==================================================
+   MESSAGES
+================================================== */
 
-let selectedChatCustomer="CoinBridge User";
+let selectedCustomer="";
 
 
 function renderChatUsers(){
 
   const messages =
-    readJSON(
-      "coinbridge_messages",
-      []
+    getData(
+      "coinbridge_messages"
     );
 
   const names =
     [
       ...new Set(
         messages.map(
-          message =>
-            message.customer ||
-            "CoinBridge User"
+          item =>
+            item.customer||
+            "Customer"
         )
       )
     ];
 
-  if(!names.includes(selectedChatCustomer)){
+  if(!selectedCustomer && names.length){
 
-    names.push(
-      selectedChatCustomer
-    );
+    selectedCustomer=names[0];
 
   }
 
@@ -3020,16 +2896,31 @@ function renderChatUsers(){
       "chatUsers"
     );
 
+  if(!names.length){
+
+    container.innerHTML =
+      `<div style="padding:15px;color:#718096;font-size:10px">
+        No customer conversations.
+      </div>`;
+
+    document.getElementById(
+      "messagesList"
+    ).innerHTML="";
+
+    return;
+
+  }
+
   container.innerHTML =
     names.map(name=>`
 
       <button
         class="chat-user ${
-          name===selectedChatCustomer
+          name===selectedCustomer
           ?"active"
           :""
         }"
-        onclick="selectChatCustomer('${escapeAttribute(name)}')"
+        onclick="selectCustomer('${escapeAttribute(name)}')"
       >
 
         <strong>
@@ -3044,46 +2935,45 @@ function renderChatUsers(){
 
     `).join("");
 
+  renderMessages();
+
 }
 
 
-function selectChatCustomer(name){
+function selectCustomer(name){
 
-  selectedChatCustomer=name;
+  selectedCustomer=name;
 
   renderChatUsers();
 
-  renderChatMessages();
-
 }
 
 
-function renderChatMessages(){
+function renderMessages(){
 
   const messages =
-    readJSON(
-      "coinbridge_messages",
-      []
+    getData(
+      "coinbridge_messages"
     );
 
   const filtered =
     messages.filter(
-      message =>
+      item =>
         (
-          message.customer ||
-          "CoinBridge User"
-        ) === selectedChatCustomer
+          item.customer||
+          "Customer"
+        )===selectedCustomer
     );
 
   const container =
     document.getElementById(
-      "chatMessages"
+      "messagesList"
     );
 
   if(!filtered.length){
 
     container.innerHTML =
-      `<div style="color:#718096;font-size:11px">
+      `<div style="color:#718096;font-size:10px">
         No messages yet.
       </div>`;
 
@@ -3092,23 +2982,21 @@ function renderChatMessages(){
   }
 
   container.innerHTML =
-    filtered.map(message=>`
+    filtered.map(item=>`
 
-      <div
-        class="message ${
-          message.from==="admin"
-          ?"admin"
-          :"customer"
-        }"
-      >
+      <div class="message ${
+        item.from==="admin"
+        ?"admin"
+        :"customer"
+      }">
 
-        ${escapeHTML(message.text)}
+        ${escapeHTML(item.text)}
 
       </div>
 
     `).join("");
 
-  container.scrollTop =
+  container.scrollTop=
     container.scrollHeight;
 
 }
@@ -3118,54 +3006,70 @@ function sendMessage(){
 
   const input =
     document.getElementById(
-      "chatMessage"
+      "messageInput"
     );
 
   const text =
     input.value.trim();
 
-  if(!text)return;
+  if(!text){
+
+    return;
+
+  }
+
+  if(!selectedCustomer){
+
+    alert(
+      "Select a customer first."
+    );
+
+    return;
+
+  }
 
   const messages =
-    readJSON(
-      "coinbridge_messages",
-      []
+    getData(
+      "coinbridge_messages"
     );
 
   messages.push({
 
-    id:"MSG-"+Date.now(),
+    id:
+      "MSG-"+Date.now(),
 
     customer:
-      selectedChatCustomer,
+      selectedCustomer,
 
-    from:"admin",
+    from:
+      "admin",
 
-    text:text,
+    text:
+      text,
 
     createdAt:
       new Date().toISOString()
 
   });
 
-  saveJSON(
+  setData(
     "coinbridge_messages",
     messages
   );
 
   input.value="";
 
-  renderChatMessages();
-
   addNotification(
     "Message sent to "+
-    selectedChatCustomer
+    selectedCustomer
   );
+
+  renderChatUsers();
 
 }
 
 
-function handleChatKey(event){
+function messageKey(event){
 
   if(event.key==="Enter"){
 
@@ -3176,32 +3080,33 @@ function handleChatKey(event){
 }
 
 
-/* =====================================================
+/* ==================================================
    NOTIFICATIONS
-===================================================== */
+================================================== */
 
 function addNotification(text){
 
-  const notifications =
-    readJSON(
-      "coinbridge_notifications",
-      []
+  const list =
+    getData(
+      "coinbridge_notifications"
     );
 
-  notifications.push({
+  list.push({
 
-    id:"NOT-"+Date.now(),
+    id:
+      "NOT-"+Date.now(),
 
-    text:text,
+    text:
+      text,
 
     createdAt:
       new Date().toISOString()
 
   });
 
-  saveJSON(
+  setData(
     "coinbridge_notifications",
-    notifications
+    list
   );
 
 }
@@ -3209,10 +3114,9 @@ function addNotification(text){
 
 function renderNotifications(){
 
-  const notifications =
-    readJSON(
-      "coinbridge_notifications",
-      []
+  const list =
+    getData(
+      "coinbridge_notifications"
     );
 
   const container =
@@ -3220,13 +3124,13 @@ function renderNotifications(){
       "notificationsList"
     );
 
-  if(!notifications.length){
+  if(!list.length){
 
     container.innerHTML =
-      `<div class="activity-item">
+      `<div class="activity-row">
         <div>
           <strong>No notifications</strong>
-          <span>New events will appear here.</span>
+          <span>New administrative events will appear here.</span>
         </div>
       </div>`;
 
@@ -3235,12 +3139,12 @@ function renderNotifications(){
   }
 
   container.innerHTML =
-    notifications
+    list
       .slice()
       .reverse()
       .map(item=>`
 
-        <div class="activity-item">
+        <div class="activity-row">
 
           <div>
 
@@ -3269,80 +3173,49 @@ function clearNotifications(){
     )
   )return;
 
-  saveJSON(
+  setData(
     "coinbridge_notifications",
     []
   );
 
-  renderNotifications();
+  loadEverything();
 
 }
 
 
-/* =====================================================
-   MODALS
-===================================================== */
+/* ==================================================
+   MODAL
+================================================== */
 
-function openModal(id){
-
-  document
-    .getElementById(id)
-    .classList.add("open");
-
-}
-
-
-function closeModal(id){
+function closeModal(){
 
   document
-    .getElementById(id)
+    .getElementById(
+      "customerModal"
+    )
     .classList.remove("open");
 
 }
 
 
-/* =====================================================
-   STATUS
-===================================================== */
+/* ==================================================
+   HELPERS
+================================================== */
 
-function statusHTML(status){
+function money(value){
 
-  const normalized =
-    String(status||"Pending")
-      .toLowerCase();
-
-  let cls="pending";
-
-  if(
-    normalized==="approved" ||
-    normalized==="active"
-  ){
-
-    cls="approved";
-
-  }
-
-  if(
-    normalized==="rejected" ||
-    normalized==="suspended"
-  ){
-
-    cls="rejected";
-
-  }
-
-  return `
-    <span class="status ${cls}">
-      ● ${escapeHTML(status||"Pending")}
-    </span>
-  `;
+  return Number(
+    value||0
+  ).toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  );
 
 }
 
-
-/* =====================================================
-   DATE
-===================================================== */
 
 function formatDate(value){
 
@@ -3368,18 +3241,60 @@ function formatDate(value){
 }
 
 
-/* =====================================================
-   SECURITY / ESCAPING
-===================================================== */
+function statusHTML(status){
+
+  const value =
+    String(
+      status||
+      "Pending"
+    );
+
+  const lower =
+    value.toLowerCase();
+
+  let cls="pending";
+
+  if(
+    lower==="active" ||
+    lower==="approved"
+  ){
+
+    cls=
+      lower==="active"
+      ?"active"
+      :"approved";
+
+  }
+
+  if(
+    lower==="rejected" ||
+    lower==="suspended"
+  ){
+
+    cls=
+      lower;
+
+  }
+
+  return `
+    <span class="status ${cls}">
+      ● ${escapeHTML(value)}
+    </span>
+  `;
+
+}
+
 
 function escapeHTML(value){
 
-  return String(value??"")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  return String(
+    value??""
+  )
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
 
 }
 
@@ -3391,19 +3306,19 @@ function escapeAttribute(value){
 }
 
 
-/* =====================================================
+/* ==================================================
    LOAD EVERYTHING
-===================================================== */
+================================================== */
 
 function loadEverything(){
 
-  seedDemoData();
+  initialize();
 
   renderDashboard();
 
   renderCustomers();
 
-  renderAccounts();
+  renderApprovals();
 
   renderWallets();
 
@@ -3413,25 +3328,27 @@ function loadEverything(){
 
   renderChatUsers();
 
-  renderChatMessages();
-
   renderNotifications();
 
 }
 
 
-/* =====================================================
+/* ==================================================
    STARTUP
-===================================================== */
+================================================== */
 
-if(isLoggedIn()){
+if(loggedIn()){
 
   document
-    .getElementById("loginScreen")
+    .getElementById(
+      "loginScreen"
+    )
     .classList.add("hidden");
 
   document
-    .getElementById("adminApp")
+    .getElementById(
+      "adminApp"
+    )
     .classList.remove("hidden");
 
   loadEverything();

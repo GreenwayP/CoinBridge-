@@ -181,7 +181,7 @@
       border-color: #22d3ee;
     }
 
-    /* MARKET TABLE */
+    /* PANEL */
 
     .panel {
       background: #091522;
@@ -195,6 +195,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      gap: 15px;
     }
 
     .panel-header h2 {
@@ -205,6 +206,8 @@
       color: #718096;
       font-size: 11px;
     }
+
+    /* TABLE */
 
     .table-wrapper {
       overflow-x: auto;
@@ -292,6 +295,14 @@
       color: #22d3ee;
     }
 
+    .watch.watching {
+      border-color: #34d399;
+      color: #34d399;
+      background: rgba(52,211,153,0.08);
+    }
+
+    /* NOTICE */
+
     .notice {
       margin-top: 20px;
       padding: 14px;
@@ -367,6 +378,14 @@
         display: none;
       }
 
+      .panel {
+        padding: 18px;
+      }
+
+      .panel-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -389,23 +408,23 @@
 
       <nav class="nav">
 
-        <a href="dashboard.html">
+        <a href="./dashboard.html">
           🏠 Dashboard
         </a>
 
-        <a href="portfolio.html">
+        <a href="./portfolio.html">
           💼 Portfolio
         </a>
 
-        <a href="wallet.html">
+        <a href="./wallet.html">
           💰 Wallet
         </a>
 
-        <a href="transactions.html">
+        <a href="./transactions.html">
           📊 Transactions
         </a>
 
-        <a href="markets.html" class="active">
+        <a href="./markets.html" class="active">
           📈 Markets
         </a>
 
@@ -429,7 +448,7 @@
 
       <div class="logout">
 
-        <a href="index.html">
+        <a href="./index.html">
           ← Log Out
         </a>
 
@@ -454,23 +473,24 @@
 
       </div>
 
+
       <div class="mobile-menu" id="mobileMenu">
 
-        <a href="dashboard.html">🏠 Dashboard</a>
+        <a href="./dashboard.html">🏠 Dashboard</a>
 
-        <a href="portfolio.html">💼 Portfolio</a>
+        <a href="./portfolio.html">💼 Portfolio</a>
 
-        <a href="wallet.html">💰 Wallet</a>
+        <a href="./wallet.html">💰 Wallet</a>
 
-        <a href="transactions.html">📊 Transactions</a>
+        <a href="./transactions.html">📊 Transactions</a>
 
-        <a href="markets.html">📈 Markets</a>
+        <a href="./markets.html">📈 Markets</a>
 
         <a href="#">⚙️ Settings</a>
 
         <a href="#">🔐 Security</a>
 
-        <a href="index.html">← Log Out</a>
+        <a href="./index.html">← Log Out</a>
 
       </div>
 
@@ -564,6 +584,9 @@
 
             <tbody id="marketTable">
 
+
+              <!-- BITCOIN -->
+
               <tr>
 
                 <td>
@@ -607,13 +630,20 @@
                 </td>
 
                 <td>
-                  <button class="watch">
+
+                  <button
+                    class="watch"
+                    onclick="toggleWatch(this)"
+                  >
                     ☆ Watch
                   </button>
+
                 </td>
 
               </tr>
 
+
+              <!-- ETHEREUM -->
 
               <tr>
 
@@ -658,13 +688,20 @@
                 </td>
 
                 <td>
-                  <button class="watch">
+
+                  <button
+                    class="watch"
+                    onclick="toggleWatch(this)"
+                  >
                     ☆ Watch
                   </button>
+
                 </td>
 
               </tr>
 
+
+              <!-- USDC -->
 
               <tr>
 
@@ -709,7 +746,11 @@
                 </td>
 
                 <td>
-                  <button class="watch">
+
+                  <button
+                    class="watch"
+                    onclick="toggleWatch(this)"
+                  >
                     ☆ Watch
                   </button>
 
@@ -717,6 +758,8 @@
 
               </tr>
 
+
+              <!-- SOLANA -->
 
               <tr>
 
@@ -761,7 +804,11 @@
                 </td>
 
                 <td>
-                  <button class="watch">
+
+                  <button
+                    class="watch"
+                    onclick="toggleWatch(this)"
+                  >
                     ☆ Watch
                   </button>
 
@@ -769,6 +816,8 @@
 
               </tr>
 
+
+              <!-- BNB -->
 
               <tr>
 
@@ -813,13 +862,18 @@
                 </td>
 
                 <td>
-                  <button class="watch">
+
+                  <button
+                    class="watch"
+                    onclick="toggleWatch(this)"
+                  >
                     ☆ Watch
                   </button>
 
                 </td>
 
               </tr>
+
 
             </tbody>
 
@@ -844,29 +898,66 @@
 
   <script>
 
+    /* MOBILE MENU */
+
     function toggleMenu() {
 
-      const menu = document.getElementById("mobileMenu");
+      const menu =
+        document.getElementById("mobileMenu");
 
       menu.classList.toggle("open");
 
     }
 
 
+    /* WATCH BUTTON */
+
+    function toggleWatch(button) {
+
+      if (button.classList.contains("watching")) {
+
+        button.classList.remove("watching");
+
+        button.textContent = "☆ Watch";
+
+      } else {
+
+        button.classList.add("watching");
+
+        button.textContent = "★ Watching";
+
+      }
+
+    }
+
+
+    /* SEARCH */
+
     function searchMarkets() {
 
-      const input = document.getElementById("marketSearch");
+      const input =
+        document.getElementById("marketSearch");
 
-      const filter = input.value.toLowerCase();
+      const filter =
+        input.value.toLowerCase();
 
-      const rows = document.querySelectorAll("#marketTable tr");
+      const rows =
+        document.querySelectorAll("#marketTable tr");
 
       rows.forEach(row => {
 
-        const text = row.textContent.toLowerCase();
+        const text =
+          row.textContent.toLowerCase();
 
-        row.style.display =
-          text.includes(filter) ? "" : "none";
+        if (text.includes(filter)) {
+
+          row.style.display = "";
+
+        } else {
+
+          row.style.display = "none";
+
+        }
 
       });
 
@@ -875,4 +966,4 @@
   </script>
 
 </body>
-  </html>
+        </html>

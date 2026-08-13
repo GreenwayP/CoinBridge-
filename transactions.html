@@ -7,6 +7,7 @@
   <title>Transactions | CoinBridge</title>
 
   <style>
+
     * {
       margin: 0;
       padding: 0;
@@ -25,12 +26,24 @@
       color: inherit;
     }
 
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    /* =========================
+       LAYOUT
+    ========================= */
+
     .layout {
       display: flex;
       min-height: 100vh;
     }
 
-    /* SIDEBAR */
+    /* =========================
+       SIDEBAR
+    ========================= */
 
     .sidebar {
       width: 245px;
@@ -103,7 +116,9 @@
       color: #ffffff;
     }
 
-    /* MAIN */
+    /* =========================
+       MAIN
+    ========================= */
 
     .main {
       margin-left: 245px;
@@ -115,16 +130,24 @@
       display: none;
     }
 
+    .mobile-menu {
+      display: none;
+    }
+
+    /* =========================
+       TOPBAR
+    ========================= */
+
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
     .welcome h1 {
-      font-size: 27px;
-      margin-bottom: 5px;
+      font-size: 28px;
+      margin-bottom: 6px;
     }
 
     .welcome p {
@@ -157,15 +180,18 @@
     .profile-status {
       color: #34d399;
       font-size: 11px;
+      margin-top: 3px;
     }
 
-    /* SUMMARY */
+    /* =========================
+       SUMMARY CARDS
+    ========================= */
 
-    .summary {
+    .summary-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-bottom: 24px;
+      gap: 16px;
+      margin-bottom: 22px;
     }
 
     .summary-card {
@@ -175,148 +201,276 @@
       padding: 22px;
     }
 
-    .label {
-      color: #8798ab;
-      font-size: 12px;
-      margin-bottom: 9px;
+    .summary-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #132b3d;
+      display: grid;
+      place-items: center;
+      margin-bottom: 15px;
+      font-size: 18px;
     }
 
-    .value {
-      font-size: 24px;
+    .summary-label {
+      color: #718096;
+      font-size: 11px;
+      margin-bottom: 7px;
+    }
+
+    .summary-value {
+      font-size: 23px;
       font-weight: 800;
     }
 
-    .green {
+    .summary-note {
+      color: #6f8295;
+      font-size: 10px;
+      margin-top: 7px;
+    }
+
+    .positive {
       color: #34d399;
     }
 
-    .blue {
-      color: #22d3ee;
+    .negative {
+      color: #fb7185;
     }
 
-    /* TRANSACTIONS */
+    /* =========================
+       PANEL
+    ========================= */
 
     .panel {
       background: #091522;
       border: 1px solid #1d3448;
       border-radius: 15px;
       padding: 24px;
+      margin-bottom: 20px;
     }
 
     .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
       gap: 15px;
+      margin-bottom: 20px;
     }
 
     .panel-header h2 {
       font-size: 18px;
     }
 
-    .filters {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .filter {
-      padding: 8px 12px;
-      border: 1px solid #294052;
-      background: #07111d;
-      color: #8798ab;
-      border-radius: 7px;
-      font-size: 11px;
-    }
-
-    .filter.active {
-      border-color: #22d3ee;
-      color: #22d3ee;
-    }
-
-    .table-wrapper {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 760px;
-    }
-
-    th {
-      text-align: left;
+    .panel-header p {
       color: #718096;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    /* =========================
+       FILTERS
+    ========================= */
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr auto;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .filter-group label {
+      display: block;
+      color: #718096;
+      font-size: 10px;
+      margin-bottom: 6px;
+    }
+
+    .filter-group input,
+    .filter-group select {
+      width: 100%;
+      padding: 11px 12px;
+      background: #07111d;
+      border: 1px solid #294052;
+      border-radius: 8px;
+      color: #ffffff;
+      outline: none;
       font-size: 11px;
-      font-weight: normal;
-      padding: 12px;
-      border-bottom: 1px solid #1b3042;
     }
 
-    td {
-      padding: 17px 12px;
+    .filter-group input:focus,
+    .filter-group select:focus {
+      border-color: #22d3ee;
+    }
+
+    .filter-button {
+      align-self: end;
+      padding: 11px 16px;
+      border: 1px solid #1d3448;
+      background: #22d3ee;
+      color: #031018;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .filter-button:hover {
+      opacity: 0.9;
+    }
+
+    /* =========================
+       TRANSACTION TABLE
+    ========================= */
+
+    .transaction-header {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr 0.8fr auto;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #1d3448;
+      color: #617488;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .transaction {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr 0.8fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      font-size: 13px;
     }
 
-    tr:last-child td {
+    .transaction:last-child {
       border-bottom: none;
     }
 
-    .type {
+    .transaction-type {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
     }
 
-    .type-icon {
-      width: 35px;
-      height: 35px;
-      border-radius: 8px;
+    .transaction-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
       background: #132b3d;
       display: grid;
       place-items: center;
       font-size: 16px;
     }
 
-    .type-name {
+    .transaction-title {
+      font-size: 12px;
       font-weight: bold;
     }
 
-    .type-sub {
-      color: #6f8295;
-      font-size: 10px;
-      margin-top: 3px;
+    .transaction-date {
+      color: #718096;
+      font-size: 9px;
+      margin-top: 4px;
     }
 
-    .asset {
-      font-weight: bold;
+    .transaction-text {
+      font-size: 11px;
+      color: #8798ab;
     }
 
-    .amount-positive {
-      color: #34d399;
-      font-weight: bold;
-    }
-
-    .amount-negative {
-      color: #ff7b8a;
+    .transaction-amount {
+      font-size: 11px;
       font-weight: bold;
     }
 
     .status {
       display: inline-block;
       padding: 5px 8px;
-      border-radius: 6px;
+      border-radius: 20px;
       background: rgba(52,211,153,0.08);
       color: #34d399;
+      font-size: 9px;
+      text-align: center;
+    }
+
+    .status.pending {
+      background: rgba(251,191,36,0.08);
+      color: #fbbf24;
+    }
+
+    .status.failed {
+      background: rgba(251,113,133,0.08);
+      color: #fb7185;
+    }
+
+    .view-button {
+      border: 1px solid #294052;
+      background: #07111d;
+      color: #22d3ee;
+      border-radius: 7px;
+      padding: 7px 9px;
+      cursor: pointer;
+      font-size: 9px;
+    }
+
+    .view-button:hover {
+      border-color: #22d3ee;
+      background: rgba(34,211,238,0.08);
+    }
+
+    /* =========================
+       PAGINATION
+    ========================= */
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 17px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .pagination-text {
+      color: #718096;
       font-size: 10px;
     }
 
-    .txid {
-      color: #8798ab;
-      font-size: 11px;
+    .pagination-buttons {
+      display: flex;
+      gap: 7px;
     }
+
+    .page-button {
+      border: 1px solid #294052;
+      background: #07111d;
+      color: #8798ab;
+      border-radius: 7px;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 10px;
+    }
+
+    .page-button.active {
+      background: #22d3ee;
+      border-color: #22d3ee;
+      color: #031018;
+      font-weight: bold;
+    }
+
+    .page-button:hover {
+      border-color: #22d3ee;
+      color: #22d3ee;
+    }
+
+    .page-button.active:hover {
+      color: #031018;
+    }
+
+    /* =========================
+       NOTICE
+    ========================= */
 
     .notice {
       margin-top: 20px;
@@ -329,9 +483,94 @@
       text-align: center;
     }
 
-    /* MOBILE */
+    /* =========================
+       MODAL
+    ========================= */
 
-    @media (max-width: 900px) {
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 460px;
+      background: #091522;
+      border: 1px solid #294052;
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 19px;
+    }
+
+    .close-button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #294052;
+      background: #07111d;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: #718096;
+      font-size: 11px;
+    }
+
+    .detail-value {
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .modal-note {
+      color: #718096;
+      font-size: 10px;
+      text-align: center;
+      margin-top: 15px;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1050px) {
+
       .sidebar {
         width: 210px;
       }
@@ -341,12 +580,86 @@
         width: calc(100% - 210px);
       }
 
-      .summary {
+      .summary-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .transaction-header,
+      .transaction {
+        grid-template-columns: 1.5fr 1fr 1fr 0.8fr auto;
+      }
+
+      .transaction-header div:nth-child(3),
+      .transaction div:nth-child(3) {
+        display: none;
+      }
+
+    }
+
+    @media (max-width: 800px) {
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
         grid-template-columns: 1fr 1fr;
       }
+
+      .filter-button {
+        align-self: stretch;
+      }
+
+      .transaction-header {
+        display: none;
+      }
+
+      .transaction {
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding: 17px 0;
+      }
+
+      .transaction-type {
+        grid-column: 1;
+      }
+
+      .transaction div:nth-child(2),
+      .transaction div:nth-child(3),
+      .transaction div:nth-child(4),
+      .transaction div:nth-child(5) {
+        grid-column: 1;
+      }
+
+      .transaction div:nth-child(2)::before {
+        content: "Asset: ";
+        color: #617488;
+      }
+
+      .transaction div:nth-child(3)::before {
+        content: "Amount: ";
+        color: #617488;
+      }
+
+      .transaction div:nth-child(4)::before {
+        content: "Date: ";
+        color: #617488;
+      }
+
+      .transaction div:nth-child(5) {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .transaction .view-button {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
     }
 
     @media (max-width: 700px) {
+
       .sidebar {
         display: none;
       }
@@ -361,7 +674,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 25px;
+        margin-bottom: 18px;
       }
 
       .mobile-header .logo {
@@ -369,11 +682,41 @@
         margin: 0;
       }
 
+      .menu-button {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 25px;
+        cursor: pointer;
+      }
+
+      .mobile-menu.open {
+        display: flex;
+        flex-direction: column;
+        background: #07111d;
+        border: 1px solid #1b3042;
+        border-radius: 12px;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      .mobile-menu a {
+        color: #91a1b4;
+        padding: 13px;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+
+      .mobile-menu a:hover {
+        background: rgba(34,211,238,0.09);
+        color: #22d3ee;
+      }
+
       .topbar .profile {
         display: none;
       }
 
-      .summary {
+      .filters {
         grid-template-columns: 1fr;
       }
 
@@ -381,11 +724,14 @@
         padding: 18px;
       }
 
-      .panel-header {
-        align-items: flex-start;
+      .pagination {
         flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
       }
+
     }
+
   </style>
 </head>
 
@@ -393,7 +739,9 @@
 
   <div class="layout">
 
-    <!-- SIDEBAR -->
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
 
     <aside class="sidebar">
 
@@ -407,39 +755,42 @@
 
       <nav class="nav">
 
-        <a href="dashboard.html">
+        <a href="./dashboard.html">
           🏠 Dashboard
         </a>
 
-        <a href="portfolio.html">
+        <a href="./portfolio.html">
           💼 Portfolio
         </a>
 
-        <a href="wallet.html">
+        <a href="./wallet.html">
           💰 Wallet
         </a>
 
-        <a href="transactions.html" class="active">
+        <a href="./transactions.html" class="active">
           📊 Transactions
         </a>
 
-        <a href="#">
+        <a href="./markets.html">
           📈 Markets
         </a>
 
       </nav>
 
-      <div class="menu-title" style="margin-top: 30px;">
+      <div
+        class="menu-title"
+        style="margin-top: 30px;"
+      >
         Account
       </div>
 
       <nav class="nav">
 
-        <a href="#">
+        <a href="./settings.html">
           ⚙️ Settings
         </a>
 
-        <a href="#">
+        <a href="./security.html">
           🔐 Security
         </a>
 
@@ -447,7 +798,7 @@
 
       <div class="logout">
 
-        <a href="index.html">
+        <a href="./index.html">
           ← Log Out
         </a>
 
@@ -456,9 +807,13 @@
     </aside>
 
 
-    <!-- MAIN -->
+    <!-- =========================
+         MAIN
+    ========================= -->
 
     <main class="main">
+
+      <!-- MOBILE HEADER -->
 
       <div class="mobile-header">
 
@@ -466,9 +821,54 @@
           Coin<span>Bridge</span>
         </div>
 
-        <div>
+        <button
+          class="menu-button"
+          onclick="toggleMenu()"
+        >
           ☰
-        </div>
+        </button>
+
+      </div>
+
+
+      <!-- MOBILE MENU -->
+
+      <div
+        class="mobile-menu"
+        id="mobileMenu"
+      >
+
+        <a href="./dashboard.html">
+          🏠 Dashboard
+        </a>
+
+        <a href="./portfolio.html">
+          💼 Portfolio
+        </a>
+
+        <a href="./wallet.html">
+          💰 Wallet
+        </a>
+
+        <a href="./transactions.html">
+          📊 Transactions
+        </a>
+
+        <a href="./markets.html">
+          📈 Markets
+        </a>
+
+        <a href="./settings.html">
+          ⚙️ Settings
+        </a>
+
+        <a href="./security.html">
+          🔐 Security
+        </a>
+
+        <a href="./index.html">
+          ← Log Out
+        </a>
 
       </div>
 
@@ -479,14 +879,15 @@
 
         <div class="welcome">
 
-          <h1>Transactions</h1>
+          <h1>
+            Transactions
+          </h1>
 
           <p>
-            Review your deposits, transfers and asset activity.
+            Review your digital asset transaction activity.
           </p>
 
         </div>
-
 
         <div class="profile">
 
@@ -511,31 +912,28 @@
       </div>
 
 
-      <!-- SUMMARY -->
+      <!-- =========================
+           SUMMARY
+      ========================= -->
 
-      <section class="summary">
-
-        <div class="summary-card">
-
-          <div class="label">
-            Total Transactions
-          </div>
-
-          <div class="value">
-            12
-          </div>
-
-        </div>
-
+      <section class="summary-grid">
 
         <div class="summary-card">
 
-          <div class="label">
+          <div class="summary-icon">
+            📥
+          </div>
+
+          <div class="summary-label">
             Total Deposits
           </div>
 
-          <div class="value green">
+          <div class="summary-value positive">
             $8,450.00
+          </div>
+
+          <div class="summary-note">
+            12 completed deposits
           </div>
 
         </div>
@@ -543,12 +941,41 @@
 
         <div class="summary-card">
 
-          <div class="label">
+          <div class="summary-icon">
+            📤
+          </div>
+
+          <div class="summary-label">
             Total Sent
           </div>
 
-          <div class="value">
-            $2,140.25
+          <div class="summary-value">
+            $3,120.00
+          </div>
+
+          <div class="summary-note">
+            8 completed transfers
+          </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+          <div class="summary-icon">
+            🔄
+          </div>
+
+          <div class="summary-label">
+            Total Swaps
+          </div>
+
+          <div class="summary-value">
+            $2,850.50
+          </div>
+
+          <div class="summary-note">
+            6 completed swaps
           </div>
 
         </div>
@@ -556,327 +983,617 @@
       </section>
 
 
-      <!-- TRANSACTION TABLE -->
+      <!-- =========================
+           TRANSACTION PANEL
+      ========================= -->
 
       <section class="panel">
 
         <div class="panel-header">
 
-          <h2>Transaction History</h2>
+          <div>
 
-          
-<div class="filters">
+            <h2>
+              Transaction History
+            </h2>
 
-  <button class="filter active" onclick="filterTransactions('all')">
-    All
-  </button>
+            <p>
+              View deposits, sends, receives and swaps.
+            </p>
 
-  <button class="filter" onclick="filterTransactions('deposit')">
-    Deposits
-  </button>
+          </div>
 
-  <button class="filter" onclick="filterTransactions('send')">
-    Sends
-  </button>
+        </div>
 
-  <button class="filter" onclick="filterTransactions('swap')">
-    Swaps
-  </button>
 
-</div>
+        <!-- FILTERS -->
 
-        <div class="table-wrapper">
+        <div class="filters">
 
-          <table>
+          <div class="filter-group">
 
-            <thead>
+            <label>
+              Search
+            </label>
 
-              <tr>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search transactions..."
+            >
 
-                <th>Type</th>
-                <th>Asset</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Transaction ID</th>
+          </div>
 
-              </tr>
 
-            </thead>
+          <div class="filter-group">
 
+            <label>
+              Type
+            </label>
 
-            <tbody>
+            <select id="typeFilter">
 
+              <option value="all">
+                All Types
+              </option>
 
-              <tr data-type="deposit">
+              <option value="deposit">
+                Deposit
+              </option>
 
-                <td>
+              <option value="send">
+                Send
+              </option>
 
-                  <div class="type">
+              <option value="receive">
+                Receive
+              </option>
 
-                    <div class="type-icon">
-                      ↓
-                    </div>
+              <option value="swap">
+                Swap
+              </option>
 
-                    <div>
+            </select>
 
-                      <div class="type-name">
-                        Deposit
-                      </div>
+          </div>
 
-                      <div class="type-sub">
-                        Incoming
-                      </div>
 
-                    </div>
+          <div class="filter-group">
 
-                  </div>
+            <label>
+              Asset
+            </label>
 
-                </td>
+            <select id="assetFilter">
 
-                <td class="asset">
-                  USDC
-                </td>
+              <option value="all">
+                All Assets
+              </option>
 
-                <td class="amount-positive">
-                  +$1,250.00
-                </td>
+              <option value="BTC">
+                Bitcoin
+              </option>
 
-                <td>
-                  Today · 10:42 AM
-                </td>
+              <option value="ETH">
+                Ethereum
+              </option>
 
-                <td>
-                  <span class="status">
-                    Completed
-                  </span>
-                </td>
+              <option value="USDC">
+                USD Coin
+              </option>
 
-                <td class="txid">
-                  CB-7F29A1
-                </td>
+            </select>
 
-              </tr>
+          </div>
 
 
-              <tr data-type="send">
+          <button
+            class="filter-button"
+            onclick="filterTransactions()"
+          >
+            Apply Filters
+          </button>
 
-                <td>
+        </div>
 
-                  <div class="type">
 
-                    <div class="type-icon">
-                      ↑
-                    </div>
+        <!-- TABLE HEADER -->
 
-                    <div>
+        <div class="transaction-header">
 
-                      <div class="type-name">
-                        Send
-                      </div>
+          <div>
+            Transaction
+          </div>
 
-                      <div class="type-sub">
-                        Outgoing
-                      </div>
+          <div>
+            Asset
+          </div>
 
-                    </div>
+          <div>
+            Amount
+          </div>
 
-                  </div>
+          <div>
+            Date
+          </div>
 
-                </td>
+          <div>
+            Status
+          </div>
 
-                <td class="asset">
-                  BTC
-                </td>
+          <div>
+            Action
+          </div>
 
-                <td class="amount-negative">
-                  -$320.00
-                </td>
+        </div>
 
-                <td>
-                  Yesterday · 4:18 PM
-                </td>
 
-                <td>
-                  <span class="status">
-                    Completed
-                  </span>
-                </td>
+        <!-- TRANSACTION 1 -->
 
-                <td class="txid">
-                  CB-3D84B2
-                </td>
+        <div
+          class="transaction"
+          data-type="deposit"
+          data-asset="BTC"
+          data-search="deposit bitcoin btc"
+        >
 
-              </tr>
+          <div class="transaction-type">
 
+            <div class="transaction-icon">
+              📥
+            </div>
 
-              <tr data-type="swap">
+            <div>
 
-                <td>
+              <div class="transaction-title">
+                Deposit
+              </div>
 
-                  <div class="type">
+              <div class="transaction-date">
+                Transaction #CB001
+              </div>
 
-                    <div class="type-icon">
-                      ⇄
-                    </div>
+            </div>
 
-                    <div>
+          </div>
 
-                      <div class="type-name">
-                        Asset Swap
-                      </div>
 
-                      <div class="type-sub">
-                        Exchange
-                      </div>
+          <div class="transaction-text">
+            Bitcoin (BTC)
+          </div>
 
-                    </div>
 
-                  </div>
+          <div class="transaction-amount positive">
+            +$2,000.00
+          </div>
 
-                </td>
 
-                <td class="asset">
-                  ETH → USDC
-                </td>
+          <div class="transaction-text">
+            Today
+          </div>
 
-                <td>
-                  $580.25
-                </td>
 
-                <td>
-                  Aug 11 · 2:30 PM
-                </td>
+          <div>
+            <span class="status">
+              Completed
+            </span>
+          </div>
 
-                <td>
-                  <span class="status">
-                    Completed
-                  </span>
-                </td>
 
-                <td class="txid">
-                  CB-91A7C4
-                </td>
+          <button
+            class="view-button"
+            onclick="viewTransaction(
+              'Deposit',
+              'Bitcoin (BTC)',
+              '+$2,000.00',
+              'Today',
+              'Completed'
+            )"
+          >
+            View
+          </button>
 
-              </tr>
+        </div>
 
 
-              <tr data-type="deposit">
+        <!-- TRANSACTION 2 -->
 
-                <td>
+        <div
+          class="transaction"
+          data-type="swap"
+          data-asset="ETH"
+          data-search="swap ethereum eth usdc"
+        >
 
-                  <div class="type">
+          <div class="transaction-type">
 
-                    <div class="type-icon">
-                      ↓
-                    </div>
+            <div class="transaction-icon">
+              🔄
+            </div>
 
-                    <div>
+            <div>
 
-                      <div class="type-name">
-                        Deposit
-                      </div>
+              <div class="transaction-title">
+                Swap
+              </div>
 
-                      <div class="type-sub">
-                        Incoming
-                      </div>
+              <div class="transaction-date">
+                Transaction #CB002
+              </div>
 
-                    </div>
+            </div>
 
-                  </div>
+          </div>
 
-                </td>
 
-                <td class="asset">
-                  ETH
-                </td>
+          <div class="transaction-text">
+            ETH → USDC
+          </div>
 
-                <td class="amount-positive">
-                  +$2,100.00
-                </td>
 
-                <td>
-                  Aug 10 · 11:05 AM
-                </td>
+          <div class="transaction-amount">
+            $850.00
+          </div>
 
-                <td>
-                  <span class="status">
-                    Completed
-                  </span>
-                </td>
 
-                <td class="txid">
-                  CB-54E8D9
-                </td>
+          <div class="transaction-text">
+            Yesterday
+          </div>
 
-              </tr>
 
+          <div>
+            <span class="status">
+              Completed
+            </span>
+          </div>
 
-              <tr data-type="send">
 
-                <td>
+          <button
+            class="view-button"
+            onclick="viewTransaction(
+              'Swap',
+              'ETH → USDC',
+              '$850.00',
+              'Yesterday',
+              'Completed'
+            )"
+          >
+            View
+          </button>
 
-                  <div class="type">
+        </div>
 
-                    <div class="type-icon">
-                      ↑
-                    </div>
 
-                    <div>
+        <!-- TRANSACTION 3 -->
 
-                      <div class="type-name">
-                        Send
-                      </div>
+        <div
+          class="transaction"
+          data-type="send"
+          data-asset="USDC"
+          data-search="send usd coin usdc"
+        >
 
-                      <div class="type-sub">
-                        Outgoing
-                      </div>
+          <div class="transaction-type">
 
-                    </div>
+            <div class="transaction-icon">
+              📤
+            </div>
 
-                  </div>
+            <div>
 
-                </td>
+              <div class="transaction-title">
+                Send
+              </div>
 
-                <td class="asset">
-                  USDC
-                </td>
+              <div class="transaction-date">
+                Transaction #CB003
+              </div>
 
-                <td class="amount-negative">
-                  -$450.25
-                </td>
+            </div>
 
-                <td>
-                  Aug 08 · 8:41 PM
-                </td>
+          </div>
 
-                <td>
-                  <span class="status">
-                    Completed
-                  </span>
-                </td>
 
-                <td class="txid">
-                  CB-28F3A6
-                </td>
+          <div class="transaction-text">
+            USD Coin (USDC)
+          </div>
 
-              </tr>
 
+          <div class="transaction-amount negative">
+            -$300.00
+          </div>
 
-            </tbody>
 
-          </table>
+          <div class="transaction-text">
+            Aug 10
+          </div>
+
+
+          <div>
+            <span class="status">
+              Completed
+            </span>
+          </div>
+
+
+          <button
+            class="view-button"
+            onclick="viewTransaction(
+              'Send',
+              'USD Coin (USDC)',
+              '-$300.00',
+              'Aug 10',
+              'Completed'
+            )"
+          >
+            View
+          </button>
+
+        </div>
+
+
+        <!-- TRANSACTION 4 -->
+
+        <div
+          class="transaction"
+          data-type="receive"
+          data-asset="ETH"
+          data-search="receive ethereum eth"
+        >
+
+          <div class="transaction-type">
+
+            <div class="transaction-icon">
+              📋
+            </div>
+
+            <div>
+
+              <div class="transaction-title">
+                Receive
+              </div>
+
+              <div class="transaction-date">
+                Transaction #CB004
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="transaction-text">
+            Ethereum (ETH)
+          </div>
+
+
+          <div class="transaction-amount positive">
+            +$1,250.00
+          </div>
+
+
+          <div class="transaction-text">
+            Aug 08
+          </div>
+
+
+          <div>
+            <span class="status">
+              Completed
+            </span>
+          </div>
+
+
+          <button
+            class="view-button"
+            onclick="viewTransaction(
+              'Receive',
+              'Ethereum (ETH)',
+              '+$1,250.00',
+              'Aug 08',
+              'Completed'
+            )"
+          >
+            View
+          </button>
+
+        </div>
+
+
+        <!-- TRANSACTION 5 -->
+
+        <div
+          class="transaction"
+          data-type="deposit"
+          data-asset="USDC"
+          data-search="deposit usd coin usdc"
+        >
+
+          <div class="transaction-type">
+
+            <div class="transaction-icon">
+              📥
+            </div>
+
+            <div>
+
+              <div class="transaction-title">
+                Deposit
+              </div>
+
+              <div class="transaction-date">
+                Transaction #CB005
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="transaction-text">
+            USD Coin (USDC)
+          </div>
+
+
+          <div class="transaction-amount positive">
+            +$1,500.00
+          </div>
+
+
+          <div class="transaction-text">
+            Aug 06
+          </div>
+
+
+          <div>
+            <span class="status">
+              Completed
+            </span>
+          </div>
+
+
+          <button
+            class="view-button"
+            onclick="viewTransaction(
+              'Deposit',
+              'USD Coin (USDC)',
+              '+$1,500.00',
+              'Aug 06',
+              'Completed'
+            )"
+          >
+            View
+          </button>
+
+        </div>
+
+
+        <!-- TRANSACTION 6 -->
+
+        <div
+          class="transaction"
+          data-type="send"
+          data-asset="BTC"
+          data-search="send bitcoin btc"
+        >
+
+          <div class="transaction-type">
+
+            <div class="transaction-icon">
+              📤
+            </div>
+
+            <div>
+
+              <div class="transaction-title">
+                Send
+              </div>
+
+              <div class="transaction-date">
+                Transaction #CB006
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="transaction-text">
+            Bitcoin (BTC)
+          </div>
+
+
+          <div class="transaction-amount negative">
+            -$820.00
+          </div>
+
+
+          <div class="transaction-text">
+            Aug 04
+          </div>
+
+
+          <div>
+            <span class="status pending">
+              Pending
+            </span>
+          </div>
+
+
+          <button
+            class="view-button"
+            onclick="viewTransaction(
+              'Send',
+              'Bitcoin (BTC)',
+              '-$820.00',
+              'Aug 04',
+              'Pending'
+            )"
+          >
+            View
+          </button>
+
+        </div>
+
+
+        <!-- PAGINATION -->
+
+        <div class="pagination">
+
+          <div class="pagination-text">
+            Showing 1–6 of 26 transactions
+          </div>
+
+          <div class="pagination-buttons">
+
+            <button
+              class="page-button"
+              onclick="previousPage()"
+            >
+              Previous
+            </button>
+
+            <button
+              class="page-button active"
+            >
+              1
+            </button>
+
+            <button
+              class="page-button"
+              onclick="nextPage()"
+            >
+              2
+            </button>
+
+            <button
+              class="page-button"
+              onclick="nextPage()"
+            >
+              3
+            </button>
+
+            <button
+              class="page-button"
+              onclick="nextPage()"
+            >
+              Next
+            </button>
+
+          </div>
 
         </div>
 
       </section>
 
 
+      <!-- NOTICE -->
+
       <div class="notice">
 
-        ⚠️ Demo Transactions — transaction history and amounts
-        shown here are sample data. No real transactions are
-        being processed.
+        ⚠️ Demo Transaction History — transaction records
+        shown here are sample data. No real cryptocurrency
+        transactions are being processed or broadcast.
 
       </div>
 
@@ -884,31 +1601,343 @@
 
   </div>
 
+
+  <!-- =========================
+       TRANSACTION MODAL
+  ========================= -->
+
+  <div
+    class="modal"
+    id="transactionModal"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <h2>
+          Transaction Details
+        </h2>
+
+        <button
+          class="close-button"
+          onclick="closeTransactionModal()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Transaction
+        </div>
+
+        <div
+          class="detail-value"
+          id="detailType"
+        >
+          Deposit
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Asset
+        </div>
+
+        <div
+          class="detail-value"
+          id="detailAsset"
+        >
+          Bitcoin (BTC)
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Amount
+        </div>
+
+        <div
+          class="detail-value"
+          id="detailAmount"
+        >
+          +$2,000.00
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Date
+        </div>
+
+        <div
+          class="detail-value"
+          id="detailDate"
+        >
+          Today
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Status
+        </div>
+
+        <div
+          class="detail-value"
+          id="detailStatus"
+        >
+          Completed
+        </div>
+
+      </div>
+
+
+      <div class="modal-note">
+
+        Demo transaction details only. This record does not
+        represent a real blockchain transaction.
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
   <script>
-    function filterTransactions(type) {
 
-      const rows = document.querySelectorAll("tbody tr");
-      const buttons = document.querySelectorAll(".filter");
+    function toggleMenu() {
 
-      buttons.forEach(button => {
-        button.classList.remove("active");
-      });
+      const menu =
+        document.getElementById("mobileMenu");
 
-      event.currentTarget.classList.add("active");
-
-      rows.forEach(row => {
-
-        if (type === "all" || row.dataset.type === type) {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
-        }
-
-      });
+      menu.classList.toggle("open");
 
     }
-  </script>
 
+
+    function viewTransaction(
+      type,
+      asset,
+      amount,
+      date,
+      status
+    ) {
+
+      document.getElementById(
+        "detailType"
+      ).textContent = type;
+
+
+      document.getElementById(
+        "detailAsset"
+      ).textContent = asset;
+
+
+      document.getElementById(
+        "detailAmount"
+      ).textContent = amount;
+
+
+      document.getElementById(
+        "detailDate"
+      ).textContent = date;
+
+
+      document.getElementById(
+        "detailStatus"
+      ).textContent = status;
+
+
+      document
+        .getElementById("transactionModal")
+        .classList.add("show");
+
+    }
+
+
+    function closeTransactionModal() {
+
+      document
+        .getElementById("transactionModal")
+        .classList.remove("show");
+
+    }
+
+
+    function filterTransactions() {
+
+      const search =
+        document
+          .getElementById("searchInput")
+          .value
+          .toLowerCase()
+          .trim();
+
+
+      const type =
+        document
+          .getElementById("typeFilter")
+          .value;
+
+
+      const asset =
+        document
+          .getElementById("assetFilter")
+          .value;
+
+
+      const transactions =
+        document.querySelectorAll(
+          ".transaction"
+        );
+
+
+      transactions.forEach(
+        function(transaction) {
+
+          const transactionType =
+            transaction.dataset.type;
+
+
+          const transactionAsset =
+            transaction.dataset.asset;
+
+
+          const transactionSearch =
+            transaction.dataset.search;
+
+
+          const matchesSearch =
+            !search ||
+            transactionSearch.includes(search);
+
+
+          const matchesType =
+            type === "all" ||
+            transactionType === type;
+
+
+          const matchesAsset =
+            asset === "all" ||
+            transactionAsset === asset;
+
+
+          if (
+            matchesSearch &&
+            matchesType &&
+            matchesAsset
+          ) {
+
+            transaction.style.display =
+              "grid";
+
+          } else {
+
+            transaction.style.display =
+              "none";
+
+          }
+
+        }
+      );
+
+    }
+
+
+    function previousPage() {
+
+      alert(
+        "Demo only: previous transaction page."
+      );
+
+    }
+
+
+    function nextPage() {
+
+      alert(
+        "Demo only: next transaction page."
+      );
+
+    }
+
+
+    document
+      .getElementById("transactionModal")
+      .addEventListener(
+        "click",
+        function(event) {
+
+          if (event.target === this) {
+
+            closeTransactionModal();
+
+          }
+
+        }
+      );
+
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Escape") {
+
+          closeTransactionModal();
+
+        }
+
+      }
+    );
+
+
+    document
+      .getElementById("searchInput")
+      .addEventListener(
+        "input",
+        filterTransactions
+      );
+
+
+    document
+      .getElementById("typeFilter")
+      .addEventListener(
+        "change",
+        filterTransactions
+      );
+
+
+    document
+      .getElementById("assetFilter")
+      .addEventListener(
+        "change",
+        filterTransactions
+      );
+
+  </script>
 
 </body>
 </html>

@@ -7,144 +7,262 @@
   <title>Create Account | CoinBridge</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #050b14;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 18px;
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(circle at top left,#17345f 0%,transparent 38%),
+        radial-gradient(circle at bottom right,#102c49 0%,transparent 40%),
+        #050b14;
+      color:#fff;
+      padding:24px;
     }
 
-    .container {
-      width: 100%;
-      max-width: 470px;
+    .page{
+      width:100%;
+      max-width:470px;
     }
 
-    .logo {
-      text-align: center;
-      font-size: 27px;
-      font-weight: 800;
-      margin-bottom: 28px;
+    .brand{
+      text-align:center;
+      margin-bottom:24px;
     }
 
-    .logo span {
-      color: #22d3ee;
+    .brand-icon{
+      width:58px;
+      height:58px;
+      margin:0 auto 14px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#2d8cff,#6b5cff);
+      box-shadow:0 15px 35px rgba(45,140,255,.25);
+      font-size:27px;
+      font-weight:800;
     }
 
-    .card {
-      background: #091522;
-      border: 1px solid #20394d;
-      border-radius: 18px;
-      padding: 35px;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+    .brand h1{
+      font-size:29px;
+      letter-spacing:-.5px;
     }
 
-    .card h1 {
-      font-size: 29px;
-      margin-bottom: 8px;
+    .brand p{
+      color:#91a0b5;
+      margin-top:7px;
+      font-size:14px;
     }
 
-    .subtitle {
-      color: #8798ab;
-      font-size: 14px;
-      margin-bottom: 28px;
+    .card{
+      background:rgba(10,20,34,.88);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:24px;
+      padding:32px;
+      box-shadow:
+        0 25px 70px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.04);
+      backdrop-filter:blur(18px);
     }
 
-    .form-group {
-      margin-bottom: 18px;
+    .card h2{
+      font-size:23px;
+      margin-bottom:7px;
     }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #d8e0e8;
-      font-size: 14px;
+    .subtitle{
+      color:#91a0b5;
+      font-size:14px;
+      line-height:1.5;
+      margin-bottom:25px;
     }
 
-    input {
-      width: 100%;
-      padding: 13px 14px;
-      background: #07111d;
-      border: 1px solid #294052;
-      border-radius: 8px;
-      color: #ffffff;
-      font-size: 15px;
-      outline: none;
+    .field{
+      margin-bottom:17px;
     }
 
-    input:focus {
-      border-color: #22d3ee;
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-size:13px;
+      color:#dce5f2;
+      font-weight:600;
     }
 
-    .terms {
-      display: flex;
-      gap: 9px;
-      align-items: flex-start;
-      margin: 20px 0;
-      color: #8798ab;
-      font-size: 12px;
+    input{
+      width:100%;
+      height:49px;
+      padding:0 14px;
+      border-radius:12px;
+      border:1px solid #26364d;
+      outline:none;
+      background:#08111f;
+      color:#fff;
+      font-size:14px;
+      transition:.2s;
     }
 
-    .terms input {
-      width: auto;
-      margin-top: 3px;
+    input::placeholder{
+      color:#65758b;
     }
 
-    .terms a {
-      color: #22d3ee;
+    input:focus{
+      border-color:#328cff;
+      box-shadow:0 0 0 3px rgba(50,140,255,.12);
     }
 
-    button {
-      width: 100%;
-      border: none;
-      padding: 14px;
-      border-radius: 9px;
-      background: #22d3ee;
-      color: #041018;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
+    .password-box{
+      position:relative;
     }
 
-    button:hover {
-      opacity: 0.9;
+    .password-box input{
+      padding-right:48px;
     }
 
-    .login {
-      text-align: center;
-      color: #8798ab;
-      font-size: 14px;
-      margin-top: 23px;
+    .eye{
+      position:absolute;
+      right:13px;
+      top:50%;
+      transform:translateY(-50%);
+      border:0;
+      background:none;
+      color:#8292a8;
+      cursor:pointer;
+      font-size:18px;
+      padding:5px;
     }
 
-    .login a {
-      color: #22d3ee;
-      font-weight: bold;
+    .eye:hover{
+      color:#fff;
     }
 
-    .notice {
-      margin-top: 22px;
-      padding: 12px;
-      background: rgba(34,211,238,0.06);
-      border: 1px solid rgba(34,211,238,0.15);
-      border-radius: 8px;
-      color: #8da0b3;
-      font-size: 12px;
-      text-align: center;
+    .password-hint{
+      margin-top:7px;
+      font-size:11px;
+      color:#718198;
+      line-height:1.5;
     }
 
-    @media (max-width: 480px) {
-      .card {
-        padding: 25px 20px;
+    .terms{
+      display:flex;
+      align-items:flex-start;
+      gap:9px;
+      margin:18px 0;
+      color:#8292a8;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .terms input{
+      width:16px;
+      height:16px;
+      min-width:16px;
+      margin-top:1px;
+      accent-color:#328cff;
+      box-shadow:none;
+    }
+
+    .terms a{
+      color:#61a7ff;
+      text-decoration:none;
+    }
+
+    .terms a:hover{
+      text-decoration:underline;
+    }
+
+    .button{
+      width:100%;
+      height:50px;
+      border:0;
+      border-radius:13px;
+      background:linear-gradient(135deg,#2d8cff,#665cff);
+      color:#fff;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+      box-shadow:0 12px 25px rgba(45,140,255,.18);
+    }
+
+    .button:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(45,140,255,.28);
+    }
+
+    .button:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    .message{
+      display:none;
+      margin-bottom:18px;
+      padding:12px 14px;
+      border-radius:11px;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .message.error{
+      display:block;
+      color:#ffb8bd;
+      background:rgba(220,50,65,.10);
+      border:1px solid rgba(220,50,65,.25);
+    }
+
+    .message.success{
+      display:block;
+      color:#a9f3ca;
+      background:rgba(35,190,115,.10);
+      border:1px solid rgba(35,190,115,.25);
+    }
+
+    .login-link{
+      text-align:center;
+      margin-top:22px;
+      color:#8292a8;
+      font-size:13px;
+    }
+
+    .login-link a{
+      color:#61a7ff;
+      font-weight:700;
+      text-decoration:none;
+    }
+
+    .login-link a:hover{
+      text-decoration:underline;
+    }
+
+    .security{
+      margin-top:20px;
+      text-align:center;
+      color:#5f7087;
+      font-size:11px;
+    }
+
+    @media(max-width:500px){
+      body{
+        padding:15px;
+      }
+
+      .card{
+        padding:25px 20px;
+        border-radius:20px;
+      }
+
+      .brand h1{
+        font-size:26px;
       }
     }
   </style>
@@ -152,114 +270,441 @@
 
 <body>
 
-  <div class="container">
+  <main class="page">
 
-    <div class="logo">
-      Coin<span>Bridge</span>
+    <div class="brand">
+      <div class="brand-icon">C</div>
+      <h1>CoinBridge</h1>
+      <p>Secure access to your account</p>
     </div>
 
-    <div class="card">
+    <section class="card">
 
-      <h1>Create your account</h1>
+      <h2>Create your account</h2>
 
       <p class="subtitle">
-        Join CoinBridge and start your digital asset journey.
+        Enter your details below to create your CoinBridge account.
       </p>
 
+      <div id="message" class="message"></div>
 
-      <form>
+      <form id="signupForm">
 
-        <div class="form-group">
-          <label for="fullname">Full Name</label>
+        <div class="field">
+          <label for="fullName">Full name</label>
 
           <input
+            id="fullName"
             type="text"
-            id="fullname"
-            name="fullname"
             placeholder="Enter your full name"
             autocomplete="name"
             required
           >
         </div>
 
-
-        <div class="form-group">
-          <label for="email">Email Address</label>
+        <div class="field">
+          <label for="email">Email address</label>
 
           <input
-            type="email"
             id="email"
-            name="email"
+            type="email"
             placeholder="Enter your email address"
             autocomplete="email"
             required
           >
         </div>
 
+        <div class="field">
 
-        <div class="form-group">
           <label for="password">Password</label>
 
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Create a strong password"
-            autocomplete="new-password"
-            required
-          >
+          <div class="password-box">
+
+            <input
+              id="password"
+              type="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="eye"
+              id="passwordEye"
+              aria-label="Show password"
+            >👁️</button>
+
+          </div>
+
+          <div class="password-hint">
+            Use at least 8 characters.
+          </div>
+
         </div>
 
+        <div class="field">
 
-        <div class="form-group">
-          <label for="confirm-password">Confirm Password</label>
+          <label for="confirmPassword">Confirm password</label>
 
-          <input
-            type="password"
-            id="confirm-password"
-            name="confirm-password"
-            placeholder="Confirm your password"
-            autocomplete="new-password"
-            required
-          >
+          <div class="password-box">
+
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Enter your password again"
+              autocomplete="new-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="eye"
+              id="confirmEye"
+              aria-label="Show password"
+            >👁️</button>
+
+          </div>
+
         </div>
-
 
         <label class="terms">
 
-          <input type="checkbox" required>
+          <input
+            type="checkbox"
+            id="terms"
+            required
+          >
 
           <span>
-            I agree to the CoinBridge
-            <a href="#">Terms of Service</a>
-            and
-            <a href="#">Privacy Policy</a>.
+            I agree to the account terms and understand that my account
+            information will be used to provide CoinBridge services.
           </span>
 
         </label>
 
-
-        <button type="submit">
+        <button
+          type="submit"
+          class="button"
+          id="signupButton"
+        >
           Create Account
         </button>
 
       </form>
 
-
-      <div class="login">
+      <div class="login-link">
         Already have an account?
-        <a href="login.html">Log in</a>
+        <a href="login.html">Sign in</a>
       </div>
 
-
-      <div class="notice">
-        Account creation is currently a front-end demo.
-        Secure authentication will be connected later.
+      <div class="security">
+        🔒 Your account information is protected by secure authentication.
       </div>
 
-    </div>
+    </section>
 
-  </div>
+  </main>
+
+
+  <!-- =====================================================
+       SUPABASE
+  ====================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    /* =====================================================
+       COINBRIDGE SUPABASE CONFIGURATION
+       ===================================================== */
+
+    const SUPABASE_URL =
+      "https://jgvpbbuslpwupjwxqfmz.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_69Rflk-FZvhbtAbZ_RGRCg_cJHfexEc";
+
+
+    /* =====================================================
+       CREATE SUPABASE CLIENT
+    ===================================================== */
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const form =
+      document.getElementById("signupForm");
+
+    const message =
+      document.getElementById("message");
+
+    const signupButton =
+      document.getElementById("signupButton");
+
+    const password =
+      document.getElementById("password");
+
+    const confirmPassword =
+      document.getElementById("confirmPassword");
+
+    const passwordEye =
+      document.getElementById("passwordEye");
+
+    const confirmEye =
+      document.getElementById("confirmEye");
+
+
+    /* =====================================================
+       MESSAGE
+    ===================================================== */
+
+    function showMessage(text,type){
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    function clearMessage(){
+
+      message.textContent = "";
+
+      message.className =
+        "message";
+
+    }
+
+
+    /* =====================================================
+       PASSWORD VISIBILITY
+    ===================================================== */
+
+    passwordEye.addEventListener(
+      "click",
+      function(){
+
+        if(password.type === "password"){
+
+          password.type = "text";
+
+          passwordEye.textContent = "🙈";
+
+        }else{
+
+          password.type = "password";
+
+          passwordEye.textContent = "👁️";
+
+        }
+
+      }
+    );
+
+
+    confirmEye.addEventListener(
+      "click",
+      function(){
+
+        if(confirmPassword.type === "password"){
+
+          confirmPassword.type = "text";
+
+          confirmEye.textContent = "🙈";
+
+        }else{
+
+          confirmPassword.type = "password";
+
+          confirmEye.textContent = "👁️";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       SIGNUP
+    ===================================================== */
+
+    form.addEventListener(
+      "submit",
+      async function(event){
+
+        event.preventDefault();
+
+        clearMessage();
+
+        const fullName =
+          document
+            .getElementById("fullName")
+            .value
+            .trim();
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
+
+        const passwordValue =
+          password.value;
+
+        const confirmValue =
+          confirmPassword.value;
+
+
+        /* -------------------------
+           VALIDATION
+        ------------------------- */
+
+        if(fullName.length < 2){
+
+          showMessage(
+            "Please enter your full name.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if(passwordValue.length < 8){
+
+          showMessage(
+            "Your password must contain at least 8 characters.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if(passwordValue !== confirmValue){
+
+          showMessage(
+            "The passwords do not match.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        signupButton.disabled = true;
+
+        signupButton.textContent =
+          "Creating account...";
+
+
+        try{
+
+          const {
+            data,
+            error
+          } =
+            await supabaseClient.auth.signUp({
+
+              email: email,
+
+              password: passwordValue,
+
+              options: {
+
+                data: {
+
+                  full_name: fullName
+
+                },
+
+                emailRedirectTo:
+                  "https://greenwayp.github.io/CoinBridge-/login.html"
+
+              }
+
+            });
+
+
+          if(error){
+
+            throw error;
+
+          }
+
+
+          /* -------------------------
+             SUCCESS
+          ------------------------- */
+
+          if(data.user){
+
+            showMessage(
+              "Account created successfully. Please check your email and confirm your address before signing in.",
+              "success"
+            );
+
+            form.reset();
+
+          }
+
+        }catch(error){
+
+          console.error(
+            "CoinBridge signup error:",
+            error
+          );
+
+
+          let errorMessage =
+            error.message ||
+            "Unable to create your account.";
+
+          if(
+            errorMessage
+              .toLowerCase()
+              .includes("already registered")
+          ){
+
+            errorMessage =
+              "An account with this email already exists. Please sign in instead.";
+
+          }
+
+
+          showMessage(
+            errorMessage,
+            "error"
+          );
+
+        }finally{
+
+          signupButton.disabled = false;
+
+          signupButton.textContent =
+            "Create Account";
+
+        }
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>

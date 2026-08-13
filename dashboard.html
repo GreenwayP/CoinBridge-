@@ -1,851 +1,940 @@
-aOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Dashboard | CoinBridge</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #050b14;
-      color: #ffffff;
-      min-height: 100vh;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .layout {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-      width: 245px;
-      background: #07111d;
-      border-right: 1px solid #1b3042;
-      padding: 25px 16px;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      padding: 0 12px;
-      margin-bottom: 40px;
-    }
-
-    .logo span {
-      color: #22d3ee;
-    }
-
-    .menu-title {
-      color: #617488;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 0 12px;
-      margin-bottom: 10px;
-    }
-
-    .nav {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .nav a {
-      color: #91a1b4;
-      padding: 12px;
-      border-radius: 9px;
-      font-size: 14px;
-    }
-
-    .nav a:hover,
-    .nav a.active {
-      background: rgba(34, 211, 238, 0.09);
-      color: #22d3ee;
-    }
-
-    .logout {
-      position: absolute;
-      bottom: 25px;
-      left: 16px;
-      right: 16px;
-    }
-
-    .logout a {
-      display: block;
-      padding: 12px;
-      color: #8798ab;
-      font-size: 14px;
-      border-radius: 9px;
-    }
-
-    .logout a:hover {
-      background: rgba(255,255,255,0.04);
-      color: #ffffff;
-    }
-
-    /* MAIN */
-
-    .main {
-      margin-left: 245px;
-      width: calc(100% - 245px);
-      padding: 28px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .welcome h1 {
-      font-size: 27px;
-      margin-bottom: 5px;
-    }
-
-    .welcome p {
-      color: #718096;
-      font-size: 13px;
-    }
-
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #153247;
-      display: grid;
-      place-items: center;
-      color: #22d3ee;
-      font-weight: 800;
-    }
-
-    .profile-name {
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .profile-status {
-      color: #34d399;
-      font-size: 11px;
-    }
-
-    /* BALANCE */
-
-    .balance-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 18px;
-      margin-bottom: 25px;
-    }
-
-    .balance-card,
-    .stat-card,
-    .panel {
-      background: #091522;
-      border: 1px solid #1d3448;
-      border-radius: 15px;
-    }
-
-    .balance-card {
-      padding: 27px;
-      background: linear-gradient(135deg, #0c2230, #091522);
-    }
-
-    .balance-label {
-      color: #8798ab;
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-
-    .balance {
-      font-size: 40px;
-      font-weight: 800;
-      margin-bottom: 7px;
-    }
-
-    .positive {
-      color: #34d399;
-      font-size: 13px;
-    }
-
-    .stat-card {
-      padding: 25px;
-    }
-
-    .stat-card .icon {
-      font-size: 22px;
-      margin-bottom: 15px;
-    }
-
-    .stat-label {
-      color: #8798ab;
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-size: 21px;
-      font-weight: 700;
-    }
-
-    /* ACTIONS */
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-    }
-
-    .action {
-      padding: 12px 20px;
-      border-radius: 8px;
-      background: #22d3ee;
-      color: #041018;
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .action.secondary {
-      background: #0b1b2a;
-      color: #ffffff;
-      border: 1px solid #294052;
-    }
-
-    /* PANELS */
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1.35fr 1fr;
-      gap: 20px;
-    }
-
-    .panel {
-      padding: 23px;
-    }
-
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .panel-header h2 {
-      font-size: 17px;
-    }
-
-    .panel-header a {
-      color: #22d3ee;
-      font-size: 12px;
-    }
-
-    /* ASSETS */
-
-    .asset {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .asset:last-child {
-      border-bottom: none;
-    }
-
-    .asset-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .coin {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #132b3d;
-      display: grid;
-      place-items: center;
-      color: #22d3ee;
-      font-weight: bold;
-    }
-
-    .asset-name {
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .asset-code {
-      color: #6f8295;
-      font-size: 11px;
-      margin-top: 2px;
-    }
-
-    .asset-right {
-      text-align: right;
-    }
-
-    .asset-right strong {
-      display: block;
-      font-size: 13px;
-    }
-
-    .asset-right span {
-      color: #34d399;
-      font-size: 11px;
-    }
-
-    /* TRANSACTIONS */
-
-    .transaction {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .transaction:last-child {
-      border-bottom: none;
-    }
-
-    .transaction-left {
-      display: flex;
-      gap: 11px;
-      align-items: center;
-    }
-
-    .transaction-icon {
-      width: 35px;
-      height: 35px;
-      border-radius: 9px;
-      background: #12273a;
-      display: grid;
-      place-items: center;
-    }
-
-    .transaction-name {
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .transaction-date {
-      color: #6f8295;
-      font-size: 10px;
-      margin-top: 3px;
-    }
-
-    .transaction-amount {
-      text-align: right;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .transaction-status {
-      color: #34d399;
-      font-size: 10px;
-      margin-top: 3px;
-    }
-
-    /* DEMO NOTICE */
-
-    .demo-notice {
-      margin-top: 20px;
-      padding: 13px 15px;
-      border: 1px solid rgba(34,211,238,0.16);
-      background: rgba(34,211,238,0.05);
-      border-radius: 10px;
-      color: #8798ab;
-      font-size: 12px;
-      text-align: center;
-    }
-
-    /* MOBILE */
-
-    .mobile-header {
-      display: none;
-    }
-.menu-button {
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-size: 25px;
-  cursor: pointer;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | CoinBridge</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-.mobile-menu {
-  display: none;
-  background: #07111d;
-  border: 1px solid #1b3042;
-  border-radius: 12px;
-  padding: 10px;
-  margin-bottom: 20px;
+:root{
+  --bg:#050b14;
+  --panel:#0b1524;
+  --panel2:#0f1c2d;
+  --line:#203149;
+  --text:#f5f8fc;
+  --muted:#8b9ab0;
+  --blue:#2d8cff;
+  --purple:#685cff;
+  --green:#29c47a;
+  --yellow:#f4b740;
+  --red:#ef5b68;
 }
 
-.mobile-menu.open {
-  display: flex;
-  flex-direction: column;
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(45,140,255,.13),transparent 30%),
+    radial-gradient(circle at 90% 100%,rgba(104,92,255,.12),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
 }
 
-.mobile-menu a {
-  color: #91a1b4;
-  padding: 13px;
-  border-radius: 8px;
-  font-size: 14px;
+button,
+input,
+select{
+  font:inherit;
 }
 
-.mobile-menu a:hover {
-  background: rgba(34, 211, 238, 0.09);
-  color: #22d3ee;
+button{
+  cursor:pointer;
 }
-    @media (max-width: 950px) {
-      .sidebar {
-        width: 210px;
-      }
 
-      .main {
-        margin-left: 210px;
-        width: calc(100% - 210px);
-      }
+a{
+  color:inherit;
+  text-decoration:none;
+}
 
-      .balance-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+/* =========================
+   LAYOUT
+========================= */
 
-      .balance-card {
-        grid-column: span 2;
-      }
+.app{
+  display:flex;
+  min-height:100vh;
+}
 
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+.sidebar{
+  width:250px;
+  position:fixed;
+  inset:0 auto 0 0;
+  background:rgba(7,15,27,.96);
+  border-right:1px solid rgba(255,255,255,.07);
+  padding:22px 15px;
+  z-index:20;
+}
 
-    @media (max-width: 700px) {
-      .sidebar {
-        display: none;
-      }
+.logo{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:5px 10px 25px;
+}
 
-      .main {
-        margin-left: 0;
-        width: 100%;
-        padding: 18px;
-      }
+.logo-mark{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  font-size:20px;
+  font-weight:800;
+  box-shadow:0 10px 25px rgba(45,140,255,.2);
+}
 
-      .mobile-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-      }
+.logo strong{
+  font-size:19px;
+}
 
-      .mobile-header .logo {
-        padding: 0;
-        margin: 0;
-      }
+.logo span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+}
 
-      .balance-grid {
-        grid-template-columns: 1fr;
-      }
+.nav-title{
+  color:#56677f;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.3px;
+  padding:12px 11px 8px;
+}
 
-      .balance-card {
-        grid-column: span 1;
-      }
+.nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#9aa9bc;
+  padding:12px 12px;
+  border-radius:11px;
+  text-align:left;
+  margin-bottom:4px;
+  transition:.2s;
+}
 
-      .balance {
-        font-size: 34px;
-      }
+.nav button:hover,
+.nav button.active{
+  background:rgba(45,140,255,.12);
+  color:#fff;
+}
 
-      .topbar {
-        margin-bottom: 20px;
-      }
+.nav button span{
+  margin-right:10px;
+}
 
-      .topbar .profile {
-        display: none;
-      }
-    }
-  </style>
+.logout{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:20px;
+  border:1px solid #26374d;
+  background:#0c1726;
+  color:#9eacbe;
+  padding:11px;
+  border-radius:11px;
+}
+
+.logout:hover{
+  color:#fff;
+  border-color:#3b506c;
+}
+
+.main{
+  width:100%;
+  margin-left:250px;
+  padding:25px;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:25px;
+}
+
+.welcome h1{
+  font-size:25px;
+}
+
+.welcome p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:5px;
+}
+
+.profile{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  background:#0c1726;
+  border:1px solid var(--line);
+  padding:8px 12px;
+  border-radius:13px;
+}
+
+.avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  font-weight:700;
+}
+
+.profile small{
+  display:block;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+/* =========================
+   BALANCE
+========================= */
+
+.balance-card{
+  background:
+    linear-gradient(135deg,rgba(45,140,255,.17),rgba(104,92,255,.08)),
+    var(--panel);
+  border:1px solid rgba(70,135,255,.2);
+  border-radius:22px;
+  padding:27px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.balance-card:after{
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:rgba(45,140,255,.08);
+  right:-100px;
+  top:-110px;
+}
+
+.balance-label{
+  color:#9eacc0;
+  font-size:13px;
+}
+
+.balance{
+  font-size:37px;
+  font-weight:700;
+  margin:9px 0 4px;
+}
+
+.balance-note{
+  color:#6f8097;
+  font-size:12px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.action{
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:#fff;
+  border-radius:15px;
+  padding:17px 10px;
+  transition:.2s;
+}
+
+.action:hover{
+  transform:translateY(-2px);
+  border-color:#355476;
+  background:var(--panel2);
+}
+
+.action .icon{
+  font-size:21px;
+  margin-bottom:9px;
+}
+
+.action strong{
+  display:block;
+  font-size:13px;
+}
+
+.action small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+  font-size:10px;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:18px;
+}
+
+.card{
+  background:rgba(11,21,36,.88);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:19px;
+  padding:20px;
+}
+
+.card-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.card-header h2{
+  font-size:16px;
+}
+
+.card-header span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.assets{
+  display:grid;
+  gap:10px;
+}
+
+.asset{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px;
+  background:#0d1929;
+  border:1px solid #1b2b40;
+  border-radius:13px;
+}
+
+.asset-left{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.coin{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#17283d;
+  font-weight:700;
+}
+
+.asset small{
+  color:var(--muted);
+  display:block;
+  margin-top:3px;
+}
+
+.asset-right{
+  text-align:right;
+}
+
+.asset-right strong{
+  display:block;
+}
+
+.asset-right small{
+  color:var(--muted);
+}
+
+/* =========================
+   TRANSACTIONS
+========================= */
+
+.transactions{
+  display:grid;
+  gap:9px;
+}
+
+.transaction{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:13px;
+  border-bottom:1px solid #18283b;
+}
+
+.transaction:last-child{
+  border-bottom:0;
+}
+
+.tx-left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.tx-icon{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  background:#16263a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.tx-left small{
+  display:block;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.status{
+  font-size:10px;
+  padding:5px 8px;
+  border-radius:20px;
+  display:inline-block;
+}
+
+.pending{
+  background:rgba(244,183,64,.11);
+  color:#f4c45e;
+}
+
+.approved{
+  background:rgba(41,196,122,.11);
+  color:#52d895;
+}
+
+.declined{
+  background:rgba(239,91,104,.11);
+  color:#ff7884;
+}
+
+.empty{
+  text-align:center;
+  padding:28px 10px;
+  color:#65758b;
+  font-size:13px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(8px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:100;
+}
+
+.modal-bg.show{
+  display:flex;
+}
+
+.modal{
+  width:100%;
+  max-width:500px;
+  max-height:90vh;
+  overflow:auto;
+  background:#0b1625;
+  border:1px solid #24364d;
+  border-radius:22px;
+  padding:25px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:21px;
+}
+
+.modal-head h2{
+  font-size:20px;
+}
+
+.close{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  border:1px solid #27394f;
+  background:#101e30;
+  color:#9aabbe;
+}
+
+.close:hover{
+  color:#fff;
+}
+
+.field{
+  margin-bottom:16px;
+}
+
+.field label{
+  display:block;
+  color:#bdc9d8;
+  font-size:12px;
+  font-weight:600;
+  margin-bottom:7px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  height:47px;
+  background:#07111e;
+  border:1px solid #26384f;
+  color:#fff;
+  border-radius:11px;
+  padding:0 13px;
+  outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(45,140,255,.1);
+}
+
+.wallet-box{
+  background:rgba(45,140,255,.08);
+  border:1px solid rgba(45,140,255,.22);
+  border-radius:13px;
+  padding:15px;
+  margin-bottom:18px;
+}
+
+.wallet-box small{
+  color:#8394aa;
+  display:block;
+  margin-bottom:6px;
+}
+
+.wallet-id{
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:.6px;
+  word-break:break-all;
+}
+
+.copy{
+  float:right;
+  border:0;
+  background:transparent;
+  color:#61a7ff;
+  font-size:11px;
+  margin-top:-19px;
+}
+
+.info{
+  background:#0d1b2d;
+  border:1px solid #1d3046;
+  color:#8fa0b6;
+  border-radius:11px;
+  padding:12px;
+  font-size:11px;
+  line-height:1.6;
+  margin-bottom:17px;
+}
+
+.primary{
+  width:100%;
+  height:48px;
+  border:0;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  color:#fff;
+  font-weight:700;
+}
+
+.primary:disabled{
+  opacity:.55;
+}
+
+.secondary{
+  width:100%;
+  height:45px;
+  border:1px solid #293d55;
+  background:#101e30;
+  color:#b5c1d0;
+  border-radius:11px;
+  margin-top:9px;
+}
+
+/* =========================
+   CHAT
+========================= */
+
+.chat{
+  display:flex;
+  flex-direction:column;
+  height:510px;
+}
+
+.messages{
+  flex:1;
+  overflow:auto;
+  padding:5px 3px 15px;
+}
+
+.message{
+  max-width:80%;
+  padding:10px 12px;
+  border-radius:13px;
+  margin-bottom:10px;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.message.support{
+  background:#13243a;
+  border:1px solid #213750;
+}
+
+.message.customer{
+  margin-left:auto;
+  background:linear-gradient(135deg,#1d69c7,#5147bd);
+}
+
+.message time{
+  display:block;
+  color:#71849b;
+  font-size:9px;
+  margin-top:5px;
+}
+
+.message.customer time{
+  color:#c6d7f0;
+}
+
+.chat-input{
+  display:flex;
+  gap:8px;
+  border-top:1px solid #1b2d42;
+  padding-top:13px;
+}
+
+.chat-input input{
+  flex:1;
+  height:43px;
+  border-radius:11px;
+  border:1px solid #26384f;
+  background:#07111e;
+  color:#fff;
+  padding:0 12px;
+  outline:none;
+}
+
+.chat-input button{
+  width:45px;
+  border:0;
+  border-radius:11px;
+  background:var(--blue);
+  color:#fff;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:300;
+  background:#102033;
+  border:1px solid #29405b;
+  padding:13px 16px;
+  border-radius:12px;
+  color:#dce6f2;
+  font-size:12px;
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-menu{
+  display:none;
+}
+
+@media(max-width:850px){
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.25s;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+    padding:17px;
+  }
+
+  .mobile-menu{
+    display:block;
+    border:1px solid #26384f;
+    background:#0d1929;
+    color:#fff;
+    width:40px;
+    height:40px;
+    border-radius:11px;
+  }
+
+  .topbar{
+    align-items:flex-start;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px){
+
+  .profile-info{
+    display:none;
+  }
+
+  .welcome h1{
+    font-size:21px;
+  }
+
+  .balance{
+    font-size:31px;
+  }
+
+  .actions{
+    gap:8px;
+  }
+
+  .action{
+    padding:14px 8px;
+  }
+
+  .modal{
+    padding:20px;
+    border-radius:18px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="layout">
+<div class="app">
 
-    <!-- SIDEBAR -->
+  <!-- SIDEBAR -->
 
-    <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
 
-      <div class="logo">
-        Coin<span>Bridge</span>
+    <div class="logo">
+      <div class="logo-mark">C</div>
+
+      <div>
+        <strong>CoinBridge</strong>
+        <span>Secure financial platform</span>
       </div>
+    </div>
 
-      <div class="menu-title">
-        Main Menu
-      </div>
+    <div class="nav-title">Main</div>
 
-      <nav class="nav">
+    <nav class="nav">
 
-        <a href="dashboard.html" class="active">
-          🏠 Dashboard
-        </a>
+      <button class="active" onclick="showSection('dashboard',this)">
+        <span>▣</span> Dashboard
+      </button>
 
-        <a href="portfolio.html">
-  💼 Portfolio
-</a>
+      <button onclick="showSection('portfolio',this)">
+        <span>◈</span> Portfolio
+      </button>
 
-        <a href="wallet.html">
-  💰 Wallet
-        </a>
+      <button onclick="openModal('walletModal')">
+        <span>◉</span> Wallet
+      </button>
 
-        <a href="./transactions.html">
-  📊 Transactions
-        </a>
-        <a href="./markets.html">
-  📈 Markets
-</a>
+      <button onclick="showSection('transactions',this)">
+        <span>▤</span> Transactions
+      </button>
 
-      </nav>
+      <button onclick="showSection('messages',this)">
+        <span>💬</span> Messages
+      </button>
 
-      <div class="menu-title" style="margin-top: 30px;">
-        Account
-      </div>
+    </nav>
 
-      <nav class="nav">
+    <div class="nav-title">Account</div>
 
-        <a href="./settings.html">
-  ⚙️ Settings
-        </a>
+    <nav class="nav">
 
-       <a href="./security.html">
-  🔐 Security
-       </a>
-      </nav>
+      <button onclick="showToast('Notifications will appear here.')">
+        <span>🔔</span> Notifications
+      </button>
 
-      <div class="logout">
+      <button onclick="showToast('Account settings are being prepared.')">
+        <span>⚙</span> Settings
+      </button>
 
-        <a href="index.html">
-          ← Log Out
-        </a>
+    </nav>
 
-      </div>
+    <button class="logout" id="logoutButton">
+      ⇥ &nbsp; Sign out
+    </button>
 
-    </aside>
+  </aside>
 
 
-    <!-- MAIN -->
+  <!-- MAIN -->
 
-    <main class="main">
+  <main class="main">
 
-      <div class="mobile-header">
+    <header class="topbar">
 
-  <div class="logo">
-    Coin<span>Bridge</span>
-  </div>
+      <div style="display:flex;gap:12px;align-items:center;">
 
-  <button class="menu-button" onclick="toggleMenu()">
-    ☰
-  </button>
-
-</div>
-
-<div class="mobile-menu" id="mobileMenu">
-
-  <a href="dashboard.html">🏠 Dashboard</a>
-
-  <a href="portfolio.html">💼 Portfolio</a>
-
-  <a href="wallet.html">
-  💰 Wallet
-  </a>
-
-  <a href="./transactions.html">
-  📊 Transactions
-</a>
-
-  <a href="./markets.html">
-  📈 Markets
-</a>
-
-  <a href="./settings.html">⚙️ Settings</a>
-
-  <a href="./security.html">
-  🔐 Security
-</a>
-
-  <a href="index.html">← Log Out</a>
-
-</div>
-
-
-
-      <!-- TOPBAR -->
-
-      <div class="topbar">
+        <button
+          class="mobile-menu"
+          onclick="toggleSidebar()"
+        >☰</button>
 
         <div class="welcome">
-
-          <h1>Welcome back, User</h1>
-
-          <p>
-            Here's what's happening with your portfolio.
-          </p>
-
-        </div>
-
-
-        <div class="profile">
-
-          <div class="avatar">
-            U
-          </div>
-
-          <div>
-
-            <div class="profile-name">
-              CoinBridge User
-            </div>
-
-            <div class="profile-status">
-              ● Demo Account
-            </div>
-
-          </div>
-
+          <h1 id="welcomeName">Welcome back</h1>
+          <p>Your CoinBridge account at a glance.</p>
         </div>
 
       </div>
 
+      <div class="profile">
 
-      <!-- BALANCE -->
+        <div class="avatar" id="avatar">C</div>
 
-      <section class="balance-grid">
-
-        <div class="balance-card">
-
-          <div class="balance-label">
-            Total Portfolio Balance
-          </div>
-
-          <div class="balance">
-            $12,480.50
-          </div>
-
-          <div class="positive">
-            ▲ +$582.40 today (+4.82%)
-          </div>
-
+        <div class="profile-info">
+          <strong id="profileName">Customer</strong>
+          <small id="profileEmail">Loading...</small>
         </div>
 
+      </div>
 
-        <div class="stat-card">
+    </header>
 
-          <div class="icon">
-            📈
-          </div>
 
-          <div class="stat-label">
-            Today's Change
-          </div>
+    <!-- DASHBOARD -->
 
-          <div class="stat-value">
-            +$582.40
-          </div>
+    <section id="dashboardSection">
 
+      <div class="balance-card">
+
+        <div class="balance-label">
+          Total Portfolio Balance
         </div>
 
-
-        <div class="stat-card">
-
-          <div class="icon">
-            💼
-          </div>
-
-          <div class="stat-label">
-            Assets
-          </div>
-
-          <div class="stat-value">
-            3
-          </div>
-
+        <div class="balance" id="totalBalance">
+          —
         </div>
 
-      </section>
+        <div class="balance-note">
+          Your current CoinBridge portfolio value
+        </div>
+
+      </div>
 
 
       <!-- ACTIONS -->
 
       <div class="actions">
 
-        <a href="#" class="action">
-          + Deposit
-        </a>
+        <button class="action" onclick="openModal('depositModal')">
+          <div class="icon">＋</div>
+          <strong>Deposit</strong>
+          <small>Add funds</small>
+        </button>
 
-        <a href="#" class="action secondary">
-          ↑ Send
-        </a>
+        <button class="action" onclick="openModal('sendModal')">
+          <div class="icon">↗</div>
+          <strong>Send</strong>
+          <small>Transfer funds</small>
+        </button>
 
-        <a href="#" class="action secondary">
-          ↓ Withdraw
-        </a>
+        <button class="action" onclick="openModal('withdrawModal')">
+          <div class="icon">↙</div>
+          <strong>Withdraw</strong>
+          <small>Withdraw funds</small>
+        </button>
 
-        <a href="#" class="action secondary">
-          ⇄ Swap
-        </a>
+        <button class="action" onclick="openModal('swapModal')">
+          <div class="icon">⇄</div>
+          <strong>Swap</strong>
+          <small>Exchange assets</small>
+        </button>
 
       </div>
 
 
-      <!-- CONTENT -->
+      <div class="grid">
 
-      <section class="content-grid">
+        <div class="card">
 
-
-        <!-- ASSETS -->
-
-        <div class="panel">
-
-          <div class="panel-header">
-
+          <div class="card-header">
             <h2>Your Assets</h2>
-
-            <a href="#">
-              View all
-            </a>
-
+            <span>Current holdings</span>
           </div>
 
+          <div class="assets" id="assetsList">
 
-          <div class="asset">
-
-            <div class="asset-left">
-
-              <div class="coin">
-                ₿
-              </div>
-
-              <div>
-                <div class="asset-name">
-                  Bitcoin
-                </div>
-
-                <div class="asset-code">
-                  BTC
-                </div>
-              </div>
-
-            </div>
-
-
-            <div class="asset-right">
-
-              <strong>
-                $7,420.20
-              </strong>
-
-              <span>
-                +4.82%
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="asset">
-
-            <div class="asset-left">
-
-              <div class="coin">
-                Ξ
-              </div>
-
-              <div>
-                <div class="asset-name">
-                  Ethereum
-                </div>
-
-                <div class="asset-code">
-                  ETH
-                </div>
-              </div>
-
-            </div>
-
-
-            <div class="asset-right">
-
-              <strong>
-                $3,210.70
-              </strong>
-
-              <span>
-                +3.17%
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="asset">
-
-            <div class="asset-left">
-
-              <div class="coin">
-                $
-              </div>
-
-              <div>
-                <div class="asset-name">
-                  USD Coin
-                </div>
-
-                <div class="asset-code">
-                  USDC
-                </div>
-              </div>
-
-            </div>
-
-
-            <div class="asset-right">
-
-              <strong>
-                $1,849.60
-              </strong>
-
-              <span>
-                +0.02%
-              </span>
-
+            <div class="empty">
+              Loading wallet information...
             </div>
 
           </div>
@@ -853,155 +942,1608 @@ aOCTYPE html>
         </div>
 
 
-        <!-- TRANSACTIONS -->
+        <div class="card">
 
-        <div class="panel">
-
-          <div class="panel-header">
-
+          <div class="card-header">
             <h2>Recent Activity</h2>
-
-            <a href="#">
-              View all
-            </a>
-
+            <span>Latest</span>
           </div>
 
+          <div class="transactions" id="recentTransactions">
 
-          <div class="transaction">
-
-            <div class="transaction-left">
-
-              <div class="transaction-icon">
-                ↓
-              </div>
-
-              <div>
-
-                <div class="transaction-name">
-                  Deposit
-                </div>
-
-                <div class="transaction-date">
-                  Today · 10:42 AM
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div>
-
-              <div class="transaction-amount">
-                +$1,250.00
-              </div>
-
-              <div class="transaction-status">
-                Completed
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="transaction">
-
-            <div class="transaction-left">
-
-              <div class="transaction-icon">
-                ↑
-              </div>
-
-              <div>
-
-                <div class="transaction-name">
-                  Send
-                </div>
-
-                <div class="transaction-date">
-                  Yesterday · 4:18 PM
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div>
-
-              <div class="transaction-amount">
-                -$320.00
-              </div>
-
-              <div class="transaction-status">
-                Completed
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="transaction">
-
-            <div class="transaction-left">
-
-              <div class="transaction-icon">
-                ⇄
-              </div>
-
-              <div>
-
-                <div class="transaction-name">
-                  Asset Swap
-                </div>
-
-                <div class="transaction-date">
-                  Aug 11 · 2:30 PM
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div>
-
-              <div class="transaction-amount">
-                $580.25
-              </div>
-
-              <div class="transaction-status">
-                Completed
-              </div>
-
+            <div class="empty">
+              No recent activity.
             </div>
 
           </div>
 
         </div>
-
-      </section>
-
-
-      <div class="demo-notice">
-
-        ⚠️ Demo Dashboard — balances, assets and transactions
-        shown here are sample data. No real funds are being
-        stored or transferred.
 
       </div>
 
-    </main>
+    </section>
+
+
+    <!-- PORTFOLIO -->
+
+    <section
+      id="portfolioSection"
+      style="display:none;"
+    >
+
+      <div class="card">
+
+        <div class="card-header">
+          <h2>Portfolio</h2>
+          <span>Your holdings</span>
+        </div>
+
+        <div class="assets" id="portfolioAssets">
+
+          <div class="empty">
+            Portfolio information will appear here.
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TRANSACTIONS -->
+
+    <section
+      id="transactionsSection"
+      style="display:none;"
+    >
+
+      <div class="card">
+
+        <div class="card-header">
+          <h2>Transactions</h2>
+          <span>Account activity</span>
+        </div>
+
+        <div class="transactions" id="allTransactions">
+
+          <div class="empty">
+            No transactions yet.
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- MESSAGES -->
+
+    <section
+      id="messagesSection"
+      style="display:none;"
+    >
+
+      <div class="card chat">
+
+        <div class="card-header">
+
+          <div>
+            <h2>CoinBridge Support</h2>
+            <span>Support conversation</span>
+          </div>
+
+          <span style="color:#46d58f;">
+            ● Available
+          </span>
+
+        </div>
+
+        <div
+          class="messages"
+          id="chatMessages"
+        >
+
+          <div class="message support">
+
+            Welcome to CoinBridge Support.
+            How can we help you today?
+
+            <time>Support</time>
+
+          </div>
+
+        </div>
+
+        <form
+          class="chat-input"
+          id="chatForm"
+        >
+
+          <input
+            id="chatInput"
+            type="text"
+            placeholder="Type your message..."
+            autocomplete="off"
+          >
+
+          <button type="submit">
+            ➤
+          </button>
+
+        </form>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- =========================
+     DEPOSIT MODAL
+========================= -->
+
+<div class="modal-bg" id="depositModal">
+
+  <div class="modal">
+
+    <div class="modal-head">
+      <h2>Deposit Funds</h2>
+
+      <button
+        class="close"
+        onclick="closeModal('depositModal')"
+      >×</button>
+    </div>
+
+
+    <div class="wallet-box">
+
+      <small>Your CoinBridge Wallet ID</small>
+
+      <div
+        class="wallet-id"
+        id="depositWalletId"
+      >Loading...</div>
+
+      <button
+        class="copy"
+        onclick="copyWalletId()"
+      >Copy</button>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Payment method</label>
+
+      <select id="depositMethod">
+
+        <option value="credit_card">
+          Credit Card
+        </option>
+
+        <option value="debit_card">
+          Debit Card
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Amount</label>
+
+      <input
+        id="depositAmount"
+        type="number"
+        min="1"
+        step="0.01"
+        placeholder="Enter amount"
+      >
+
+    </div>
+
+
+    <div class="info">
+
+      Your payment details should be entered only through
+      the secure payment page provided by the payment processor.
+      CoinBridge does not request your card PIN, CVV, or banking password
+      through this portal.
+
+    </div>
+
+
+    <button
+      class="primary"
+      onclick="submitDeposit()"
+    >
+      Continue Deposit
+    </button>
 
   </div>
+
+</div>
+
+
+<!-- =========================
+     SEND MODAL
+========================= -->
+
+<div class="modal-bg" id="sendModal">
+
+  <div class="modal">
+
+    <div class="modal-head">
+
+      <h2>Send Funds</h2>
+
+      <button
+        class="close"
+        onclick="closeModal('sendModal')"
+      >×</button>
+
+    </div>
+
+
+    <div class="wallet-box">
+
+      <small>Available Balance</small>
+
+      <div
+        class="wallet-id"
+        id="sendBalance"
+      >—</div>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Amount</label>
+
+      <input
+        id="sendAmount"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="Enter amount"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Receiver Wallet ID</label>
+
+      <input
+        id="receiverWallet"
+        type="text"
+        placeholder="Enter receiver Wallet ID"
+      >
+
+    </div>
+
+
+    <div
+      class="info"
+      id="sendInfo"
+    >
+      Transfers within your available balance are submitted
+      for review. Transfers above your available balance are
+      automatically declined.
+
+    </div>
+
+
+    <button
+      class="primary"
+      onclick="submitSend()"
+    >
+      Send Request
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     WITHDRAW MODAL
+========================= -->
+
+<div class="modal-bg" id="withdrawModal">
+
+  <div class="modal">
+
+    <div class="modal-head">
+
+      <h2>Withdraw Funds</h2>
+
+      <button
+        class="close"
+        onclick="closeModal('withdrawModal')"
+      >×</button>
+
+    </div>
+
+
+    <div class="wallet-box">
+
+      <small>Available Balance</small>
+
+      <div
+        class="wallet-id"
+        id="withdrawBalance"
+      >—</div>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Amount</label>
+
+      <input
+        id="withdrawAmount"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="Enter amount"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Withdrawal destination</label>
+
+      <input
+        id="withdrawDestination"
+        type="text"
+        placeholder="Enter destination"
+      >
+
+    </div>
+
+
+    <div class="info">
+
+      Withdrawal requests within your available balance
+      are submitted for review. Requests above your
+      available balance are automatically declined.
+
+    </div>
+
+
+    <button
+      class="primary"
+      onclick="submitWithdraw()"
+    >
+      Submit Withdrawal
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     SWAP MODAL
+========================= -->
+
+<div class="modal-bg" id="swapModal">
+
+  <div class="modal">
+
+    <div class="modal-head">
+
+      <h2>Swap Assets</h2>
+
+      <button
+        class="close"
+        onclick="closeModal('swapModal')"
+      >×</button>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>From</label>
+
+      <select id="swapFrom">
+
+        <option value="BTC">BTC</option>
+        <option value="ETH">ETH</option>
+        <option value="USDC">USDC</option>
+
+      </select>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>Amount</label>
+
+      <input
+        id="swapAmount"
+        type="number"
+        min="0"
+        step="0.00000001"
+        placeholder="Enter amount"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>To</label>
+
+      <select id="swapTo">
+
+        <option value="USDC">USDC</option>
+        <option value="BTC">BTC</option>
+        <option value="ETH">ETH</option>
+
+      </select>
+
+    </div>
+
+
+    <div class="info">
+
+      Your available balance will be checked before the
+      swap request is submitted. Swap requests are reviewed
+      before the conversion is completed.
+
+    </div>
+
+
+    <button
+      class="primary"
+      onclick="submitSwap()"
+    >
+      Submit Swap Request
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     WALLET MODAL
+========================= -->
+
+<div class="modal-bg" id="walletModal">
+
+  <div class="modal">
+
+    <div class="modal-head">
+
+      <h2>Your Wallet</h2>
+
+      <button
+        class="close"
+        onclick="closeModal('walletModal')"
+      >×</button>
+
+    </div>
+
+
+    <div class="wallet-box">
+
+      <small>Wallet ID</small>
+
+      <div
+        class="wallet-id"
+        id="walletModalId"
+      >Loading...</div>
+
+      <button
+        class="copy"
+        onclick="copyWalletId()"
+      >Copy</button>
+
+    </div>
+
+
+    <div class="info">
+
+      Your wallet ID identifies your CoinBridge wallet.
+      Use it when receiving funds from another CoinBridge customer.
+
+    </div>
+
+    <button
+      class="secondary"
+      onclick="closeModal('walletModal')"
+    >
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-  function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    menu.classList.toggle("open");
+
+/* =====================================================
+   COINBRIDGE SUPABASE CONFIGURATION
+===================================================== */
+
+const SUPABASE_URL =
+  "https://jgvpbbuslpwupjwxqfmz.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_69Rflk-FZvhbtAbZ_RGRCg_cJHfexEc";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let currentWallet = null;
+
+
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
+
+async function loadCustomer(){
+
+  const {
+    data:{
+      session
+    }
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if(!session){
+
+    window.location.href =
+      "login.html";
+
+    return;
+
   }
+
+
+  currentUser =
+    session.user;
+
+
+  await loadProfile();
+
+  await loadWallet();
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+async function loadProfile(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id",currentUser.id)
+      .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "Profile error:",
+      error
+    );
+
+    setCustomerName(
+      currentUser.email
+    );
+
+    return;
+
+  }
+
+
+  currentProfile =
+    data;
+
+
+  const name =
+    data?.full_name ||
+    currentUser.user_metadata?.full_name ||
+    currentUser.email ||
+    "Customer";
+
+
+  setCustomerName(name);
+
+}
+
+
+/* =====================================================
+   CUSTOMER NAME
+===================================================== */
+
+function setCustomerName(name){
+
+  const firstName =
+    String(name)
+      .split(" ")[0];
+
+
+  document.getElementById(
+    "welcomeName"
+  ).textContent =
+    "Welcome back, " +
+    firstName;
+
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    name;
+
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent =
+    currentUser.email;
+
+
+  document.getElementById(
+    "avatar"
+  ).textContent =
+    String(name)
+      .charAt(0)
+      .toUpperCase();
+
+}
+
+
+/* =====================================================
+   WALLET
+===================================================== */
+
+async function loadWallet(){
+
+  /*
+     This expects the customer's wallet record to be
+     associated with auth.users.id.
+
+     Expected common fields:
+       user_id
+       wallet_id
+       balance
+       currency
+
+     We will connect the exact wallet schema next if
+     your existing Supabase table uses different names.
+  */
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("wallets")
+      .select("*")
+      .eq("user_id",currentUser.id)
+      .limit(1)
+      .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "Wallet error:",
+      error
+    );
+
+    showWalletUnavailable();
+
+    return;
+
+  }
+
+
+  if(!data){
+
+    showWalletUnavailable();
+
+    return;
+
+  }
+
+
+  currentWallet =
+    data;
+
+
+  const walletId =
+    data.wallet_id ||
+    data.walletId ||
+    data.id ||
+    "—";
+
+
+  const balance =
+    Number(
+      data.balance ??
+      data.amount ??
+      0
+    );
+
+
+  const currency =
+    data.currency ||
+    "USD";
+
+
+  document.getElementById(
+    "totalBalance"
+  ).textContent =
+    formatMoney(
+      balance,
+      currency
+    );
+
+
+  document.getElementById(
+    "sendBalance"
+  ).textContent =
+    formatMoney(
+      balance,
+      currency
+    );
+
+
+  document.getElementById(
+    "withdrawBalance"
+  ).textContent =
+    formatMoney(
+      balance,
+      currency
+    );
+
+
+  document.getElementById(
+    "depositWalletId"
+  ).textContent =
+    walletId;
+
+
+  document.getElementById(
+    "walletModalId"
+  ).textContent =
+    walletId;
+
+
+  renderAssets(data);
+
+}
+
+
+/* =====================================================
+   WALLET UNAVAILABLE
+===================================================== */
+
+function showWalletUnavailable(){
+
+  document.getElementById(
+    "totalBalance"
+  ).textContent =
+    "—";
+
+
+  document.getElementById(
+    "sendBalance"
+  ).textContent =
+    "—";
+
+
+  document.getElementById(
+    "withdrawBalance"
+  ).textContent =
+    "—";
+
+
+  document.getElementById(
+    "depositWalletId"
+  ).textContent =
+    "Wallet unavailable";
+
+
+  document.getElementById(
+    "walletModalId"
+  ).textContent =
+    "Wallet unavailable";
+
+
+  document.getElementById(
+    "assetsList"
+  ).innerHTML =
+    `
+      <div class="empty">
+        Your wallet information is not available yet.
+      </div>
+    `;
+
+}
+
+
+/* =====================================================
+   ASSETS
+===================================================== */
+
+function renderAssets(wallet){
+
+  const balance =
+    Number(
+      wallet.balance ??
+      wallet.amount ??
+      0
+    );
+
+
+  const currency =
+    wallet.currency ||
+    "USD";
+
+
+  document.getElementById(
+    "assetsList"
+  ).innerHTML =
+    `
+      <div class="asset">
+
+        <div class="asset-left">
+
+          <div class="coin">
+            $
+          </div>
+
+          <div>
+            <strong>
+              ${escapeHTML(currency)}
+            </strong>
+
+            <small>
+              Available balance
+            </small>
+          </div>
+
+        </div>
+
+        <div class="asset-right">
+
+          <strong>
+            ${formatMoney(balance,currency)}
+          </strong>
+
+          <small>
+            Current
+          </small>
+
+        </div>
+
+      </div>
+    `;
+
+
+  document.getElementById(
+    "portfolioAssets"
+  ).innerHTML =
+    document.getElementById(
+      "assetsList"
+    ).innerHTML;
+
+}
+
+
+/* =====================================================
+   FORMAT MONEY
+===================================================== */
+
+function formatMoney(amount,currency){
+
+  if(
+    typeof amount !== "number" ||
+    Number.isNaN(amount)
+  ){
+
+    return "—";
+
+  }
+
+
+  return new Intl.NumberFormat(
+    "en-US",
+    {
+      style:"currency",
+      currency:
+        currency === "USD"
+          ? "USD"
+          : "USD",
+      minimumFractionDigits:2
+    }
+  ).format(amount);
+
+}
+
+
+/* =====================================================
+   MODALS
+===================================================== */
+
+function openModal(id){
+
+  document
+    .getElementById(id)
+    .classList
+    .add("show");
+
+}
+
+
+function closeModal(id){
+
+  document
+    .getElementById(id)
+    .classList
+    .remove("show");
+
+}
+
+
+document
+  .querySelectorAll(".modal-bg")
+  .forEach(function(modal){
+
+    modal.addEventListener(
+      "click",
+      function(event){
+
+        if(event.target === modal){
+
+          modal.classList.remove(
+            "show"
+          );
+
+        }
+
+      }
+    );
+
+  });
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showSection(section,button){
+
+  const sections = [
+    "dashboard",
+    "portfolio",
+    "transactions",
+    "messages"
+  ];
+
+
+  sections.forEach(function(name){
+
+    const element =
+      document.getElementById(
+        name + "Section"
+      );
+
+    if(element){
+
+      element.style.display =
+        name === section
+          ? "block"
+          : "none";
+
+    }
+
+  });
+
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(function(btn){
+
+      btn.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  if(button){
+
+    button.classList.add(
+      "active"
+    );
+
+  }
+
+
+  closeSidebar();
+
+}
+
+
+/* =====================================================
+   SEND
+===================================================== */
+
+async function submitSend(){
+
+  if(!currentWallet){
+
+    showToast(
+      "Your wallet is not available yet."
+    );
+
+    return;
+
+  }
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "sendAmount"
+      ).value
+    );
+
+
+  const receiver =
+    document.getElementById(
+      "receiverWallet"
+    ).value.trim();
+
+
+  const balance =
+    Number(
+      currentWallet.balance ??
+      currentWallet.amount ??
+      0
+    );
+
+
+  if(!amount || amount <= 0){
+
+    showToast(
+      "Enter a valid amount."
+    );
+
+    return;
+
+  }
+
+
+  if(!receiver){
+
+    showToast(
+      "Enter the receiver Wallet ID."
+    );
+
+    return;
+
+  }
+
+
+  if(amount > balance){
+
+    showToast(
+      "Transfer declined: insufficient balance."
+    );
+
+    return;
+
+  }
+
+
+  /*
+     The secure transaction table and RLS
+     will be connected after we confirm
+     your exact database schema.
+  */
+
+  showToast(
+    "Transfer request is ready for secure submission."
+  );
+
+}
+
+
+/* =====================================================
+   WITHDRAW
+===================================================== */
+
+async function submitWithdraw(){
+
+  if(!currentWallet){
+
+    showToast(
+      "Your wallet is not available yet."
+    );
+
+    return;
+
+  }
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "withdrawAmount"
+      ).value
+    );
+
+
+  const destination =
+    document.getElementById(
+      "withdrawDestination"
+    ).value.trim();
+
+
+  const balance =
+    Number(
+      currentWallet.balance ??
+      currentWallet.amount ??
+      0
+    );
+
+
+  if(!amount || amount <= 0){
+
+    showToast(
+      "Enter a valid withdrawal amount."
+    );
+
+    return;
+
+  }
+
+
+  if(!destination){
+
+    showToast(
+      "Enter a withdrawal destination."
+    );
+
+    return;
+
+  }
+
+
+  if(amount > balance){
+
+    showToast(
+      "Withdrawal declined: insufficient balance."
+    );
+
+    return;
+
+  }
+
+
+  showToast(
+    "Withdrawal request is ready for secure submission."
+  );
+
+}
+
+
+/* =====================================================
+   DEPOSIT
+===================================================== */
+
+function submitDeposit(){
+
+  const amount =
+    Number(
+      document.getElementById(
+        "depositAmount"
+      ).value
+    );
+
+
+  const method =
+    document.getElementById(
+      "depositMethod"
+    ).value;
+
+
+  if(!amount || amount <= 0){
+
+    showToast(
+      "Enter a valid deposit amount."
+    );
+
+    return;
+
+  }
+
+
+  /*
+     Payment processor integration will be
+     connected here. We do not collect raw
+     card credentials inside CoinBridge.
+  */
+
+  showToast(
+    "Secure deposit request is ready to continue."
+  );
+
+}
+
+
+/* =====================================================
+   SWAP
+===================================================== */
+
+function submitSwap(){
+
+  const from =
+    document.getElementById(
+      "swapFrom"
+    ).value;
+
+
+  const to =
+    document.getElementById(
+      "swapTo"
+    ).value;
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "swapAmount"
+      ).value
+    );
+
+
+  if(from === to){
+
+    showToast(
+      "Choose two different assets."
+    );
+
+    return;
+
+  }
+
+
+  if(!amount || amount <= 0){
+
+    showToast(
+      "Enter a valid swap amount."
+    );
+
+    return;
+
+  }
+
+
+  showToast(
+    "Swap request is ready for secure submission."
+  );
+
+}
+
+
+/* =====================================================
+   COPY WALLET ID
+===================================================== */
+
+async function copyWalletId(){
+
+  if(!currentWallet){
+
+    showToast(
+      "Wallet ID is not available."
+    );
+
+    return;
+
+  }
+
+
+  const walletId =
+    currentWallet.wallet_id ||
+    currentWallet.walletId ||
+    currentWallet.id;
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      String(walletId)
+    );
+
+
+    showToast(
+      "Wallet ID copied."
+    );
+
+  }catch{
+
+    showToast(
+      "Unable to copy Wallet ID."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   CHAT
+===================================================== */
+
+document
+  .getElementById("chatForm")
+  .addEventListener(
+    "submit",
+    function(event){
+
+      event.preventDefault();
+
+
+      const input =
+        document.getElementById(
+          "chatInput"
+        );
+
+
+      const text =
+        input.value.trim();
+
+
+      if(!text){
+
+        return;
+
+      }
+
+
+      const container =
+        document.getElementById(
+          "chatMessages"
+        );
+
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "message customer";
+
+
+      item.innerHTML =
+        `
+          ${escapeHTML(text)}
+          <time>Just now</time>
+        `;
+
+
+      container.appendChild(item);
+
+
+      input.value = "";
+
+
+      container.scrollTop =
+        container.scrollHeight;
+
+
+      /*
+         Supabase Messages table will be
+         connected after we confirm its
+         exact schema.
+      */
+
+    }
+  );
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(text){
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
+
+  toast.textContent =
+    text;
+
+
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      function(){
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      3000
+    );
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+function toggleSidebar(){
+
+  document
+    .getElementById("sidebar")
+    .classList
+    .toggle("open");
+
+}
+
+
+function closeSidebar(){
+
+  document
+    .getElementById("sidebar")
+    .classList
+    .remove("open");
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+  .getElementById("logoutButton")
+  .addEventListener(
+    "click",
+    async function(){
+
+      const {
+        error
+      } =
+        await supabaseClient.auth.signOut();
+
+
+      if(error){
+
+        showToast(
+          "Unable to sign out."
+        );
+
+        return;
+
+      }
+
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event,session){
+
+    if(
+      event === "SIGNED_OUT" ||
+      !session
+    ){
+
+      window.location.href =
+        "login.html";
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadCustomer();
+
 </script>
+
 </body>
-  </html>
+</html>

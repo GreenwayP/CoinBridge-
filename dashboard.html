@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111f">
+<title>CoinBridge | Dashboard</title>
 
-<title>Dashboard | CoinBridge</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
@@ -15,31 +17,38 @@
 
 :root{
   --bg:#050b14;
-  --panel:#0b1524;
-  --panel2:#0f1c2d;
-  --line:#203149;
-  --text:#f5f8fc;
-  --muted:#8b9ab0;
-  --blue:#2d8cff;
-  --purple:#685cff;
-  --green:#29c47a;
-  --yellow:#f4b740;
-  --red:#ef5b68;
+  --panel:#0a1422;
+  --panel2:#0d1a2b;
+  --border:rgba(255,255,255,.08);
+  --text:#f5f8ff;
+  --muted:#8795aa;
+  --accent:#4f8cff;
+  --accent2:#7c5cff;
+  --green:#20d39b;
+  --red:#ff5f6d;
+  --gold:#f4bd4f;
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
   background:
-    radial-gradient(circle at 10% 0%,rgba(45,140,255,.13),transparent 30%),
-    radial-gradient(circle at 90% 100%,rgba(104,92,255,.12),transparent 30%),
+    radial-gradient(circle at 20% 0%,rgba(79,140,255,.12),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(124,92,255,.12),transparent 28%),
     var(--bg);
   color:var(--text);
-  min-height:100vh;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
 }
 
 button,
 input,
-select{
+select,
+textarea{
   font:inherit;
 }
 
@@ -53,7 +62,7 @@ a{
 }
 
 /* =========================
-   LAYOUT
+   APP
 ========================= */
 
 .app{
@@ -61,221 +70,614 @@ a{
   min-height:100vh;
 }
 
+/* =========================
+   SIDEBAR
+========================= */
+
 .sidebar{
-  width:250px;
+  width:255px;
+  min-height:100vh;
   position:fixed;
-  inset:0 auto 0 0;
-  background:rgba(7,15,27,.96);
-  border-right:1px solid rgba(255,255,255,.07);
-  padding:22px 15px;
-  z-index:20;
+  left:0;
+  top:0;
+  bottom:0;
+  padding:24px 16px;
+  background:rgba(5,11,20,.94);
+  backdrop-filter:blur(20px);
+  border-right:1px solid var(--border);
+  z-index:1000;
+  overflow-y:auto;
 }
 
-.logo{
+.brand{
   display:flex;
   align-items:center;
-  gap:11px;
-  padding:5px 10px 25px;
+  gap:12px;
+  padding:8px 10px 28px;
 }
 
-.logo-mark{
-  width:42px;
-  height:42px;
+.brand-mark{
+  width:40px;
+  height:40px;
   border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,var(--blue),var(--purple));
-  font-size:20px;
-  font-weight:800;
-  box-shadow:0 10px 25px rgba(45,140,255,.2);
+  display:grid;
+  place-items:center;
+  font-size:21px;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 10px 30px rgba(79,140,255,.3);
 }
 
-.logo strong{
+.brand-name{
   font-size:19px;
+  font-weight:800;
+  letter-spacing:-.5px;
 }
 
-.logo span{
-  display:block;
-  color:var(--muted);
-  font-size:10px;
-  margin-top:3px;
+.brand-name span{
+  color:#7da8ff;
 }
 
-.nav-title{
-  color:#56677f;
+.nav-label{
+  color:#55657c;
   font-size:10px;
+  font-weight:800;
   text-transform:uppercase;
-  letter-spacing:1.3px;
-  padding:12px 11px 8px;
+  letter-spacing:1.5px;
+  padding:12px 12px 8px;
 }
 
-.nav button{
+.nav-item{
   width:100%;
   border:0;
   background:transparent;
-  color:#9aa9bc;
-  padding:12px 12px;
-  border-radius:11px;
+  color:#8997ab;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:12px 13px;
+  margin:3px 0;
+  border-radius:12px;
   text-align:left;
-  margin-bottom:4px;
   transition:.2s;
 }
 
-.nav button:hover,
-.nav button.active{
-  background:rgba(45,140,255,.12);
+.nav-item:hover{
   color:#fff;
+  background:rgba(255,255,255,.05);
 }
 
-.nav button span{
-  margin-right:10px;
-}
-
-.logout{
-  position:absolute;
-  left:15px;
-  right:15px;
-  bottom:20px;
-  border:1px solid #26374d;
-  background:#0c1726;
-  color:#9eacbe;
-  padding:11px;
-  border-radius:11px;
-}
-
-.logout:hover{
+.nav-item.active{
   color:#fff;
-  border-color:#3b506c;
+  background:linear-gradient(90deg,rgba(79,140,255,.18),rgba(124,92,255,.09));
+  box-shadow:inset 3px 0 0 var(--accent);
 }
 
-.main{
-  width:100%;
-  margin-left:250px;
-  padding:25px;
+.nav-icon{
+  width:22px;
+  text-align:center;
+  font-size:17px;
+}
+
+.sidebar-bottom{
+  margin-top:22px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
 }
 
 /* =========================
-   TOPBAR
+   MAIN
 ========================= */
+
+.main{
+  width:calc(100% - 255px);
+  margin-left:255px;
+  min-height:100vh;
+  padding:22px 28px 45px;
+}
 
 .topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:20px;
+  gap:15px;
   margin-bottom:25px;
 }
 
-.welcome h1{
-  font-size:25px;
+.mobile-menu{
+  display:none;
 }
 
-.welcome p{
+.welcome{
+  font-size:14px;
   color:var(--muted);
-  font-size:13px;
-  margin-top:5px;
 }
 
-.profile{
+.welcome strong{
+  color:#fff;
+}
+
+.top-actions{
   display:flex;
   align-items:center;
-  gap:11px;
-  background:#0c1726;
-  border:1px solid var(--line);
-  padding:8px 12px;
-  border-radius:13px;
+  gap:10px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:rgba(255,255,255,.035);
+  color:#dce5f4;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+.notification-dot{
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  right:9px;
+  top:8px;
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
+}
+
+.profile-pill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:5px 11px 5px 6px;
+  border:1px solid var(--border);
+  border-radius:30px;
+  background:rgba(255,255,255,.035);
 }
 
 .avatar{
-  width:36px;
-  height:36px;
+  width:34px;
+  height:34px;
   border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,var(--blue),var(--purple));
-  font-weight:700;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#4f8cff,#7c5cff);
+  font-weight:800;
+  font-size:13px;
 }
 
-.profile small{
+.profile-info{
+  line-height:1.2;
+}
+
+.profile-info strong{
   display:block;
+  font-size:12px;
+}
+
+.profile-info span{
+  display:block;
+  font-size:10px;
   color:var(--muted);
-  margin-top:3px;
+}
+
+/* =========================
+   VIEWS
+========================= */
+
+.view{
+  display:none;
+  animation:fadeIn .25s ease;
+}
+
+.view.active{
+  display:block;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(105,151,255,.18);
+  border-radius:24px;
+  padding:30px;
+  background:
+    radial-gradient(circle at 85% 20%,rgba(124,92,255,.28),transparent 30%),
+    radial-gradient(circle at 50% 120%,rgba(79,140,255,.16),transparent 40%),
+    linear-gradient(135deg,#0b1729,#091321);
+  box-shadow:var(--shadow);
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  right:-100px;
+  bottom:-150px;
+  border-radius:50%;
+  border:1px solid rgba(110,155,255,.15);
+  box-shadow:
+    0 0 0 35px rgba(110,155,255,.03),
+    0 0 0 70px rgba(110,155,255,.02);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+
+.hero-kicker{
+  color:#86aaff;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1.7px;
+  margin-bottom:10px;
+}
+
+.hero-title{
+  font-size:clamp(25px,4vw,39px);
+  line-height:1.05;
+  letter-spacing:-1.6px;
+  max-width:620px;
+}
+
+.hero-title span{
+  color:#86aaff;
+}
+
+.hero-copy{
+  color:#8998ad;
+  font-size:13px;
+  max-width:590px;
+  line-height:1.7;
+  margin:13px 0 22px;
+}
+
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.primary-btn,
+.secondary-btn{
+  border:0;
+  border-radius:11px;
+  padding:12px 17px;
+  font-weight:750;
+  transition:.2s;
+}
+
+.primary-btn{
+  color:#fff;
+  background:linear-gradient(135deg,#4f8cff,#675cf5);
+  box-shadow:0 10px 28px rgba(79,140,255,.22);
+}
+
+.secondary-btn{
+  color:#d9e4f5;
+  background:rgba(255,255,255,.055);
+  border:1px solid var(--border);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover{
+  transform:translateY(-2px);
 }
 
 /* =========================
    BALANCE
 ========================= */
 
-.balance-card{
-  background:
-    linear-gradient(135deg,rgba(45,140,255,.17),rgba(104,92,255,.08)),
-    var(--panel);
-  border:1px solid rgba(70,135,255,.2);
-  border-radius:22px;
-  padding:27px;
-  margin-bottom:20px;
+.balance-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:16px;
+  margin-top:18px;
+}
+
+.card{
+  background:rgba(10,20,34,.86);
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:20px;
+  box-shadow:0 12px 35px rgba(0,0,0,.18);
+}
+
+.card-title{
+  color:#78879c;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.3px;
+  font-weight:800;
+}
+
+.balance-number{
+  font-size:34px;
+  font-weight:850;
+  letter-spacing:-1px;
+  margin:9px 0 6px;
+}
+
+.gain{
+  color:var(--green);
+  font-size:12px;
+  font-weight:750;
+}
+
+.wallet-line{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:20px;
+  padding-top:15px;
+  border-top:1px solid var(--border);
+}
+
+.wallet-id{
+  color:#b6c4d8;
+  font-family:monospace;
+  font-size:12px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.copy-btn{
+  border:0;
+  background:rgba(79,140,255,.1);
+  color:#8db0ff;
+  border-radius:8px;
+  padding:7px 9px;
+  font-size:11px;
+}
+
+.asset-mini{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:13px;
+}
+
+.asset-box{
+  padding:13px;
+  border-radius:13px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.asset-symbol{
+  font-size:11px;
+  color:#8796aa;
+}
+
+.asset-price{
+  font-size:15px;
+  font-weight:800;
+  margin-top:5px;
+}
+
+/* =========================
+   SECTION HEAD
+========================= */
+
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:15px;
+  margin:28px 0 13px;
+}
+
+.section-head h2{
+  font-size:18px;
+  letter-spacing:-.5px;
+}
+
+.section-head p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.view-link{
+  color:#79a2ff;
+  font-size:11px;
+  border:0;
+  background:none;
+}
+
+/* =========================
+   MARKET CARDS
+========================= */
+
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.market-card{
+  padding:16px;
+  border-radius:17px;
+  background:linear-gradient(145deg,rgba(15,29,48,.94),rgba(8,16,28,.9));
+  border:1px solid var(--border);
+  transition:.2s;
+}
+
+.market-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(111,155,255,.25);
+}
+
+.coin-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.coin{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.coin-icon{
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.07);
+  font-weight:900;
+}
+
+.coin-name strong{
+  display:block;
+  font-size:12px;
+}
+
+.coin-name span{
+  display:block;
+  color:#69798e;
+  font-size:9px;
+  margin-top:2px;
+}
+
+.change-up{
+  color:var(--green);
+  font-size:10px;
+  font-weight:800;
+}
+
+.chart{
+  height:55px;
+  margin:13px 0 7px;
   position:relative;
   overflow:hidden;
 }
 
-.balance-card:after{
-  content:"";
-  position:absolute;
-  width:220px;
-  height:220px;
-  border-radius:50%;
-  background:rgba(45,140,255,.08);
-  right:-100px;
-  top:-110px;
+.chart svg{
+  width:100%;
+  height:100%;
 }
 
-.balance-label{
-  color:#9eacc0;
-  font-size:13px;
-}
-
-.balance{
-  font-size:37px;
-  font-weight:700;
-  margin:9px 0 4px;
-}
-
-.balance-note{
-  color:#6f8097;
-  font-size:12px;
+.market-price{
+  font-size:16px;
+  font-weight:850;
 }
 
 /* =========================
-   ACTIONS
+   PROMOS
 ========================= */
 
-.actions{
+.promo-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:14px;
+}
+
+.promo{
+  min-height:155px;
+  padding:22px;
+  border-radius:20px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+
+.promo-main{
+  background:
+    radial-gradient(circle at 85% 30%,rgba(79,140,255,.32),transparent 28%),
+    linear-gradient(120deg,#101e34,#0b1422);
+}
+
+.promo-side{
+  background:
+    radial-gradient(circle at 90% 0%,rgba(244,189,79,.2),transparent 30%),
+    linear-gradient(120deg,#171a24,#101522);
+}
+
+.promo-tag{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:7px;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  background:rgba(255,255,255,.07);
+  color:#a8c1ff;
+}
+
+.promo h3{
+  font-size:20px;
+  margin:12px 0 7px;
+  letter-spacing:-.6px;
+}
+
+.promo p{
+  color:#8997aa;
+  font-size:11px;
+  line-height:1.6;
+  max-width:430px;
+}
+
+.promo-btn{
+  margin-top:13px;
+  border:0;
+  background:transparent;
+  color:#8db0ff;
+  font-weight:800;
+  font-size:11px;
+}
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.action-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:12px;
-  margin-bottom:20px;
 }
 
 .action{
-  border:1px solid var(--line);
-  background:var(--panel);
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.025);
   color:#fff;
-  border-radius:15px;
-  padding:17px 10px;
+  border-radius:16px;
+  padding:18px;
+  text-align:left;
   transition:.2s;
 }
 
 .action:hover{
-  transform:translateY(-2px);
-  border-color:#355476;
-  background:var(--panel2);
+  transform:translateY(-3px);
+  background:rgba(79,140,255,.08);
+  border-color:rgba(79,140,255,.25);
 }
 
-.action .icon{
-  font-size:21px;
-  margin-bottom:9px;
+.action-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  margin-bottom:13px;
+  background:rgba(79,140,255,.11);
+  font-size:18px;
 }
 
 .action strong{
@@ -283,389 +685,565 @@ a{
   font-size:13px;
 }
 
-.action small{
+.action span{
   display:block;
-  color:var(--muted);
-  margin-top:4px;
+  color:#74849a;
   font-size:10px;
+  margin-top:4px;
 }
 
 /* =========================
-   GRID
+   TABLE
 ========================= */
 
-.grid{
-  display:grid;
-  grid-template-columns:1.3fr .7fr;
-  gap:18px;
+.table-wrap{
+  overflow-x:auto;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:rgba(10,20,34,.72);
 }
 
-.card{
-  background:rgba(11,21,36,.88);
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:19px;
-  padding:20px;
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
 }
 
-.card-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
+th{
+  color:#65758a;
+  text-align:left;
+  padding:14px 16px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  border-bottom:1px solid var(--border);
 }
 
-.card-header h2{
-  font-size:16px;
-}
-
-.card-header span{
-  color:var(--muted);
+td{
+  padding:15px 16px;
   font-size:11px;
+  color:#d4deec;
+  border-bottom:1px solid rgba(255,255,255,.045);
 }
 
-.assets{
-  display:grid;
-  gap:10px;
-}
-
-.asset{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px;
-  background:#0d1929;
-  border:1px solid #1b2b40;
-  border-radius:13px;
-}
-
-.asset-left{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.coin{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#17283d;
-  font-weight:700;
-}
-
-.asset small{
-  color:var(--muted);
-  display:block;
-  margin-top:3px;
-}
-
-.asset-right{
-  text-align:right;
-}
-
-.asset-right strong{
-  display:block;
-}
-
-.asset-right small{
-  color:var(--muted);
-}
-
-/* =========================
-   TRANSACTIONS
-========================= */
-
-.transactions{
-  display:grid;
-  gap:9px;
-}
-
-.transaction{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:13px;
-  border-bottom:1px solid #18283b;
-}
-
-.transaction:last-child{
+tr:last-child td{
   border-bottom:0;
 }
 
-.tx-left{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.tx-icon{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  background:#16263a;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.tx-left small{
-  display:block;
-  color:var(--muted);
-  margin-top:3px;
-}
-
 .status{
-  font-size:10px;
+  display:inline-flex;
   padding:5px 8px;
-  border-radius:20px;
-  display:inline-block;
+  border-radius:7px;
+  font-size:9px;
+  font-weight:800;
+  text-transform:capitalize;
 }
 
-.pending{
-  background:rgba(244,183,64,.11);
-  color:#f4c45e;
+.status.pending{
+  color:#f6c96a;
+  background:rgba(244,189,79,.1);
 }
 
-.approved{
-  background:rgba(41,196,122,.11);
-  color:#52d895;
+.status.approved,
+.status.completed,
+.status.success{
+  color:#51e4b3;
+  background:rgba(32,211,155,.1);
 }
 
-.declined{
-  background:rgba(239,91,104,.11);
-  color:#ff7884;
+.status.declined,
+.status.failed,
+.status.cancelled{
+  color:#ff7b87;
+  background:rgba(255,95,109,.1);
 }
 
-.empty{
-  text-align:center;
-  padding:28px 10px;
-  color:#65758b;
-  font-size:13px;
+.status.processing{
+  color:#8db0ff;
+  background:rgba(79,140,255,.1);
 }
 
 /* =========================
-   MODAL
+   PORTFOLIO
 ========================= */
 
-.modal-bg{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  backdrop-filter:blur(8px);
-  display:none;
+.portfolio-grid{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:15px;
+}
+
+.allocation{
+  display:flex;
   align-items:center;
   justify-content:center;
-  padding:18px;
-  z-index:100;
+  min-height:280px;
+  position:relative;
 }
 
-.modal-bg.show{
-  display:flex;
+.donut{
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  background:conic-gradient(#4f8cff 0 42%,#7c5cff 42% 72%,#20d39b 72% 90%,#f4bd4f 90% 100%);
+  display:grid;
+  place-items:center;
 }
 
-.modal{
-  width:100%;
-  max-width:500px;
-  max-height:90vh;
-  overflow:auto;
-  background:#0b1625;
-  border:1px solid #24364d;
-  border-radius:22px;
-  padding:25px;
-  box-shadow:0 30px 80px rgba(0,0,0,.55);
+.donut:after{
+  content:"";
+  width:128px;
+  height:128px;
+  border-radius:50%;
+  background:#0a1422;
 }
 
-.modal-head{
+.donut-center{
+  position:absolute;
+  text-align:center;
+  z-index:2;
+}
+
+.donut-center strong{
+  display:block;
+  font-size:21px;
+}
+
+.donut-center span{
+  color:#78879c;
+  font-size:10px;
+}
+
+.asset-list{
+  display:grid;
+  gap:8px;
+}
+
+.asset-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:21px;
-}
-
-.modal-head h2{
-  font-size:20px;
-}
-
-.close{
-  width:35px;
-  height:35px;
-  border-radius:10px;
-  border:1px solid #27394f;
-  background:#101e30;
-  color:#9aabbe;
-}
-
-.close:hover{
-  color:#fff;
-}
-
-.field{
-  margin-bottom:16px;
-}
-
-.field label{
-  display:block;
-  color:#bdc9d8;
-  font-size:12px;
-  font-weight:600;
-  margin-bottom:7px;
-}
-
-.field input,
-.field select{
-  width:100%;
-  height:47px;
-  background:#07111e;
-  border:1px solid #26384f;
-  color:#fff;
+  padding:13px;
   border-radius:11px;
-  padding:0 13px;
-  outline:none;
+  background:rgba(255,255,255,.035);
 }
 
-.field input:focus,
-.field select:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 0 3px rgba(45,140,255,.1);
+.asset-row-left{
+  display:flex;
+  gap:9px;
+  align-items:center;
 }
 
-.wallet-box{
-  background:rgba(45,140,255,.08);
-  border:1px solid rgba(45,140,255,.22);
-  border-radius:13px;
-  padding:15px;
-  margin-bottom:18px;
-}
-
-.wallet-box small{
-  color:#8394aa;
-  display:block;
-  margin-bottom:6px;
-}
-
-.wallet-id{
-  font-size:17px;
-  font-weight:700;
-  letter-spacing:.6px;
-  word-break:break-all;
-}
-
-.copy{
-  float:right;
-  border:0;
-  background:transparent;
-  color:#61a7ff;
+.asset-row strong{
   font-size:11px;
-  margin-top:-19px;
 }
 
-.info{
-  background:#0d1b2d;
-  border:1px solid #1d3046;
-  color:#8fa0b6;
-  border-radius:11px;
-  padding:12px;
-  font-size:11px;
-  line-height:1.6;
-  margin-bottom:17px;
+.asset-row small{
+  display:block;
+  color:#6f7e93;
+  font-size:9px;
+  margin-top:2px;
 }
 
-.primary{
+/* =========================
+   WALLET
+========================= */
+
+.wallet-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.wallet-card{
+  padding:19px;
+  border-radius:17px;
+  border:1px solid var(--border);
+  background:linear-gradient(145deg,#0d1a2b,#08111e);
+}
+
+.wallet-card-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.wallet-card h3{
+  font-size:14px;
+}
+
+.wallet-balance{
+  font-size:24px;
+  font-weight:850;
+  margin:20px 0 7px;
+}
+
+.wallet-address{
+  font-family:monospace;
+  font-size:9px;
+  color:#718198;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* =========================
+   MARKETS
+========================= */
+
+.market-large-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.market-large{
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:19px;
+  background:linear-gradient(145deg,#0d1b2e,#08111e);
+}
+
+.market-large-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.market-large-chart{
+  height:190px;
+  margin-top:20px;
+  border-bottom:1px solid var(--border);
+}
+
+.market-large-chart svg{
   width:100%;
-  height:48px;
-  border:0;
-  border-radius:11px;
-  background:linear-gradient(135deg,var(--blue),var(--purple));
-  color:#fff;
-  font-weight:700;
-}
-
-.primary:disabled{
-  opacity:.55;
-}
-
-.secondary{
-  width:100%;
-  height:45px;
-  border:1px solid #293d55;
-  background:#101e30;
-  color:#b5c1d0;
-  border-radius:11px;
-  margin-top:9px;
+  height:100%;
 }
 
 /* =========================
    CHAT
 ========================= */
 
-.chat{
+.chat-layout{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  min-height:560px;
+  border:1px solid var(--border);
+  border-radius:19px;
+  overflow:hidden;
+  background:#091321;
+}
+
+.chat-sidebar{
+  border-right:1px solid var(--border);
+  padding:18px;
+}
+
+.support-card{
+  padding:15px;
+  border-radius:13px;
+  background:rgba(79,140,255,.08);
+  border:1px solid rgba(79,140,255,.15);
+}
+
+.support-card strong{
+  display:block;
+  font-size:12px;
+}
+
+.support-card span{
+  display:block;
+  color:#74849a;
+  font-size:10px;
+  margin-top:5px;
+}
+
+.chat-main{
   display:flex;
   flex-direction:column;
-  height:510px;
+}
+
+.chat-head{
+  padding:16px 18px;
+  border-bottom:1px solid var(--border);
+}
+
+.chat-head strong{
+  font-size:13px;
+}
+
+.chat-head span{
+  display:block;
+  color:#5de0b2;
+  font-size:9px;
+  margin-top:4px;
 }
 
 .messages{
   flex:1;
-  overflow:auto;
-  padding:5px 3px 15px;
+  padding:20px;
+  overflow-y:auto;
+  min-height:390px;
 }
 
-.message{
-  max-width:80%;
-  padding:10px 12px;
+.chat-empty{
+  height:100%;
+  min-height:330px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:#65758a;
+  font-size:11px;
+}
+
+.bubble{
+  max-width:75%;
+  padding:11px 13px;
   border-radius:13px;
   margin-bottom:10px;
-  font-size:12px;
+  font-size:11px;
   line-height:1.5;
 }
 
-.message.support{
-  background:#13243a;
-  border:1px solid #213750;
+.bubble.admin{
+  background:rgba(255,255,255,.055);
+  border:1px solid var(--border);
 }
 
-.message.customer{
+.bubble.customer{
   margin-left:auto;
-  background:linear-gradient(135deg,#1d69c7,#5147bd);
-}
-
-.message time{
-  display:block;
-  color:#71849b;
-  font-size:9px;
-  margin-top:5px;
-}
-
-.message.customer time{
-  color:#c6d7f0;
+  background:linear-gradient(135deg,#4f8cff,#675cf5);
 }
 
 .chat-input{
   display:flex;
   gap:8px;
-  border-top:1px solid #1b2d42;
-  padding-top:13px;
+  padding:13px;
+  border-top:1px solid var(--border);
 }
 
 .chat-input input{
   flex:1;
-  height:43px;
-  border-radius:11px;
-  border:1px solid #26384f;
-  background:#07111e;
+  min-width:0;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:11px;
+  background:rgba(255,255,255,.04);
   color:#fff;
-  padding:0 12px;
   outline:none;
 }
 
 .chat-input button{
-  width:45px;
+  width:44px;
   border:0;
-  border-radius:11px;
-  background:var(--blue);
+  border-radius:10px;
   color:#fff;
+  background:linear-gradient(135deg,#4f8cff,#675cf5);
+}
+
+/* =========================
+   SECURITY / SETTINGS
+========================= */
+
+.settings-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.setting-card{
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:rgba(10,20,34,.8);
+}
+
+.setting-card h3{
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.setting-card p{
+  color:#74849a;
+  font-size:11px;
+  line-height:1.6;
+}
+
+.setting-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.setting-row:last-child{
+  border-bottom:0;
+}
+
+.setting-row strong{
+  display:block;
+  font-size:11px;
+}
+
+.setting-row span{
+  display:block;
+  color:#69798e;
+  font-size:9px;
+  margin-top:3px;
+}
+
+.security-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 9px;
+  border-radius:8px;
+  color:#51e4b3;
+  background:rgba(32,211,155,.1);
+  font-size:9px;
+  font-weight:800;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(9px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:3000;
+}
+
+.modal-overlay.show{
+  display:flex;
+}
+
+.modal{
+  width:min(510px,100%);
+  max-height:90vh;
+  overflow-y:auto;
+  border:1px solid rgba(120,160,255,.18);
+  border-radius:22px;
+  background:linear-gradient(145deg,#0e1b2d,#08111d);
+  box-shadow:0 30px 100px rgba(0,0,0,.55);
+  padding:23px;
+  animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+  from{opacity:0;transform:scale(.97) translateY(8px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:start;
+  margin-bottom:20px;
+}
+
+.modal-head h2{
+  font-size:19px;
+}
+
+.modal-head p{
+  color:#74849a;
+  font-size:10px;
+  line-height:1.5;
+  margin-top:5px;
+}
+
+.close-btn{
+  width:34px;
+  height:34px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:rgba(255,255,255,.04);
+  color:#fff;
+}
+
+.form-group{
+  margin-bottom:14px;
+}
+
+.form-group label{
+  display:block;
+  color:#91a0b4;
+  font-size:10px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  padding:12px;
+  outline:none;
+}
+
+.form-group textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:rgba(79,140,255,.55);
+}
+
+.wallet-highlight{
+  padding:14px;
+  border-radius:12px;
+  background:rgba(79,140,255,.08);
+  border:1px solid rgba(79,140,255,.14);
+  margin-bottom:15px;
+}
+
+.wallet-highlight small{
+  color:#728198;
+  font-size:9px;
+}
+
+.wallet-highlight strong{
+  display:block;
+  margin-top:5px;
+  color:#b8ceff;
+  font-family:monospace;
+  font-size:12px;
+  word-break:break-all;
+}
+
+.modal-submit{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:11px;
+  color:#fff;
+  font-weight:800;
+  background:linear-gradient(135deg,#4f8cff,#675cf5);
+}
+
+.modal-note{
+  color:#63738a;
+  font-size:9px;
+  line-height:1.6;
+  text-align:center;
+  margin-top:11px;
 }
 
 /* =========================
@@ -674,40 +1252,72 @@ a{
 
 .toast{
   position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:300;
-  background:#102033;
-  border:1px solid #29405b;
-  padding:13px 16px;
-  border-radius:12px;
-  color:#dce6f2;
-  font-size:12px;
-  box-shadow:0 15px 40px rgba(0,0,0,.35);
-  transform:translateY(20px);
+  left:50%;
+  bottom:25px;
+  transform:translate(-50%,20px);
   opacity:0;
   pointer-events:none;
+  z-index:5000;
+  padding:12px 17px;
+  border-radius:11px;
+  background:#111e30;
+  border:1px solid var(--border);
+  color:#fff;
+  font-size:11px;
+  box-shadow:var(--shadow);
   transition:.25s;
 }
 
 .toast.show{
-  transform:translateY(0);
   opacity:1;
+  transform:translate(-50%,0);
+}
+
+.toast.success{
+  border-color:rgba(32,211,155,.25);
+}
+
+.toast.error{
+  border-color:rgba(255,95,109,.25);
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  color:#64748a;
+  font-size:11px;
+  padding:20px;
+  text-align:center;
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-.mobile-menu{
-  display:none;
+@media(max-width:1000px){
+  .market-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .wallet-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .balance-grid,
+  .promo-grid,
+  .portfolio-grid{
+    grid-template-columns:1fr;
+  }
 }
 
-@media(max-width:850px){
+@media(max-width:760px){
 
   .sidebar{
-    transform:translateX(-100%);
+    transform:translateX(-105%);
     transition:.25s;
+    box-shadow:20px 0 70px rgba(0,0,0,.45);
   }
 
   .sidebar.open{
@@ -715,58 +1325,93 @@ a{
   }
 
   .main{
+    width:100%;
     margin-left:0;
-    padding:17px;
+    padding:14px 14px 35px;
   }
 
   .mobile-menu{
-    display:block;
-    border:1px solid #26384f;
-    background:#0d1929;
-    color:#fff;
+    display:grid;
     width:40px;
     height:40px;
+    place-items:center;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+    color:#fff;
     border-radius:11px;
   }
 
   .topbar{
-    align-items:flex-start;
+    margin-bottom:17px;
   }
 
-  .grid{
-    grid-template-columns:1fr;
+  .welcome{
+    display:none;
   }
-
-  .actions{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-@media(max-width:520px){
 
   .profile-info{
     display:none;
   }
 
-  .welcome h1{
-    font-size:21px;
+  .hero{
+    padding:22px;
+    border-radius:20px;
   }
 
-  .balance{
-    font-size:31px;
+  .hero-title{
+    font-size:28px;
   }
 
-  .actions{
-    gap:8px;
+  .balance-number{
+    font-size:29px;
   }
 
-  .action{
-    padding:14px 8px;
+  .market-grid,
+  .action-grid,
+  .wallet-grid,
+  .settings-grid,
+  .market-large-grid{
+    grid-template-columns:1fr;
   }
 
-  .modal{
-    padding:20px;
-    border-radius:18px;
+  .asset-mini{
+    grid-template-columns:1fr;
+  }
+
+  .chat-layout{
+    grid-template-columns:1fr;
+  }
+
+  .chat-sidebar{
+    display:none;
+  }
+
+  .section-head{
+    margin-top:23px;
+  }
+
+  .promo{
+    min-height:140px;
+  }
+}
+
+@media(max-width:420px){
+  .top-actions{
+    gap:5px;
+  }
+
+  .icon-btn{
+    width:38px;
+    height:38px;
+  }
+
+  .profile-pill{
+    padding-right:6px;
+  }
+
+  .avatar{
+    width:31px;
+    height:31px;
   }
 }
 </style>
@@ -776,239 +1421,710 @@ a{
 
 <div class="app">
 
-  <!-- SIDEBAR -->
+  <!-- =========================
+       SIDEBAR
+  ========================== -->
 
   <aside class="sidebar" id="sidebar">
 
-    <div class="logo">
-      <div class="logo-mark">C</div>
-
-      <div>
-        <strong>CoinBridge</strong>
-        <span>Secure financial platform</span>
-      </div>
+    <div class="brand">
+      <div class="brand-mark">C</div>
+      <div class="brand-name">Coin<span>Bridge</span></div>
     </div>
 
-    <div class="nav-title">Main</div>
+    <div class="nav-label">Main</div>
 
-    <nav class="nav">
-
-      <button class="active" onclick="showSection('dashboard',this)">
-        <span>▣</span> Dashboard
-      </button>
-
-      <button onclick="showSection('portfolio',this)">
-        <span>◈</span> Portfolio
-      </button>
-
-      <button onclick="openModal('walletModal')">
-        <span>◉</span> Wallet
-      </button>
-
-      <button onclick="showSection('transactions',this)">
-        <span>▤</span> Transactions
-      </button>
-
-      <button onclick="showSection('messages',this)">
-        <span>💬</span> Messages
-      </button>
-
-    </nav>
-
-    <div class="nav-title">Account</div>
-
-    <nav class="nav">
-
-      <button onclick="showToast('Notifications will appear here.')">
-        <span>🔔</span> Notifications
-      </button>
-
-      <button onclick="showToast('Account settings are being prepared.')">
-        <span>⚙</span> Settings
-      </button>
-
-    </nav>
-
-    <button class="logout" id="logoutButton">
-      ⇥ &nbsp; Sign out
+    <button class="nav-item active" data-view="dashboard">
+      <span class="nav-icon">⌂</span>
+      <span>Dashboard</span>
     </button>
+
+    <button class="nav-item" data-view="portfolio">
+      <span class="nav-icon">◈</span>
+      <span>Portfolio</span>
+    </button>
+
+    <button class="nav-item" data-view="wallet">
+      <span class="nav-icon">▣</span>
+      <span>Wallet</span>
+    </button>
+
+    <button class="nav-item" data-view="markets">
+      <span class="nav-icon">↗</span>
+      <span>Markets</span>
+    </button>
+
+    <button class="nav-item" data-view="transactions">
+      <span class="nav-icon">≡</span>
+      <span>Transactions</span>
+    </button>
+
+    <button class="nav-item" data-view="messages">
+      <span class="nav-icon">◌</span>
+      <span>Messages</span>
+    </button>
+
+    <div class="nav-label">Account</div>
+
+    <button class="nav-item" data-view="notifications">
+      <span class="nav-icon">♢</span>
+      <span>Notifications</span>
+    </button>
+
+    <button class="nav-item" data-view="security">
+      <span class="nav-icon">♙</span>
+      <span>Security</span>
+    </button>
+
+    <button class="nav-item" data-view="settings">
+      <span class="nav-icon">⚙</span>
+      <span>Settings</span>
+    </button>
+
+    <div class="sidebar-bottom">
+      <button class="nav-item" id="logoutBtn">
+        <span class="nav-icon">↪</span>
+        <span>Sign out</span>
+      </button>
+    </div>
 
   </aside>
 
-
-  <!-- MAIN -->
+  <!-- =========================
+       MAIN
+  ========================== -->
 
   <main class="main">
 
     <header class="topbar">
 
-      <div style="display:flex;gap:12px;align-items:center;">
-
-        <button
-          class="mobile-menu"
-          onclick="toggleSidebar()"
-        >☰</button>
-
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
         <div class="welcome">
-          <h1 id="welcomeName">Welcome back</h1>
-          <p>Your CoinBridge account at a glance.</p>
+          Welcome back, <strong id="userName">Customer</strong>
         </div>
-
       </div>
 
-      <div class="profile">
+      <div class="top-actions">
 
-        <div class="avatar" id="avatar">C</div>
+        <button class="icon-btn" id="notificationBtn" title="Notifications">
+          ♢
+          <span class="notification-dot"></span>
+        </button>
 
-        <div class="profile-info">
-          <strong id="profileName">Customer</strong>
-          <small id="profileEmail">Loading...</small>
+        <div class="profile-pill">
+          <div class="avatar" id="avatar">C</div>
+          <div class="profile-info">
+            <strong id="profileName">Customer</strong>
+            <span id="profileEmail">Account</span>
+          </div>
         </div>
 
       </div>
 
     </header>
 
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
 
-    <!-- DASHBOARD -->
+    <section class="view active" id="view-dashboard">
 
-    <section id="dashboardSection">
+      <div class="hero">
 
-      <div class="balance-card">
+        <div class="hero-content">
 
-        <div class="balance-label">
-          Total Portfolio Balance
-        </div>
+          <div class="hero-kicker">Digital asset platform</div>
 
-        <div class="balance" id="totalBalance">
-          —
-        </div>
+          <h1 class="hero-title">
+            Your digital assets.<br>
+            <span>Connected through CoinBridge.</span>
+          </h1>
 
-        <div class="balance-note">
-          Your current CoinBridge portfolio value
+          <p class="hero-copy">
+            Manage your supported digital assets, monitor market movements,
+            manage your wallet and submit account requests from one secure
+            dashboard.
+          </p>
+
+          <div class="hero-actions">
+            <button class="primary-btn" data-action="deposit">
+              + Deposit
+            </button>
+
+            <button class="secondary-btn" data-action="send">
+              Send
+            </button>
+
+            <button class="secondary-btn" data-action="withdraw">
+              Withdraw
+            </button>
+
+            <button class="secondary-btn" data-action="swap">
+              Swap
+            </button>
+          </div>
+
         </div>
 
       </div>
 
+      <div class="balance-grid">
 
-      <!-- ACTIONS -->
+        <div class="card">
 
-      <div class="actions">
+          <div class="card-title">Total portfolio balance</div>
 
-        <button class="action" onclick="openModal('depositModal')">
-          <div class="icon">＋</div>
+          <div class="balance-number" id="totalBalance">
+            $0.00
+          </div>
+
+          <div class="gain">
+            ● Account balance
+          </div>
+
+          <div class="wallet-line">
+            <div>
+              <div class="card-title">Primary Wallet ID</div>
+              <div class="wallet-id" id="primaryWalletId">
+                Loading...
+              </div>
+            </div>
+
+            <button class="copy-btn" id="copyWallet">
+              Copy
+            </button>
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-title">Account overview</div>
+
+          <div class="asset-mini">
+
+            <div class="asset-box">
+              <div class="asset-symbol">BTC</div>
+              <div class="asset-price" id="btcBalance">$0</div>
+            </div>
+
+            <div class="asset-box">
+              <div class="asset-symbol">ETH</div>
+              <div class="asset-price" id="ethBalance">$0</div>
+            </div>
+
+            <div class="asset-box">
+              <div class="asset-symbol">USDC</div>
+              <div class="asset-price" id="usdcBalance">$0</div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>Market pulse</h2>
+          <p>Explore supported digital assets.</p>
+        </div>
+
+        <button class="view-link" data-view-link="markets">
+          View markets →
+        </button>
+      </div>
+
+      <div class="market-grid">
+
+        <div class="market-card">
+          <div class="coin-top">
+            <div class="coin">
+              <div class="coin-icon">₿</div>
+              <div class="coin-name">
+                <strong>Bitcoin</strong>
+                <span>BTC</span>
+              </div>
+            </div>
+            <span class="change-up">Market</span>
+          </div>
+          <div class="chart">
+            <svg viewBox="0 0 300 70" preserveAspectRatio="none">
+              <polyline
+                points="0,55 25,50 50,54 75,38 100,43 125,28 150,34 175,20 200,27 225,15 250,22 275,10 300,17"
+                fill="none"
+                stroke="#4f8cff"
+                stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="market-price">BTC</div>
+        </div>
+
+        <div class="market-card">
+          <div class="coin-top">
+            <div class="coin">
+              <div class="coin-icon">Ξ</div>
+              <div class="coin-name">
+                <strong>Ethereum</strong>
+                <span>ETH</span>
+              </div>
+            </div>
+            <span class="change-up">Market</span>
+          </div>
+          <div class="chart">
+            <svg viewBox="0 0 300 70" preserveAspectRatio="none">
+              <polyline
+                points="0,45 25,42 50,48 75,34 100,40 125,29 150,35 175,25 200,30 225,19 250,26 275,16 300,22"
+                fill="none"
+                stroke="#7c5cff"
+                stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="market-price">ETH</div>
+        </div>
+
+        <div class="market-card">
+          <div class="coin-top">
+            <div class="coin">
+              <div class="coin-icon">$</div>
+              <div class="coin-name">
+                <strong>USD Coin</strong>
+                <span>USDC</span>
+              </div>
+            </div>
+            <span class="change-up">Stable</span>
+          </div>
+          <div class="chart">
+            <svg viewBox="0 0 300 70" preserveAspectRatio="none">
+              <polyline
+                points="0,35 30,34 60,36 90,33 120,35 150,34 180,35 210,33 240,35 270,34 300,35"
+                fill="none"
+                stroke="#20d39b"
+                stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="market-price">USDC</div>
+        </div>
+
+        <div class="market-card">
+          <div class="coin-top">
+            <div class="coin">
+              <div class="coin-icon">◆</div>
+              <div class="coin-name">
+                <strong>Digital Assets</strong>
+                <span>MARKET</span>
+              </div>
+            </div>
+            <span class="change-up">Explore</span>
+          </div>
+          <div class="chart">
+            <svg viewBox="0 0 300 70" preserveAspectRatio="none">
+              <polyline
+                points="0,50 30,45 60,49 90,31 120,37 150,25 180,32 210,18 240,27 270,14 300,20"
+                fill="none"
+                stroke="#f4bd4f"
+                stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="market-price">CoinBridge Markets</div>
+        </div>
+
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>Digital asset opportunities</h2>
+          <p>Stay informed and explore supported markets.</p>
+        </div>
+      </div>
+
+      <div class="promo-grid">
+
+        <div class="promo promo-main">
+          <span class="promo-tag">Market insight</span>
+          <h3>Explore the digital asset market</h3>
+          <p>
+            Monitor supported assets and keep your portfolio connected
+            to the markets you follow.
+          </p>
+          <button class="promo-btn" data-view-link="markets">
+            Explore markets →
+          </button>
+        </div>
+
+        <div class="promo promo-side">
+          <span class="promo-tag">Portfolio</span>
+          <h3>Build your view</h3>
+          <p>
+            Review your supported assets and keep track of your wallet
+            positions in one place.
+          </p>
+          <button class="promo-btn" data-view-link="portfolio">
+            View portfolio →
+          </button>
+        </div>
+
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>Quick actions</h2>
+          <p>Manage your account.</p>
+        </div>
+      </div>
+
+      <div class="action-grid">
+
+        <button class="action" data-action="deposit">
+          <div class="action-icon">＋</div>
           <strong>Deposit</strong>
-          <small>Add funds</small>
+          <span>Add funds to a supported wallet.</span>
         </button>
 
-        <button class="action" onclick="openModal('sendModal')">
-          <div class="icon">↗</div>
+        <button class="action" data-action="send">
+          <div class="action-icon">↗</div>
           <strong>Send</strong>
-          <small>Transfer funds</small>
+          <span>Send supported assets to a wallet ID.</span>
         </button>
 
-        <button class="action" onclick="openModal('withdrawModal')">
-          <div class="icon">↙</div>
+        <button class="action" data-action="withdraw">
+          <div class="action-icon">↙</div>
           <strong>Withdraw</strong>
-          <small>Withdraw funds</small>
+          <span>Submit a withdrawal request.</span>
         </button>
 
-        <button class="action" onclick="openModal('swapModal')">
-          <div class="icon">⇄</div>
+        <button class="action" data-action="swap">
+          <div class="action-icon">⇄</div>
           <strong>Swap</strong>
-          <small>Exchange assets</small>
+          <span>Request an asset exchange.</span>
         </button>
 
       </div>
 
-
-      <div class="grid">
-
-        <div class="card">
-
-          <div class="card-header">
-            <h2>Your Assets</h2>
-            <span>Current holdings</span>
-          </div>
-
-          <div class="assets" id="assetsList">
-
-            <div class="empty">
-              Loading wallet information...
-            </div>
-
-          </div>
-
+      <div class="section-head">
+        <div>
+          <h2>Recent activity</h2>
+          <p>Your latest account transactions.</p>
         </div>
 
+        <button class="view-link" data-view-link="transactions">
+          View all →
+        </button>
+      </div>
 
-        <div class="card">
-
-          <div class="card-header">
-            <h2>Recent Activity</h2>
-            <span>Latest</span>
-          </div>
-
-          <div class="transactions" id="recentTransactions">
-
-            <div class="empty">
-              No recent activity.
-            </div>
-
-          </div>
-
-        </div>
-
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Currency</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="recentTransactions">
+            <tr>
+              <td colspan="5" class="loading">Loading activity...</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
     </section>
 
+    <!-- =========================
+         PORTFOLIO
+    ========================== -->
 
-    <!-- PORTFOLIO -->
+    <section class="view" id="view-portfolio">
 
-    <section
-      id="portfolioSection"
-      style="display:none;"
-    >
-
-      <div class="card">
-
-        <div class="card-header">
+      <div class="section-head">
+        <div>
           <h2>Portfolio</h2>
-          <span>Your holdings</span>
+          <p>Your connected digital asset positions.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-grid">
+
+        <div class="card allocation">
+          <div class="donut"></div>
+          <div class="donut-center">
+            <strong id="portfolioCenter">$0</strong>
+            <span>Total value</span>
+          </div>
         </div>
 
-        <div class="assets" id="portfolioAssets">
-
-          <div class="empty">
-            Portfolio information will appear here.
+        <div class="card">
+          <div class="card-title">Your assets</div>
+          <div class="asset-list" id="portfolioAssets">
+            <div class="loading">Loading portfolio...</div>
           </div>
-
         </div>
 
       </div>
 
     </section>
 
+    <!-- =========================
+         WALLET
+    ========================== -->
 
-    <!-- TRANSACTIONS -->
+    <section class="view" id="view-wallet">
 
-    <section
-      id="transactionsSection"
-      style="display:none;"
-    >
+      <div class="section-head">
+        <div>
+          <h2>Wallet</h2>
+          <p>Your CoinBridge wallet balances and wallet IDs.</p>
+        </div>
 
-      <div class="card">
+        <button class="primary-btn" data-action="deposit">
+          + Deposit
+        </button>
+      </div>
 
-        <div class="card-header">
+      <div class="wallet-grid" id="walletGrid">
+        <div class="loading">Loading wallets...</div>
+      </div>
+
+    </section>
+
+    <!-- =========================
+         MARKETS
+    ========================== -->
+
+    <section class="view" id="view-markets">
+
+      <div class="section-head">
+        <div>
+          <h2>Markets</h2>
+          <p>Explore supported digital assets and market activity.</p>
+        </div>
+      </div>
+
+      <div class="market-large-grid">
+
+        <div class="market-large">
+          <div class="market-large-top">
+            <div class="coin">
+              <div class="coin-icon">₿</div>
+              <div class="coin-name">
+                <strong>Bitcoin</strong>
+                <span>BTC / Digital Asset</span>
+              </div>
+            </div>
+            <span class="change-up">Market</span>
+          </div>
+
+          <div class="market-large-chart">
+            <svg viewBox="0 0 600 190" preserveAspectRatio="none">
+              <polyline
+                points="0,145 40,138 80,151 120,110 160,125 200,87 240,105 280,68 320,80 360,58 400,72 440,45 480,60 520,32 560,45 600,25"
+                fill="none"
+                stroke="#4f8cff"
+                stroke-width="4"/>
+            </svg>
+          </div>
+
+          <div style="margin-top:15px;font-size:18px;font-weight:850;">
+            BTC
+          </div>
+        </div>
+
+        <div class="market-large">
+          <div class="market-large-top">
+            <div class="coin">
+              <div class="coin-icon">Ξ</div>
+              <div class="coin-name">
+                <strong>Ethereum</strong>
+                <span>ETH / Digital Asset</span>
+              </div>
+            </div>
+            <span class="change-up">Market</span>
+          </div>
+
+          <div class="market-large-chart">
+            <svg viewBox="0 0 600 190" preserveAspectRatio="none">
+              <polyline
+                points="0,130 40,120 80,139 120,105 160,116 200,88 240,100 280,74 320,86 360,60 400,76 440,51 480,63 520,40 560,53 600,34"
+                fill="none"
+                stroke="#7c5cff"
+                stroke-width="4"/>
+            </svg>
+          </div>
+
+          <div style="margin-top:15px;font-size:18px;font-weight:850;">
+            ETH
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>Supported assets</h2>
+          <p>Asset availability depends on your CoinBridge account.</p>
+        </div>
+      </div>
+
+      <div class="market-grid">
+
+        <div class="market-card">
+          <div class="coin">
+            <div class="coin-icon">₿</div>
+            <div class="coin-name">
+              <strong>Bitcoin</strong>
+              <span>BTC</span>
+            </div>
+          </div>
+          <div style="margin-top:18px;color:#8997aa;font-size:10px;">
+            Digital asset
+          </div>
+        </div>
+
+        <div class="market-card">
+          <div class="coin">
+            <div class="coin-icon">Ξ</div>
+            <div class="coin-name">
+              <strong>Ethereum</strong>
+              <span>ETH</span>
+            </div>
+          </div>
+          <div style="margin-top:18px;color:#8997aa;font-size:10px;">
+            Digital asset
+          </div>
+        </div>
+
+        <div class="market-card">
+          <div class="coin">
+            <div class="coin-icon">$</div>
+            <div class="coin-name">
+              <strong>USD Coin</strong>
+              <span>USDC</span>
+            </div>
+          </div>
+          <div style="margin-top:18px;color:#8997aa;font-size:10px;">
+            Stablecoin
+          </div>
+        </div>
+
+        <div class="market-card">
+          <div class="coin">
+            <div class="coin-icon">◆</div>
+            <div class="coin-name">
+              <strong>Digital Assets</strong>
+              <span>MORE</span>
+            </div>
+          </div>
+          <div style="margin-top:18px;color:#8997aa;font-size:10px;">
+            Supported assets
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         TRANSACTIONS
+    ========================== -->
+
+    <section class="view" id="view-transactions">
+
+      <div class="section-head">
+        <div>
           <h2>Transactions</h2>
-          <span>Account activity</span>
+          <p>Your account activity and request history.</p>
         </div>
+      </div>
 
-        <div class="transactions" id="allTransactions">
+      <div class="table-wrap">
 
-          <div class="empty">
-            No transactions yet.
+        <table>
+
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Currency</th>
+              <th>Reference</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+
+          <tbody id="transactionsBody">
+            <tr>
+              <td colspan="6" class="loading">
+                Loading transactions...
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         MESSAGES
+    ========================== -->
+
+    <section class="view" id="view-messages">
+
+      <div class="section-head">
+        <div>
+          <h2>Messages</h2>
+          <p>Contact CoinBridge support.</p>
+        </div>
+      </div>
+
+      <div class="chat-layout">
+
+        <aside class="chat-sidebar">
+
+          <div class="support-card">
+            <strong>CoinBridge Support</strong>
+            <span>Secure customer support</span>
+          </div>
+
+          <div style="margin-top:15px;color:#65758a;font-size:10px;line-height:1.6;">
+            Use this space to contact support about your account,
+            transactions or requests.
+          </div>
+
+        </aside>
+
+        <div class="chat-main">
+
+          <div class="chat-head">
+            <strong>CoinBridge Support</strong>
+            <span>● Support channel</span>
+          </div>
+
+          <div class="messages" id="messagesList">
+
+            <div class="chat-empty">
+              <div>
+                <div style="font-size:28px;margin-bottom:10px;">◌</div>
+                Start a conversation with CoinBridge support.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="chat-input">
+            <input
+              id="messageInput"
+              type="text"
+              placeholder="Write a message...">
+
+            <button id="sendMessage">
+              ↗
+            </button>
           </div>
 
         </div>
@@ -1017,475 +2133,177 @@ a{
 
     </section>
 
+    <!-- =========================
+         NOTIFICATIONS
+    ========================== -->
 
-    <!-- MESSAGES -->
+    <section class="view" id="view-notifications">
 
-    <section
-      id="messagesSection"
-      style="display:none;"
-    >
+      <div class="section-head">
+        <div>
+          <h2>Notifications</h2>
+          <p>Important updates from your CoinBridge account.</p>
+        </div>
+      </div>
 
-      <div class="card chat">
+      <div class="card" id="notificationsList">
+        <div class="loading">Loading notifications...</div>
+      </div>
 
-        <div class="card-header">
+    </section>
 
-          <div>
-            <h2>CoinBridge Support</h2>
-            <span>Support conversation</span>
+    <!-- =========================
+         SECURITY
+    ========================== -->
+
+    <section class="view" id="view-security">
+
+      <div class="section-head">
+        <div>
+          <h2>Security</h2>
+          <p>Manage the security of your CoinBridge account.</p>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+
+        <div class="setting-card">
+
+          <div class="security-badge">
+            ● Account active
           </div>
 
-          <span style="color:#46d58f;">
-            ● Available
-          </span>
+          <h3 style="margin-top:15px;">
+            Account security
+          </h3>
+
+          <p>
+            Your CoinBridge account is protected by secure authentication.
+          </p>
+
+          <div class="setting-row">
+            <div>
+              <strong>Email authentication</strong>
+              <span>Supabase Auth</span>
+            </div>
+            <span class="security-badge">Enabled</span>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <strong>Password protection</strong>
+              <span>Protected account credential</span>
+            </div>
+            <span class="security-badge">Active</span>
+          </div>
 
         </div>
 
-        <div
-          class="messages"
-          id="chatMessages"
-        >
+        <div class="setting-card">
 
-          <div class="message support">
+          <h3>Password</h3>
 
-            Welcome to CoinBridge Support.
-            How can we help you today?
+          <p>
+            If you need to change your password, use the secure
+            password-reset process.
+          </p>
 
-            <time>Support</time>
-
-          </div>
-
-        </div>
-
-        <form
-          class="chat-input"
-          id="chatForm"
-        >
-
-          <input
-            id="chatInput"
-            type="text"
-            placeholder="Type your message..."
-            autocomplete="off"
-          >
-
-          <button type="submit">
-            ➤
+          <button
+            class="secondary-btn"
+            style="margin-top:18px;"
+            id="resetPasswordBtn">
+            Request password reset
           </button>
 
-        </form>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         SETTINGS
+    ========================== -->
+
+    <section class="view" id="view-settings">
+
+      <div class="section-head">
+        <div>
+          <h2>Settings</h2>
+          <p>Your CoinBridge account information.</p>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+
+        <div class="setting-card">
+
+          <h3>Account</h3>
+
+          <div class="setting-row">
+            <div>
+              <strong>Name</strong>
+              <span id="settingsName">Loading...</span>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <strong>Email</strong>
+              <span id="settingsEmail">Loading...</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="setting-card">
+
+          <h3>Platform</h3>
+
+          <p>
+            CoinBridge account settings and supported digital asset
+            services are managed securely through your account.
+          </p>
+
+        </div>
 
       </div>
 
     </section>
 
   </main>
-
 </div>
 
-
 <!-- =========================
-     DEPOSIT MODAL
-========================= -->
+     MODAL
+========================== -->
 
-<div class="modal-bg" id="depositModal">
-
-  <div class="modal">
-
-    <div class="modal-head">
-      <h2>Deposit Funds</h2>
-
-      <button
-        class="close"
-        onclick="closeModal('depositModal')"
-      >×</button>
-    </div>
-
-
-    <div class="wallet-box">
-
-      <small>Your CoinBridge Wallet ID</small>
-
-      <div
-        class="wallet-id"
-        id="depositWalletId"
-      >Loading...</div>
-
-      <button
-        class="copy"
-        onclick="copyWalletId()"
-      >Copy</button>
-
-    </div>
-
-
-    <div class="field">
-
-      <label>Payment method</label>
-
-      <select id="depositMethod">
-
-        <option value="credit_card">
-          Credit Card
-        </option>
-
-        <option value="debit_card">
-          Debit Card
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <div class="field">
-
-      <label>Amount</label>
-
-      <input
-        id="depositAmount"
-        type="number"
-        min="1"
-        step="0.01"
-        placeholder="Enter amount"
-      >
-
-    </div>
-
-
-    <div class="info">
-
-      Your payment details should be entered only through
-      the secure payment page provided by the payment processor.
-      CoinBridge does not request your card PIN, CVV, or banking password
-      through this portal.
-
-    </div>
-
-
-    <button
-      class="primary"
-      onclick="submitDeposit()"
-    >
-      Continue Deposit
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     SEND MODAL
-========================= -->
-
-<div class="modal-bg" id="sendModal">
+<div class="modal-overlay" id="modalOverlay">
 
   <div class="modal">
 
     <div class="modal-head">
 
-      <h2>Send Funds</h2>
+      <div>
+        <h2 id="modalTitle">Request</h2>
+        <p id="modalDescription">
+          Submit your request.
+        </p>
+      </div>
 
-      <button
-        class="close"
-        onclick="closeModal('sendModal')"
-      >×</button>
-
-    </div>
-
-
-    <div class="wallet-box">
-
-      <small>Available Balance</small>
-
-      <div
-        class="wallet-id"
-        id="sendBalance"
-      >—</div>
+      <button class="close-btn" id="closeModal">
+        ×
+      </button>
 
     </div>
 
-
-    <div class="field">
-
-      <label>Amount</label>
-
-      <input
-        id="sendAmount"
-        type="number"
-        min="0"
-        step="0.01"
-        placeholder="Enter amount"
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label>Receiver Wallet ID</label>
-
-      <input
-        id="receiverWallet"
-        type="text"
-        placeholder="Enter receiver Wallet ID"
-      >
-
-    </div>
-
-
-    <div
-      class="info"
-      id="sendInfo"
-    >
-      Transfers within your available balance are submitted
-      for review. Transfers above your available balance are
-      automatically declined.
-
-    </div>
-
-
-    <button
-      class="primary"
-      onclick="submitSend()"
-    >
-      Send Request
-    </button>
+    <div id="modalContent"></div>
 
   </div>
 
 </div>
-
-
-<!-- =========================
-     WITHDRAW MODAL
-========================= -->
-
-<div class="modal-bg" id="withdrawModal">
-
-  <div class="modal">
-
-    <div class="modal-head">
-
-      <h2>Withdraw Funds</h2>
-
-      <button
-        class="close"
-        onclick="closeModal('withdrawModal')"
-      >×</button>
-
-    </div>
-
-
-    <div class="wallet-box">
-
-      <small>Available Balance</small>
-
-      <div
-        class="wallet-id"
-        id="withdrawBalance"
-      >—</div>
-
-    </div>
-
-
-    <div class="field">
-
-      <label>Amount</label>
-
-      <input
-        id="withdrawAmount"
-        type="number"
-        min="0"
-        step="0.01"
-        placeholder="Enter amount"
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label>Withdrawal destination</label>
-
-      <input
-        id="withdrawDestination"
-        type="text"
-        placeholder="Enter destination"
-      >
-
-    </div>
-
-
-    <div class="info">
-
-      Withdrawal requests within your available balance
-      are submitted for review. Requests above your
-      available balance are automatically declined.
-
-    </div>
-
-
-    <button
-      class="primary"
-      onclick="submitWithdraw()"
-    >
-      Submit Withdrawal
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     SWAP MODAL
-========================= -->
-
-<div class="modal-bg" id="swapModal">
-
-  <div class="modal">
-
-    <div class="modal-head">
-
-      <h2>Swap Assets</h2>
-
-      <button
-        class="close"
-        onclick="closeModal('swapModal')"
-      >×</button>
-
-    </div>
-
-
-    <div class="field">
-
-      <label>From</label>
-
-      <select id="swapFrom">
-
-        <option value="BTC">BTC</option>
-        <option value="ETH">ETH</option>
-        <option value="USDC">USDC</option>
-
-      </select>
-
-    </div>
-
-
-    <div class="field">
-
-      <label>Amount</label>
-
-      <input
-        id="swapAmount"
-        type="number"
-        min="0"
-        step="0.00000001"
-        placeholder="Enter amount"
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label>To</label>
-
-      <select id="swapTo">
-
-        <option value="USDC">USDC</option>
-        <option value="BTC">BTC</option>
-        <option value="ETH">ETH</option>
-
-      </select>
-
-    </div>
-
-
-    <div class="info">
-
-      Your available balance will be checked before the
-      swap request is submitted. Swap requests are reviewed
-      before the conversion is completed.
-
-    </div>
-
-
-    <button
-      class="primary"
-      onclick="submitSwap()"
-    >
-      Submit Swap Request
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     WALLET MODAL
-========================= -->
-
-<div class="modal-bg" id="walletModal">
-
-  <div class="modal">
-
-    <div class="modal-head">
-
-      <h2>Your Wallet</h2>
-
-      <button
-        class="close"
-        onclick="closeModal('walletModal')"
-      >×</button>
-
-    </div>
-
-
-    <div class="wallet-box">
-
-      <small>Wallet ID</small>
-
-      <div
-        class="wallet-id"
-        id="walletModalId"
-      >Loading...</div>
-
-      <button
-        class="copy"
-        onclick="copyWalletId()"
-      >Copy</button>
-
-    </div>
-
-
-    <div class="info">
-
-      Your wallet ID identifies your CoinBridge wallet.
-      Use it when receiving funds from another CoinBridge customer.
-
-    </div>
-
-    <button
-      class="secondary"
-      onclick="closeModal('walletModal')"
-    >
-      Close
-    </button>
-
-  </div>
-
-</div>
-
 
 <div class="toast" id="toast"></div>
-
-
-<!-- SUPABASE -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
@@ -1499,7 +2317,6 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_69Rflk-FZvhbtAbZ_RGRCg_cJHfexEc";
 
-
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
@@ -1512,43 +2329,227 @@ const supabaseClient =
 ===================================================== */
 
 let currentUser = null;
+let profile = null;
+let wallets = [];
+let transactions = [];
+let currentView = "dashboard";
+let navigationStarted = false;
 
-let currentProfile = null;
 
-let currentWallet = null;
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function money(value,currency="USD"){
+
+  const amount = Number(value || 0);
+
+  if(currency === "BTC" || currency === "ETH"){
+    return amount.toFixed(8);
+  }
+
+  return amount.toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  );
+
+}
+
+
+function toast(text,type="success"){
+
+  const el = document.getElementById("toast");
+
+  el.textContent = text;
+  el.className = "toast show " + type;
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer =
+    setTimeout(() => {
+      el.className = "toast";
+    },3500);
+
+}
+
+
+function initials(name){
+
+  const value =
+    String(name || "Customer").trim();
+
+  if(!value) return "C";
+
+  return value
+    .split(/\s+/)
+    .slice(0,2)
+    .map(part => part[0])
+    .join("")
+    .toUpperCase();
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showView(view,push=true){
+
+  const target =
+    document.getElementById("view-" + view);
+
+  if(!target) return;
+
+  document
+    .querySelectorAll(".view")
+    .forEach(el => {
+      el.classList.remove("active");
+    });
+
+  target.classList.add("active");
+
+  document
+    .querySelectorAll(".nav-item[data-view]")
+    .forEach(btn => {
+      btn.classList.toggle(
+        "active",
+        btn.dataset.view === view
+      );
+    });
+
+  currentView = view;
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
+
+  if(push){
+
+    history.pushState(
+      {coinBridgeView:view},
+      "",
+      "#"+view
+    );
+
+  }
+
+  if(view === "transactions"){
+    loadTransactions();
+  }
+
+  if(view === "wallet"){
+    renderWallets();
+  }
+
+  if(view === "portfolio"){
+    renderPortfolio();
+  }
+
+  if(view === "notifications"){
+    loadNotifications();
+  }
+
+  if(view === "messages"){
+    loadMessages();
+  }
+
+}
+
+
+window.addEventListener(
+  "popstate",
+  event => {
+
+    const stateView =
+      event.state?.coinBridgeView;
+
+    if(stateView){
+      showView(stateView,false);
+      return;
+    }
+
+    if(currentView !== "dashboard"){
+      showView("dashboard",false);
+      return;
+    }
+
+  }
+);
+
+
+document
+  .querySelectorAll(".nav-item[data-view]")
+  .forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      () => showView(btn.dataset.view,true)
+    );
+
+  });
+
+
+document
+  .querySelectorAll("[data-view-link]")
+  .forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      () => showView(btn.dataset.viewLink,true)
+    );
+
+  });
+
+
+document
+  .getElementById("mobileMenu")
+  .addEventListener(
+    "click",
+    () => {
+      document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+    }
+  );
 
 
 /* =====================================================
    AUTHENTICATION
 ===================================================== */
 
-async function loadCustomer(){
+async function loadCurrentUser(){
 
   const {
-    data:{
-      session
-    }
-  } =
-    await supabaseClient.auth.getSession();
+    data,
+    error
+  } = await supabaseClient.auth.getUser();
 
+  if(error || !data?.user){
 
-  if(!session){
-
-    window.location.href =
-      "login.html";
-
-    return;
+    window.location.href = "login.html";
+    return false;
 
   }
 
+  currentUser = data.user;
 
-  currentUser =
-    session.user;
-
-
-  await loadProfile();
-
-  await loadWallet();
+  return true;
 
 }
 
@@ -1563,352 +2564,493 @@ async function loadProfile(){
     data,
     error
   } =
-    await supabaseClient
-      .from("profiles")
-      .select("*")
-      .eq("id",currentUser.id)
-      .maybeSingle();
-
+  await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id",currentUser.id)
+    .maybeSingle();
 
   if(error){
 
-    console.error(
-      "Profile error:",
-      error
+    console.warn(
+      "Profile lookup:",
+      error.message
     );
 
-    setCustomerName(
-      currentUser.email
-    );
+    profile = {};
 
-    return;
+  }else{
+
+    profile = data || {};
 
   }
 
-
-  currentProfile =
-    data;
-
-
   const name =
-    data?.full_name ||
+    profile.full_name ||
+    profile.name ||
     currentUser.user_metadata?.full_name ||
-    currentUser.email ||
+    currentUser.email?.split("@")[0] ||
     "Customer";
 
+  document.getElementById("userName").textContent = name;
+  document.getElementById("profileName").textContent = name;
+  document.getElementById("profileEmail").textContent =
+    currentUser.email || "";
 
-  setCustomerName(name);
-
-}
-
-
-/* =====================================================
-   CUSTOMER NAME
-===================================================== */
-
-function setCustomerName(name){
-
-  const firstName =
-    String(name)
-      .split(" ")[0];
-
-
-  document.getElementById(
-    "welcomeName"
-  ).textContent =
-    "Welcome back, " +
-    firstName;
-
-
-  document.getElementById(
-    "profileName"
-  ).textContent =
+  document.getElementById("settingsName").textContent =
     name;
 
+  document.getElementById("settingsEmail").textContent =
+    currentUser.email || "";
 
-  document.getElementById(
-    "profileEmail"
-  ).textContent =
-    currentUser.email;
-
-
-  document.getElementById(
-    "avatar"
-  ).textContent =
-    String(name)
-      .charAt(0)
-      .toUpperCase();
+  document.getElementById("avatar").textContent =
+    initials(name);
 
 }
 
 
 /* =====================================================
-   WALLET
+   WALLETS
 ===================================================== */
 
-async function loadWallet(){
-
-  /*
-     This expects the customer's wallet record to be
-     associated with auth.users.id.
-
-     Expected common fields:
-       user_id
-       wallet_id
-       balance
-       currency
-
-     We will connect the exact wallet schema next if
-     your existing Supabase table uses different names.
-  */
+async function loadWallets(){
 
   const {
     data,
     error
   } =
-    await supabaseClient
-      .from("wallets")
-      .select("*")
-      .eq("user_id",currentUser.id)
-      .limit(1)
-      .maybeSingle();
-
+  await supabaseClient
+    .from("wallets")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .order("created_at",{ascending:true});
 
   if(error){
 
-    console.error(
-      "Wallet error:",
-      error
-    );
+    console.error("Wallet error:",error);
 
-    showWalletUnavailable();
+    wallets = [];
+
+    toast(
+      "Unable to load wallet data.",
+      "error"
+    );
 
     return;
 
   }
 
+  wallets = data || [];
 
-  if(!data){
-
-    showWalletUnavailable();
-
-    return;
-
-  }
-
-
-  currentWallet =
-    data;
-
-
-  const walletId =
-    data.wallet_id ||
-    data.walletId ||
-    data.id ||
-    "—";
-
-
-  const balance =
-    Number(
-      data.balance ??
-      data.amount ??
-      0
-    );
-
-
-  const currency =
-    data.currency ||
-    "USD";
-
-
-  document.getElementById(
-    "totalBalance"
-  ).textContent =
-    formatMoney(
-      balance,
-      currency
-    );
-
-
-  document.getElementById(
-    "sendBalance"
-  ).textContent =
-    formatMoney(
-      balance,
-      currency
-    );
-
-
-  document.getElementById(
-    "withdrawBalance"
-  ).textContent =
-    formatMoney(
-      balance,
-      currency
-    );
-
-
-  document.getElementById(
-    "depositWalletId"
-  ).textContent =
-    walletId;
-
-
-  document.getElementById(
-    "walletModalId"
-  ).textContent =
-    walletId;
-
-
-  renderAssets(data);
+  renderWallets();
+  updateBalanceSummary();
 
 }
 
 
-/* =====================================================
-   WALLET UNAVAILABLE
-===================================================== */
+function renderWallets(){
 
-function showWalletUnavailable(){
+  const container =
+    document.getElementById("walletGrid");
 
-  document.getElementById(
-    "totalBalance"
-  ).textContent =
-    "—";
+  if(!wallets.length){
 
-
-  document.getElementById(
-    "sendBalance"
-  ).textContent =
-    "—";
-
-
-  document.getElementById(
-    "withdrawBalance"
-  ).textContent =
-    "—";
-
-
-  document.getElementById(
-    "depositWalletId"
-  ).textContent =
-    "Wallet unavailable";
-
-
-  document.getElementById(
-    "walletModalId"
-  ).textContent =
-    "Wallet unavailable";
-
-
-  document.getElementById(
-    "assetsList"
-  ).innerHTML =
-    `
-      <div class="empty">
-        Your wallet information is not available yet.
+    container.innerHTML = `
+      <div class="card" style="grid-column:1/-1;">
+        <div class="loading">
+          No wallet records are currently available.
+        </div>
       </div>
     `;
 
+    return;
+
+  }
+
+  container.innerHTML =
+    wallets.map(wallet => `
+
+      <div class="wallet-card">
+
+        <div class="wallet-card-top">
+
+          <h3>${escapeHtml(
+            wallet.currency || "Asset"
+          )}</h3>
+
+          <span class="security-badge">
+            ${escapeHtml(
+              wallet.status || "Active"
+            )}
+          </span>
+
+        </div>
+
+        <div class="wallet-balance">
+          ${escapeHtml(
+            money(wallet.balance,wallet.currency)
+          )}
+        </div>
+
+        <div class="wallet-address">
+          ${escapeHtml(wallet.wallet_id || wallet.id)}
+        </div>
+
+        <button
+          class="copy-btn"
+          style="margin-top:15px;"
+          onclick="copyText('${String(
+            wallet.wallet_id || wallet.id
+          ).replace(/'/g,"\\'")}')">
+          Copy wallet ID
+        </button>
+
+      </div>
+
+    `).join("");
+
 }
 
 
-/* =====================================================
-   ASSETS
-===================================================== */
+function updateBalanceSummary(){
 
-function renderAssets(wallet){
+  let total = 0;
 
-  const balance =
-    Number(
-      wallet.balance ??
-      wallet.amount ??
-      0
+  wallets.forEach(wallet => {
+
+    const currency =
+      String(wallet.currency || "").toUpperCase();
+
+    const balance =
+      Number(wallet.balance || 0);
+
+    /*
+      The wallet balance is displayed according to its
+      stored currency. USD-style aggregation is only
+      applied to stablecoin/USD balances here.
+    */
+
+    if(
+      currency === "USD" ||
+      currency === "USDC" ||
+      currency === "USDT"
+    ){
+
+      total += balance;
+
+    }
+
+  });
+
+  document.getElementById("totalBalance").textContent =
+    "$" + total.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
     );
 
+  document.getElementById("portfolioCenter").textContent =
+    "$" + total.toLocaleString(
+      "en-US",
+      {
+        maximumFractionDigits:2
+      }
+    );
 
-  const currency =
-    wallet.currency ||
-    "USD";
+  const btc =
+    wallets.find(
+      w => String(w.currency).toUpperCase() === "BTC"
+    );
+
+  const eth =
+    wallets.find(
+      w => String(w.currency).toUpperCase() === "ETH"
+    );
+
+  const usdc =
+    wallets.find(
+      w => String(w.currency).toUpperCase() === "USDC"
+    );
+
+  document.getElementById("btcBalance").textContent =
+    btc ? money(btc.balance,"BTC") : "$0";
+
+  document.getElementById("ethBalance").textContent =
+    eth ? money(eth.balance,"ETH") : "$0";
+
+  document.getElementById("usdcBalance").textContent =
+    usdc ? money(usdc.balance,"USDC") : "$0";
+
+  const primary =
+    wallets[0];
+
+  document.getElementById("primaryWalletId").textContent =
+    primary?.wallet_id ||
+    primary?.id ||
+    "No wallet ID";
+
+}
 
 
-  document.getElementById(
-    "assetsList"
-  ).innerHTML =
-    `
-      <div class="asset">
+function renderPortfolio(){
 
-        <div class="asset-left">
+  const container =
+    document.getElementById("portfolioAssets");
 
-          <div class="coin">
-            $
+  if(!wallets.length){
+
+    container.innerHTML =
+      `<div class="loading">No assets found.</div>`;
+
+    return;
+
+  }
+
+  container.innerHTML =
+    wallets.map(wallet => `
+
+      <div class="asset-row">
+
+        <div class="asset-row-left">
+
+          <div class="coin-icon">
+            ${escapeHtml(
+              String(wallet.currency || "?")
+                .slice(0,1)
+            )}
           </div>
 
           <div>
             <strong>
-              ${escapeHTML(currency)}
+              ${escapeHtml(
+                wallet.currency || "Asset"
+              )}
             </strong>
 
             <small>
-              Available balance
+              Wallet balance
             </small>
           </div>
 
         </div>
 
-        <div class="asset-right">
-
-          <strong>
-            ${formatMoney(balance,currency)}
-          </strong>
-
-          <small>
-            Current
-          </small>
-
-        </div>
+        <strong>
+          ${escapeHtml(
+            money(
+              wallet.balance,
+              wallet.currency
+            )
+          )}
+        </strong>
 
       </div>
-    `;
 
-
-  document.getElementById(
-    "portfolioAssets"
-  ).innerHTML =
-    document.getElementById(
-      "assetsList"
-    ).innerHTML;
+    `).join("");
 
 }
 
 
 /* =====================================================
-   FORMAT MONEY
+   TRANSACTIONS
 ===================================================== */
 
-function formatMoney(amount,currency){
+async function loadTransactions(){
 
-  if(
-    typeof amount !== "number" ||
-    Number.isNaN(amount)
-  ){
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("transactions")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .order("created_at",{ascending:false});
 
-    return "—";
+  if(error){
+
+    console.error(
+      "Transactions:",
+      error
+    );
+
+    transactions = [];
+
+  }else{
+
+    transactions = data || [];
 
   }
 
+  renderTransactions();
 
-  return new Intl.NumberFormat(
-    "en-US",
-    {
-      style:"currency",
-      currency:
-        currency === "USD"
-          ? "USD"
-          : "USD",
-      minimumFractionDigits:2
-    }
-  ).format(amount);
+}
+
+
+function statusClass(status){
+
+  const value =
+    String(status || "pending")
+      .toLowerCase();
+
+  if(
+    value.includes("approve") ||
+    value.includes("complete") ||
+    value.includes("success")
+  ){
+    return "approved";
+  }
+
+  if(
+    value.includes("declin") ||
+    value.includes("fail") ||
+    value.includes("cancel")
+  ){
+    return "declined";
+  }
+
+  if(value.includes("process")){
+    return "processing";
+  }
+
+  return "pending";
+
+}
+
+
+function renderTransactions(){
+
+  const body =
+    document.getElementById("transactionsBody");
+
+  const recent =
+    document.getElementById("recentTransactions");
+
+  if(!transactions.length){
+
+    body.innerHTML = `
+      <tr>
+        <td colspan="6" class="loading">
+          No transactions yet.
+        </td>
+      </tr>
+    `;
+
+    recent.innerHTML = `
+      <tr>
+        <td colspan="5" class="loading">
+          No recent activity.
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
+
+  body.innerHTML =
+    transactions.map(tx => {
+
+      const date =
+        tx.created_at
+          ? new Date(tx.created_at)
+              .toLocaleString()
+          : "—";
+
+      return `
+        <tr>
+
+          <td>
+            ${escapeHtml(
+              tx.transaction_type || "Transaction"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              money(
+                tx.amount,
+                tx.currency
+              )
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              tx.currency || "—"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              tx.reference || "—"
+            )}
+          </td>
+
+          <td>
+            <span class="status ${statusClass(tx.status)}">
+              ${escapeHtml(
+                tx.status || "Pending"
+              )}
+            </span>
+          </td>
+
+          <td>
+            ${escapeHtml(date)}
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+
+  recent.innerHTML =
+    transactions
+      .slice(0,5)
+      .map(tx => {
+
+        const date =
+          tx.created_at
+            ? new Date(tx.created_at)
+                .toLocaleDateString()
+            : "—";
+
+        return `
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                tx.transaction_type || "Transaction"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                money(tx.amount,tx.currency)
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                tx.currency || "—"
+              )}
+            </td>
+
+            <td>
+              <span class="status ${statusClass(tx.status)}">
+                ${escapeHtml(
+                  tx.status || "Pending"
+                )}
+              </span>
+            </td>
+
+            <td>${escapeHtml(date)}</td>
+
+          </tr>
+        `;
+
+      }).join("");
 
 }
 
@@ -1917,553 +3059,1154 @@ function formatMoney(amount,currency){
    MODALS
 ===================================================== */
 
-function openModal(id){
+function openModal(type){
 
-  document
-    .getElementById(id)
-    .classList
-    .add("show");
+  const overlay =
+    document.getElementById("modalOverlay");
+
+  const title =
+    document.getElementById("modalTitle");
+
+  const description =
+    document.getElementById("modalDescription");
+
+  const content =
+    document.getElementById("modalContent");
+
+  const primaryWallet =
+    wallets[0]?.wallet_id ||
+    wallets[0]?.id ||
+    "Wallet ID unavailable";
+
+  if(type === "deposit"){
+
+    title.textContent = "Deposit";
+
+    description.textContent =
+      "Submit a deposit request to your CoinBridge wallet.";
+
+    content.innerHTML = `
+
+      <div class="wallet-highlight">
+        <small>Customer wallet ID</small>
+        <strong>${escapeHtml(primaryWallet)}</strong>
+      </div>
+
+      <div class="form-group">
+        <label>Deposit method</label>
+
+        <select id="depositMethod">
+          <option value="Credit Card">
+            Credit Card
+          </option>
+          <option value="Debit Card">
+            Debit Card
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Cardholder name</label>
+        <input
+          id="cardName"
+          type="text"
+          placeholder="Cardholder name">
+      </div>
+
+      <div class="form-group">
+        <label>Card number</label>
+        <input
+          id="cardNumber"
+          type="text"
+          inputmode="numeric"
+          maxlength="19"
+          placeholder="Card number">
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+
+        <div class="form-group">
+          <label>Expiry</label>
+          <input
+            id="cardExpiry"
+            type="text"
+            placeholder="MM/YY">
+        </div>
+
+        <div class="form-group">
+          <label>CVV</label>
+          <input
+            id="cardCvv"
+            type="password"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="CVV">
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label>Amount</label>
+        <input
+          id="depositAmount"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="0.00">
+      </div>
+
+      <div class="form-group">
+        <label>Currency</label>
+
+        <select id="depositCurrency">
+          <option value="USDC">USDC</option>
+          <option value="USD">USD</option>
+        </select>
+      </div>
+
+      <button class="modal-submit" id="submitDeposit">
+        Submit Deposit Request
+      </button>
+
+      <div class="modal-note">
+        Deposit requests are reviewed according to your
+        account's processing rules.
+      </div>
+
+    `;
+
+    document
+      .getElementById("submitDeposit")
+      .onclick = submitDeposit;
+
+  }
+
+
+  if(type === "send"){
+
+    title.textContent = "Send";
+
+    description.textContent =
+      "Send a supported asset to another CoinBridge wallet ID.";
+
+    content.innerHTML = `
+
+      <div class="form-group">
+        <label>Asset</label>
+
+        <select id="sendCurrency">
+          ${wallets.map(w => `
+            <option value="${escapeHtml(w.currency || "")}">
+              ${escapeHtml(w.currency || "Asset")}
+            </option>
+          `).join("")}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Receiver wallet ID</label>
+        <input
+          id="receiverWallet"
+          type="text"
+          placeholder="Enter receiver wallet ID">
+      </div>
+
+      <div class="form-group">
+        <label>Amount</label>
+        <input
+          id="sendAmount"
+          type="number"
+          min="0"
+          step="0.00000001"
+          placeholder="0.00">
+      </div>
+
+      <button class="modal-submit" id="submitSend">
+        Submit Send Request
+      </button>
+
+      <div class="modal-note">
+        Requests above the available wallet balance are
+        automatically declined.
+      </div>
+
+    `;
+
+    document
+      .getElementById("submitSend")
+      .onclick = submitSend;
+
+  }
+
+
+  if(type === "withdraw"){
+
+    title.textContent = "Withdraw";
+
+    description.textContent =
+      "Submit a withdrawal request from your CoinBridge wallet.";
+
+    content.innerHTML = `
+
+      <div class="form-group">
+        <label>Asset</label>
+
+        <select id="withdrawCurrency">
+          ${wallets.map(w => `
+            <option value="${escapeHtml(w.currency || "")}">
+              ${escapeHtml(w.currency || "Asset")}
+            </option>
+          `).join("")}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Destination</label>
+        <input
+          id="withdrawDestination"
+          type="text"
+          placeholder="Wallet ID or approved destination">
+      </div>
+
+      <div class="form-group">
+        <label>Amount</label>
+        <input
+          id="withdrawAmount"
+          type="number"
+          min="0"
+          step="0.00000001"
+          placeholder="0.00">
+      </div>
+
+      <button class="modal-submit" id="submitWithdraw">
+        Submit Withdrawal Request
+      </button>
+
+      <div class="modal-note">
+        Withdrawals above the available balance are
+        automatically declined.
+      </div>
+
+    `;
+
+    document
+      .getElementById("submitWithdraw")
+      .onclick = submitWithdraw;
+
+  }
+
+
+  if(type === "swap"){
+
+    title.textContent = "Swap";
+
+    description.textContent =
+      "Request an exchange between supported assets.";
+
+    content.innerHTML = `
+
+      <div class="form-group">
+        <label>From</label>
+
+        <select id="swapFrom">
+          ${wallets.map(w => `
+            <option value="${escapeHtml(w.currency || "")}">
+              ${escapeHtml(w.currency || "Asset")}
+            </option>
+          `).join("")}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>To</label>
+
+        <select id="swapTo">
+          <option value="USDC">USDC</option>
+          <option value="BTC">BTC</option>
+          <option value="ETH">ETH</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Amount</label>
+        <input
+          id="swapAmount"
+          type="number"
+          min="0"
+          step="0.00000001"
+          placeholder="0.00">
+      </div>
+
+      <button class="modal-submit" id="submitSwap">
+        Submit Swap Request
+      </button>
+
+      <div class="modal-note">
+        Swap requests are reviewed and processed according
+        to supported asset and account rules.
+      </div>
+
+    `;
+
+    document
+      .getElementById("submitSwap")
+      .onclick = submitSwap;
+
+  }
+
+
+  overlay.classList.add("show");
+
+  history.pushState(
+    {coinBridgeModal:type},
+    "",
+    location.href.split("#")[0] + "#" + type
+  );
 
 }
 
 
-function closeModal(id){
+function closeModal(fromHistory=false){
 
   document
-    .getElementById(id)
-    .classList
-    .remove("show");
+    .getElementById("modalOverlay")
+    .classList.remove("show");
+
+  if(!fromHistory && history.state?.coinBridgeModal){
+
+    history.back();
+
+  }
 
 }
 
 
 document
-  .querySelectorAll(".modal-bg")
-  .forEach(function(modal){
+  .getElementById("closeModal")
+  .addEventListener(
+    "click",
+    () => closeModal()
+  );
 
-    modal.addEventListener(
-      "click",
-      function(event){
 
-        if(event.target === modal){
+document
+  .getElementById("modalOverlay")
+  .addEventListener(
+    "click",
+    event => {
 
-          modal.classList.remove(
-            "show"
-          );
-
-        }
-
+      if(event.target.id === "modalOverlay"){
+        closeModal();
       }
-    );
 
-  });
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function showSection(section,button){
-
-  const sections = [
-    "dashboard",
-    "portfolio",
-    "transactions",
-    "messages"
-  ];
+    }
+  );
 
 
-  sections.forEach(function(name){
+window.addEventListener(
+  "popstate",
+  event => {
 
-    const element =
-      document.getElementById(
-        name + "Section"
-      );
+    if(
+      event.state?.coinBridgeModal
+    ){
 
-    if(element){
-
-      element.style.display =
-        name === section
-          ? "block"
-          : "none";
+      return;
 
     }
 
-  });
+    document
+      .getElementById("modalOverlay")
+      .classList.remove("show");
+
+  }
+);
 
 
-  document
-    .querySelectorAll(".nav button")
-    .forEach(function(btn){
+/* =====================================================
+   REQUEST CREATION
+===================================================== */
 
-      btn.classList.remove(
-        "active"
-      );
+async function createOrder(
+  itemName,
+  amount,
+  currency,
+  status="Pending"
+){
 
-    });
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("orders")
+    .insert({
+      user_id:currentUser.id,
+      item_name:itemName,
+      quantity:1,
+      amount:Number(amount),
+      currency:currency,
+      status:status
+    })
+    .select()
+    .single();
 
+  if(error){
 
-  if(button){
-
-    button.classList.add(
-      "active"
+    console.error(
+      "Order creation:",
+      error
     );
+
+    return {
+      success:false,
+      error
+    };
 
   }
 
-
-  closeSidebar();
+  return {
+    success:true,
+    data
+  };
 
 }
 
 
-/* =====================================================
-   SEND
-===================================================== */
+async function submitDeposit(){
+
+  const amount =
+    Number(
+      document.getElementById("depositAmount").value
+    );
+
+  const method =
+    document.getElementById("depositMethod").value;
+
+  const cardName =
+    document.getElementById("cardName").value.trim();
+
+  const cardNumber =
+    document.getElementById("cardNumber").value.trim();
+
+  const expiry =
+    document.getElementById("cardExpiry").value.trim();
+
+  const cvv =
+    document.getElementById("cardCvv").value.trim();
+
+  const currency =
+    document.getElementById("depositCurrency").value;
+
+  if(
+    !amount ||
+    amount <= 0 ||
+    !cardName ||
+    !cardNumber ||
+    !expiry ||
+    !cvv
+  ){
+
+    toast(
+      "Please complete the deposit details.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  /*
+    IMPORTANT:
+    Real card numbers/CVV should never be stored in
+    your CoinBridge database. A production payment
+    gateway should tokenize card information.
+  */
+
+  const result =
+    await createOrder(
+      "Deposit - " + method,
+      amount,
+      currency,
+      "Pending"
+    );
+
+  if(!result.success){
+
+    toast(
+      "Deposit request could not be submitted.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  closeModal(true);
+
+  toast(
+    "Deposit request submitted and is pending review."
+  );
+
+}
+
 
 async function submitSend(){
 
-  if(!currentWallet){
+  const currency =
+    document.getElementById("sendCurrency").value;
 
-    showToast(
-      "Your wallet is not available yet."
-    );
-
-    return;
-
-  }
-
+  const receiver =
+    document
+      .getElementById("receiverWallet")
+      .value.trim();
 
   const amount =
     Number(
-      document.getElementById(
-        "sendAmount"
-      ).value
+      document.getElementById("sendAmount").value
     );
 
-
-  const receiver =
-    document.getElementById(
-      "receiverWallet"
-    ).value.trim();
-
+  const wallet =
+    wallets.find(
+      w =>
+        String(w.currency).toUpperCase() ===
+        String(currency).toUpperCase()
+    );
 
   const balance =
-    Number(
-      currentWallet.balance ??
-      currentWallet.amount ??
-      0
-    );
+    Number(wallet?.balance || 0);
 
+  if(!receiver || !amount || amount <= 0){
 
-  if(!amount || amount <= 0){
-
-    showToast(
-      "Enter a valid amount."
+    toast(
+      "Enter a receiver wallet ID and amount.",
+      "error"
     );
 
     return;
 
   }
-
-
-  if(!receiver){
-
-    showToast(
-      "Enter the receiver Wallet ID."
-    );
-
-    return;
-
-  }
-
 
   if(amount > balance){
 
-    showToast(
-      "Transfer declined: insufficient balance."
+    const result =
+      await createOrder(
+        "Send - " + receiver,
+        amount,
+        currency,
+        "Declined"
+      );
+
+    toast(
+      "Send declined: insufficient wallet balance.",
+      "error"
+    );
+
+    if(result.success){
+      closeModal(true);
+    }
+
+    return;
+
+  }
+
+  const result =
+    await createOrder(
+      "Send - " + receiver,
+      amount,
+      currency,
+      "Pending"
+    );
+
+  if(!result.success){
+
+    toast(
+      "Send request could not be submitted.",
+      "error"
     );
 
     return;
 
   }
 
+  closeModal(true);
 
-  /*
-     The secure transaction table and RLS
-     will be connected after we confirm
-     your exact database schema.
-  */
-
-  showToast(
-    "Transfer request is ready for secure submission."
+  toast(
+    "Send request submitted and is pending approval."
   );
 
 }
 
-
-/* =====================================================
-   WITHDRAW
-===================================================== */
 
 async function submitWithdraw(){
 
-  if(!currentWallet){
+  const currency =
+    document.getElementById("withdrawCurrency").value;
 
-    showToast(
-      "Your wallet is not available yet."
-    );
-
-    return;
-
-  }
-
+  const destination =
+    document
+      .getElementById("withdrawDestination")
+      .value.trim();
 
   const amount =
     Number(
-      document.getElementById(
-        "withdrawAmount"
-      ).value
+      document.getElementById("withdrawAmount").value
     );
 
-
-  const destination =
-    document.getElementById(
-      "withdrawDestination"
-    ).value.trim();
-
+  const wallet =
+    wallets.find(
+      w =>
+        String(w.currency).toUpperCase() ===
+        String(currency).toUpperCase()
+    );
 
   const balance =
-    Number(
-      currentWallet.balance ??
-      currentWallet.amount ??
-      0
-    );
+    Number(wallet?.balance || 0);
 
+  if(
+    !destination ||
+    !amount ||
+    amount <= 0
+  ){
 
-  if(!amount || amount <= 0){
-
-    showToast(
-      "Enter a valid withdrawal amount."
-    );
-
-    return;
-
-  }
-
-
-  if(!destination){
-
-    showToast(
-      "Enter a withdrawal destination."
+    toast(
+      "Enter a destination and amount.",
+      "error"
     );
 
     return;
 
   }
-
 
   if(amount > balance){
 
-    showToast(
-      "Withdrawal declined: insufficient balance."
+    const result =
+      await createOrder(
+        "Withdrawal - " + destination,
+        amount,
+        currency,
+        "Declined"
+      );
+
+    toast(
+      "Withdrawal declined: insufficient wallet balance.",
+      "error"
+    );
+
+    if(result.success){
+      closeModal(true);
+    }
+
+    return;
+
+  }
+
+  const result =
+    await createOrder(
+      "Withdrawal - " + destination,
+      amount,
+      currency,
+      "Pending"
+    );
+
+  if(!result.success){
+
+    toast(
+      "Withdrawal request could not be submitted.",
+      "error"
     );
 
     return;
 
   }
 
+  closeModal(true);
 
-  showToast(
-    "Withdrawal request is ready for secure submission."
+  toast(
+    "Withdrawal request submitted and is pending approval."
   );
 
 }
 
 
-/* =====================================================
-   DEPOSIT
-===================================================== */
-
-function submitDeposit(){
-
-  const amount =
-    Number(
-      document.getElementById(
-        "depositAmount"
-      ).value
-    );
-
-
-  const method =
-    document.getElementById(
-      "depositMethod"
-    ).value;
-
-
-  if(!amount || amount <= 0){
-
-    showToast(
-      "Enter a valid deposit amount."
-    );
-
-    return;
-
-  }
-
-
-  /*
-     Payment processor integration will be
-     connected here. We do not collect raw
-     card credentials inside CoinBridge.
-  */
-
-  showToast(
-    "Secure deposit request is ready to continue."
-  );
-
-}
-
-
-/* =====================================================
-   SWAP
-===================================================== */
-
-function submitSwap(){
+async function submitSwap(){
 
   const from =
-    document.getElementById(
-      "swapFrom"
-    ).value;
-
+    document.getElementById("swapFrom").value;
 
   const to =
-    document.getElementById(
-      "swapTo"
-    ).value;
-
+    document.getElementById("swapTo").value;
 
   const amount =
     Number(
-      document.getElementById(
-        "swapAmount"
-      ).value
+      document.getElementById("swapAmount").value
     );
 
+  const wallet =
+    wallets.find(
+      w =>
+        String(w.currency).toUpperCase() ===
+        String(from).toUpperCase()
+    );
 
-  if(from === to){
+  const balance =
+    Number(wallet?.balance || 0);
 
-    showToast(
-      "Choose two different assets."
+  if(
+    !amount ||
+    amount <= 0 ||
+    !from ||
+    !to
+  ){
+
+    toast(
+      "Enter a valid swap amount.",
+      "error"
     );
 
     return;
 
   }
 
+  if(
+    String(from).toUpperCase() ===
+    String(to).toUpperCase()
+  ){
 
-  if(!amount || amount <= 0){
-
-    showToast(
-      "Enter a valid swap amount."
+    toast(
+      "Choose two different assets.",
+      "error"
     );
 
     return;
 
   }
 
+  if(amount > balance){
 
-  showToast(
-    "Swap request is ready for secure submission."
+    const result =
+      await createOrder(
+        "Swap " + from + " to " + to,
+        amount,
+        from,
+        "Declined"
+      );
+
+    toast(
+      "Swap declined: insufficient wallet balance.",
+      "error"
+    );
+
+    if(result.success){
+      closeModal(true);
+    }
+
+    return;
+
+  }
+
+  const result =
+    await createOrder(
+      "Swap " + from + " to " + to,
+      amount,
+      from,
+      "Pending"
+    );
+
+  if(!result.success){
+
+    toast(
+      "Swap request could not be submitted.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  closeModal(true);
+
+  toast(
+    "Swap request submitted and is pending review."
   );
 
 }
 
 
 /* =====================================================
-   COPY WALLET ID
-===================================================== */
-
-async function copyWalletId(){
-
-  if(!currentWallet){
-
-    showToast(
-      "Wallet ID is not available."
-    );
-
-    return;
-
-  }
-
-
-  const walletId =
-    currentWallet.wallet_id ||
-    currentWallet.walletId ||
-    currentWallet.id;
-
-
-  try{
-
-    await navigator.clipboard.writeText(
-      String(walletId)
-    );
-
-
-    showToast(
-      "Wallet ID copied."
-    );
-
-  }catch{
-
-    showToast(
-      "Unable to copy Wallet ID."
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   CHAT
+   ACTION BUTTONS
 ===================================================== */
 
 document
-  .getElementById("chatForm")
+  .querySelectorAll("[data-action]")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => openModal(button.dataset.action)
+    );
+
+  });
+
+
+/* =====================================================
+   COPY
+===================================================== */
+
+async function copyText(value){
+
+  try{
+
+    await navigator.clipboard.writeText(value);
+
+    toast("Copied to clipboard.");
+
+  }catch(error){
+
+    toast(
+      "Unable to copy automatically.",
+      "error"
+    );
+
+  }
+
+}
+
+
+window.copyText = copyText;
+
+
+document
+  .getElementById("copyWallet")
   .addEventListener(
-    "submit",
-    function(event){
+    "click",
+    () => {
 
-      event.preventDefault();
+      const wallet =
+        wallets[0]?.wallet_id ||
+        wallets[0]?.id;
+
+      if(wallet){
+        copyText(wallet);
+      }
+
+    }
+  );
 
 
-      const input =
-        document.getElementById(
-          "chatInput"
-        );
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
 
+async function loadNotifications(){
+
+  const container =
+    document.getElementById("notificationsList");
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("notifications")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .order("created_at",{ascending:false});
+
+  if(error){
+
+    container.innerHTML = `
+      <div class="loading">
+        No notifications available.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  if(!data?.length){
+
+    container.innerHTML = `
+      <div class="loading">
+        You're all caught up.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  container.innerHTML =
+    data.map(item => `
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            ${escapeHtml(
+              item.title ||
+              item.type ||
+              "CoinBridge update"
+            )}
+          </strong>
+
+          <span>
+            ${escapeHtml(
+              item.message ||
+              item.content ||
+              ""
+            )}
+          </span>
+
+        </div>
+
+        <span>
+          ${item.created_at
+            ? escapeHtml(
+                new Date(
+                  item.created_at
+                ).toLocaleDateString()
+              )
+            : ""}
+        </span>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
+async function loadMessages(){
+
+  const container =
+    document.getElementById("messagesList");
+
+  /*
+    The messages table was confirmed to exist.
+    Its exact column structure was not altered here,
+    so the query reads the available row structure and
+    gracefully falls back if RLS/schema prevents access.
+  */
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("messages")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .order("created_at",{ascending:true});
+
+  if(error){
+
+    container.innerHTML = `
+      <div class="chat-empty">
+        <div>
+          <div style="font-size:28px;margin-bottom:10px;">◌</div>
+          Start a conversation with CoinBridge support.
+        </div>
+      </div>
+    `;
+
+    return;
+
+  }
+
+  if(!data?.length){
+
+    container.innerHTML = `
+      <div class="chat-empty">
+        <div>
+          <div style="font-size:28px;margin-bottom:10px;">◌</div>
+          Start a conversation with CoinBridge support.
+        </div>
+      </div>
+    `;
+
+    return;
+
+  }
+
+  container.innerHTML =
+    data.map(message => {
+
+      const sender =
+        String(
+          message.sender_type ||
+          message.role ||
+          message.sender ||
+          "customer"
+        ).toLowerCase();
 
       const text =
-        input.value.trim();
+        message.message ||
+        message.content ||
+        message.body ||
+        "";
+
+      const customer =
+        sender.includes("customer") ||
+        sender.includes("user");
+
+      return `
+        <div class="bubble ${customer ? "customer" : "admin"}">
+          ${escapeHtml(text)}
+        </div>
+      `;
+
+    }).join("");
+
+}
 
 
-      if(!text){
+async function sendChatMessage(){
+
+  const input =
+    document.getElementById("messageInput");
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+  /*
+    Message sending is intentionally guarded because
+    the exact messages-table columns must match its
+    existing schema and RLS policy.
+  */
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("messages")
+    .insert({
+      user_id:currentUser.id,
+      message:text,
+      sender_type:"customer"
+    })
+    .select()
+    .single();
+
+  if(error){
+
+    console.error(
+      "Message send:",
+      error
+    );
+
+    toast(
+      "Message could not be sent yet.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  input.value = "";
+
+  await loadMessages();
+
+  toast("Message sent.");
+
+}
+
+
+document
+  .getElementById("sendMessage")
+  .addEventListener(
+    "click",
+    sendChatMessage
+  );
+
+
+document
+  .getElementById("messageInput")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if(event.key === "Enter"){
+        event.preventDefault();
+        sendChatMessage();
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   PASSWORD RESET
+===================================================== */
+
+document
+  .getElementById("resetPasswordBtn")
+  .addEventListener(
+    "click",
+    async () => {
+
+      if(!currentUser?.email){
+
+        toast(
+          "Your account email could not be found.",
+          "error"
+        );
 
         return;
 
       }
 
+      const {
+        error
+      } =
+      await supabaseClient.auth.resetPasswordForEmail(
+        currentUser.email,
+        {
+          redirectTo:
+            window.location.origin +
+            "/login.html"
+        }
+      );
 
-      const container =
-        document.getElementById(
-          "chatMessages"
+      if(error){
+
+        toast(
+          "Password reset request failed.",
+          "error"
         );
 
+        return;
 
-      const item =
-        document.createElement(
-          "div"
-        );
+      }
 
-
-      item.className =
-        "message customer";
-
-
-      item.innerHTML =
-        `
-          ${escapeHTML(text)}
-          <time>Just now</time>
-        `;
-
-
-      container.appendChild(item);
-
-
-      input.value = "";
-
-
-      container.scrollTop =
-        container.scrollHeight;
-
-
-      /*
-         Supabase Messages table will be
-         connected after we confirm its
-         exact schema.
-      */
+      toast(
+        "Password reset instructions sent to your email."
+      );
 
     }
   );
 
 
 /* =====================================================
-   TOAST
+   NOTIFICATION BUTTON
 ===================================================== */
 
-let toastTimer;
-
-
-function showToast(text){
-
-  const toast =
-    document.getElementById(
-      "toast"
-    );
-
-
-  toast.textContent =
-    text;
-
-
-  toast.classList.add(
-    "show"
+document
+  .getElementById("notificationBtn")
+  .addEventListener(
+    "click",
+    () => showView("notifications",true)
   );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(
-      function(){
-
-        toast.classList.remove(
-          "show"
-        );
-
-      },
-      3000
-    );
-
-}
-
-
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
-function toggleSidebar(){
-
-  document
-    .getElementById("sidebar")
-    .classList
-    .toggle("open");
-
-}
-
-
-function closeSidebar(){
-
-  document
-    .getElementById("sidebar")
-    .classList
-    .remove("open");
-
-}
 
 
 /* =====================================================
@@ -2471,77 +4214,81 @@ function closeSidebar(){
 ===================================================== */
 
 document
-  .getElementById("logoutButton")
+  .getElementById("logoutBtn")
   .addEventListener(
     "click",
-    async function(){
+    async () => {
 
       const {
         error
       } =
-        await supabaseClient.auth.signOut();
-
+      await supabaseClient.auth.signOut();
 
       if(error){
 
-        showToast(
-          "Unable to sign out."
+        toast(
+          "Unable to sign out.",
+          "error"
         );
 
         return;
 
       }
 
-
-      window.location.href =
-        "login.html";
+      window.location.href = "login.html";
 
     }
   );
 
 
 /* =====================================================
-   SECURITY
+   INITIALIZE
 ===================================================== */
 
-supabaseClient.auth.onAuthStateChange(
-  function(event,session){
+async function initialize(){
 
-    if(
-      event === "SIGNED_OUT" ||
-      !session
-    ){
+  const authenticated =
+    await loadCurrentUser();
 
-      window.location.href =
-        "login.html";
+  if(!authenticated) return;
 
-    }
+  await loadProfile();
+
+  await loadWallets();
+
+  await loadTransactions();
+
+  const hash =
+    window.location.hash
+      .replace("#","")
+      .trim();
+
+  const validViews = [
+    "dashboard",
+    "portfolio",
+    "wallet",
+    "markets",
+    "transactions",
+    "messages",
+    "notifications",
+    "security",
+    "settings"
+  ];
+
+  if(validViews.includes(hash)){
+
+    showView(hash,false);
+
+  }else{
+
+    showView("dashboard",false);
 
   }
-);
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
 
 }
 
 
-/* =====================================================
-   START
-===================================================== */
-
-loadCustomer();
+initialize();
 
 </script>
 

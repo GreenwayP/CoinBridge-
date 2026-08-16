@@ -22,7 +22,7 @@ body{
   min-height:100vh;
 }
 
-button,input,select{
+button,input,select,textarea{
   font:inherit;
 }
 
@@ -87,7 +87,8 @@ button{
 }
 
 .field input,
-.field select{
+.field select,
+.field textarea{
   width:100%;
   background:#07111d;
   color:#fff;
@@ -97,8 +98,14 @@ button{
   outline:none;
 }
 
+.field textarea{
+  resize:vertical;
+  min-height:80px;
+}
+
 .field input:focus,
-.field select:focus{
+.field select:focus,
+.field textarea:focus{
   border-color:#22d3ee;
 }
 
@@ -377,6 +384,11 @@ button{
   filter:brightness(1.15);
 }
 
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
 /* TABLE */
 
 .table-wrap{
@@ -454,16 +466,136 @@ td{
   margin-top:4px;
 }
 
-/* WALLET EDIT */
+/* WALLET MODAL */
 
-.wallet-form{
+.wallet-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  z-index:500;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   padding:20px;
+  overflow-y:auto;
+}
+
+.wallet-modal.hidden{
+  display:none!important;
+}
+
+.wallet-box{
+  width:100%;
   max-width:500px;
+  background:#091522;
+  border:1px solid #1d3448;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 25px 80px rgba(0,0,0,.6);
+}
+
+.wallet-box-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.wallet-box-title span{
+  color:#22d3ee;
+}
+
+.wallet-box-subtitle{
+  text-align:center;
+  color:#718096;
+  font-size:10px;
+  margin-bottom:22px;
+}
+
+.wallet-current{
+  background:#07111d;
+  border:1px solid #1d3448;
+  border-radius:10px;
+  padding:13px;
+  margin-bottom:18px;
+}
+
+.wallet-current-label{
+  color:#718096;
+  font-size:9px;
+  margin-bottom:5px;
+}
+
+.wallet-current-value{
+  font-size:18px;
+  font-weight:800;
+}
+
+.action-box{
+  background:#07111d;
+  border:1px solid #1d3448;
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:17px;
+}
+
+.action-title{
+  color:#94a3b8;
+  font-size:10px;
+  margin-bottom:10px;
+}
+
+.action-buttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+
+.action-choice{
+  border:1px solid #1d3448;
+  background:#091522;
+  color:#94a3b8;
+  padding:10px 6px;
+  border-radius:7px;
+  font-size:9px;
+}
+
+.action-choice.active{
+  border-color:#22d3ee;
+  background:rgba(34,211,238,.09);
+  color:#22d3ee;
+}
+
+.action-choice.credit.active{
+  border-color:#34d399;
+  background:rgba(52,211,153,.09);
+  color:#34d399;
+}
+
+.action-choice.debit.active{
+  border-color:#fb7185;
+  background:rgba(251,113,133,.09);
+  color:#fb7185;
+}
+
+.wallet-actions{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+  margin-top:8px;
+}
+
+.wallet-actions .btn{
+  padding:10px 14px;
 }
 
 /* MOBILE */
 
 .mobile-top{
+  display:none;
+}
+
+.mobile-sidebar-overlay{
   display:none;
 }
 
@@ -479,6 +611,11 @@ td{
 
   .sidebar{
     display:none;
+    box-shadow:15px 0 40px rgba(0,0,0,.5);
+  }
+
+  .sidebar.mobile-open{
+    display:block;
   }
 
   .main{
@@ -504,10 +641,16 @@ td{
     color:#22d3ee;
     padding:9px;
     border-radius:8px;
+    font-size:18px;
   }
 
   .profile{
     display:none;
+  }
+
+  .card-head{
+    align-items:flex-start;
+    flex-direction:column;
   }
 
 }
@@ -520,6 +663,22 @@ td{
 
   .login-box{
     padding:25px 20px;
+  }
+
+  .wallet-box{
+    padding:20px 16px;
+  }
+
+  .action-buttons{
+    grid-template-columns:1fr;
+  }
+
+  .wallet-actions{
+    flex-direction:column;
+  }
+
+  .wallet-actions .btn{
+    width:100%;
   }
 
 }
@@ -599,7 +758,7 @@ td{
 
 <div class="layout">
 
-<aside class="sidebar">
+<aside class="sidebar" id="adminSidebar">
 
   <div class="brand">
     Coin<span>Bridge</span>
@@ -617,7 +776,8 @@ td{
 
     <button
       class="active"
-      onclick="showSection('dashboard',this)"
+      data-section="dashboard"
+      onclick="navigateAdmin('dashboard',this)"
     >
       📊 Dashboard
     </button>
@@ -630,15 +790,24 @@ td{
 
   <div class="nav">
 
-    <button onclick="showSection('customers',this)">
+    <button
+      data-section="customers"
+      onclick="navigateAdmin('customers',this)"
+    >
       👥 Customers
     </button>
 
-    <button onclick="showSection('wallets',this)">
+    <button
+      data-section="wallets"
+      onclick="navigateAdmin('wallets',this)"
+    >
       💰 Wallets
     </button>
 
-    <button onclick="showSection('approvals',this)">
+    <button
+      data-section="approvals"
+      onclick="navigateAdmin('approvals',this)"
+    >
       ✅ Account Approvals
     </button>
 
@@ -650,7 +819,10 @@ td{
 
   <div class="nav">
 
-    <button onclick="showSection('activity',this)">
+    <button
+      data-section="activity"
+      onclick="navigateAdmin('activity',this)"
+    >
       📋 Activity
     </button>
 
@@ -905,7 +1077,7 @@ td{
       </h2>
 
       <p>
-        Administrators can view and update customer wallets.
+        View, edit, credit and debit customer wallets.
       </p>
 
     </div>
@@ -1030,6 +1202,13 @@ td{
 
     </div>
 
+    <button
+      class="btn primary"
+      onclick="loadActivity()"
+    >
+      Refresh
+    </button>
+
   </div>
 
   <div
@@ -1052,22 +1231,77 @@ td{
 
 <div
   id="walletModal"
-  class="login-screen hidden"
-  style="position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;"
+  class="wallet-modal hidden"
 >
 
-  <div class="login-box">
+  <div class="wallet-box">
 
-    <div class="brand" style="font-size:22px;">
-      Edit <span>Wallet</span>
+    <div class="wallet-box-title">
+      Manage <span>Wallet</span>
     </div>
 
-    <br>
+    <div class="wallet-box-subtitle">
+      Update wallet details or make a balance adjustment.
+    </div>
 
     <input
       id="editWalletId"
       type="hidden"
     >
+
+    <div class="wallet-current">
+
+      <div class="wallet-current-label">
+        Current Balance
+      </div>
+
+      <div
+        id="currentWalletBalance"
+        class="wallet-current-value"
+      >
+        0.00
+      </div>
+
+    </div>
+
+    <div class="action-box">
+
+      <div class="action-title">
+        Wallet Action
+      </div>
+
+      <div class="action-buttons">
+
+        <button
+          id="actionDetails"
+          class="action-choice active"
+          type="button"
+          onclick="setWalletAction('details')"
+        >
+          ⚙️ Details
+        </button>
+
+        <button
+          id="actionCredit"
+          class="action-choice credit"
+          type="button"
+          onclick="setWalletAction('credit')"
+        >
+          ＋ Credit
+        </button>
+
+        <button
+          id="actionDebit"
+          class="action-choice debit"
+          type="button"
+          onclick="setWalletAction('debit')"
+        >
+          − Debit
+        </button>
+
+      </div>
+
+    </div>
 
     <div class="field">
 
@@ -1078,20 +1312,6 @@ td{
       <input
         id="walletIdInput"
         type="text"
-      >
-
-    </div>
-
-    <div class="field">
-
-      <label>
-        Balance
-      </label>
-
-      <input
-        id="walletBalanceInput"
-        type="number"
-        step="0.01"
       >
 
     </div>
@@ -1116,17 +1336,56 @@ td{
 
     </div>
 
-    <div style="display:flex;gap:8px;">
+    <div
+      id="adjustmentFields"
+      class="hidden"
+    >
+
+      <div class="field">
+
+        <label id="amountLabel">
+          Amount
+        </label>
+
+        <input
+          id="walletAmountInput"
+          type="number"
+          min="0"
+          step="0.00000001"
+          placeholder="Enter amount"
+        >
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Description
+        </label>
+
+        <textarea
+          id="walletDescriptionInput"
+          placeholder="Enter transaction description"
+        ></textarea>
+
+      </div>
+
+    </div>
+
+    <div class="wallet-actions">
 
       <button
         class="btn neutral"
+        type="button"
         onclick="closeWalletModal()"
       >
         Cancel
       </button>
 
       <button
+        id="saveWalletButton"
         class="btn success"
+        type="button"
         onclick="saveWallet()"
       >
         Save Wallet
@@ -1159,6 +1418,16 @@ const supabaseClient =
 
 
 /* ==================================================
+   ADMIN STATE
+================================================== */
+
+let customerProfiles = [];
+let walletRows = [];
+let currentWalletAction = "details";
+let currentAdminSection = "dashboard";
+
+
+/* ==================================================
    PASSWORD
 ================================================== */
 
@@ -1176,7 +1445,7 @@ function togglePassword(){
 
 
 /* ==================================================
-   MESSAGE
+   LOGIN MESSAGE
 ================================================== */
 
 function showLoginMessage(text,type="error"){
@@ -1237,7 +1506,6 @@ async function login(){
   }
 
   button.disabled=true;
-
   button.textContent="Signing in...";
 
   try{
@@ -1249,9 +1517,7 @@ async function login(){
       });
 
     if(error){
-
       throw error;
-
     }
 
     if(!data.user){
@@ -1270,9 +1536,7 @@ async function login(){
         .maybeSingle();
 
     if(profileError){
-
       throw profileError;
-
     }
 
     if(!profile){
@@ -1329,6 +1593,8 @@ async function login(){
         profile.full_name ||
         "Administrator";
 
+      initializeAdminHistory();
+
       loadAll();
 
     },400);
@@ -1343,7 +1609,6 @@ async function login(){
     );
 
     button.disabled=false;
-
     button.textContent="Sign In";
 
   }
@@ -1363,15 +1628,12 @@ async function checkSession(){
   if(error){
 
     console.error(error);
-
     return;
 
   }
 
   if(!data.session){
-
     return;
-
   }
 
   const user =
@@ -1393,7 +1655,6 @@ async function checkSession(){
   ){
 
     await supabaseClient.auth.signOut();
-
     return;
 
   }
@@ -1411,6 +1672,8 @@ async function checkSession(){
   ).textContent =
     profile.full_name ||
     "Administrator";
+
+  initializeAdminHistory();
 
   loadAll();
 
@@ -1431,25 +1694,79 @@ async function logout(){
 
 
 /* ==================================================
-   NAVIGATION
+   ADMIN HISTORY / PHONE BACK BUTTON
 ================================================== */
 
-function showSection(id,button){
+function initializeAdminHistory(){
 
-  document
-    .querySelectorAll(".section")
-    .forEach(section=>{
-      section.classList.remove("active");
-    });
+  currentAdminSection =
+    window.location.hash
+      ? window.location.hash.substring(1)
+      : "dashboard";
+
+  if(
+    ![
+      "dashboard",
+      "customers",
+      "wallets",
+      "approvals",
+      "activity"
+    ].includes(currentAdminSection)
+  ){
+
+    currentAdminSection="dashboard";
+
+  }
+
+  history.replaceState(
+    {
+      adminSection:currentAdminSection
+    },
+    "",
+    "#" + currentAdminSection
+  );
+
+  applyAdminSection(
+    currentAdminSection,
+    false
+  );
+
+}
+
+
+function navigateAdmin(id,button){
+
+  currentAdminSection=id;
+
+  history.pushState(
+    {
+      adminSection:id
+    },
+    "",
+    "#" + id
+  );
+
+  applyAdminSection(id,true);
+
+}
+
+
+function applyAdminSection(id,closeMobile=true){
 
   const section =
     document.getElementById(id);
 
-  if(section){
-
-    section.classList.add("active");
-
+  if(!section){
+    return;
   }
+
+  document
+    .querySelectorAll(".section")
+    .forEach(item=>{
+      item.classList.remove("active");
+    });
+
+  section.classList.add("active");
 
   document
     .querySelectorAll(".nav button")
@@ -1457,10 +1774,13 @@ function showSection(id,button){
       item.classList.remove("active");
     });
 
-  if(button){
+  const activeButton =
+    document.querySelector(
+      `.nav button[data-section="${id}"]`
+    );
 
-    button.classList.add("active");
-
+  if(activeButton){
+    activeButton.classList.add("active");
   }
 
   const names={
@@ -1504,18 +1824,78 @@ function showSection(id,button){
 
   }
 
+  if(closeMobile){
+
+    closeMobileMenu();
+
+  }
+
 }
 
+
+window.addEventListener(
+  "popstate",
+  function(event){
+
+    let section =
+      event.state &&
+      event.state.adminSection
+        ? event.state.adminSection
+        : "dashboard";
+
+    if(
+      ![
+        "dashboard",
+        "customers",
+        "wallets",
+        "approvals",
+        "activity"
+      ].includes(section)
+    ){
+
+      section="dashboard";
+
+    }
+
+    currentAdminSection=section;
+
+    applyAdminSection(
+      section,
+      true
+    );
+
+  }
+);
+
+
+/* ==================================================
+   MOBILE MENU
+================================================== */
 
 function toggleMobileMenu(){
 
   const sidebar =
-    document.querySelector(".sidebar");
+    document.getElementById("adminSidebar");
 
-  sidebar.style.display =
-    sidebar.style.display === "block"
-      ? "none"
-      : "block";
+  if(!sidebar){
+    return;
+  }
+
+  sidebar.classList.toggle("mobile-open");
+
+}
+
+
+function closeMobileMenu(){
+
+  const sidebar =
+    document.getElementById("adminSidebar");
+
+  if(!sidebar){
+    return;
+  }
+
+  sidebar.classList.remove("mobile-open");
 
 }
 
@@ -1529,7 +1909,8 @@ async function loadAll(){
   await Promise.all([
     loadCustomers(),
     loadWallets(),
-    loadApprovals()
+    loadApprovals(),
+    loadActivity()
   ]);
 
   updateDashboard();
@@ -1540,8 +1921,6 @@ async function loadAll(){
 /* ==================================================
    CUSTOMERS
 ================================================== */
-
-let customerProfiles=[];
 
 async function loadCustomers(){
 
@@ -1571,7 +1950,8 @@ async function loadCustomers(){
     table.innerHTML=
       `<tr>
         <td colspan="5">
-          Error loading customers: ${escapeHTML(error.message)}
+          Error loading customers:
+          ${escapeHTML(error.message)}
         </td>
       </tr>`;
 
@@ -1601,24 +1981,35 @@ async function loadCustomers(){
 
         <td>
           <strong>
-            ${escapeHTML(customer.full_name||"Customer")}
+            ${escapeHTML(
+              customer.full_name ||
+              "Customer"
+            )}
           </strong>
         </td>
 
         <td>
-          ${escapeHTML(customer.email||"—")}
+          ${escapeHTML(
+            customer.email||"—"
+          )}
         </td>
 
         <td>
-          ${escapeHTML(customer.phone||"—")}
+          ${escapeHTML(
+            customer.phone||"—"
+          )}
         </td>
 
         <td>
-          ${statusHTML(customer.account_status)}
+          ${statusHTML(
+            customer.account_status
+          )}
         </td>
 
         <td>
-          ${formatDate(customer.created_at)}
+          ${formatDate(
+            customer.created_at
+          )}
         </td>
 
       </tr>
@@ -1631,8 +2022,6 @@ async function loadCustomers(){
 /* ==================================================
    WALLETS
 ================================================== */
-
-let walletRows=[];
 
 async function loadWallets(){
 
@@ -1661,7 +2050,8 @@ async function loadWallets(){
     table.innerHTML=
       `<tr>
         <td colspan="6">
-          Error loading wallets: ${escapeHTML(error.message)}
+          Error loading wallets:
+          ${escapeHTML(error.message)}
         </td>
       </tr>`;
 
@@ -1687,7 +2077,9 @@ async function loadWallets(){
   const userIds =
     [
       ...new Set(
-        walletRows.map(wallet=>wallet.user_id)
+        walletRows.map(
+          wallet=>wallet.user_id
+        )
       )
     ];
 
@@ -1695,11 +2087,20 @@ async function loadWallets(){
 
   if(userIds.length){
 
-    const {data:profiles} =
+    const {data:profiles,error:profileError} =
       await supabaseClient
         .from("profiles")
         .select("id,full_name,email")
         .in("id",userIds);
+
+    if(profileError){
+
+      console.error(
+        "PROFILE LOOKUP ERROR:",
+        profileError
+      );
+
+    }
 
     (profiles||[]).forEach(profile=>{
       profileMap[profile.id]=profile;
@@ -1738,11 +2139,16 @@ async function loadWallets(){
           </td>
 
           <td>
-            $${money(wallet.balance)}
+            ${escapeHTML(
+              String(wallet.currency||"")
+            )}
+            ${money(wallet.balance)}
           </td>
 
           <td>
-            ${statusHTML(wallet.status)}
+            ${statusHTML(
+              wallet.status
+            )}
           </td>
 
           <td>
@@ -1751,7 +2157,7 @@ async function loadWallets(){
               class="btn primary"
               onclick="openWalletEditor('${escapeAttribute(wallet.id)}')"
             >
-              Edit
+              Manage
             </button>
 
           </td>
@@ -1776,7 +2182,10 @@ function openWalletEditor(id){
       item=>item.id===id
     );
 
-  if(!wallet)return;
+  if(!wallet){
+    alert("Wallet could not be found.");
+    return;
+  }
 
   document.getElementById(
     "editWalletId"
@@ -1787,14 +2196,26 @@ function openWalletEditor(id){
   ).value=wallet.wallet_id||"";
 
   document.getElementById(
-    "walletBalanceInput"
-  ).value=wallet.balance||0;
-
-  document.getElementById(
     "walletStatusInput"
   ).value=
-    String(wallet.status||"active")
-      .toLowerCase();
+    String(
+      wallet.status||"active"
+    ).toLowerCase();
+
+  document.getElementById(
+    "walletAmountInput"
+  ).value="";
+
+  document.getElementById(
+    "walletDescriptionInput"
+  ).value="";
+
+  document.getElementById(
+    "currentWalletBalance"
+  ).textContent=
+    `${wallet.currency||""} ${money(wallet.balance)}`;
+
+  setWalletAction("details");
 
   document
     .getElementById("walletModal")
@@ -1812,6 +2233,97 @@ function closeWalletModal(){
 }
 
 
+function setWalletAction(action){
+
+  currentWalletAction=action;
+
+  document
+    .getElementById("actionDetails")
+    .classList.toggle(
+      "active",
+      action==="details"
+    );
+
+  document
+    .getElementById("actionCredit")
+    .classList.toggle(
+      "active",
+      action==="credit"
+    );
+
+  document
+    .getElementById("actionDebit")
+    .classList.toggle(
+      "active",
+      action==="debit"
+    );
+
+  const adjustmentFields =
+    document.getElementById(
+      "adjustmentFields"
+    );
+
+  const saveButton =
+    document.getElementById(
+      "saveWalletButton"
+    );
+
+  const amountLabel =
+    document.getElementById(
+      "amountLabel"
+    );
+
+  if(action==="details"){
+
+    adjustmentFields.classList.add(
+      "hidden"
+    );
+
+    saveButton.textContent=
+      "Save Wallet";
+
+    saveButton.className=
+      "btn success";
+
+  }else{
+
+    adjustmentFields.classList.remove(
+      "hidden"
+    );
+
+    if(action==="credit"){
+
+      amountLabel.textContent=
+        "Credit Amount";
+
+      saveButton.textContent=
+        "Credit Wallet";
+
+      saveButton.className=
+        "btn success";
+
+    }else{
+
+      amountLabel.textContent=
+        "Debit Amount";
+
+      saveButton.textContent=
+        "Debit Wallet";
+
+      saveButton.className=
+        "btn danger";
+
+    }
+
+  }
+
+}
+
+
+/* ==================================================
+   SAVE / CREDIT / DEBIT WALLET
+================================================== */
+
 async function saveWallet(){
 
   const id =
@@ -1819,72 +2331,429 @@ async function saveWallet(){
       "editWalletId"
     ).value;
 
+  const wallet =
+    walletRows.find(
+      item=>item.id===id
+    );
+
+  if(!wallet){
+
+    alert("Wallet could not be found.");
+    return;
+
+  }
+
   const walletId =
     document.getElementById(
       "walletIdInput"
     ).value.trim();
-
-  const balance =
-    Number(
-      document.getElementById(
-        "walletBalanceInput"
-      ).value||0
-    );
 
   const status =
     document.getElementById(
       "walletStatusInput"
     ).value;
 
+  const button =
+    document.getElementById(
+      "saveWalletButton"
+    );
+
   if(!id){
 
     alert("Wallet ID is missing.");
+    return;
+
+  }
+
+  if(!walletId){
+
+    alert("Wallet ID cannot be empty.");
+    return;
+
+  }
+
+
+  /* -----------------------------------------------
+     NORMAL DETAILS UPDATE
+  ------------------------------------------------ */
+
+  if(currentWalletAction==="details"){
+
+    button.disabled=true;
+    button.textContent="Saving...";
+
+    try{
+
+      const {error} =
+        await supabaseClient
+          .from("wallets")
+          .update({
+            wallet_id:walletId,
+            status:status,
+            updated_at:
+              new Date().toISOString()
+          })
+          .eq("id",id);
+
+      if(error){
+        throw error;
+      }
+
+      closeWalletModal();
+
+      await loadWallets();
+
+      updateDashboard();
+
+      alert(
+        "Wallet details updated successfully."
+      );
+
+    }catch(error){
+
+      console.error(
+        "WALLET UPDATE ERROR:",
+        error
+      );
+
+      alert(
+        "Unable to update wallet:\n\n"+
+        error.message
+      );
+
+    }finally{
+
+      button.disabled=false;
+      button.textContent="Save Wallet";
+
+    }
 
     return;
 
   }
 
-  if(balance < 0){
 
-    alert("Balance cannot be negative.");
+  /* -----------------------------------------------
+     CREDIT / DEBIT VALIDATION
+  ------------------------------------------------ */
 
-    return;
+  const amount =
+    Number(
+      document.getElementById(
+        "walletAmountInput"
+      ).value
+    );
 
-  }
+  const description =
+    document.getElementById(
+      "walletDescriptionInput"
+    ).value.trim();
 
-  const {error} =
-    await supabaseClient
-      .from("wallets")
-      .update({
-
-        wallet_id:walletId,
-        balance:balance,
-        status:status,
-        updated_at:new Date().toISOString()
-
-      })
-      .eq("id",id);
-
-  if(error){
-
-    console.error(error);
+  if(!Number.isFinite(amount) || amount<=0){
 
     alert(
-      "Unable to update wallet:\n\n"+
-      error.message
+      "Enter an amount greater than zero."
     );
 
     return;
 
   }
 
-  closeWalletModal();
+  if(currentWalletAction==="debit"){
 
-  await loadWallets();
+    if(
+      Number(wallet.balance||0) < amount
+    ){
 
-  updateDashboard();
+      alert(
+        "Insufficient wallet balance."
+      );
 
-  alert("Wallet updated successfully.");
+      return;
+
+    }
+
+  }
+
+
+  const oldBalance =
+    Number(wallet.balance||0);
+
+  let newBalance;
+
+  if(currentWalletAction==="credit"){
+
+    newBalance =
+      oldBalance + amount;
+
+  }else{
+
+    newBalance =
+      oldBalance - amount;
+
+  }
+
+
+  const actionText =
+    currentWalletAction==="credit"
+      ? "credit"
+      : "debit";
+
+
+  const confirmed =
+    confirm(
+      `Confirm ${actionText}?\n\n`+
+      `Wallet: ${wallet.wallet_id}\n`+
+      `Currency: ${wallet.currency}\n`+
+      `Current balance: ${money(oldBalance)}\n`+
+      `Amount: ${money(amount)}\n`+
+      `New balance: ${money(newBalance)}`
+    );
+
+  if(!confirmed){
+    return;
+  }
+
+
+  button.disabled=true;
+
+  button.textContent =
+    currentWalletAction==="credit"
+      ? "Crediting..."
+      : "Debiting...";
+
+
+  try{
+
+    /* ---------------------------------------------
+       UPDATE WALLET BALANCE
+    ---------------------------------------------- */
+
+    const {error:walletError} =
+      await supabaseClient
+        .from("wallets")
+        .update({
+
+          wallet_id:walletId,
+
+          balance:newBalance,
+
+          status:status,
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq("id",id);
+
+    if(walletError){
+
+      throw walletError;
+
+    }
+
+
+    /* ---------------------------------------------
+       TRANSACTION REFERENCE
+    ---------------------------------------------- */
+
+    const reference =
+      "CB-" +
+      crypto
+        .randomUUID()
+        .replaceAll("-","")
+        .substring(0,12)
+        .toUpperCase();
+
+
+    /* ---------------------------------------------
+       TRANSACTION RECORD
+    ---------------------------------------------- */
+
+    const transactionType =
+      currentWalletAction==="credit"
+        ? "Admin Credit"
+        : "Admin Debit";
+
+    const transactionDescription =
+      description ||
+      (
+        currentWalletAction==="credit"
+          ? "Wallet credited by administrator"
+          : "Wallet debited by administrator"
+      );
+
+
+    const {data:transactionData,error:transactionError} =
+      await supabaseClient
+        .from("transactions")
+        .insert({
+
+          user_id:wallet.user_id,
+
+          wallet_id:wallet.id,
+
+          transaction_type:
+            transactionType,
+
+          amount:amount,
+
+          currency:
+            wallet.currency,
+
+          status:"completed",
+
+          description:
+            transactionDescription,
+
+          reference:
+            reference
+
+        })
+        .select("id")
+        .maybeSingle();
+
+
+    if(transactionError){
+
+      console.error(
+        "TRANSACTION ERROR:",
+        transactionError
+      );
+
+
+      /* -------------------------------------------
+         ATTEMPT BALANCE ROLLBACK
+      -------------------------------------------- */
+
+      await supabaseClient
+        .from("wallets")
+        .update({
+
+          balance:oldBalance,
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq("id",id);
+
+
+      throw new Error(
+        "The transaction record could not be created. The wallet balance was restored.\n\n"+
+        transactionError.message
+      );
+
+    }
+
+
+    /* ---------------------------------------------
+       CUSTOMER NOTIFICATION
+    ---------------------------------------------- */
+
+    const notificationTitle =
+      currentWalletAction==="credit"
+        ? "Wallet credited"
+        : "Wallet debited";
+
+    const notificationMessage =
+      currentWalletAction==="credit"
+
+        ?
+
+        `Your ${wallet.currency} wallet has been credited with ${amount} ${wallet.currency}. New balance: ${newBalance} ${wallet.currency}.`
+
+        :
+
+        `Your ${wallet.currency} wallet has been debited by ${amount} ${wallet.currency}. New balance: ${newBalance} ${wallet.currency}.`;
+
+
+    const {error:notificationError} =
+      await supabaseClient
+        .from("notifications")
+        .insert({
+
+          user_id:
+            wallet.user_id,
+
+          title:
+            notificationTitle,
+
+          message:
+            notificationMessage,
+
+          type:
+            "wallet"
+
+        });
+
+
+    if(notificationError){
+
+      console.error(
+        "NOTIFICATION ERROR:",
+        notificationError
+      );
+
+      alert(
+        "Wallet and transaction were updated successfully, but the customer notification could not be created.\n\n"+
+        notificationError.message
+      );
+
+    }else{
+
+      alert(
+        currentWalletAction==="credit"
+          ? "Wallet credited successfully."
+          : "Wallet debited successfully."
+      );
+
+    }
+
+
+    closeWalletModal();
+
+    await loadWallets();
+
+    await loadActivity();
+
+    updateDashboard();
+
+
+  }catch(error){
+
+    console.error(
+      "WALLET ADJUSTMENT ERROR:",
+      error
+    );
+
+    alert(
+      "Unable to complete wallet adjustment:\n\n"+
+      error.message
+    );
+
+  }finally{
+
+    button.disabled=false;
+
+    if(currentWalletAction==="details"){
+
+      button.textContent=
+        "Save Wallet";
+
+    }else if(currentWalletAction==="credit"){
+
+      button.textContent=
+        "Credit Wallet";
+
+    }else{
+
+      button.textContent=
+        "Debit Wallet";
+
+    }
+
+  }
 
 }
 
@@ -1949,35 +2818,44 @@ async function loadApprovals(){
 
         <td>
           ${escapeHTML(
-            account.full_name||"Customer"
+            account.full_name||
+            "Customer"
           )}
         </td>
 
         <td>
           ${escapeHTML(
-            account.email||"—"
+            account.email||
+            "—"
           )}
         </td>
 
         <td>
           ${escapeHTML(
-            account.role||"customer"
+            account.role||
+            "customer"
           )}
         </td>
 
         <td>
-          ${statusHTML(account.account_status)}
+          ${statusHTML(
+            account.account_status
+          )}
         </td>
 
         <td>
-          ${formatDate(account.created_at)}
+          ${formatDate(
+            account.created_at
+          )}
         </td>
 
         <td>
 
           ${
-            String(account.account_status)
-              .toLowerCase()==="pending"
+            String(
+              account.account_status
+            ).toLowerCase()==="pending"
+
             ?
 
             `<div style="display:flex;gap:5px;">
@@ -2018,21 +2896,33 @@ async function loadApprovals(){
    ACCOUNT STATUS
 ================================================== */
 
-async function changeAccountStatus(id,status){
+async function changeAccountStatus(
+  id,
+  status
+){
 
   if(
     !confirm(
       "Change this account status to "+
       status+"?"
     )
-  )return;
+  ){
+
+    return;
+
+  }
 
   const {error} =
     await supabaseClient
       .from("profiles")
       .update({
-        account_status:status,
-        updated_at:new Date().toISOString()
+
+        account_status:
+          status,
+
+        updated_at:
+          new Date().toISOString()
+
       })
       .eq("id",id);
 
@@ -2062,6 +2952,106 @@ async function changeAccountStatus(id,status){
 
 
 /* ==================================================
+   ACTIVITY
+================================================== */
+
+async function loadActivity(){
+
+  const list =
+    document.getElementById(
+      "activityList"
+    );
+
+  if(!list){
+    return;
+  }
+
+  list.innerHTML=
+    `<div class="activity-row">
+      <strong>Loading activity...</strong>
+      <span>Please wait.</span>
+    </div>`;
+
+  const {data,error} =
+    await supabaseClient
+      .from("transactions")
+      .select("*")
+      .order("created_at",{ascending:false})
+      .limit(15);
+
+  if(error){
+
+    list.innerHTML=
+      `<div class="activity-row">
+        <strong>Activity unavailable</strong>
+        <span>
+          ${escapeHTML(error.message)}
+        </span>
+      </div>`;
+
+    return;
+
+  }
+
+  const rows=data||[];
+
+  if(!rows.length){
+
+    list.innerHTML=
+      `<div class="activity-row">
+        <strong>No transactions yet</strong>
+        <span>
+          Platform transaction activity will appear here.
+        </span>
+      </div>`;
+
+    return;
+
+  }
+
+  list.innerHTML=
+    rows.map(row=>`
+
+      <div class="activity-row">
+
+        <strong>
+          ${escapeHTML(
+            row.transaction_type||
+            "Transaction"
+          )}
+          — 
+          ${escapeHTML(
+            String(row.amount||0)
+          )}
+          ${escapeHTML(
+            row.currency||""
+          )}
+        </strong>
+
+        <span>
+          ${escapeHTML(
+            row.description||
+            "No description"
+          )}
+          ·
+          ${formatDate(
+            row.created_at
+          )}
+          ${
+            row.reference
+              ? " · "+escapeHTML(row.reference)
+              : ""
+          }
+        </span>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* ==================================================
    DASHBOARD
 ================================================== */
 
@@ -2073,8 +3063,9 @@ function updateDashboard(){
   const pending =
     customerProfiles.filter(
       item =>
-        String(item.account_status)
-          .toLowerCase()==="pending"
+        String(
+          item.account_status
+        ).toLowerCase()==="pending"
     ).length;
 
   const wallets =
@@ -2083,8 +3074,9 @@ function updateDashboard(){
   const active =
     walletRows.filter(
       item =>
-        String(item.status)
-          .toLowerCase()==="active"
+        String(
+          item.status
+        ).toLowerCase()==="active"
     ).length;
 
   document.getElementById(
@@ -2122,11 +3114,13 @@ function updateDashboard(){
 
 function money(value){
 
-  return Number(value||0).toLocaleString(
+  return Number(
+    value||0
+  ).toLocaleString(
     "en-US",
     {
       minimumFractionDigits:2,
-      maximumFractionDigits:2
+      maximumFractionDigits:8
     }
   );
 
@@ -2135,12 +3129,22 @@ function money(value){
 
 function formatDate(value){
 
-  if(!value)return "—";
-
-  const date=new Date(value);
-
-  if(isNaN(date.getTime()))
+  if(!value){
     return "—";
+  }
+
+  const date=
+    new Date(value);
+
+  if(
+    isNaN(
+      date.getTime()
+    )
+  ){
+
+    return "—";
+
+  }
 
   return date.toLocaleString(
     [],
@@ -2159,9 +3163,12 @@ function formatDate(value){
 function statusHTML(status){
 
   const value=
-    String(status||"pending");
+    String(
+      status||"pending"
+    );
 
-  const lower=value.toLowerCase();
+  const lower=
+    value.toLowerCase();
 
   let cls="pending";
 
@@ -2194,12 +3201,29 @@ function statusHTML(status){
 
 function escapeHTML(value){
 
-  return String(value??"")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  return String(
+    value??""
+  )
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
@@ -2220,4 +3244,4 @@ checkSession();
 </script>
 
 </body>
-</html>
+  </html>

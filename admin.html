@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>CoinBridge | Admin</title>
+<title>CoinBridge | Administrator</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
@@ -20,7 +22,7 @@ body{
   min-height:100vh;
 }
 
-button,input{
+button,input,select{
   font:inherit;
 }
 
@@ -41,7 +43,7 @@ button{
   justify-content:center;
   padding:20px;
   background:
-    radial-gradient(circle at top right,rgba(34,211,238,.14),transparent 35%),
+    radial-gradient(circle at top right,rgba(34,211,238,.15),transparent 35%),
     radial-gradient(circle at bottom left,rgba(16,185,129,.10),transparent 35%),
     #050b14;
 }
@@ -84,7 +86,8 @@ button{
   margin-bottom:7px;
 }
 
-.field input{
+.field input,
+.field select{
   width:100%;
   background:#07111d;
   color:#fff;
@@ -94,7 +97,8 @@ button{
   outline:none;
 }
 
-.field input:focus{
+.field input:focus,
+.field select:focus{
   border-color:#22d3ee;
 }
 
@@ -111,30 +115,10 @@ button{
   right:8px;
   top:50%;
   transform:translateY(-50%);
+  background:none;
   border:0;
-  background:transparent;
   color:#94a3b8;
-  padding:7px;
-}
-
-.login-error{
-  background:rgba(244,63,94,.08);
-  border:1px solid rgba(244,63,94,.25);
-  color:#fb7185;
-  padding:10px;
-  border-radius:8px;
-  font-size:11px;
-  margin-bottom:15px;
-}
-
-.login-success{
-  background:rgba(52,211,153,.08);
-  border:1px solid rgba(52,211,153,.25);
-  color:#34d399;
-  padding:10px;
-  border-radius:8px;
-  font-size:11px;
-  margin-bottom:15px;
+  font-size:17px;
 }
 
 .login-btn{
@@ -156,6 +140,28 @@ button{
   cursor:not-allowed;
 }
 
+.login-message{
+  display:none;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:15px;
+  font-size:11px;
+}
+
+.login-message.error{
+  display:block;
+  color:#fb7185;
+  background:rgba(244,63,94,.08);
+  border:1px solid rgba(244,63,94,.25);
+}
+
+.login-message.success{
+  display:block;
+  color:#34d399;
+  background:rgba(52,211,153,.08);
+  border:1px solid rgba(52,211,153,.25);
+}
+
 /* APP */
 
 .layout{
@@ -166,9 +172,7 @@ button{
 .sidebar{
   width:245px;
   position:fixed;
-  top:0;
-  bottom:0;
-  left:0;
+  inset:0 auto 0 0;
   background:#07111d;
   border-right:1px solid #1b3042;
   padding:24px 15px;
@@ -177,9 +181,8 @@ button{
 
 .sidebar .brand{
   text-align:left;
-  padding:0 12px;
   font-size:23px;
-  margin-bottom:5px;
+  padding:0 12px;
 }
 
 .admin-tag{
@@ -188,7 +191,7 @@ button{
   letter-spacing:1px;
   text-transform:uppercase;
   padding:0 12px;
-  margin-bottom:30px;
+  margin:6px 0 30px;
 }
 
 .menu-title{
@@ -243,8 +246,8 @@ button{
 
 .topbar{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   margin-bottom:25px;
 }
 
@@ -293,6 +296,8 @@ button{
   display:block;
 }
 
+/* CARDS */
+
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -300,10 +305,14 @@ button{
   margin-bottom:20px;
 }
 
-.stat{
+.stat,
+.card{
   background:#091522;
   border:1px solid #1d3448;
   border-radius:14px;
+}
+
+.stat{
   padding:18px;
 }
 
@@ -317,10 +326,14 @@ button{
   font-size:23px;
 }
 
+.stat small{
+  display:block;
+  color:#34d399;
+  font-size:9px;
+  margin-top:6px;
+}
+
 .card{
-  background:#091522;
-  border:1px solid #1d3448;
-  border-radius:14px;
   overflow:hidden;
   margin-bottom:20px;
 }
@@ -331,6 +344,7 @@ button{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:12px;
 }
 
 .card-head h2{
@@ -343,13 +357,35 @@ button{
   margin-top:4px;
 }
 
+/* BUTTONS */
+
+.btn{
+  border:0;
+  border-radius:6px;
+  padding:8px 11px;
+  color:#fff;
+  font-size:9px;
+}
+
+.primary{background:#0891b2}
+.success{background:#059669}
+.danger{background:#be123c}
+.warning{background:#a16207}
+.neutral{background:#1e3346}
+
+.btn:hover{
+  filter:brightness(1.15);
+}
+
+/* TABLE */
+
 .table-wrap{
   overflow-x:auto;
 }
 
 table{
   width:100%;
-  min-width:750px;
+  min-width:700px;
   border-collapse:collapse;
 }
 
@@ -375,8 +411,8 @@ td{
   font-size:9px;
 }
 
-.status.approved,
-.status.active{
+.status.active,
+.status.approved{
   color:#34d399;
   background:rgba(52,211,153,.08);
 }
@@ -392,41 +428,40 @@ td{
   background:rgba(251,113,133,.08);
 }
 
-.btn{
-  border:0;
-  border-radius:6px;
-  padding:7px 10px;
-  color:#fff;
-  font-size:9px;
+/* ACTIVITY */
+
+.activity{
+  padding:18px;
 }
 
-.primary{
-  background:#0891b2;
+.activity-row{
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.success{
-  background:#059669;
+.activity-row:last-child{
+  border-bottom:0;
 }
 
-.danger{
-  background:#be123c;
+.activity-row strong{
+  font-size:11px;
 }
 
-.neutral{
-  background:#1e3346;
-}
-
-.actions{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-}
-
-.empty{
+.activity-row span{
+  display:block;
   color:#718096;
-  text-align:center;
-  padding:30px;
+  font-size:9px;
+  margin-top:4px;
 }
+
+/* WALLET EDIT */
+
+.wallet-form{
+  padding:20px;
+  max-width:500px;
+}
+
+/* MOBILE */
 
 .mobile-top{
   display:none;
@@ -507,9 +542,7 @@ td{
       Administrator Access
     </div>
 
-    <div id="loginError" class="login-error hidden"></div>
-
-    <div id="loginSuccess" class="login-success hidden"></div>
+    <div id="loginMessage" class="login-message"></div>
 
     <div class="field">
 
@@ -541,9 +574,7 @@ td{
           class="eye"
           type="button"
           onclick="togglePassword()"
-        >
-          👁️
-        </button>
+        >👁️</button>
 
       </div>
 
@@ -552,7 +583,6 @@ td{
     <button
       id="loginButton"
       class="login-btn"
-      type="button"
       onclick="login()"
     >
       Sign In
@@ -579,7 +609,9 @@ td{
     Administrator
   </div>
 
-  <div class="menu-title">Overview</div>
+  <div class="menu-title">
+    Overview
+  </div>
 
   <div class="nav">
 
@@ -592,7 +624,9 @@ td{
 
   </div>
 
-  <div class="menu-title">Management</div>
+  <div class="menu-title">
+    Management
+  </div>
 
   <div class="nav">
 
@@ -600,22 +634,24 @@ td{
       👥 Customers
     </button>
 
-    <button onclick="showSection('approvals',this)">
-      ✅ Account Approvals
-    </button>
-
     <button onclick="showSection('wallets',this)">
       💰 Wallets
     </button>
 
+    <button onclick="showSection('approvals',this)">
+      ✅ Account Approvals
+    </button>
+
   </div>
 
-  <div class="menu-title">System</div>
+  <div class="menu-title">
+    System
+  </div>
 
   <div class="nav">
 
-    <button onclick="showSection('profile',this)">
-      👤 Administrator
+    <button onclick="showSection('activity',this)">
+      📋 Activity
     </button>
 
   </div>
@@ -654,7 +690,7 @@ td{
     </h1>
 
     <p id="pageSubtitle">
-      Manage CoinBridge customer accounts and wallets.
+      Manage customers and wallets.
     </p>
 
   </div>
@@ -684,54 +720,105 @@ td{
 
 <!-- DASHBOARD -->
 
-<section id="dashboard" class="section active">
+<section
+  id="dashboard"
+  class="section active"
+>
 
 <div class="stats">
 
   <div class="stat">
+
     <p>Total Customers</p>
+
     <h2 id="totalCustomers">0</h2>
+
+    <small>Registered customers</small>
+
   </div>
 
   <div class="stat">
+
     <p>Pending Accounts</p>
+
     <h2 id="pendingAccounts">0</h2>
+
+    <small>Require approval</small>
+
   </div>
 
   <div class="stat">
+
     <p>Total Wallets</p>
+
     <h2 id="totalWallets">0</h2>
+
+    <small>Customer wallets</small>
+
   </div>
 
   <div class="stat">
+
     <p>Active Wallets</p>
+
     <h2 id="activeWallets">0</h2>
+
+    <small>Currently active</small>
+
   </div>
 
 </div>
+
 
 <div class="card">
 
   <div class="card-head">
 
     <div>
-      <h2>Administrator Overview</h2>
-      <p>Live information from your CoinBridge database.</p>
+
+      <h2>
+        Administrator Overview
+      </h2>
+
+      <p>
+        CoinBridge platform control center.
+      </p>
+
     </div>
 
     <button
       class="btn primary"
-      onclick="loadEverything()"
+      onclick="loadAll()"
     >
       Refresh
     </button>
 
   </div>
 
-  <div style="padding:20px">
+  <div class="activity">
 
-    <div id="dashboardMessage" class="empty">
-      Loading database information...
+    <div class="activity-row">
+
+      <strong>
+        Supabase connection
+      </strong>
+
+      <span id="connectionStatus">
+        Checking...
+      </span>
+
+    </div>
+
+    <div class="activity-row">
+
+      <strong>
+        Administrator account
+      </strong>
+
+      <span id="administratorStatus">
+        Checking...
+      </span>
+
     </div>
 
   </div>
@@ -743,15 +830,25 @@ td{
 
 <!-- CUSTOMERS -->
 
-<section id="customers" class="section">
+<section
+  id="customers"
+  class="section"
+>
 
 <div class="card">
 
   <div class="card-head">
 
     <div>
-      <h2>Customers</h2>
-      <p>Customers registered in CoinBridge.</p>
+
+      <h2>
+        Customers
+      </h2>
+
+      <p>
+        Customer accounts connected to Supabase.
+      </p>
+
     </div>
 
     <button
@@ -790,17 +887,87 @@ td{
 </section>
 
 
-<!-- APPROVALS -->
+<!-- WALLETS -->
 
-<section id="approvals" class="section">
+<section
+  id="wallets"
+  class="section"
+>
 
 <div class="card">
 
   <div class="card-head">
 
     <div>
-      <h2>Account Approvals</h2>
-      <p>Review customer account status.</p>
+
+      <h2>
+        Wallet Management
+      </h2>
+
+      <p>
+        Administrators can view and update customer wallets.
+      </p>
+
+    </div>
+
+    <button
+      class="btn primary"
+      onclick="loadWallets()"
+    >
+      Refresh
+    </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Customer</th>
+          <th>Wallet ID</th>
+          <th>Currency</th>
+          <th>Balance</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="walletTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- APPROVALS -->
+
+<section
+  id="approvals"
+  class="section"
+>
+
+<div class="card">
+
+  <div class="card-head">
+
+    <div>
+
+      <h2>
+        Account Approvals
+      </h2>
+
+      <p>
+        Review customer account status.
+      </p>
+
     </div>
 
     <button
@@ -821,6 +988,7 @@ td{
         <tr>
           <th>Name</th>
           <th>Email</th>
+          <th>Role</th>
           <th>Status</th>
           <th>Created</th>
           <th>Action</th>
@@ -839,118 +1007,35 @@ td{
 </section>
 
 
-<!-- WALLETS -->
+<!-- ACTIVITY -->
 
-<section id="wallets" class="section">
-
-<div class="card">
-
-  <div class="card-head">
-
-    <div>
-      <h2>Wallet Management</h2>
-      <p>Manage customer wallet IDs, balances and status.</p>
-    </div>
-
-    <button
-      class="btn primary"
-      onclick="loadWallets()"
-    >
-      Refresh
-    </button>
-
-  </div>
-
-  <div class="table-wrap">
-
-    <table>
-
-      <thead>
-
-        <tr>
-          <th>Customer</th>
-          <th>Currency</th>
-          <th>Wallet ID</th>
-          <th>Balance</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-
-      </thead>
-
-      <tbody id="walletTable"></tbody>
-
-    </table>
-
-  </div>
-
-</div>
-
-</section>
-
-
-<!-- PROFILE -->
-
-<section id="profile" class="section">
+<section
+  id="activity"
+  class="section"
+>
 
 <div class="card">
 
   <div class="card-head">
 
     <div>
-      <h2>Administrator Account</h2>
-      <p>Your authenticated CoinBridge administrator account.</p>
-    </div>
 
-  </div>
+      <h2>
+        Platform Activity
+      </h2>
 
-  <div style="padding:20px">
-
-    <div class="field">
-
-      <label>Name</label>
-
-      <input
-        id="profileName"
-        readonly
-      >
-
-    </div>
-
-    <div class="field">
-
-      <label>Email</label>
-
-      <input
-        id="profileEmail"
-        readonly
-      >
-
-    </div>
-
-    <div class="field">
-
-      <label>Role</label>
-
-      <input
-        id="profileRole"
-        readonly
-      >
-
-    </div>
-
-    <div class="field">
-
-      <label>Account Status</label>
-
-      <input
-        id="profileStatus"
-        readonly
-      >
+      <p>
+        Recent database activity.
+      </p>
 
     </div>
 
   </div>
+
+  <div
+    id="activityList"
+    class="activity"
+  ></div>
 
 </div>
 
@@ -963,7 +1048,96 @@ td{
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- WALLET MODAL -->
+
+<div
+  id="walletModal"
+  class="login-screen hidden"
+  style="position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;"
+>
+
+  <div class="login-box">
+
+    <div class="brand" style="font-size:22px;">
+      Edit <span>Wallet</span>
+    </div>
+
+    <br>
+
+    <input
+      id="editWalletId"
+      type="hidden"
+    >
+
+    <div class="field">
+
+      <label>
+        Wallet ID
+      </label>
+
+      <input
+        id="walletIdInput"
+        type="text"
+      >
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Balance
+      </label>
+
+      <input
+        id="walletBalanceInput"
+        type="number"
+        step="0.01"
+      >
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Status
+      </label>
+
+      <select id="walletStatusInput">
+
+        <option value="active">
+          Active
+        </option>
+
+        <option value="suspended">
+          Suspended
+        </option>
+
+      </select>
+
+    </div>
+
+    <div style="display:flex;gap:8px;">
+
+      <button
+        class="btn neutral"
+        onclick="closeWalletModal()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="btn success"
+        onclick="saveWallet()"
+      >
+        Save Wallet
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
 
 <script>
 
@@ -985,7 +1159,53 @@ const supabaseClient =
 
 
 /* ==================================================
-   LOGIN
+   PASSWORD
+================================================== */
+
+function togglePassword(){
+
+  const input =
+    document.getElementById("adminPassword");
+
+  input.type =
+    input.type === "password"
+      ? "text"
+      : "password";
+
+}
+
+
+/* ==================================================
+   MESSAGE
+================================================== */
+
+function showLoginMessage(text,type="error"){
+
+  const box =
+    document.getElementById("loginMessage");
+
+  box.textContent=text;
+
+  box.className=
+    "login-message "+type;
+
+}
+
+
+function clearLoginMessage(){
+
+  const box =
+    document.getElementById("loginMessage");
+
+  box.textContent="";
+
+  box.className="login-message";
+
+}
+
+
+/* ==================================================
+   ADMIN LOGIN
 ================================================== */
 
 async function login(){
@@ -1001,81 +1221,55 @@ async function login(){
       .getElementById("adminPassword")
       .value;
 
-  const error =
-    document.getElementById("loginError");
-
-  const success =
-    document.getElementById("loginSuccess");
-
   const button =
     document.getElementById("loginButton");
 
-  error.classList.add("hidden");
-  success.classList.add("hidden");
+  clearLoginMessage();
 
   if(!email || !password){
 
-    error.textContent =
-      "Please enter your administrator email and password.";
-
-    error.classList.remove("hidden");
+    showLoginMessage(
+      "Enter your administrator email and password."
+    );
 
     return;
 
   }
 
   button.disabled=true;
-  button.textContent="Signing In...";
+
+  button.textContent="Signing in...";
 
   try{
 
-    const {
-      data,
-      error:authError
-    } =
+    const {data,error} =
       await supabaseClient.auth.signInWithPassword({
         email:email,
         password:password
       });
 
-    if(authError){
+    if(error){
 
-      throw authError;
+      throw error;
 
     }
 
     if(!data.user){
 
       throw new Error(
-        "Authentication did not return a user."
+        "Authentication succeeded but no user was returned."
       );
 
     }
 
-    /*
-      IMPORTANT:
-      Check the authenticated user's
-      profile before allowing access.
-    */
-
-    const {
-      data:profile,
-      error:profileError
-    } =
+    const {data:profile,error:profileError} =
       await supabaseClient
         .from("profiles")
-        .select(
-          "id,full_name,email,role,account_status"
-        )
-        .eq(
-          "id",
-          data.user.id
-        )
+        .select("*")
+        .eq("id",data.user.id)
         .maybeSingle();
 
     if(profileError){
-
-      await supabaseClient.auth.signOut();
 
       throw profileError;
 
@@ -1091,22 +1285,19 @@ async function login(){
 
     }
 
-    if(
-      String(profile.role).toLowerCase() !==
-      "admin"
-    ){
+    if(profile.role !== "admin"){
 
       await supabaseClient.auth.signOut();
 
       throw new Error(
-        "This account does not have administrator access."
+        "This account is not an administrator account."
       );
 
     }
 
     if(
-      String(profile.account_status).toLowerCase() !==
-      "approved"
+      String(profile.account_status).toLowerCase()
+      !== "approved"
     ){
 
       await supabaseClient.auth.signOut();
@@ -1117,30 +1308,42 @@ async function login(){
 
     }
 
-    success.textContent =
-      "Administrator authenticated successfully.";
-
-    success.classList.remove("hidden");
+    showLoginMessage(
+      "Administrator verified. Opening dashboard...",
+      "success"
+    );
 
     setTimeout(()=>{
 
-      showAdminApp(profile);
+      document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
 
-    },300);
+      document
+        .getElementById("adminApp")
+        .classList.remove("hidden");
+
+      document.getElementById(
+        "adminName"
+      ).textContent =
+        profile.full_name ||
+        "Administrator";
+
+      loadAll();
+
+    },400);
 
   }catch(error){
 
     console.error("ADMIN LOGIN ERROR:",error);
 
-    error.textContent =
+    showLoginMessage(
       error.message ||
-      "Unable to sign in.";
-
-    error.classList.remove("hidden");
-
-  }finally{
+      "Unable to sign in."
+    );
 
     button.disabled=false;
+
     button.textContent="Sign In";
 
   }
@@ -1149,10 +1352,51 @@ async function login(){
 
 
 /* ==================================================
-   SHOW ADMIN
+   SESSION CHECK
 ================================================== */
 
-function showAdminApp(profile){
+async function checkSession(){
+
+  const {data,error} =
+    await supabaseClient.auth.getSession();
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+  if(!data.session){
+
+    return;
+
+  }
+
+  const user =
+    data.session.user;
+
+  const {data:profile,error:profileError} =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id",user.id)
+      .maybeSingle();
+
+  if(
+    profileError ||
+    !profile ||
+    profile.role !== "admin" ||
+    String(profile.account_status).toLowerCase()
+      !== "approved"
+  ){
+
+    await supabaseClient.auth.signOut();
+
+    return;
+
+  }
 
   document
     .getElementById("loginScreen")
@@ -1168,108 +1412,7 @@ function showAdminApp(profile){
     profile.full_name ||
     "Administrator";
 
-  document.getElementById(
-    "profileName"
-  ).value =
-    profile.full_name || "";
-
-  document.getElementById(
-    "profileEmail"
-  ).value =
-    profile.email || "";
-
-  document.getElementById(
-    "profileRole"
-  ).value =
-    profile.role || "";
-
-  document.getElementById(
-    "profileStatus"
-  ).value =
-    profile.account_status || "";
-
-  loadEverything();
-
-}
-
-
-/* ==================================================
-   SESSION CHECK
-================================================== */
-
-async function checkSession(){
-
-  try{
-
-    const {
-      data
-    } =
-      await supabaseClient.auth.getSession();
-
-    if(!data.session){
-
-      return;
-
-    }
-
-    const user =
-      data.session.user;
-
-    const {
-      data:profile,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,full_name,email,role,account_status"
-        )
-        .eq(
-          "id",
-          user.id
-        )
-        .maybeSingle();
-
-    if(error || !profile){
-
-      await supabaseClient.auth.signOut();
-
-      return;
-
-    }
-
-    if(
-      String(profile.role).toLowerCase() !==
-      "admin"
-    ){
-
-      await supabaseClient.auth.signOut();
-
-      return;
-
-    }
-
-    if(
-      String(profile.account_status).toLowerCase() !==
-      "approved"
-    ){
-
-      await supabaseClient.auth.signOut();
-
-      return;
-
-    }
-
-    showAdminApp(profile);
-
-  }catch(error){
-
-    console.error(
-      "SESSION CHECK ERROR:",
-      error
-    );
-
-  }
+  loadAll();
 
 }
 
@@ -1283,35 +1426,6 @@ async function logout(){
   await supabaseClient.auth.signOut();
 
   location.reload();
-
-}
-
-
-/* ==================================================
-   PASSWORD
-================================================== */
-
-function togglePassword(){
-
-  const input =
-    document.getElementById(
-      "adminPassword"
-    );
-
-  const button =
-    document.querySelector(".eye");
-
-  if(input.type==="password"){
-
-    input.type="text";
-    button.textContent="🙈";
-
-  }else{
-
-    input.type="password";
-    button.textContent="👁️";
-
-  }
 
 }
 
@@ -1349,16 +1463,21 @@ function showSection(id,button){
 
   }
 
-  const titles={
+  const names={
 
     dashboard:[
       "Admin Dashboard",
-      "Manage CoinBridge customer accounts and wallets."
+      "Manage customers and wallets."
     ],
 
     customers:[
       "Customers",
-      "Customers registered in CoinBridge."
+      "View registered customer accounts."
+    ],
+
+    wallets:[
+      "Wallet Management",
+      "Control customer wallet information."
     ],
 
     approvals:[
@@ -1366,27 +1485,22 @@ function showSection(id,button){
       "Review customer account status."
     ],
 
-    wallets:[
-      "Wallet Management",
-      "Manage customer wallet IDs, balances and status."
-    ],
-
-    profile:[
-      "Administrator",
-      "Authenticated administrator account."
+    activity:[
+      "Platform Activity",
+      "Review current platform information."
     ]
 
   };
 
-  if(titles[id]){
+  if(names[id]){
 
     document.getElementById(
       "pageTitle"
-    ).textContent=titles[id][0];
+    ).textContent=names[id][0];
 
     document.getElementById(
       "pageSubtitle"
-    ).textContent=titles[id][1];
+    ).textContent=names[id][1];
 
   }
 
@@ -1398,122 +1512,27 @@ function toggleMobileMenu(){
   const sidebar =
     document.querySelector(".sidebar");
 
-  if(
-    sidebar.style.display==="block"
-  ){
-
-    sidebar.style.display="none";
-
-  }else{
-
-    sidebar.style.display="block";
-
-  }
+  sidebar.style.display =
+    sidebar.style.display === "block"
+      ? "none"
+      : "block";
 
 }
 
 
 /* ==================================================
-   LOAD DASHBOARD
+   LOAD ALL
 ================================================== */
 
-async function loadDashboard(){
+async function loadAll(){
 
-  const dashboardMessage =
-    document.getElementById(
-      "dashboardMessage"
-    );
+  await Promise.all([
+    loadCustomers(),
+    loadWallets(),
+    loadApprovals()
+  ]);
 
-  try{
-
-    const {
-      data:profiles,
-      error:profilesError
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,role,account_status"
-        );
-
-    if(profilesError){
-
-      throw profilesError;
-
-    }
-
-    const {
-      data:wallets,
-      error:walletError
-    } =
-      await supabaseClient
-        .from("wallets")
-        .select(
-          "id,status"
-        );
-
-    if(walletError){
-
-      throw walletError;
-
-    }
-
-    const customers =
-      profiles.filter(
-        item =>
-          String(item.role).toLowerCase() ===
-          "customer"
-      );
-
-    const pending =
-      customers.filter(
-        item =>
-          String(item.account_status).toLowerCase() ===
-          "pending"
-      );
-
-    const activeWallets =
-      (wallets||[]).filter(
-        item =>
-          String(item.status).toLowerCase() ===
-          "active"
-      );
-
-    document.getElementById(
-      "totalCustomers"
-    ).textContent =
-      customers.length;
-
-    document.getElementById(
-      "pendingAccounts"
-    ).textContent =
-      pending.length;
-
-    document.getElementById(
-      "totalWallets"
-    ).textContent =
-      (wallets||[]).length;
-
-    document.getElementById(
-      "activeWallets"
-    ).textContent =
-      activeWallets.length;
-
-    dashboardMessage.textContent =
-      "Database connection is working. Administrator controls are ready.";
-
-  }catch(error){
-
-    console.error(
-      "DASHBOARD ERROR:",
-      error
-    );
-
-    dashboardMessage.textContent =
-      "Database error: "+
-      error.message;
-
-  }
+  updateDashboard();
 
 }
 
@@ -1521,6 +1540,8 @@ async function loadDashboard(){
 /* ==================================================
    CUSTOMERS
 ================================================== */
+
+let customerProfiles=[];
 
 async function loadCustomers(){
 
@@ -1531,109 +1552,339 @@ async function loadCustomers(){
 
   table.innerHTML=
     `<tr>
-      <td colspan="5" class="empty">
+      <td colspan="5">
         Loading customers...
       </td>
     </tr>`;
 
-  try{
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("role","customer")
+      .order("created_at",{ascending:false});
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,full_name,email,phone,role,account_status,created_at"
-        )
-        .eq(
-          "role",
-          "customer"
-        )
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
+  if(error){
 
-    if(error){
-
-      throw error;
-
-    }
-
-    if(!data || !data.length){
-
-      table.innerHTML=
-        `<tr>
-          <td colspan="5" class="empty">
-            No customers found.
-          </td>
-        </tr>`;
-
-      return;
-
-    }
+    console.error(error);
 
     table.innerHTML=
-      data.map(customer=>`
+      `<tr>
+        <td colspan="5">
+          Error loading customers: ${escapeHTML(error.message)}
+        </td>
+      </tr>`;
+
+    return;
+
+  }
+
+  customerProfiles=data||[];
+
+  if(!customerProfiles.length){
+
+    table.innerHTML=
+      `<tr>
+        <td colspan="5">
+          No customers found.
+        </td>
+      </tr>`;
+
+    return;
+
+  }
+
+  table.innerHTML=
+    customerProfiles.map(customer=>`
+
+      <tr>
+
+        <td>
+          <strong>
+            ${escapeHTML(customer.full_name||"Customer")}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHTML(customer.email||"—")}
+        </td>
+
+        <td>
+          ${escapeHTML(customer.phone||"—")}
+        </td>
+
+        <td>
+          ${statusHTML(customer.account_status)}
+        </td>
+
+        <td>
+          ${formatDate(customer.created_at)}
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+/* ==================================================
+   WALLETS
+================================================== */
+
+let walletRows=[];
+
+async function loadWallets(){
+
+  const table =
+    document.getElementById(
+      "walletTable"
+    );
+
+  table.innerHTML=
+    `<tr>
+      <td colspan="6">
+        Loading wallets...
+      </td>
+    </tr>`;
+
+  const {data,error} =
+    await supabaseClient
+      .from("wallets")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+  if(error){
+
+    console.error(error);
+
+    table.innerHTML=
+      `<tr>
+        <td colspan="6">
+          Error loading wallets: ${escapeHTML(error.message)}
+        </td>
+      </tr>`;
+
+    return;
+
+  }
+
+  walletRows=data||[];
+
+  if(!walletRows.length){
+
+    table.innerHTML=
+      `<tr>
+        <td colspan="6">
+          No wallets found.
+        </td>
+      </tr>`;
+
+    return;
+
+  }
+
+  const userIds =
+    [
+      ...new Set(
+        walletRows.map(wallet=>wallet.user_id)
+      )
+    ];
+
+  let profileMap={};
+
+  if(userIds.length){
+
+    const {data:profiles} =
+      await supabaseClient
+        .from("profiles")
+        .select("id,full_name,email")
+        .in("id",userIds);
+
+    (profiles||[]).forEach(profile=>{
+      profileMap[profile.id]=profile;
+    });
+
+  }
+
+  table.innerHTML=
+    walletRows.map(wallet=>{
+
+      const profile =
+        profileMap[wallet.user_id]||{};
+
+      return `
 
         <tr>
 
           <td>
             ${escapeHTML(
-              customer.full_name ||
+              profile.full_name ||
+              profile.email ||
               "Customer"
             )}
           </td>
 
           <td>
             ${escapeHTML(
-              customer.email ||
-              "—"
+              wallet.wallet_id||"—"
             )}
           </td>
 
           <td>
             ${escapeHTML(
-              customer.phone ||
-              "—"
+              wallet.currency||"—"
             )}
           </td>
 
           <td>
-            ${statusHTML(
-              customer.account_status
-            )}
+            $${money(wallet.balance)}
           </td>
 
           <td>
-            ${formatDate(
-              customer.created_at
-            )}
+            ${statusHTML(wallet.status)}
+          </td>
+
+          <td>
+
+            <button
+              class="btn primary"
+              onclick="openWalletEditor('${escapeAttribute(wallet.id)}')"
+            >
+              Edit
+            </button>
+
           </td>
 
         </tr>
 
-      `).join("");
+      `;
 
-  }catch(error){
+    }).join("");
 
-    console.error(
-      "CUSTOMERS ERROR:",
-      error
+}
+
+
+/* ==================================================
+   WALLET EDITOR
+================================================== */
+
+function openWalletEditor(id){
+
+  const wallet =
+    walletRows.find(
+      item=>item.id===id
     );
 
-    table.innerHTML=
-      `<tr>
-        <td colspan="5" class="empty">
-          ${escapeHTML(error.message)}
-        </td>
-      </tr>`;
+  if(!wallet)return;
+
+  document.getElementById(
+    "editWalletId"
+  ).value=wallet.id;
+
+  document.getElementById(
+    "walletIdInput"
+  ).value=wallet.wallet_id||"";
+
+  document.getElementById(
+    "walletBalanceInput"
+  ).value=wallet.balance||0;
+
+  document.getElementById(
+    "walletStatusInput"
+  ).value=
+    String(wallet.status||"active")
+      .toLowerCase();
+
+  document
+    .getElementById("walletModal")
+    .classList.remove("hidden");
+
+}
+
+
+function closeWalletModal(){
+
+  document
+    .getElementById("walletModal")
+    .classList.add("hidden");
+
+}
+
+
+async function saveWallet(){
+
+  const id =
+    document.getElementById(
+      "editWalletId"
+    ).value;
+
+  const walletId =
+    document.getElementById(
+      "walletIdInput"
+    ).value.trim();
+
+  const balance =
+    Number(
+      document.getElementById(
+        "walletBalanceInput"
+      ).value||0
+    );
+
+  const status =
+    document.getElementById(
+      "walletStatusInput"
+    ).value;
+
+  if(!id){
+
+    alert("Wallet ID is missing.");
+
+    return;
 
   }
+
+  if(balance < 0){
+
+    alert("Balance cannot be negative.");
+
+    return;
+
+  }
+
+  const {error} =
+    await supabaseClient
+      .from("wallets")
+      .update({
+
+        wallet_id:walletId,
+        balance:balance,
+        status:status,
+        updated_at:new Date().toISOString()
+
+      })
+      .eq("id",id);
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to update wallet:\n\n"+
+      error.message
+    );
+
+    return;
+
+  }
+
+  closeWalletModal();
+
+  await loadWallets();
+
+  updateDashboard();
+
+  alert("Wallet updated successfully.");
 
 }
 
@@ -1651,475 +1902,216 @@ async function loadApprovals(){
 
   table.innerHTML=
     `<tr>
-      <td colspan="5" class="empty">
+      <td colspan="6">
         Loading accounts...
       </td>
     </tr>`;
 
-  try{
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("role","customer")
+      .order("created_at",{ascending:false});
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,full_name,email,role,account_status,created_at"
-        )
-        .eq(
-          "role",
-          "customer"
-        )
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
-
-    if(error){
-
-      throw error;
-
-    }
-
-    if(!data || !data.length){
-
-      table.innerHTML=
-        `<tr>
-          <td colspan="5" class="empty">
-            No customer accounts found.
-          </td>
-        </tr>`;
-
-      return;
-
-    }
-
-    table.innerHTML=
-      data.map(account=>`
-
-        <tr>
-
-          <td>
-            ${escapeHTML(
-              account.full_name ||
-              "Customer"
-            )}
-          </td>
-
-          <td>
-            ${escapeHTML(
-              account.email ||
-              "—"
-            )}
-          </td>
-
-          <td>
-            ${statusHTML(
-              account.account_status
-            )}
-          </td>
-
-          <td>
-            ${formatDate(
-              account.created_at
-            )}
-          </td>
-
-          <td>
-
-            ${
-              String(account.account_status).toLowerCase()==="pending"
-              ?
-              `
-              <div class="actions">
-
-                <button
-                  class="btn success"
-                  onclick="changeAccountStatus('${account.id}','approved')"
-                >
-                  Approve
-                </button>
-
-                <button
-                  class="btn danger"
-                  onclick="changeAccountStatus('${account.id}','rejected')"
-                >
-                  Reject
-                </button>
-
-              </div>
-              `
-              :
-              `<span style="color:#718096">
-                Reviewed
-              </span>`
-            }
-
-          </td>
-
-        </tr>
-
-      `).join("");
-
-  }catch(error){
-
-    console.error(
-      "APPROVAL ERROR:",
-      error
-    );
+  if(error){
 
     table.innerHTML=
       `<tr>
-        <td colspan="5" class="empty">
+        <td colspan="6">
           ${escapeHTML(error.message)}
         </td>
       </tr>`;
 
+    return;
+
   }
+
+  const accounts=data||[];
+
+  if(!accounts.length){
+
+    table.innerHTML=
+      `<tr>
+        <td colspan="6">
+          No customer accounts found.
+        </td>
+      </tr>`;
+
+    return;
+
+  }
+
+  table.innerHTML=
+    accounts.map(account=>`
+
+      <tr>
+
+        <td>
+          ${escapeHTML(
+            account.full_name||"Customer"
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            account.email||"—"
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            account.role||"customer"
+          )}
+        </td>
+
+        <td>
+          ${statusHTML(account.account_status)}
+        </td>
+
+        <td>
+          ${formatDate(account.created_at)}
+        </td>
+
+        <td>
+
+          ${
+            String(account.account_status)
+              .toLowerCase()==="pending"
+            ?
+
+            `<div style="display:flex;gap:5px;">
+
+              <button
+                class="btn success"
+                onclick="changeAccountStatus('${escapeAttribute(account.id)}','approved')"
+              >
+                Approve
+              </button>
+
+              <button
+                class="btn danger"
+                onclick="changeAccountStatus('${escapeAttribute(account.id)}','rejected')"
+              >
+                Reject
+              </button>
+
+            </div>`
+
+            :
+
+            `<span style="color:#718096;font-size:9px">
+              Reviewed
+            </span>`
+          }
+
+        </td>
+
+      </tr>
+
+    `).join("");
 
 }
 
 
 /* ==================================================
-   CHANGE ACCOUNT STATUS
+   ACCOUNT STATUS
 ================================================== */
 
-async function changeAccountStatus(
-  userId,
-  newStatus
-){
-
-  const action =
-    newStatus==="approved"
-    ?"approve"
-    :"reject";
+async function changeAccountStatus(id,status){
 
   if(
     !confirm(
-      "Are you sure you want to "+
-      action+
-      " this account?"
+      "Change this account status to "+
+      status+"?"
     )
-  ){
+  )return;
 
-    return;
+  const {error} =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        account_status:status,
+        updated_at:new Date().toISOString()
+      })
+      .eq("id",id);
 
-  }
-
-  try{
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .update({
-          account_status:newStatus,
-          updated_at:new Date().toISOString()
-        })
-        .eq(
-          "id",
-          userId
-        );
-
-    if(error){
-
-      throw error;
-
-    }
+  if(error){
 
     alert(
-      "Account "+
-      action+
-      "d successfully."
-    );
-
-    await loadEverything();
-
-  }catch(error){
-
-    console.error(
-      "STATUS UPDATE ERROR:",
-      error
-    );
-
-    alert(
-      "Unable to update account: "+
+      "Unable to update account:\n\n"+
       error.message
     );
 
-  }
-
-}
-
-
-/* ==================================================
-   WALLETS
-================================================== */
-
-async function loadWallets(){
-
-  const table =
-    document.getElementById(
-      "walletTable"
-    );
-
-  table.innerHTML=
-    `<tr>
-      <td colspan="6" class="empty">
-        Loading wallets...
-      </td>
-    </tr>`;
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("wallets")
-        .select(`
-          id,
-          user_id,
-          wallet_id,
-          currency,
-          balance,
-          status,
-          created_at
-        `)
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
-
-    if(error){
-
-      throw error;
-
-    }
-
-    if(!data || !data.length){
-
-      table.innerHTML=
-        `<tr>
-          <td colspan="6" class="empty">
-            No wallets found.
-          </td>
-        </tr>`;
-
-      return;
-
-    }
-
-    /*
-      Load profiles separately so we don't
-      depend on a foreign-key relationship.
-    */
-
-    const {
-      data:profiles,
-      error:profileError
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,full_name,email"
-        );
-
-    if(profileError){
-
-      throw profileError;
-
-    }
-
-    table.innerHTML=
-      data.map(wallet=>{
-
-        const customer =
-          (profiles||[]).find(
-            profile =>
-              profile.id ===
-              wallet.user_id
-          );
-
-        return `
-
-          <tr>
-
-            <td>
-              ${escapeHTML(
-                customer?.full_name ||
-                customer?.email ||
-                "Customer"
-              )}
-            </td>
-
-            <td>
-              ${escapeHTML(
-                wallet.currency ||
-                "—"
-              )}
-            </td>
-
-            <td>
-              <strong>
-                ${escapeHTML(
-                  wallet.wallet_id ||
-                  "—"
-                )}
-              </strong>
-            </td>
-
-            <td>
-              $${money(wallet.balance)}
-            </td>
-
-            <td>
-              ${statusHTML(
-                wallet.status
-              )}
-            </td>
-
-            <td>
-
-              <div class="actions">
-
-                <button
-                  class="btn primary"
-                  onclick="editWallet('${wallet.id}',${Number(wallet.balance||0)})"
-                >
-                  Edit Balance
-                </button>
-
-              </div>
-
-            </td>
-
-          </tr>
-
-        `;
-
-      }).join("");
-
-  }catch(error){
-
-    console.error(
-      "WALLETS ERROR:",
-      error
-    );
-
-    table.innerHTML=
-      `<tr>
-        <td colspan="6" class="empty">
-          ${escapeHTML(error.message)}
-        </td>
-      </tr>`;
-
-  }
-
-}
-
-
-/* ==================================================
-   EDIT WALLET BALANCE
-================================================== */
-
-async function editWallet(
-  walletId,
-  currentBalance
-){
-
-  const value =
-    prompt(
-      "Enter the new wallet balance:",
-      currentBalance
-    );
-
-  if(value===null){
-
     return;
 
   }
 
-  const balance =
-    Number(value);
+  await loadApprovals();
 
-  if(
-    !Number.isFinite(balance) ||
-    balance < 0
-  ){
+  await loadCustomers();
 
-    alert(
-      "Please enter a valid non-negative balance."
-    );
+  updateDashboard();
 
-    return;
-
-  }
-
-  try{
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("wallets")
-        .update({
-          balance:balance,
-          updated_at:new Date().toISOString()
-        })
-        .eq(
-          "id",
-          walletId
-        );
-
-    if(error){
-
-      throw error;
-
-    }
-
-    alert(
-      "Wallet balance updated successfully."
-    );
-
-    await loadEverything();
-
-  }catch(error){
-
-    console.error(
-      "WALLET UPDATE ERROR:",
-      error
-    );
-
-    alert(
-      "Unable to update wallet: "+
-      error.message
-    );
-
-  }
+  alert(
+    "Account status changed to "+
+    status+"."
+  );
 
 }
 
 
 /* ==================================================
-   LOAD EVERYTHING
+   DASHBOARD
 ================================================== */
 
-async function loadEverything(){
+function updateDashboard(){
 
-  await Promise.all([
-    loadDashboard(),
-    loadCustomers(),
-    loadApprovals(),
-    loadWallets()
-  ]);
+  const total =
+    customerProfiles.length;
+
+  const pending =
+    customerProfiles.filter(
+      item =>
+        String(item.account_status)
+          .toLowerCase()==="pending"
+    ).length;
+
+  const wallets =
+    walletRows.length;
+
+  const active =
+    walletRows.filter(
+      item =>
+        String(item.status)
+          .toLowerCase()==="active"
+    ).length;
+
+  document.getElementById(
+    "totalCustomers"
+  ).textContent=total;
+
+  document.getElementById(
+    "pendingAccounts"
+  ).textContent=pending;
+
+  document.getElementById(
+    "totalWallets"
+  ).textContent=wallets;
+
+  document.getElementById(
+    "activeWallets"
+  ).textContent=active;
+
+  document.getElementById(
+    "connectionStatus"
+  ).textContent=
+    "Connected to Supabase";
+
+  document.getElementById(
+    "administratorStatus"
+  ).textContent=
+    "Authenticated administrator";
 
 }
 
@@ -2130,9 +2122,7 @@ async function loadEverything(){
 
 function money(value){
 
-  return Number(
-    value||0
-  ).toLocaleString(
+  return Number(value||0).toLocaleString(
     "en-US",
     {
       minimumFractionDigits:2,
@@ -2147,18 +2137,10 @@ function formatDate(value){
 
   if(!value)return "—";
 
-  const date =
-    new Date(value);
+  const date=new Date(value);
 
-  if(
-    Number.isNaN(
-      date.getTime()
-    )
-  ){
-
+  if(isNaN(date.getTime()))
     return "—";
-
-  }
 
   return date.toLocaleString(
     [],
@@ -2176,20 +2158,16 @@ function formatDate(value){
 
 function statusHTML(status){
 
-  const value =
-    String(
-      status ||
-      "pending"
-    );
+  const value=
+    String(status||"pending");
 
-  const lower =
-    value.toLowerCase();
+  const lower=value.toLowerCase();
 
   let cls="pending";
 
   if(
-    lower==="approved" ||
-    lower==="active"
+    lower==="active" ||
+    lower==="approved"
   ){
 
     cls=lower;
@@ -2197,8 +2175,8 @@ function statusHTML(status){
   }
 
   if(
-    lower==="rejected" ||
-    lower==="suspended"
+    lower==="suspended" ||
+    lower==="rejected"
   ){
 
     cls=lower;
@@ -2216,14 +2194,19 @@ function statusHTML(status){
 
 function escapeHTML(value){
 
-  return String(
-    value ?? ""
-  )
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
+  return String(value??"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+  return escapeHTML(value);
 
 }
 

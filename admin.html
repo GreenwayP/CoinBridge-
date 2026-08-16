@@ -20,8 +20,7 @@ body{
   min-height:100vh;
 }
 
-button,
-input{
+button,input{
   font:inherit;
 }
 
@@ -33,9 +32,7 @@ button{
   display:none!important;
 }
 
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 .login-screen{
   min-height:100vh;
@@ -43,33 +40,20 @@ button{
   align-items:center;
   justify-content:center;
   padding:20px;
-
   background:
-    radial-gradient(
-      circle at top right,
-      rgba(34,211,238,.14),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgba(16,185,129,.10),
-      transparent 35%
-    ),
+    radial-gradient(circle at top right,rgba(34,211,238,.14),transparent 35%),
+    radial-gradient(circle at bottom left,rgba(16,185,129,.10),transparent 35%),
     #050b14;
 }
 
 .login-box{
   width:100%;
   max-width:420px;
-
   background:#091522;
   border:1px solid #1c3448;
   border-radius:20px;
-
   padding:32px;
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.5);
+  box-shadow:0 25px 80px rgba(0,0,0,.5);
 }
 
 .brand{
@@ -100,18 +84,12 @@ button{
   margin-bottom:7px;
 }
 
-.input-wrap{
-  position:relative;
-}
-
 .field input{
   width:100%;
   background:#07111d;
   color:#fff;
-
   border:1px solid #1d3448;
   border-radius:9px;
-
   padding:12px;
   outline:none;
 }
@@ -120,7 +98,11 @@ button{
   border-color:#22d3ee;
 }
 
-.input-wrap input{
+.password-wrap{
+  position:relative;
+}
+
+.password-wrap input{
   padding-right:48px;
 }
 
@@ -128,30 +110,19 @@ button{
   position:absolute;
   right:8px;
   top:50%;
-
   transform:translateY(-50%);
-
   border:0;
   background:transparent;
-
   color:#94a3b8;
   padding:7px;
-  font-size:17px;
-}
-
-.eye:hover{
-  color:#22d3ee;
 }
 
 .login-error{
   background:rgba(244,63,94,.08);
   border:1px solid rgba(244,63,94,.25);
-
   color:#fb7185;
-
   padding:10px;
   border-radius:8px;
-
   font-size:11px;
   margin-bottom:15px;
 }
@@ -159,27 +130,20 @@ button{
 .login-success{
   background:rgba(52,211,153,.08);
   border:1px solid rgba(52,211,153,.25);
-
   color:#34d399;
-
   padding:10px;
   border-radius:8px;
-
   font-size:11px;
   margin-bottom:15px;
 }
 
 .login-btn{
   width:100%;
-
   border:0;
   border-radius:9px;
-
   padding:13px;
-
   background:#0891b2;
   color:#fff;
-
   font-weight:700;
 }
 
@@ -192,60 +156,46 @@ button{
   cursor:not-allowed;
 }
 
-/* =========================
-   ADMIN APP
-========================= */
+/* APP */
 
-.admin-app{
+.layout{
   min-height:100vh;
+  display:flex;
 }
-
-/* =========================
-   SIDEBAR
-========================= */
 
 .sidebar{
   width:245px;
-
   position:fixed;
   top:0;
   bottom:0;
   left:0;
-
   background:#07111d;
   border-right:1px solid #1b3042;
-
   padding:24px 15px;
-
   z-index:100;
 }
 
 .sidebar .brand{
   text-align:left;
   padding:0 12px;
-
   font-size:23px;
   margin-bottom:5px;
 }
 
 .admin-tag{
   color:#34d399;
-
   font-size:9px;
   letter-spacing:1px;
   text-transform:uppercase;
-
   padding:0 12px;
   margin-bottom:30px;
 }
 
 .menu-title{
   color:#60748a;
-
   font-size:9px;
   text-transform:uppercase;
   letter-spacing:1px;
-
   padding:0 12px;
   margin:18px 0 7px;
 }
@@ -258,16 +208,11 @@ button{
 
 .nav button{
   width:100%;
-
   border:0;
   background:transparent;
-
   color:#94a3b8;
-
   padding:11px 12px;
-
   border-radius:8px;
-
   text-align:left;
   font-size:12px;
 }
@@ -280,42 +225,26 @@ button{
 
 .logout{
   position:absolute;
-
   left:15px;
   right:15px;
   bottom:20px;
-
   border:0;
   background:#111f2d;
-
   color:#94a3b8;
-
   padding:11px;
   border-radius:8px;
 }
 
-.logout:hover{
-  color:#fff;
-}
-
-/* =========================
-   MAIN
-========================= */
-
 .main{
   margin-left:245px;
-
   width:calc(100% - 245px);
-
   padding:25px;
 }
 
 .topbar{
   display:flex;
-
   align-items:center;
   justify-content:space-between;
-
   margin-bottom:25px;
 }
 
@@ -338,15 +267,11 @@ button{
 .avatar{
   width:40px;
   height:40px;
-
   border-radius:50%;
-
   display:grid;
   place-items:center;
-
   background:#153247;
   color:#22d3ee;
-
   font-weight:800;
 }
 
@@ -360,12 +285,159 @@ button{
   font-size:9px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:#091522;
+  border:1px solid #1d3448;
+  border-radius:14px;
+  padding:18px;
+}
+
+.stat p{
+  color:#718096;
+  font-size:10px;
+  margin-bottom:10px;
+}
+
+.stat h2{
+  font-size:23px;
+}
+
+.card{
+  background:#091522;
+  border:1px solid #1d3448;
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.card-head{
+  padding:17px 20px;
+  border-bottom:1px solid #1b3042;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.card-head h2{
+  font-size:15px;
+}
+
+.card-head p{
+  color:#718096;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  min-width:750px;
+  border-collapse:collapse;
+}
+
+th{
+  text-align:left;
+  color:#617488;
+  font-size:9px;
+  text-transform:uppercase;
+  padding:13px 18px;
+  border-bottom:1px solid #1b3042;
+}
+
+td{
+  padding:13px 18px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  font-size:11px;
+}
+
+.status{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:9px;
+}
+
+.status.approved,
+.status.active{
+  color:#34d399;
+  background:rgba(52,211,153,.08);
+}
+
+.status.pending{
+  color:#facc15;
+  background:rgba(250,204,21,.08);
+}
+
+.status.suspended,
+.status.rejected{
+  color:#fb7185;
+  background:rgba(251,113,133,.08);
+}
+
+.btn{
+  border:0;
+  border-radius:6px;
+  padding:7px 10px;
+  color:#fff;
+  font-size:9px;
+}
+
+.primary{
+  background:#0891b2;
+}
+
+.success{
+  background:#059669;
+}
+
+.danger{
+  background:#be123c;
+}
+
+.neutral{
+  background:#1e3346;
+}
+
+.actions{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.empty{
+  color:#718096;
+  text-align:center;
+  padding:30px;
+}
 
 .mobile-top{
   display:none;
+}
+
+@media(max-width:1100px){
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
 }
 
 @media(max-width:750px){
@@ -382,10 +454,8 @@ button{
 
   .mobile-top{
     display:flex;
-
     justify-content:space-between;
     align-items:center;
-
     margin-bottom:18px;
   }
 
@@ -395,169 +465,14 @@ button{
 
   .mobile-menu{
     border:0;
-
     background:#091522;
     color:#22d3ee;
-
     padding:9px;
     border-radius:8px;
   }
 
   .profile{
     display:none;
-  }
-
-}
-
-/* =========================
-   DASHBOARD CARDS
-========================= */
-
-.stats{
-  display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
-  gap:14px;
-
-  margin-bottom:20px;
-}
-
-.stat{
-  background:#091522;
-
-  border:1px solid #1d3448;
-  border-radius:14px;
-
-  padding:18px;
-}
-
-.stat p{
-  color:#718096;
-  font-size:10px;
-
-  margin-bottom:10px;
-}
-
-.stat h2{
-  font-size:23px;
-}
-
-.stat small{
-  display:block;
-
-  color:#34d399;
-  font-size:9px;
-
-  margin-top:6px;
-}
-
-.card{
-  background:#091522;
-
-  border:1px solid #1d3448;
-  border-radius:14px;
-
-  overflow:hidden;
-  margin-bottom:20px;
-}
-
-.card-head{
-  padding:17px 20px;
-
-  border-bottom:1px solid #1b3042;
-
-  display:flex;
-
-  justify-content:space-between;
-  align-items:center;
-}
-
-.card-head h2{
-  font-size:15px;
-}
-
-.card-head p{
-  color:#718096;
-  font-size:10px;
-
-  margin-top:4px;
-}
-
-.activity{
-  padding:18px;
-}
-
-.activity-row{
-  padding:12px 0;
-
-  border-bottom:
-    1px solid rgba(255,255,255,.05);
-
-  display:flex;
-
-  justify-content:space-between;
-}
-
-.activity-row:last-child{
-  border-bottom:0;
-}
-
-.activity-row strong{
-  font-size:11px;
-}
-
-.activity-row span{
-  display:block;
-
-  color:#718096;
-  font-size:9px;
-
-  margin-top:4px;
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-.btn{
-  border:0;
-
-  border-radius:6px;
-
-  padding:8px 12px;
-
-  color:#fff;
-
-  font-size:10px;
-}
-
-.primary{
-  background:#0891b2;
-}
-
-.success{
-  background:#059669;
-}
-
-.neutral{
-  background:#1e3346;
-}
-
-.btn:hover{
-  filter:brightness(1.15);
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1100px){
-
-  .stats{
-    grid-template-columns:
-      repeat(2,1fr);
   }
 
 }
@@ -578,14 +493,9 @@ button{
 
 <body>
 
-<!-- =====================================================
-     LOGIN SCREEN
-===================================================== -->
+<!-- LOGIN -->
 
-<div
-  id="loginScreen"
-  class="login-screen"
->
+<div id="loginScreen" class="login-screen">
 
   <div class="login-box">
 
@@ -597,21 +507,13 @@ button{
       Administrator Access
     </div>
 
-    <div
-      id="loginError"
-      class="login-error hidden"
-    ></div>
+    <div id="loginError" class="login-error hidden"></div>
 
-    <div
-      id="loginSuccess"
-      class="login-success hidden"
-    ></div>
+    <div id="loginSuccess" class="login-success hidden"></div>
 
     <div class="field">
 
-      <label for="adminEmail">
-        Email Address
-      </label>
+      <label>Email Address</label>
 
       <input
         id="adminEmail"
@@ -624,11 +526,9 @@ button{
 
     <div class="field">
 
-      <label for="adminPassword">
-        Password
-      </label>
+      <label>Password</label>
 
-      <div class="input-wrap">
+      <div class="password-wrap">
 
         <input
           id="adminPassword"
@@ -663,599 +563,413 @@ button{
 </div>
 
 
-<!-- =====================================================
-     ADMIN APPLICATION
-===================================================== -->
+<!-- ADMIN APP -->
 
-<div
-  id="adminApp"
-  class="admin-app hidden"
->
+<div id="adminApp" class="hidden">
 
-  <aside class="sidebar">
+<div class="layout">
 
-    <div class="brand">
-      Coin<span>Bridge</span>
-    </div>
+<aside class="sidebar">
 
-    <div class="admin-tag">
-      Administrator
-    </div>
+  <div class="brand">
+    Coin<span>Bridge</span>
+  </div>
 
-    <div class="menu-title">
-      Overview
-    </div>
+  <div class="admin-tag">
+    Administrator
+  </div>
 
-    <div class="nav">
+  <div class="menu-title">Overview</div>
 
-      <button
-        class="active"
-        onclick="showSection('dashboard',this)"
-      >
-        📊 Dashboard
-      </button>
-
-    </div>
-
-    <div class="menu-title">
-      Management
-    </div>
-
-    <div class="nav">
-
-      <button
-        onclick="showSection('customers',this)"
-      >
-        👥 Customers
-      </button>
-
-      <button
-        onclick="showSection('wallets',this)"
-      >
-        💰 Wallets
-      </button>
-
-      <button
-        onclick="showSection('orders',this)"
-      >
-        🛒 Orders
-      </button>
-
-      <button
-        onclick="showSection('transactions',this)"
-      >
-        📋 Transactions
-      </button>
-
-      <button
-        onclick="showSection('messages',this)"
-      >
-        💬 Messages
-      </button>
-
-    </div>
-
-    <div class="menu-title">
-      System
-    </div>
-
-    <div class="nav">
-
-      <button
-        onclick="showSection('settings',this)"
-      >
-        ⚙️ Settings
-      </button>
-
-    </div>
+  <div class="nav">
 
     <button
-      class="logout"
-      onclick="logout()"
+      class="active"
+      onclick="showSection('dashboard',this)"
     >
-      ← Log Out
+      📊 Dashboard
     </button>
 
-  </aside>
+  </div>
 
+  <div class="menu-title">Management</div>
 
-  <main class="main">
+  <div class="nav">
 
-    <div class="mobile-top">
+    <button onclick="showSection('customers',this)">
+      👥 Customers
+    </button>
 
-      <div class="brand">
-        Coin<span>Bridge</span>
-      </div>
+    <button onclick="showSection('approvals',this)">
+      ✅ Account Approvals
+    </button>
 
-      <button
-        class="mobile-menu"
-        onclick="toggleMobileMenu()"
-      >
-        ☰
-      </button>
+    <button onclick="showSection('wallets',this)">
+      💰 Wallets
+    </button>
 
-    </div>
+  </div>
 
+  <div class="menu-title">System</div>
 
-    <div class="topbar">
+  <div class="nav">
 
-      <div class="page-title">
+    <button onclick="showSection('profile',this)">
+      👤 Administrator
+    </button>
 
-        <h1 id="pageTitle">
-          Admin Dashboard
-        </h1>
+  </div>
 
-        <p id="pageSubtitle">
-          Manage the CoinBridge platform.
-        </p>
+  <button class="logout" onclick="logout()">
+    ← Log Out
+  </button>
 
-      </div>
+</aside>
 
-      <div class="profile">
 
-        <div
-          id="adminAvatar"
-          class="avatar"
-        >
-          A
-        </div>
+<main class="main">
 
-        <div>
+<div class="mobile-top">
 
-          <strong id="adminName">
-            Administrator
-          </strong>
+  <div class="brand">
+    Coin<span>Bridge</span>
+  </div>
 
-          <span>
-            ● Approved Admin
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- =================================================
-         DASHBOARD
-    ================================================== -->
-
-    <section
-      id="dashboard"
-      class="section"
-    >
-
-      <div class="stats">
-
-        <div class="stat">
-
-          <p>
-            Total Customers
-          </p>
-
-          <h2 id="totalCustomers">
-            0
-          </h2>
-
-          <small>
-            Connected to Supabase
-          </small>
-
-        </div>
-
-
-        <div class="stat">
-
-          <p>
-            Pending Accounts
-          </p>
-
-          <h2 id="pendingAccounts">
-            0
-          </h2>
-
-          <small>
-            Awaiting approval
-          </small>
-
-        </div>
-
-
-        <div class="stat">
-
-          <p>
-            Total Wallets
-          </p>
-
-          <h2 id="totalWallets">
-            0
-          </h2>
-
-          <small>
-            Platform wallets
-          </small>
-
-        </div>
-
-
-        <div class="stat">
-
-          <p>
-            Admin Status
-          </p>
-
-          <h2
-            id="adminStatus"
-            style="font-size:18px;color:#34d399;"
-          >
-            Approved
-          </h2>
-
-          <small>
-            Supabase verified
-          </small>
-
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="card-head">
-
-          <div>
-
-            <h2>
-              Recent Activity
-            </h2>
-
-            <p>
-              Administrator session information.
-            </p>
-
-          </div>
-
-          <button
-            class="btn primary"
-            onclick="loadDashboard()"
-          >
-            Refresh
-          </button>
-
-        </div>
-
-
-        <div
-          id="activity"
-          class="activity"
-        >
-
-          <div class="activity-row">
-
-            <div>
-
-              <strong>
-                Supabase authentication active
-              </strong>
-
-              <span>
-                Your administrator account has been verified.
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         PLACEHOLDER SECTIONS
-    ================================================== -->
-
-    <section
-      id="customers"
-      class="section"
-    >
-
-      <div class="card">
-
-        <div class="card-head">
-
-          <div>
-
-            <h2>
-              Customers
-            </h2>
-
-            <p>
-              Customer management will be connected next.
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="activity">
-
-          <div class="activity-row">
-
-            <div>
-
-              <strong>
-                Customer management
-              </strong>
-
-              <span>
-                Supabase customer records will appear here.
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section
-      id="wallets"
-      class="section"
-    >
-
-      <div class="card">
-
-        <div class="card-head">
-
-          <div>
-
-            <h2>
-              Wallet Management
-            </h2>
-
-            <p>
-              Wallet controls will be connected next.
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="activity">
-
-          <div class="activity-row">
-
-            <div>
-
-              <strong>
-                Wallet management
-              </strong>
-
-              <span>
-                Your wallets table is ready for integration.
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section
-      id="orders"
-      class="section"
-    >
-
-      <div class="card">
-
-        <div class="card-head">
-
-          <div>
-
-            <h2>
-              Orders
-            </h2>
-
-            <p>
-              Order management will be connected next.
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="activity">
-
-          <div class="activity-row">
-
-            <div>
-
-              <strong>
-                Orders
-              </strong>
-
-              <span>
-                Customer orders will appear here.
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section
-      id="transactions"
-      class="section"
-    >
-
-      <div class="card">
-
-        <div class="card-head">
-
-          <div>
-
-            <h2>
-              Transactions
-            </h2>
-
-            <p>
-              Transaction records will be connected next.
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="activity">
-
-          <div class="activity-row">
-
-            <div>
-
-              <strong>
-                Transactions
-              </strong>
-
-              <span>
-                Transaction history will appear here.
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section
-      id="messages"
-      class="section"
-    >
-
-      <div class="card">
-
-        <div class="card-head">
-
-          <div>
-
-            <h2>
-              Customer Messages
-            </h2>
-
-            <p>
-              Messaging will be connected next.
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="activity">
-
-          <div class="activity-row">
-
-            <div>
-
-              <strong>
-                Customer communication
-              </strong>
-
-              <span>
-                Messages will be connected to Supabase next.
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section
-      id="settings"
-      class="section"
-    >
-
-      <div class="card">
-
-        <div class="card-head">
-
-          <div>
-
-            <h2>
-              System Settings
-            </h2>
-
-            <p>
-              Administrator settings.
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="activity">
-
-          <div class="activity-row">
-
-            <div>
-
-              <strong>
-                Supabase Authentication
-              </strong>
-
-              <span>
-                Connected
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
+  <button
+    class="mobile-menu"
+    onclick="toggleMobileMenu()"
+  >
+    ☰
+  </button>
 
 </div>
 
 
+<div class="topbar">
+
+  <div class="page-title">
+
+    <h1 id="pageTitle">
+      Admin Dashboard
+    </h1>
+
+    <p id="pageSubtitle">
+      Manage CoinBridge customer accounts and wallets.
+    </p>
+
+  </div>
+
+  <div class="profile">
+
+    <div class="avatar">
+      A
+    </div>
+
+    <div>
+
+      <strong id="adminName">
+        Administrator
+      </strong>
+
+      <span>
+        ● Active
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="section active">
+
+<div class="stats">
+
+  <div class="stat">
+    <p>Total Customers</p>
+    <h2 id="totalCustomers">0</h2>
+  </div>
+
+  <div class="stat">
+    <p>Pending Accounts</p>
+    <h2 id="pendingAccounts">0</h2>
+  </div>
+
+  <div class="stat">
+    <p>Total Wallets</p>
+    <h2 id="totalWallets">0</h2>
+  </div>
+
+  <div class="stat">
+    <p>Active Wallets</p>
+    <h2 id="activeWallets">0</h2>
+  </div>
+
+</div>
+
+<div class="card">
+
+  <div class="card-head">
+
+    <div>
+      <h2>Administrator Overview</h2>
+      <p>Live information from your CoinBridge database.</p>
+    </div>
+
+    <button
+      class="btn primary"
+      onclick="loadEverything()"
+    >
+      Refresh
+    </button>
+
+  </div>
+
+  <div style="padding:20px">
+
+    <div id="dashboardMessage" class="empty">
+      Loading database information...
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- CUSTOMERS -->
+
+<section id="customers" class="section">
+
+<div class="card">
+
+  <div class="card-head">
+
+    <div>
+      <h2>Customers</h2>
+      <p>Customers registered in CoinBridge.</p>
+    </div>
+
+    <button
+      class="btn primary"
+      onclick="loadCustomers()"
+    >
+      Refresh
+    </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Status</th>
+          <th>Created</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="customersTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- APPROVALS -->
+
+<section id="approvals" class="section">
+
+<div class="card">
+
+  <div class="card-head">
+
+    <div>
+      <h2>Account Approvals</h2>
+      <p>Review customer account status.</p>
+    </div>
+
+    <button
+      class="btn primary"
+      onclick="loadApprovals()"
+    >
+      Refresh
+    </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Action</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="approvalsTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- WALLETS -->
+
+<section id="wallets" class="section">
+
+<div class="card">
+
+  <div class="card-head">
+
+    <div>
+      <h2>Wallet Management</h2>
+      <p>Manage customer wallet IDs, balances and status.</p>
+    </div>
+
+    <button
+      class="btn primary"
+      onclick="loadWallets()"
+    >
+      Refresh
+    </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Customer</th>
+          <th>Currency</th>
+          <th>Wallet ID</th>
+          <th>Balance</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="walletTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="section">
+
+<div class="card">
+
+  <div class="card-head">
+
+    <div>
+      <h2>Administrator Account</h2>
+      <p>Your authenticated CoinBridge administrator account.</p>
+    </div>
+
+  </div>
+
+  <div style="padding:20px">
+
+    <div class="field">
+
+      <label>Name</label>
+
+      <input
+        id="profileName"
+        readonly
+      >
+
+    </div>
+
+    <div class="field">
+
+      <label>Email</label>
+
+      <input
+        id="profileEmail"
+        readonly
+      >
+
+    </div>
+
+    <div class="field">
+
+      <label>Role</label>
+
+      <input
+        id="profileRole"
+        readonly
+      >
+
+    </div>
+
+    <div class="field">
+
+      <label>Account Status</label>
+
+      <input
+        id="profileStatus"
+        readonly
+      >
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-/* =====================================================
-   SUPABASE CONNECTION
-===================================================== */
+/* ==================================================
+   SUPABASE
+================================================== */
 
 const SUPABASE_URL =
   "https://jgvpbbuslpwupjwxqfmz.supabase.co";
@@ -1270,222 +984,11 @@ const supabaseClient =
   );
 
 
-/* =====================================================
-   DOM HELPERS
-===================================================== */
-
-const loginScreen =
-  document.getElementById("loginScreen");
-
-const adminApp =
-  document.getElementById("adminApp");
-
-const loginError =
-  document.getElementById("loginError");
-
-const loginSuccess =
-  document.getElementById("loginSuccess");
-
-const loginButton =
-  document.getElementById("loginButton");
-
-
-/* =====================================================
-   PASSWORD EYE
-===================================================== */
-
-function togglePassword(){
-
-  const input =
-    document.getElementById("adminPassword");
-
-  const button =
-    document.querySelector(".eye");
-
-  if(input.type === "password"){
-
-    input.type = "text";
-
-    button.textContent = "🙈";
-
-  }else{
-
-    input.type = "password";
-
-    button.textContent = "👁️";
-
-  }
-
-}
-
-
-/* =====================================================
-   MESSAGE DISPLAY
-===================================================== */
-
-function showError(message){
-
-  loginSuccess.classList.add("hidden");
-
-  loginError.textContent = message;
-
-  loginError.classList.remove("hidden");
-
-}
-
-
-function showSuccess(message){
-
-  loginError.classList.add("hidden");
-
-  loginSuccess.textContent = message;
-
-  loginSuccess.classList.remove("hidden");
-
-}
-
-
-function clearMessages(){
-
-  loginError.classList.add("hidden");
-
-  loginSuccess.classList.add("hidden");
-
-}
-
-
-/* =====================================================
-   ADMIN PROFILE CHECK
-===================================================== */
-
-async function verifyAdmin(user){
-
-  if(!user){
-
-    return {
-      allowed:false,
-      message:"No authenticated user found."
-    };
-
-  }
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select(`
-        id,
-        full_name,
-        email,
-        role,
-        account_status
-      `)
-      .eq("id",user.id)
-      .maybeSingle();
-
-  if(error){
-
-    console.error(
-      "PROFILE CHECK ERROR:",
-      error
-    );
-
-    return {
-      allowed:false,
-      message:
-        "Unable to verify administrator profile."
-    };
-
-  }
-
-  if(!data){
-
-    return {
-      allowed:false,
-      message:
-        "Administrator profile was not found."
-    };
-
-  }
-
-  if(
-    String(data.role).toLowerCase() !==
-    "admin"
-  ){
-
-    return {
-      allowed:false,
-      message:
-        "This account does not have administrator access."
-    };
-
-  }
-
-  if(
-    String(data.account_status).toLowerCase() !==
-    "approved"
-  ){
-
-    return {
-      allowed:false,
-      message:
-        "Administrator account is not approved."
-    };
-
-  }
-
-  return {
-    allowed:true,
-    profile:data
-  };
-
-}
-
-
-/* =====================================================
-   SHOW ADMIN
-===================================================== */
-
-function showAdmin(profile){
-
-  loginScreen.classList.add("hidden");
-
-  adminApp.classList.remove("hidden");
-
-  const name =
-    profile.full_name ||
-    "Administrator";
-
-  document.getElementById(
-    "adminName"
-  ).textContent = name;
-
-  document.getElementById(
-    "adminAvatar"
-  ).textContent =
-    name
-      .charAt(0)
-      .toUpperCase();
-
-  document.getElementById(
-    "adminStatus"
-  ).textContent =
-    "Approved";
-
-  loadDashboard();
-
-}
-
-
-/* =====================================================
+/* ==================================================
    LOGIN
-===================================================== */
+================================================== */
 
 async function login(){
-
-  clearMessages();
 
   const email =
     document
@@ -1498,424 +1001,266 @@ async function login(){
       .getElementById("adminPassword")
       .value;
 
-  if(!email){
+  const error =
+    document.getElementById("loginError");
 
-    showError(
-      "Enter the administrator email."
-    );
+  const success =
+    document.getElementById("loginSuccess");
+
+  const button =
+    document.getElementById("loginButton");
+
+  error.classList.add("hidden");
+  success.classList.add("hidden");
+
+  if(!email || !password){
+
+    error.textContent =
+      "Please enter your administrator email and password.";
+
+    error.classList.remove("hidden");
 
     return;
 
   }
 
-  if(!password){
-
-    showError(
-      "Enter the administrator password."
-    );
-
-    return;
-
-  }
-
-  loginButton.disabled=true;
-
-  loginButton.textContent=
-    "Signing In...";
+  button.disabled=true;
+  button.textContent="Signing In...";
 
   try{
 
     const {
       data,
-      error
+      error:authError
     } =
       await supabaseClient.auth.signInWithPassword({
         email:email,
         password:password
       });
 
-    if(error){
+    if(authError){
 
-      console.error(
-        "AUTH ERROR:",
-        error
-      );
-
-      showError(
-        error.message ||
-        "Unable to sign in."
-      );
-
-      return;
+      throw authError;
 
     }
 
-    const result =
-      await verifyAdmin(
-        data.user
+    if(!data.user){
+
+      throw new Error(
+        "Authentication did not return a user."
       );
 
-    if(!result.allowed){
+    }
+
+    /*
+      IMPORTANT:
+      Check the authenticated user's
+      profile before allowing access.
+    */
+
+    const {
+      data:profile,
+      error:profileError
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,full_name,email,role,account_status"
+        )
+        .eq(
+          "id",
+          data.user.id
+        )
+        .maybeSingle();
+
+    if(profileError){
 
       await supabaseClient.auth.signOut();
 
-      showError(
-        result.message
-      );
-
-      return;
+      throw profileError;
 
     }
 
-    showSuccess(
-      "Administrator verified."
-    );
+    if(!profile){
+
+      await supabaseClient.auth.signOut();
+
+      throw new Error(
+        "Administrator profile was not found."
+      );
+
+    }
+
+    if(
+      String(profile.role).toLowerCase() !==
+      "admin"
+    ){
+
+      await supabaseClient.auth.signOut();
+
+      throw new Error(
+        "This account does not have administrator access."
+      );
+
+    }
+
+    if(
+      String(profile.account_status).toLowerCase() !==
+      "approved"
+    ){
+
+      await supabaseClient.auth.signOut();
+
+      throw new Error(
+        "Administrator account is not approved."
+      );
+
+    }
+
+    success.textContent =
+      "Administrator authenticated successfully.";
+
+    success.classList.remove("hidden");
 
     setTimeout(()=>{
 
-      showAdmin(
-        result.profile
-      );
+      showAdminApp(profile);
 
     },300);
 
   }catch(error){
 
-    console.error(
-      "LOGIN ERROR:",
-      error
-    );
+    console.error("ADMIN LOGIN ERROR:",error);
 
-    showError(
-      "An unexpected error occurred."
-    );
+    error.textContent =
+      error.message ||
+      "Unable to sign in.";
+
+    error.classList.remove("hidden");
 
   }finally{
 
-    loginButton.disabled=false;
-
-    loginButton.textContent=
-      "Sign In";
+    button.disabled=false;
+    button.textContent="Sign In";
 
   }
 
 }
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
+/* ==================================================
+   SHOW ADMIN
+================================================== */
 
-async function logout(){
+function showAdminApp(profile){
 
-  try{
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
 
-    await supabaseClient.auth.signOut();
-
-  }catch(error){
-
-    console.error(
-      "LOGOUT ERROR:",
-      error
-    );
-
-  }
-
-  adminApp.classList.add("hidden");
-
-  loginScreen.classList.remove("hidden");
+  document
+    .getElementById("adminApp")
+    .classList.remove("hidden");
 
   document.getElementById(
-    "adminPassword"
-  ).value="";
+    "adminName"
+  ).textContent =
+    profile.full_name ||
+    "Administrator";
 
-  clearMessages();
+  document.getElementById(
+    "profileName"
+  ).value =
+    profile.full_name || "";
+
+  document.getElementById(
+    "profileEmail"
+  ).value =
+    profile.email || "";
+
+  document.getElementById(
+    "profileRole"
+  ).value =
+    profile.role || "";
+
+  document.getElementById(
+    "profileStatus"
+  ).value =
+    profile.account_status || "";
+
+  loadEverything();
 
 }
 
 
-/* =====================================================
-   DASHBOARD
-===================================================== */
+/* ==================================================
+   SESSION CHECK
+================================================== */
 
-async function loadDashboard(){
+async function checkSession(){
 
   try{
 
     const {
-      count:customerCount,
-      error:customerError
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id",
-          {
-            count:"exact",
-            head:true
-          }
-        )
-        .eq("role","customer");
-
-    if(!customerError){
-
-      document.getElementById(
-        "totalCustomers"
-      ).textContent =
-        customerCount || 0;
-
-    }
-
-
-    const {
-      count:pendingCount,
-      error:pendingError
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id",
-          {
-            count:"exact",
-            head:true
-          }
-        )
-        .eq("role","customer")
-        .eq("account_status","pending");
-
-    if(!pendingError){
-
-      document.getElementById(
-        "pendingAccounts"
-      ).textContent =
-        pendingCount || 0;
-
-    }
-
-
-    const {
-      count:walletCount,
-      error:walletError
-    } =
-      await supabaseClient
-        .from("wallets")
-        .select(
-          "id",
-          {
-            count:"exact",
-            head:true
-          }
-        );
-
-    if(!walletError){
-
-      document.getElementById(
-        "totalWallets"
-      ).textContent =
-        walletCount || 0;
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "DASHBOARD ERROR:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function showSection(
-  id,
-  button
-){
-
-  document
-    .querySelectorAll(
-      ".section"
-    )
-    .forEach(section=>{
-
-      section.classList.remove(
-        "active"
-      );
-
-    });
-
-
-  const section =
-    document.getElementById(id);
-
-  if(section){
-
-    section.classList.add(
-      "active"
-    );
-
-  }
-
-
-  document
-    .querySelectorAll(
-      ".nav button"
-    )
-    .forEach(item=>{
-
-      item.classList.remove(
-        "active"
-      );
-
-    });
-
-
-  if(button){
-
-    button.classList.add(
-      "active"
-    );
-
-  }
-
-
-  const names={
-
-    dashboard:[
-      "Admin Dashboard",
-      "Manage the CoinBridge platform."
-    ],
-
-    customers:[
-      "Customers",
-      "View and manage customer accounts."
-    ],
-
-    wallets:[
-      "Wallet Management",
-      "Manage customer wallets."
-    ],
-
-    orders:[
-      "Orders",
-      "Review customer orders."
-    ],
-
-    transactions:[
-      "Transactions",
-      "Review transaction records."
-    ],
-
-    messages:[
-      "Customer Messages",
-      "Communicate directly with customers."
-    ],
-
-    settings:[
-      "System Settings",
-      "Administrator settings."
-    ]
-
-  };
-
-
-  if(names[id]){
-
-    document.getElementById(
-      "pageTitle"
-    ).textContent =
-      names[id][0];
-
-    document.getElementById(
-      "pageSubtitle"
-    ).textContent =
-      names[id][1];
-
-  }
-
-}
-
-
-function toggleMobileMenu(){
-
-  const sidebar =
-    document.querySelector(
-      ".sidebar"
-    );
-
-  if(
-    sidebar.style.display ===
-    "block"
-  ){
-
-    sidebar.style.display=
-      "none";
-
-  }else{
-
-    sidebar.style.display=
-      "block";
-
-  }
-
-}
-
-
-/* =====================================================
-   AUTH SESSION CHECK
-===================================================== */
-
-async function checkExistingSession(){
-
-  try{
-
-    const {
-      data,
-      error
+      data
     } =
       await supabaseClient.auth.getSession();
 
-    if(error){
-
-      console.error(
-        "SESSION ERROR:",
-        error
-      );
+    if(!data.session){
 
       return;
 
     }
 
-    const session =
-      data.session;
+    const user =
+      data.session.user;
 
-    if(!session){
+    const {
+      data:profile,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,full_name,email,role,account_status"
+        )
+        .eq(
+          "id",
+          user.id
+        )
+        .maybeSingle();
 
-      return;
-
-    }
-
-    const result =
-      await verifyAdmin(
-        session.user
-      );
-
-    if(result.allowed){
-
-      showAdmin(
-        result.profile
-      );
-
-    }else{
+    if(error || !profile){
 
       await supabaseClient.auth.signOut();
 
+      return;
+
     }
+
+    if(
+      String(profile.role).toLowerCase() !==
+      "admin"
+    ){
+
+      await supabaseClient.auth.signOut();
+
+      return;
+
+    }
+
+    if(
+      String(profile.account_status).toLowerCase() !==
+      "approved"
+    ){
+
+      await supabaseClient.auth.signOut();
+
+      return;
+
+    }
+
+    showAdminApp(profile);
 
   }catch(error){
 
@@ -1929,61 +1274,967 @@ async function checkExistingSession(){
 }
 
 
-/* =====================================================
-   AUTH STATE LISTENER
-===================================================== */
+/* ==================================================
+   LOGOUT
+================================================== */
 
-supabaseClient.auth.onAuthStateChange(
-  async (event,session)=>{
+async function logout(){
 
-    console.log(
-      "AUTH EVENT:",
-      event
+  await supabaseClient.auth.signOut();
+
+  location.reload();
+
+}
+
+
+/* ==================================================
+   PASSWORD
+================================================== */
+
+function togglePassword(){
+
+  const input =
+    document.getElementById(
+      "adminPassword"
     );
 
-    if(event === "SIGNED_OUT"){
+  const button =
+    document.querySelector(".eye");
 
-      adminApp.classList.add(
-        "hidden"
-      );
+  if(input.type==="password"){
 
-      loginScreen.classList.remove(
-        "hidden"
-      );
+    input.type="text";
+    button.textContent="🙈";
+
+  }else{
+
+    input.type="password";
+    button.textContent="👁️";
+
+  }
+
+}
+
+
+/* ==================================================
+   NAVIGATION
+================================================== */
+
+function showSection(id,button){
+
+  document
+    .querySelectorAll(".section")
+    .forEach(section=>{
+      section.classList.remove("active");
+    });
+
+  const section =
+    document.getElementById(id);
+
+  if(section){
+
+    section.classList.add("active");
+
+  }
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(item=>{
+      item.classList.remove("active");
+    });
+
+  if(button){
+
+    button.classList.add("active");
+
+  }
+
+  const titles={
+
+    dashboard:[
+      "Admin Dashboard",
+      "Manage CoinBridge customer accounts and wallets."
+    ],
+
+    customers:[
+      "Customers",
+      "Customers registered in CoinBridge."
+    ],
+
+    approvals:[
+      "Account Approvals",
+      "Review customer account status."
+    ],
+
+    wallets:[
+      "Wallet Management",
+      "Manage customer wallet IDs, balances and status."
+    ],
+
+    profile:[
+      "Administrator",
+      "Authenticated administrator account."
+    ]
+
+  };
+
+  if(titles[id]){
+
+    document.getElementById(
+      "pageTitle"
+    ).textContent=titles[id][0];
+
+    document.getElementById(
+      "pageSubtitle"
+    ).textContent=titles[id][1];
+
+  }
+
+}
+
+
+function toggleMobileMenu(){
+
+  const sidebar =
+    document.querySelector(".sidebar");
+
+  if(
+    sidebar.style.display==="block"
+  ){
+
+    sidebar.style.display="none";
+
+  }else{
+
+    sidebar.style.display="block";
+
+  }
+
+}
+
+
+/* ==================================================
+   LOAD DASHBOARD
+================================================== */
+
+async function loadDashboard(){
+
+  const dashboardMessage =
+    document.getElementById(
+      "dashboardMessage"
+    );
+
+  try{
+
+    const {
+      data:profiles,
+      error:profilesError
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,role,account_status"
+        );
+
+    if(profilesError){
+
+      throw profilesError;
 
     }
 
+    const {
+      data:wallets,
+      error:walletError
+    } =
+      await supabaseClient
+        .from("wallets")
+        .select(
+          "id,status"
+        );
+
+    if(walletError){
+
+      throw walletError;
+
+    }
+
+    const customers =
+      profiles.filter(
+        item =>
+          String(item.role).toLowerCase() ===
+          "customer"
+      );
+
+    const pending =
+      customers.filter(
+        item =>
+          String(item.account_status).toLowerCase() ===
+          "pending"
+      );
+
+    const activeWallets =
+      (wallets||[]).filter(
+        item =>
+          String(item.status).toLowerCase() ===
+          "active"
+      );
+
+    document.getElementById(
+      "totalCustomers"
+    ).textContent =
+      customers.length;
+
+    document.getElementById(
+      "pendingAccounts"
+    ).textContent =
+      pending.length;
+
+    document.getElementById(
+      "totalWallets"
+    ).textContent =
+      (wallets||[]).length;
+
+    document.getElementById(
+      "activeWallets"
+    ).textContent =
+      activeWallets.length;
+
+    dashboardMessage.textContent =
+      "Database connection is working. Administrator controls are ready.";
+
+  }catch(error){
+
+    console.error(
+      "DASHBOARD ERROR:",
+      error
+    );
+
+    dashboardMessage.textContent =
+      "Database error: "+
+      error.message;
+
   }
-);
+
+}
 
 
-/* =====================================================
-   ENTER KEY LOGIN
-===================================================== */
+/* ==================================================
+   CUSTOMERS
+================================================== */
 
-document
-  .getElementById("adminPassword")
-  .addEventListener(
-    "keydown",
-    event=>{
+async function loadCustomers(){
 
-      if(event.key==="Enter"){
+  const table =
+    document.getElementById(
+      "customersTable"
+    );
 
-        login();
+  table.innerHTML=
+    `<tr>
+      <td colspan="5" class="empty">
+        Loading customers...
+      </td>
+    </tr>`;
 
-      }
+  try{
 
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,full_name,email,phone,role,account_status,created_at"
+        )
+        .eq(
+          "role",
+          "customer"
+        )
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+    if(error){
+
+      throw error;
+
+    }
+
+    if(!data || !data.length){
+
+      table.innerHTML=
+        `<tr>
+          <td colspan="5" class="empty">
+            No customers found.
+          </td>
+        </tr>`;
+
+      return;
+
+    }
+
+    table.innerHTML=
+      data.map(customer=>`
+
+        <tr>
+
+          <td>
+            ${escapeHTML(
+              customer.full_name ||
+              "Customer"
+            )}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              customer.email ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              customer.phone ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${statusHTML(
+              customer.account_status
+            )}
+          </td>
+
+          <td>
+            ${formatDate(
+              customer.created_at
+            )}
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }catch(error){
+
+    console.error(
+      "CUSTOMERS ERROR:",
+      error
+    );
+
+    table.innerHTML=
+      `<tr>
+        <td colspan="5" class="empty">
+          ${escapeHTML(error.message)}
+        </td>
+      </tr>`;
+
+  }
+
+}
+
+
+/* ==================================================
+   APPROVALS
+================================================== */
+
+async function loadApprovals(){
+
+  const table =
+    document.getElementById(
+      "approvalsTable"
+    );
+
+  table.innerHTML=
+    `<tr>
+      <td colspan="5" class="empty">
+        Loading accounts...
+      </td>
+    </tr>`;
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,full_name,email,role,account_status,created_at"
+        )
+        .eq(
+          "role",
+          "customer"
+        )
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+    if(error){
+
+      throw error;
+
+    }
+
+    if(!data || !data.length){
+
+      table.innerHTML=
+        `<tr>
+          <td colspan="5" class="empty">
+            No customer accounts found.
+          </td>
+        </tr>`;
+
+      return;
+
+    }
+
+    table.innerHTML=
+      data.map(account=>`
+
+        <tr>
+
+          <td>
+            ${escapeHTML(
+              account.full_name ||
+              "Customer"
+            )}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              account.email ||
+              "—"
+            )}
+          </td>
+
+          <td>
+            ${statusHTML(
+              account.account_status
+            )}
+          </td>
+
+          <td>
+            ${formatDate(
+              account.created_at
+            )}
+          </td>
+
+          <td>
+
+            ${
+              String(account.account_status).toLowerCase()==="pending"
+              ?
+              `
+              <div class="actions">
+
+                <button
+                  class="btn success"
+                  onclick="changeAccountStatus('${account.id}','approved')"
+                >
+                  Approve
+                </button>
+
+                <button
+                  class="btn danger"
+                  onclick="changeAccountStatus('${account.id}','rejected')"
+                >
+                  Reject
+                </button>
+
+              </div>
+              `
+              :
+              `<span style="color:#718096">
+                Reviewed
+              </span>`
+            }
+
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }catch(error){
+
+    console.error(
+      "APPROVAL ERROR:",
+      error
+    );
+
+    table.innerHTML=
+      `<tr>
+        <td colspan="5" class="empty">
+          ${escapeHTML(error.message)}
+        </td>
+      </tr>`;
+
+  }
+
+}
+
+
+/* ==================================================
+   CHANGE ACCOUNT STATUS
+================================================== */
+
+async function changeAccountStatus(
+  userId,
+  newStatus
+){
+
+  const action =
+    newStatus==="approved"
+    ?"approve"
+    :"reject";
+
+  if(
+    !confirm(
+      "Are you sure you want to "+
+      action+
+      " this account?"
+    )
+  ){
+
+    return;
+
+  }
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .update({
+          account_status:newStatus,
+          updated_at:new Date().toISOString()
+        })
+        .eq(
+          "id",
+          userId
+        );
+
+    if(error){
+
+      throw error;
+
+    }
+
+    alert(
+      "Account "+
+      action+
+      "d successfully."
+    );
+
+    await loadEverything();
+
+  }catch(error){
+
+    console.error(
+      "STATUS UPDATE ERROR:",
+      error
+    );
+
+    alert(
+      "Unable to update account: "+
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   WALLETS
+================================================== */
+
+async function loadWallets(){
+
+  const table =
+    document.getElementById(
+      "walletTable"
+    );
+
+  table.innerHTML=
+    `<tr>
+      <td colspan="6" class="empty">
+        Loading wallets...
+      </td>
+    </tr>`;
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("wallets")
+        .select(`
+          id,
+          user_id,
+          wallet_id,
+          currency,
+          balance,
+          status,
+          created_at
+        `)
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+    if(error){
+
+      throw error;
+
+    }
+
+    if(!data || !data.length){
+
+      table.innerHTML=
+        `<tr>
+          <td colspan="6" class="empty">
+            No wallets found.
+          </td>
+        </tr>`;
+
+      return;
+
+    }
+
+    /*
+      Load profiles separately so we don't
+      depend on a foreign-key relationship.
+    */
+
+    const {
+      data:profiles,
+      error:profileError
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,full_name,email"
+        );
+
+    if(profileError){
+
+      throw profileError;
+
+    }
+
+    table.innerHTML=
+      data.map(wallet=>{
+
+        const customer =
+          (profiles||[]).find(
+            profile =>
+              profile.id ===
+              wallet.user_id
+          );
+
+        return `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(
+                customer?.full_name ||
+                customer?.email ||
+                "Customer"
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                wallet.currency ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              <strong>
+                ${escapeHTML(
+                  wallet.wallet_id ||
+                  "—"
+                )}
+              </strong>
+            </td>
+
+            <td>
+              $${money(wallet.balance)}
+            </td>
+
+            <td>
+              ${statusHTML(
+                wallet.status
+              )}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="btn primary"
+                  onclick="editWallet('${wallet.id}',${Number(wallet.balance||0)})"
+                >
+                  Edit Balance
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }).join("");
+
+  }catch(error){
+
+    console.error(
+      "WALLETS ERROR:",
+      error
+    );
+
+    table.innerHTML=
+      `<tr>
+        <td colspan="6" class="empty">
+          ${escapeHTML(error.message)}
+        </td>
+      </tr>`;
+
+  }
+
+}
+
+
+/* ==================================================
+   EDIT WALLET BALANCE
+================================================== */
+
+async function editWallet(
+  walletId,
+  currentBalance
+){
+
+  const value =
+    prompt(
+      "Enter the new wallet balance:",
+      currentBalance
+    );
+
+  if(value===null){
+
+    return;
+
+  }
+
+  const balance =
+    Number(value);
+
+  if(
+    !Number.isFinite(balance) ||
+    balance < 0
+  ){
+
+    alert(
+      "Please enter a valid non-negative balance."
+    );
+
+    return;
+
+  }
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("wallets")
+        .update({
+          balance:balance,
+          updated_at:new Date().toISOString()
+        })
+        .eq(
+          "id",
+          walletId
+        );
+
+    if(error){
+
+      throw error;
+
+    }
+
+    alert(
+      "Wallet balance updated successfully."
+    );
+
+    await loadEverything();
+
+  }catch(error){
+
+    console.error(
+      "WALLET UPDATE ERROR:",
+      error
+    );
+
+    alert(
+      "Unable to update wallet: "+
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   LOAD EVERYTHING
+================================================== */
+
+async function loadEverything(){
+
+  await Promise.all([
+    loadDashboard(),
+    loadCustomers(),
+    loadApprovals(),
+    loadWallets()
+  ]);
+
+}
+
+
+/* ==================================================
+   HELPERS
+================================================== */
+
+function money(value){
+
+  return Number(
+    value||0
+  ).toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
     }
   );
 
+}
 
-/* =====================================================
+
+function formatDate(value){
+
+  if(!value)return "—";
+
+  const date =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+
+    return "—";
+
+  }
+
+  return date.toLocaleString(
+    [],
+    {
+      year:"numeric",
+      month:"short",
+      day:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+function statusHTML(status){
+
+  const value =
+    String(
+      status ||
+      "pending"
+    );
+
+  const lower =
+    value.toLowerCase();
+
+  let cls="pending";
+
+  if(
+    lower==="approved" ||
+    lower==="active"
+  ){
+
+    cls=lower;
+
+  }
+
+  if(
+    lower==="rejected" ||
+    lower==="suspended"
+  ){
+
+    cls=lower;
+
+  }
+
+  return `
+    <span class="status ${cls}">
+      ● ${escapeHTML(value)}
+    </span>
+  `;
+
+}
+
+
+function escapeHTML(value){
+
+  return String(
+    value ?? ""
+  )
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+
+}
+
+
+/* ==================================================
    START
-===================================================== */
+================================================== */
 
-checkExistingSession();
+checkSession();
 
 </script>
 
 </body>
-  </html>
+</html>

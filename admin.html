@@ -3894,7 +3894,187 @@ async function processDepositRequest(
 
 }
 
+/* ==================================================
+   WALLET ADJUSTMENT
+================================================== */
 
+function openAdjustWallet(id){
+
+  const wallet =
+    walletRows.find(ko
+      item =>
+        item.id === id
+    );
+
+  if(!wallet)return;
+
+  selectedWallet =
+    wallet;
+
+  document
+    .getElementById(
+      "adjustModalSubtitle"
+    )
+    .textContent =
+    `${wallet.profiles?.email || wallet.email || "Customer"} · ${wallet.currency || ""}`;
+
+  document
+    .getElementById(
+      "adjustAmount"
+    )
+    .value = "";
+
+  document
+    .getElementById(
+      "adjustDescription"
+    )
+    .value = "";
+
+  document
+    .getElementById(
+      "adjustModal"
+    )
+    .classList.remove("hidden");
+
+}
+
+
+function closeAdjustModal(){
+
+  document
+    .getElementById(
+      "adjustModal"
+    )
+    .classList.add("hidden");
+
+}
+
+
+async function saveWalletAdjustment(){
+
+  if(!selectedWallet){
+    return;
+  }
+
+  const action =
+    document
+      .getElementById(
+        "adjustAction"
+      )
+      .value;
+
+  const amount =
+    Number(
+      document
+        .getElementById(
+          "adjustAmount"
+        )
+        .value
+    );
+
+  const description =
+    document
+      .getElementById(
+        "adjustDescription"
+      )
+      .value
+      .trim();
+
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    alert(
+      "Enter a valid amount."
+    );
+
+    return;
+
+  }
+
+  const button =
+    document.getElementById(
+      "adjustSaveButton"
+    );
+
+  button.disabled = true;
+
+  button.textContent =
+    "Saving...";
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient.rpc(
+      "admin_adjust_wallet",
+      {
+        p_wallet_id:
+          selectedWallet.id,
+
+        p_action:
+          action,
+
+        p_amount:
+          amount,
+
+        p_description:
+          description ||
+          "Administrator wallet adjustment"
+      }
+    );
+
+    if(error){
+      throw error;
+    }
+
+    if(
+      data &&
+      data.success === false
+    ){
+
+      throw new Error(
+        data.message ||
+        "Wallet adjustment failed."
+      );
+
+    }
+
+    closeAdjustModal();
+
+    await loadWallets();
+
+    updateDashboard();
+
+    alert(
+      "Wallet adjustment completed successfully."
+    );
+
+  }catch(error){
+
+    console.error(
+      "WALLET ADJUSTMENT ERROR:",
+      error
+    );
+
+    alert(
+      "Unable to adjust wallet.\n\n" +
+      error.message
+    );
+
+  }finally{
+
+    button.disabled = false;
+
+    button.textContent =
+      "Save Adjustment";
+
+  }
+
+    }
 /* ==================================================
    CUSTOMER MESSAGES
 ================================================== */

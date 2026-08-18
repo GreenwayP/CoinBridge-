@@ -2770,12 +2770,17 @@ async function saveWalletAdjustment(){
 
   if(!selectedWallet)return;
 
-  const action =
-    document
-      .getElementById(
-        "adjustAction"
-      )
-      .value;
+  const selectedAction =
+  document
+    .getElementById(
+      "adjustAction"
+    )
+    .value;
+
+const action =
+  selectedAction === "remove"
+    ? "deduct"
+    : "add";
 
   const amount =
     Number(

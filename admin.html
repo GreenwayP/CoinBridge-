@@ -2957,23 +2957,49 @@ async function loadApprovals(){
               )}
             </td>
 
-            <td>
+   <td>
 
-              <button
-                class="btn success"
-                onclick="setAccountStatus('${escapeAttribute(customer.id)}','active')"
-              >
-                Approve
-              </button>
+  ${
+    String(customer.account_status).toLowerCase() === "approved"
+      ? `
+        <span style="color:#16a34a;font-weight:600;">
+          Approved
+        </span>
 
-              <button
-                class="btn danger"
-                onclick="setAccountStatus('${escapeAttribute(customer.id)}','suspended')"
-              >
-                Suspend
-              </button>
+        <button
+          class="btn danger"
+          onclick="setAccountStatus('${escapeAttribute(customer.id)}','suspended')"
+        >
+          Suspend
+        </button>
+      `
+      : String(customer.account_status).toLowerCase() === "suspended"
+      ? `
+        <button
+          class="btn success"
+          onclick="setAccountStatus('${escapeAttribute(customer.id)}','approved')"
+        >
+          Approve
+        </button>
+      `
+      : `
+        <button
+          class="btn success"
+          onclick="setAccountStatus('${escapeAttribute(customer.id)}','approved')"
+        >
+          Approve
+        </button>
 
-            </td>
+        <button
+          class="btn danger"
+          onclick="setAccountStatus('${escapeAttribute(customer.id)}','suspended')"
+        >
+          Suspend
+        </button>
+      `
+  }
+
+</td>
 
           </tr>
 

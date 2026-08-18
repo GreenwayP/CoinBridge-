@@ -3000,10 +3000,26 @@ async function loadApprovals(){
 }
 
 
-async function setAccountStatus(
-  id,
-  status
-){
+async function setAccountStatus(id, status){
+
+  if(status === "active"){
+    status = "approved";
+  }
+
+  const allowedStatuses = [
+    "pending",
+    "approved",
+    "rejected",
+    "suspended"
+  ];
+
+  if(!allowedStatuses.includes(status)){
+    alert(
+      "Invalid account status: " +
+      status
+    );
+    return;
+  }
 
   try{
 
@@ -3013,21 +3029,25 @@ async function setAccountStatus(
     await supabaseClient
       .from("profiles")
       .update({
-        account_status:status
+        account_status: status
       })
-      .eq("id",id);
+      .eq("id", id);
 
     if(error){
       throw error;
     }
 
     await loadApprovals();
-
     await loadCustomers();
 
     updateDashboard();
 
   }catch(error){
+
+    console.error(
+      "ACCOUNT STATUS ERROR:",
+      error
+    );
 
     alert(
       "Unable to update account.\n\n" +

@@ -2379,6 +2379,7 @@ async function loadCustomers(){
 }
 
 
+
 /* ==================================================
    CUSTOMER STATUS
 ================================================== */
@@ -2399,15 +2400,25 @@ async function openCustomerStatus(id){
       "pending"
     ).toLowerCase();
 
-  const next =
-    current === "active"
-      ? "suspended"
-      : "active";
+  let next;
+  let label;
 
-  const label =
-    next === "active"
-      ? "activate"
-      : "suspend";
+  if(current === "approved"){
+
+    next = "suspended";
+    label = "suspend";
+
+  }else if(current === "suspended"){
+
+    next = "approved";
+    label = "approve";
+
+  }else{
+
+    next = "approved";
+    label = "approve";
+
+  }
 
   if(
     !confirm(
@@ -2425,9 +2436,9 @@ async function openCustomerStatus(id){
     await supabaseClient
       .from("profiles")
       .update({
-        account_status:next
+        account_status: next
       })
-      .eq("id",id);
+      .eq("id", id);
 
     if(error){
       throw error;
@@ -2435,9 +2446,16 @@ async function openCustomerStatus(id){
 
     await loadCustomers();
 
+    await loadApprovals();
+
     updateDashboard();
 
   }catch(error){
+
+    console.error(
+      "CUSTOMER STATUS ERROR:",
+      error
+    );
 
     alert(
       "Unable to update account.\n\n" +
